@@ -1,0 +1,67 @@
+allprojects {
+  repositories {
+    jcenter()
+  }
+}
+
+ext {
+  // SDK version
+  androidBuildToolsVersion = "23.0.2"
+  androidMinSdkVersion = 16
+  androidTargetSdkVersion = 23
+  androidCompileSdkVersion = 23
+
+  // Google Libraries
+  supportVersion = '23.1.0'
+  appCompatVersion = '23.1.0'
+  recyclerViewVersion = '23.1.0'
+  cardViewVersion = '23.1.0'
+  designVersion = '23.1.0'
+
+  // Libraries
+  daggerVersion = '2.0.2'
+  rxJavaVersion = '1.0.14'
+  rxAndroidVersion = '1.0.1'
+  javaxAnnotationVersion = '1.0'
+  androidAnnotationsVersion = '22.2.0'
+  butterKnifeVersion = '7.0.1'
+  realmVersion = '0.86.1'
+
+  // Testing
+  robolectricVersion = '3.0'
+  jUnitVersion = '4.12'
+  assertJVersion = '1.7.1'
+  mockitoVersion = '1.9.5'
+
+  presentationDependencies = [daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                              dagger            : "com.google.dagger:dagger:${daggerVersion}",
+                              rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
+                              rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                              javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+                              butterKnife       : "com.jakewharton:butterknife:${butterKnifeVersion}",
+                              supportVersion    : "com.android.support:support-v4:${supportVersion}",
+                              appCompat         : "com.android.support:appcompat-v7:${appCompatVersion}",
+                              design            : "com.android.support:design:${designVersion}",
+                              recyclerView      : "com.android.support:recyclerview-v7:${recyclerViewVersion}"]
+
+  domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                        dagger         : "com.google.dagger:dagger:${daggerVersion}",
+                        javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+                        rxJava         : "io.reactivex:rxjava:${rxJavaVersion}"]
+
+  domainTestDependencies = [junit  : "junit:junit:${jUnitVersion}",
+                            mockito: "org.mockito:mockito-core:${mockitoVersion}",]
+
+  dataDependencies = [daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                      dagger            : "com.google.dagger:dagger:${daggerVersion}",
+                      rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
+                      rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                      javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+                      androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
+                      realm             : "io.realm:realm-android:${realmVersion}"]
+
+  dataTestDependencies = [junit      : "junit:junit:${jUnitVersion}",
+                          assertj    : "org.assertj:assertj-core:${assertJVersion}",
+                          mockito    : "org.mockito:mockito-core:${mockitoVersion}",
+                          robolectric: "org.robolectric:robolectric:${robolectricVersion}",]
+}
