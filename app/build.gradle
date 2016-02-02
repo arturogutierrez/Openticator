@@ -38,6 +38,7 @@ dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
 
   compile project(':domain')
+  compile project(':data')
 
   compile presentationDependencies.supportVersion
   compile presentationDependencies.appCompat
