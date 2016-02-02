@@ -1,0 +1,21 @@
+apply from: 'dependencies.gradle'
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:1.5.0'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.1'
+  }
+}
+
+allprojects {
+  ext {
+    androidApplicationId = 'com.arturogutierrez.openticator'
+    androidVersionCode = 1
+    androidVersionName = "0.0.1"
+    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+  }
+}
