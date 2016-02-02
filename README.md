@@ -1,0 +1,2 @@
+# Openticator
+Another authenticator implementation
