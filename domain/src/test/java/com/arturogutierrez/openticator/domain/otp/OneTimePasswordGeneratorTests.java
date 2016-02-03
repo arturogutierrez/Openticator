@@ -1,6 +1,5 @@
 package com.arturogutierrez.openticator.domain.otp;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,20 +7,13 @@ import static org.hamcrest.core.Is.is;
 
 public class OneTimePasswordGeneratorTests {
 
-  private OneTimePasswordFactory oneTimePasswordFactory;
-
-  @Before
-  public void setUp() {
-    oneTimePasswordFactory = new OneTimePasswordFactory();
-  }
-
   @Test
   public void testGenerateCodeForFirstState() {
-    String secret = "7777777777777777";
-    OneTimePasswordGenerator oneTimePasswordGenerator = new OneTimePasswordGenerator(secret);
+    String secret = "ABCDEFGHIJK23456";
+    OneTimePasswordGenerator oneTimePasswordGenerator = new OneTimePasswordGenerator(secret, 6);
 
-    String code = oneTimePasswordGenerator.generate(1);
+    String code = oneTimePasswordGenerator.generate(0);
 
-    assertThat(code, is(683298));
+    assertThat(code, is("867671"));
   }
 }
