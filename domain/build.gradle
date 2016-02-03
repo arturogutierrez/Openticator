@@ -2,25 +2,25 @@ apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
 configurations {
-    provided
+  provided
 }
 
 sourceSets {
-    main {
-        compileClasspath += configurations.provided
-    }
+  main {
+    compileClasspath += configurations.provided
+  }
 }
 
 dependencies {
-    def domainDependencies = rootProject.ext.domainDependencies
-    def domainTestDependencies = rootProject.ext.domainTestDependencies
+  def domainDependencies = rootProject.ext.domainDependencies
+  def domainTestDependencies = rootProject.ext.domainTestDependencies
 
-    provided domainDependencies.daggerCompiler
-    provided domainDependencies.javaxAnnotation
+  provided domainDependencies.daggerCompiler
+  provided domainDependencies.javaxAnnotation
 
-    compile domainDependencies.dagger
-    compile domainDependencies.rxJava
+  compile domainDependencies.dagger
+  compile domainDependencies.rxJava
 
-    testCompile domainTestDependencies.junit
-    testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.junit
+  testCompile domainTestDependencies.mockito
 }
