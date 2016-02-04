@@ -1,10 +1,11 @@
-package com.arturogutierrez.openticator.domain.otp;
+package com.arturogutierrez.openticator.domain.otp.signer;
 
+import com.arturogutierrez.openticator.domain.helper.Base32String;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
-class MacSignerFactory {
+public class MacSignerFactory {
 
   @Inject
   public MacSignerFactory() {
