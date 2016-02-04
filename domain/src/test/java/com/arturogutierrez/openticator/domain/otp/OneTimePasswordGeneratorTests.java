@@ -16,4 +16,14 @@ public class OneTimePasswordGeneratorTests {
 
     assertThat(code, is("867671"));
   }
+
+  @Test
+  public void testGenerateCodeForNinthState() {
+    String secret = "ABCDEFGHIJK23456";
+    OneTimePasswordGenerator oneTimePasswordGenerator = new OneTimePasswordGenerator(secret, 6);
+
+    String code = oneTimePasswordGenerator.generate(9);
+
+    assertThat(code, is("877436"));
+  }
 }
