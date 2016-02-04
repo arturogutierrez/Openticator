@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.otp;
+package com.arturogutierrez.openticator.domain.otp.signer;
 
 import javax.crypto.Mac;
 

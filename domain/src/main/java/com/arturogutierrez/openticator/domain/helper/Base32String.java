@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.otp;
+package com.arturogutierrez.openticator.domain.helper;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -16,7 +16,7 @@ import java.util.Locale;
  * @author sweis@google.com (Steve Weis)
  * @author Neal Gafter
  */
-class Base32String {
+public class Base32String {
 
   // singleton
 
