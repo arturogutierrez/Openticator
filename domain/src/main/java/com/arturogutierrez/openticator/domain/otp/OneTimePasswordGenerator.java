@@ -1,5 +1,7 @@
 package com.arturogutierrez.openticator.domain.otp;
 
+import com.arturogutierrez.openticator.domain.otp.signer.MacSigner;
+import com.arturogutierrez.openticator.domain.otp.signer.MacSignerFactory;
 import java.nio.ByteBuffer;
 
 class OneTimePasswordGenerator {
