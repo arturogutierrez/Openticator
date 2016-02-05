@@ -13,16 +13,6 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
-  public Observable<Account> update(Account account) {
-    throw new UnsupportedOperationException("Not implemented yet");
-  }
-
-  @Override
-  public Observable<Account> delete(Account account) {
-    throw new UnsupportedOperationException("Not implemented yet");
-  }
-
-  @Override
   public Observable<List<Account>> getAccounts() {
     throw new UnsupportedOperationException("Not implemented yet");
   }
