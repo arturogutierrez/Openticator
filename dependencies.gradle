@@ -25,7 +25,7 @@ ext {
   javaxAnnotationVersion = '1.0'
   androidAnnotationsVersion = '22.2.0'
   butterKnifeVersion = '7.0.1'
-  realmVersion = '0.86.1'
+  realmVersion = '0.87.4'
 
   // Testing
   robolectricVersion = '3.0'
