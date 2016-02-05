@@ -18,7 +18,7 @@ public class AccountRealmMapper {
   public List<Account> transform(RealmResults<AccountRealm> accountRealms) {
     List<Account> accounts = new ArrayList<>();
 
-    for(AccountRealm accountRealm : accountRealms) {
+    for (AccountRealm accountRealm : accountRealms) {
       Account account = transform(accountRealm);
       accounts.add(account);
     }

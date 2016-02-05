@@ -4,7 +4,6 @@ import com.arturogutierrez.openticator.data.ApplicationTestCase;
 import com.arturogutierrez.openticator.data.storage.realm.mapper.AccountRealmMapper;
 import com.arturogutierrez.openticator.domain.model.Account;
 import com.arturogutierrez.openticator.domain.model.OTPType;
-import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 import rx.observers.TestSubscriber;
