@@ -5,28 +5,27 @@ import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-public class TimeBasedOneTimePasswordTests {
+public class TimeBasedOneTimePasswordTest {
 
   private static int TIME_STEP_LENGTH = 30;
 
-  private TimeCalculator timeCalculator;
   private TimeBasedOneTimePassword timeBasedOneTimePassword;
   @Mock
   private TimeProvider timeProvider;
 
   @Before
   public void setUp() {
-    initMocks(this);
+    MockitoAnnotations.initMocks(this);
 
     OneTimePasswordGenerator oneTimePasswordGenerator =
         new OneTimePasswordGenerator("ABCDEFGHIJK23456", 6);
-    timeCalculator = new TimeCalculator(timeProvider, TIME_STEP_LENGTH, 0);
+    TimeCalculator timeCalculator = new TimeCalculator(timeProvider, TIME_STEP_LENGTH, 0);
     timeBasedOneTimePassword =
         new TimeBasedOneTimePassword(oneTimePasswordGenerator, timeCalculator);
   }
