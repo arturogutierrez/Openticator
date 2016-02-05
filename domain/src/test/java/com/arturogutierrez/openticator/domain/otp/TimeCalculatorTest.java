@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class TimeCalculatorTests {
+public class TimeCalculatorTest {
 
   @Mock
   private TimeProvider timeProvider;
