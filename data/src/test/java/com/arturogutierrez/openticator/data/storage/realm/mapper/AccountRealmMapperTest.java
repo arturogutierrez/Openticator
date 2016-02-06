@@ -17,6 +17,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   private static final String FAKE_NAME = "tony@stark.com";
   private static final String FAKE_SECRET = "avengers";
   private static final String FAKE_ISSUER = "Stark Industries";
+  private static final int FAKE_ORDER = 1;
 
   private AccountRealmMapper accountRealmMapper;
 
@@ -34,7 +35,8 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
 
   @Test
   public void testAccountToAccountRealm() {
-    Account account = new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER);
+    Account account =
+        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 
@@ -42,11 +44,13 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     assertThat(accountRealm.getName(), is(FAKE_NAME));
     assertThat(accountRealm.getSecret(), is(FAKE_SECRET));
     assertThat(accountRealm.getIssuer(), is(FAKE_ISSUER));
+    assertThat(accountRealm.getOrder(), is(FAKE_ORDER));
   }
 
   @Test
   public void testHOTPTypeToRealm() {
-    Account account = new Account(FAKE_ID, FAKE_NAME, OTPType.HOTP, FAKE_SECRET, FAKE_ISSUER);
+    Account account =
+        new Account(FAKE_ID, FAKE_NAME, OTPType.HOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 
@@ -55,7 +59,8 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
 
   @Test
   public void testTOTPTypeToRealm() {
-    Account account = new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER);
+    Account account =
+        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 
