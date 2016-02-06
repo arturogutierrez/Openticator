@@ -35,6 +35,7 @@ public class AccountRealmMapper {
       accountRealm.setName(account.getName());
       accountRealm.setSecret(account.getSecret());
       accountRealm.setIssuer(account.getIssuer());
+      accountRealm.setOrder(account.getOrder());
       accountRealm.setType(transformAccountType(account.getType()));
     }
 
@@ -47,7 +48,7 @@ public class AccountRealmMapper {
     if (accountRealm != null) {
       account = new Account(accountRealm.getAccountId(), accountRealm.getName(),
           transformAccountType(accountRealm.getType()), accountRealm.getSecret(),
-          accountRealm.getIssuer());
+          accountRealm.getIssuer(), accountRealm.getOrder());
     }
 
     return account;

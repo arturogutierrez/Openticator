@@ -21,7 +21,7 @@ public class DiskDataStoreTest extends ApplicationTestCase {
 
   @Test
   public void testAddAccount() {
-    Account account = new Account("id", "name", OTPType.TOTP, "secret", "issuer");
+    Account account = new Account("id", "name", OTPType.TOTP, "secret", "issuer", 0);
     TestSubscriber<Account> testSubscriber = new TestSubscriber<>();
 
     diskDataStore.add(account).subscribe(testSubscriber);
