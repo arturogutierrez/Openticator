@@ -45,6 +45,7 @@ dependencies {
   compile presentationDependencies.design
   compile presentationDependencies.recyclerView
   compile presentationDependencies.butterKnife
+  compile presentationDependencies.fab
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger

@@ -26,6 +26,7 @@ ext {
   androidAnnotationsVersion = '22.2.0'
   butterKnifeVersion = '7.0.1'
   realmVersion = '0.87.4'
+  fabVersion = '1.6.2'
 
   // Testing
   robolectricVersion = '3.0'
@@ -43,7 +44,8 @@ ext {
                               supportVersion : "com.android.support:support-v4:${supportVersion}",
                               appCompat      : "com.android.support:appcompat-v7:${appCompatVersion}",
                               design         : "com.android.support:design:${designVersion}",
-                              recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}"]
+                              recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+                              fab            : "com.github.clans:fab:${fabVersion}"]
 
   domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
