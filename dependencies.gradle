@@ -32,17 +32,18 @@ ext {
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
   mockitoVersion = '1.9.5'
+  powerMockitoVersion = '1.6.2'
 
-  presentationDependencies = [daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
-                              dagger            : "com.google.dagger:dagger:${daggerVersion}",
-                              rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
-                              rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
-                              javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                              butterKnife       : "com.jakewharton:butterknife:${butterKnifeVersion}",
-                              supportVersion    : "com.android.support:support-v4:${supportVersion}",
-                              appCompat         : "com.android.support:appcompat-v7:${appCompatVersion}",
-                              design            : "com.android.support:design:${designVersion}",
-                              recyclerView      : "com.android.support:recyclerview-v7:${recyclerViewVersion}"]
+  presentationDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                              dagger         : "com.google.dagger:dagger:${daggerVersion}",
+                              rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
+                              rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                              javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+                              butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
+                              supportVersion : "com.android.support:support-v4:${supportVersion}",
+                              appCompat      : "com.android.support:appcompat-v7:${appCompatVersion}",
+                              design         : "com.android.support:design:${designVersion}",
+                              recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}"]
 
   domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
@@ -60,8 +61,12 @@ ext {
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
                       realm             : "io.realm:realm-android:${realmVersion}"]
 
-  dataTestDependencies = [junit      : "junit:junit:${jUnitVersion}",
-                          assertj    : "org.assertj:assertj-core:${assertJVersion}",
-                          mockito    : "org.mockito:mockito-core:${mockitoVersion}",
-                          robolectric: "org.robolectric:robolectric:${robolectricVersion}",]
+  dataTestDependencies = [junit              : "junit:junit:${jUnitVersion}",
+                          assertj            : "org.assertj:assertj-core:${assertJVersion}",
+                          mockito            : "org.mockito:mockito-core:${mockitoVersion}",
+                          robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
+                          powerMockitoJUnit  : "org.powermock:powermock-module-junit4:${powerMockitoVersion}",
+                          powerMockitoRules  : "org.powermock:powermock-module-junit4-rule:${powerMockitoVersion}",
+                          powerMockito       : "org.powermock:powermock-api-mockito:${powerMockitoVersion}",
+                          powerMockitoXStream: "org.powermock:powermock-classloading-xstream:${powerMockitoVersion}"]
 }
