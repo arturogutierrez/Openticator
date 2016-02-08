@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,6 +10,27 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:overScrollMode="never"
-      android:scrollbars="none"/>
+      android:scrollbars="none"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+  <com.github.clans.fab.FloatingActionMenu
+      android:id="@+id/fab_menu"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:layout_marginRight="15dp"
+      android:layout_marginBottom="20dp"
+      fab:menu_animationDelayPerItem="0"
+      >
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_add_from_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_camera"
+        style="@style/FABButtonsStyle"/>
+
+  </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

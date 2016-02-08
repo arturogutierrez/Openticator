@@ -22,11 +22,20 @@
     <item name="android:theme">@style/ToolbarTheme</item>
   </style>
 
-  <style name="Toolbar" parent="ToolbarBase" />
+  <style name="Toolbar" parent="ToolbarBase"/>
 
   <style name="ToolbarTheme">
     <item name="colorControlNormal">@android:color/white</item>
     <item name="android:textColorPrimary">@android:color/white</item>
+  </style>
+
+  <!-- Floating Action Buttons -->
+  <style name="FABButtonsStyle">
+    <item name="fab_size">mini</item>
+    <item name="fab_showAnimation">@anim/jump_from_down</item>
+    <item name="fab_hideAnimation">@anim/jump_to_down</item>
+    <item name="fab_colorNormal">@color/colorPrimary</item>
+    <item name="fab_colorPressed">@color/colorPrimaryDark</item>
   </style>
 
 </resources>
