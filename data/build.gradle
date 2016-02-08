@@ -43,4 +43,9 @@ dependencies {
   testCompile testDependencies.assertj
   testCompile testDependencies.mockito
   testCompile testDependencies.robolectric
+
+  testCompile testDependencies.powerMockitoJUnit
+  testCompile testDependencies.powerMockitoRules
+  testCompile testDependencies.powerMockito
+  testCompile testDependencies.powerMockitoXStream
 }
