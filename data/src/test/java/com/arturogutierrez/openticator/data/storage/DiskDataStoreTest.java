@@ -42,7 +42,6 @@ public class DiskDataStoreTest extends ApplicationTestCase {
 
     diskDataStore.add(account).subscribe(testSubscriber);
 
-    // TODO: Mock realm
     testSubscriber.assertNoErrors();
     testSubscriber.assertReceivedOnNext(Collections.singletonList(account));
   }
