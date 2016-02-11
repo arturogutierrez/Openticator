@@ -11,17 +11,19 @@ import rx.Observable;
 public class AddAccountInteractor extends Interactor<Account> {
 
   private final AccountRepository accountRepository;
+  private final AccountFactory accountFactory;
 
   private Account newAccount;
 
-  public AddAccountInteractor(AccountRepository accountRepository, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
+  public AddAccountInteractor(AccountRepository accountRepository, AccountFactory accountFactory,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.accountRepository = accountRepository;
+    this.accountFactory = accountFactory;
   }
 
   public void configure(String accountName, String accountSecret) {
-    newAccount = AccountFactory.createAccount(accountName, accountSecret);
+    newAccount = accountFactory.createAccount(accountName, accountSecret);
   }
 
   @Override

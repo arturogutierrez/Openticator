@@ -1,9 +1,9 @@
 package com.arturogutierrez.openticator.storage.realm.mapper;
 
-import com.arturogutierrez.openticator.data.ApplicationTestCase;
-import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
+import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import org.junit.Before;
 import org.junit.Test;
 
