@@ -14,7 +14,7 @@ import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.application.OpenticatorApplication;
 import com.arturogutierrez.openticator.di.component.ApplicationComponent;
 import com.arturogutierrez.openticator.di.module.ActivityModule;
-import com.arturogutierrez.openticator.navigator.Navigator;
+import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import javax.inject.Inject;
 
 public abstract class BaseActivity extends AppCompatActivity {

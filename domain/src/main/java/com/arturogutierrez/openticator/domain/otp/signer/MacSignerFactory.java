@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.domain.otp.signer;
 
-import com.arturogutierrez.openticator.domain.helper.Base32String;
+import com.arturogutierrez.openticator.helper.Base32String;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;

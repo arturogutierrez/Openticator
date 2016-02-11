@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.domain.otp;
 
-import com.arturogutierrez.openticator.domain.model.Account;
-import com.arturogutierrez.openticator.domain.model.OTPType;
+import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
 import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;

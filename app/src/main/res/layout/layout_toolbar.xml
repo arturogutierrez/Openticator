@@ -8,6 +8,6 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   app:layout_scrollFlags="scroll|enterAlways"
-  tools:showIn="@layout/activity_main" />
+  tools:showIn="@layout/activity_account_list" />
 
     
