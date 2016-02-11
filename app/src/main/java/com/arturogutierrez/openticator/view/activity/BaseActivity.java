@@ -1,13 +1,11 @@
 package com.arturogutierrez.openticator.view.activity;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.arturogutierrez.openticator.R;
@@ -21,10 +19,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   @Bind(R.id.toolbar)
   protected Toolbar toolbar;
-
-  @Bind(R.id.drawerLayout)
-  protected DrawerLayout drawerLayout;
-  protected ActionBarDrawerToggle drawerToggle;
 
   @Inject
   protected Navigator navigator;
@@ -42,21 +36,13 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-
-    if (drawerToggle != null) {
-      drawerToggle.syncState();
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
     }
-  }
 
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
-
-    if (drawerToggle != null) {
-      drawerToggle.onConfigurationChanged(newConfig);
-    }
+    return super.onOptionsItemSelected(item);
   }
 
   protected ApplicationComponent getApplicationComponent() {
@@ -77,15 +63,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   private void configureToolbar() {
     setSupportActionBar(toolbar);
-
-    showDrawerLayout();
-  }
-
-  private void showDrawerLayout() {
-    if (drawerLayout != null) {
-      drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
-          R.string.drawer_close);
-      drawerLayout.setDrawerListener(drawerToggle);
-    }
   }
 }

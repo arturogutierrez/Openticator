@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.interactor;
 
+import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
@@ -11,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-public class GetAccountsTest {
+public class GetAccountsInteractorTest {
 
   @Mock
   private ThreadExecutor mockThreadExecutor;
@@ -20,19 +21,19 @@ public class GetAccountsTest {
   @Mock
   private PostExecutionThread mockPostExecutionThread;
 
-  private com.arturogutierrez.openticator.domain.account.interactor.GetAccounts getAccounts;
+  private GetAccountsInteractor getAccountsInteractor;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
 
-    getAccounts =
-        new com.arturogutierrez.openticator.domain.account.interactor.GetAccounts(mockAccountRepository, mockThreadExecutor, mockPostExecutionThread);
+    getAccountsInteractor =
+        new GetAccountsInteractor(mockAccountRepository, mockThreadExecutor, mockPostExecutionThread);
   }
 
   @Test
   public void testUsingAccountsFromRepository() {
-    getAccounts.createObservable();
+    getAccountsInteractor.createObservable();
 
     verify(mockAccountRepository).getAccounts();
     verifyZeroInteractions(mockThreadExecutor);
