@@ -2,15 +2,20 @@ package com.arturogutierrez.openticator.domain.account.list.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.arturogutierrez.openticator.R;
+import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
+import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import com.arturogutierrez.openticator.view.fragment.BaseFragment;
+import javax.inject.Inject;
 
 public class AccountListFragment extends BaseFragment {
+
+  @Inject
+  Navigator navigator;
+  @Inject
+  AccountListPresenter presenter;
 
   public AccountListFragment() {
     super();
@@ -23,22 +28,14 @@ public class AccountListFragment extends BaseFragment {
     initialize();
   }
 
-  @Nullable
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View fragmentView = inflater.inflate(R.layout.fragment_account_list, container, false);
-
-    ButterKnife.bind(this, fragmentView);
-
-    return fragmentView;
+  protected int getLayoutResource() {
+    return R.layout.fragment_account_list;
   }
 
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-
-    ButterKnife.unbind(this);
+  @OnClick(R.id.fab_add_manually)
+  public void onAddManuallyClicked() {
+    navigator.navigateToAddAccountManually(getContext());
   }
 
   private void initialize() {

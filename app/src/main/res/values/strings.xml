@@ -4,4 +4,13 @@
   <!-- Drawer Layout -->
   <string name="drawer_open">Open</string>
   <string name="drawer_close">Close</string>
+
+  <!-- Add Account Manually -->
+  <string name="add_account_manually">Add Account Manually</string>
+  <string name="account_name">Account name</string>
+  <string name="account_secret">Secret / Key</string>
+  <string name="time_based">Time based</string>
+  <string name="add">Add</string>
+  <string name="please_set_account_name">Please, set the account\'s name</string>
+  <string name="please_set_account_secret">Please, set the account\'s secret</string>
 </resources>

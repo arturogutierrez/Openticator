@@ -1,7 +1,7 @@
-package com.arturogutierrez.openticator.domain.account.list.di;
+package com.arturogutierrez.openticator.domain.account.add.di;
 
 import com.arturogutierrez.openticator.di.PerActivity;
-import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
+import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
@@ -9,16 +9,16 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class AccountListModule {
+public class AddAccountModule {
 
-  public AccountListModule() {
+  public AddAccountModule() {
 
   }
 
   @Provides
   @PerActivity
-  GetAccountsInteractor provideGetAccountsInteractor(AccountRepository accountRepository,
+  AddAccountInteractor provideAddAccountInteractor(AccountRepository accountRepository,
       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
+    return new AddAccountInteractor(accountRepository, threadExecutor, postExecutionThread);
   }
 }

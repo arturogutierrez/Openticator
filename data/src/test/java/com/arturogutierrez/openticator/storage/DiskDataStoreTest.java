@@ -32,7 +32,7 @@ public class DiskDataStoreTest extends ApplicationTestCase {
     when(Realm.getDefaultInstance()).thenReturn(mockRealm);
 
     AccountRealmMapper accountRealmMapper = new AccountRealmMapper();
-    diskDataStore = new DiskDataStore(accountRealmMapper);
+    diskDataStore = new DiskDataStore(context, accountRealmMapper);
   }
 
   @Test
