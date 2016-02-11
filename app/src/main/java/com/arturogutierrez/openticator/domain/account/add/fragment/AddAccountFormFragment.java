@@ -62,6 +62,24 @@ public class AddAccountFormFragment extends BaseFragment implements AddAccountVi
   }
 
   @Override
+  public void onResume() {
+    super.onResume();
+    presenter.resume();
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    presenter.pause();
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    presenter.destroy();
+  }
+
+  @Override
   protected int getLayoutResource() {
     return R.layout.fragment_account_add;
   }
