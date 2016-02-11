@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.domain.interactor;
 
-import com.arturogutierrez.openticator.domain.executor.PostExecutionThread;
-import com.arturogutierrez.openticator.domain.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.executor.PostExecutionThread;
+import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -51,7 +51,8 @@ public class InteractorTest {
     assertThat(testSubscriber.isUnsubscribed(), is(true));
   }
 
-  private static class TestInteractor extends Interactor<String> {
+  private static class TestInteractor extends
+      com.arturogutierrez.openticator.interactor.Interactor<String> {
 
     public TestInteractor(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
       super(threadExecutor, postExecutionThread);

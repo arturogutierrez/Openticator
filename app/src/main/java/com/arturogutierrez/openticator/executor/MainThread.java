@@ -1,6 +1,5 @@
 package com.arturogutierrez.openticator.executor;
 
-import com.arturogutierrez.openticator.domain.executor.PostExecutionThread;
 import javax.inject.Inject;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;

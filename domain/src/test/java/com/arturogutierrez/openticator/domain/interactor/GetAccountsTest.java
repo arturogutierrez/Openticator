@@ -1,8 +1,8 @@
 package com.arturogutierrez.openticator.domain.interactor;
 
-import com.arturogutierrez.openticator.domain.executor.PostExecutionThread;
-import com.arturogutierrez.openticator.domain.executor.ThreadExecutor;
-import com.arturogutierrez.openticator.domain.repository.AccountRepository;
+import com.arturogutierrez.openticator.executor.PostExecutionThread;
+import com.arturogutierrez.openticator.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -20,14 +20,14 @@ public class GetAccountsTest {
   @Mock
   private PostExecutionThread mockPostExecutionThread;
 
-  private GetAccounts getAccounts;
+  private com.arturogutierrez.openticator.domain.account.interactor.GetAccounts getAccounts;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
 
     getAccounts =
-        new GetAccounts(mockAccountRepository, mockThreadExecutor, mockPostExecutionThread);
+        new com.arturogutierrez.openticator.domain.account.interactor.GetAccounts(mockAccountRepository, mockThreadExecutor, mockPostExecutionThread);
   }
 
   @Test
