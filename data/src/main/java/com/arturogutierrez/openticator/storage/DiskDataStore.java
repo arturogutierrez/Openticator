@@ -7,6 +7,7 @@ import com.arturogutierrez.openticator.storage.realm.helpers.RealmObservable;
 import com.arturogutierrez.openticator.storage.realm.mapper.AccountRealmMapper;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import io.realm.Realm;
+import io.realm.Sort;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
@@ -44,7 +45,8 @@ public class DiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<List<Account>> getAccounts() {
-    return RealmObservable.results(context, realm -> realm.where(AccountRealm.class).findAll())
+    return RealmObservable.results(context,
+        realm -> realm.where(AccountRealm.class).findAllSorted("order", Sort.ASCENDING))
         .map(accountRealmMapper::transform);
   }
 }
