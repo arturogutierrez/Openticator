@@ -23,6 +23,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public Observable<List<Account>> getAccounts() {
-    throw new UnsupportedOperationException("Not implemented yet");
+    return accountDataStore.getAccounts();
   }
 }

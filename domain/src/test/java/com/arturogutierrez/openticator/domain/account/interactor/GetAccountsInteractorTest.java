@@ -1,9 +1,8 @@
-package com.arturogutierrez.openticator.domain.interactor;
+package com.arturogutierrez.openticator.domain.account.interactor;
 
-import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
+import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
-import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -27,8 +26,8 @@ public class GetAccountsInteractorTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
 
-    getAccountsInteractor =
-        new GetAccountsInteractor(mockAccountRepository, mockThreadExecutor, mockPostExecutionThread);
+    getAccountsInteractor = new GetAccountsInteractor(mockAccountRepository, mockThreadExecutor,
+        mockPostExecutionThread);
   }
 
   @Test

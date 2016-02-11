@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.data;
+package com.arturogutierrez.openticator;
 
 import android.app.Application;
 
