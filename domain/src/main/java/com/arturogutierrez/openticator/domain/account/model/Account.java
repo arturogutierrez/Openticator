@@ -8,14 +8,14 @@ public class Account {
   private final String name;
   private final OTPType type;
   private final String secret;
-  private final String issuer;
+  private final Issuer issuer;
   private final int order;
 
   public Account(String accountId, String name, OTPType type, String secret) {
-    this(accountId, name, type, secret, null, MAX_ORDER);
+    this(accountId, name, type, secret, Issuer.UNKNOWN, MAX_ORDER);
   }
 
-  public Account(String accountId, String name, OTPType type, String secret, String issuer,
+  public Account(String accountId, String name, OTPType type, String secret, Issuer issuer,
       int order) {
     this.accountId = accountId;
     this.name = name;
@@ -41,7 +41,7 @@ public class Account {
     return secret;
   }
 
-  public String getIssuer() {
+  public Issuer getIssuer() {
     return issuer;
   }
 
