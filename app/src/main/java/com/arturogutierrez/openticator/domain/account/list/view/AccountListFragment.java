@@ -1,8 +1,12 @@
-package com.arturogutierrez.openticator.domain.account.list.fragment;
+package com.arturogutierrez.openticator.domain.account.list.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import butterknife.OnClick;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+import butterknife.Bind;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountListView;
@@ -19,6 +23,13 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   Navigator navigator;
   @Inject
   AccountListPresenter presenter;
+
+  @Bind(R.id.rv_accounts)
+  RecyclerView rvAccounts;
+  @Bind(R.id.tv_empty_view)
+  TextView tvEmptyView;
+
+  private AccountsAdapter accountsAdapter;
 
   public AccountListFragment() {
     super();
@@ -54,9 +65,12 @@ public class AccountListFragment extends BaseFragment implements AccountListView
     return R.layout.fragment_account_list;
   }
 
-  @OnClick(R.id.fab_add_manually)
-  public void onAddManuallyClicked() {
-    navigator.navigateToAddAccountManually(getContext());
+  @Override
+  protected void configureUI() {
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+    rvAccounts.setLayoutManager(linearLayoutManager);
   }
 
   private void initialize() {
@@ -70,11 +84,29 @@ public class AccountListFragment extends BaseFragment implements AccountListView
 
   @Override
   public void viewNoItems() {
-    // TODO
+    showEmptyView();
   }
 
   @Override
   public void renderAccounts(List<Account> accounts) {
-    // TODO
+    showAccountList(accounts);
+  }
+
+  private void showEmptyView() {
+    rvAccounts.setVisibility(View.GONE);
+    tvEmptyView.setVisibility(View.VISIBLE);
+  }
+
+  private void showAccountList(List<Account> accounts) {
+    if (accountsAdapter == null) {
+      accountsAdapter = new AccountsAdapter(getContext(), accounts);
+      rvAccounts.setAdapter(accountsAdapter);
+    } else {
+      accountsAdapter.setAccounts(accounts);
+      accountsAdapter.notifyDataSetChanged();
+    }
+
+    rvAccounts.setVisibility(View.VISIBLE);
+    tvEmptyView.setVisibility(View.GONE);
   }
 }

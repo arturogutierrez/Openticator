@@ -4,7 +4,7 @@ import com.arturogutierrez.openticator.di.PerActivity;
 import com.arturogutierrez.openticator.di.component.ActivityComponent;
 import com.arturogutierrez.openticator.di.component.ApplicationComponent;
 import com.arturogutierrez.openticator.di.module.ActivityModule;
-import com.arturogutierrez.openticator.domain.account.add.fragment.AddAccountFormFragment;
+import com.arturogutierrez.openticator.domain.account.add.view.AddAccountFormFragment;
 import dagger.Component;
 
 @PerActivity

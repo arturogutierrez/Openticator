@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.account.add.fragment;
+package com.arturogutierrez.openticator.domain.account.add.view;
 
 import android.app.Activity;
 import android.os.Bundle;

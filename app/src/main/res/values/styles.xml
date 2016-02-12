@@ -50,4 +50,17 @@
     <item name="android:textCursorDrawable">@null</item>
   </style>
 
+  <!-- Account List -->
+  <style name="NoAccountsMessage" parent="Base.TextAppearance.AppCompat.Headline">
+    <item name="android:textColor">@color/colorPrimaryText</item>
+  </style>
+
+  <style name="AccountName" parent="Base.TextAppearance.AppCompat.Body1">
+    <item name="android:textColor">@color/colorSecondaryText</item>
+  </style>
+
+  <style name="PINCode" parent="Base.TextAppearance.AppCompat.Headline">
+    <item name="android:textColor">@color/colorPrimaryText</item>
+  </style>
+
 </resources>

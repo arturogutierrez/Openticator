@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/content_padding_left"
+    android:paddingRight="@dimen/content_padding_right"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    >
+
+  <ImageView
+      android:id="@+id/iv_icon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:minWidth="40dp"
+      android:minHeight="40dp"
+      android:src="@drawable/icon_account_google"
+      />
+
+  <com.arturogutierrez.openticator.domain.account.list.view.CountdownWidget
+      android:id="@+id/v_countdown"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:layout_marginRight="10dp"
+      android:layout_centerVertical="true"
+      android:layout_alignParentRight="true"
+      app:arcColor="#4788F4"
+      />
+
+  <LinearLayout
+      android:id="@+id/ll_account_info"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_toRightOf="@id/iv_icon"
+      android:layout_toLeftOf="@id/v_countdown"
+      android:layout_marginLeft="@dimen/content_padding_left"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_account_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tony.stark@starkindustries.com"
+        android:lines="1"
+        android:ellipsize="end"
+        style="@style/AccountName"
+        />
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="752145"
+        style="@style/PINCode"
+        />
+
+  </LinearLayout>
+
+</RelativeLayout>
