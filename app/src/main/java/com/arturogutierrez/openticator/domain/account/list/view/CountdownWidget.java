@@ -65,7 +65,6 @@ public class CountdownWidget extends View implements ValueAnimator.AnimatorUpdat
     valueAnimator = ValueAnimator.ofInt(360, 0);
     valueAnimator.setDuration(lengthInSeconds * 1000);
     valueAnimator.addUpdateListener(this);
-    valueAnimator.setRepeatMode(ValueAnimator.RESTART);
     valueAnimator.start();
   }
 

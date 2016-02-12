@@ -39,6 +39,7 @@ public class AddAccountFormPresenter extends DefaultSubscriber<Account> implemen
     if (accountName == null || accountName.trim().length() == 0) {
       view.showFieldError(AddAccountView.FieldError.NAME);
     } else if (accountSecret == null || accountSecret.trim().length() == 0) {
+      // TODO: Add validation to support only base 32 chars
       view.showFieldError(AddAccountView.FieldError.SECRET);
     } else {
       addAccountInteractorInteractor.configure(accountName.trim(), accountSecret.trim());
