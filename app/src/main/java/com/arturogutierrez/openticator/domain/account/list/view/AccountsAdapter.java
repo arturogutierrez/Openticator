@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.arturogutierrez.openticator.R;
-import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import java.util.List;
 
 public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder> {
 
   private final LayoutInflater layoutInflater;
-  private List<Account> accounts;
+  private List<AccountPasscode> accounts;
 
-  public AccountsAdapter(Context context, List<Account> accounts) {
+  public AccountsAdapter(Context context, List<AccountPasscode> accounts) {
     this.layoutInflater = LayoutInflater.from(context);
     this.accounts = accounts;
   }
@@ -27,7 +27,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder> {
 
   @Override
   public void onBindViewHolder(AccountViewHolder viewHolder, int position) {
-    Account account = accounts.get(position);
+    AccountPasscode account = accounts.get(position);
     viewHolder.showAccount(account);
   }
 
@@ -36,7 +36,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder> {
     return accounts.size();
   }
 
-  public void setAccounts(List<Account> accounts) {
+  public void setAccounts(List<AccountPasscode> accounts) {
     this.accounts = accounts;
   }
 }

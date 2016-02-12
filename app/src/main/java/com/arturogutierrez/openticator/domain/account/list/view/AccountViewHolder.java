@@ -6,12 +6,14 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.arturogutierrez.openticator.R;
-import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 
 public class AccountViewHolder extends RecyclerView.ViewHolder {
 
   @Bind(R.id.tv_account_name)
   TextView tvName;
+  @Bind(R.id.tv_code)
+  TextView tvPasscode;
   @Bind(R.id.v_countdown)
   CountdownWidget vCountdown;
 
@@ -21,8 +23,9 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
     ButterKnife.bind(this, itemView);
   }
 
-  public void showAccount(Account account) {
-    tvName.setText(account.getName());
+  public void showAccount(AccountPasscode accountPasscode) {
+    tvName.setText(accountPasscode.getAccountName());
+    tvPasscode.setText(accountPasscode.getPasscode());
     startAnimation();
   }
 

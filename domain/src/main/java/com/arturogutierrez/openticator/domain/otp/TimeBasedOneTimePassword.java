@@ -16,7 +16,6 @@ class TimeBasedOneTimePassword implements OneTimePassword {
   @Override
   public String generate() {
     long currentStep = timeCalculator.getCurrentTimeStep();
-
     return oneTimePasswordGenerator.generate(currentStep);
   }
 }

@@ -11,7 +11,7 @@ import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountListView;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
-import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import com.arturogutierrez.openticator.view.fragment.BaseFragment;
 import java.util.List;
@@ -89,7 +89,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   }
 
   @Override
-  public void renderAccounts(List<Account> accounts) {
+  public void renderAccounts(List<AccountPasscode> accounts) {
     showAccountList(accounts);
   }
 
@@ -98,7 +98,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
     tvEmptyView.setVisibility(View.VISIBLE);
   }
 
-  private void showAccountList(List<Account> accounts) {
+  private void showAccountList(List<AccountPasscode> accounts) {
     if (accountsAdapter == null) {
       accountsAdapter = new AccountsAdapter(getContext(), accounts);
       rvAccounts.setAdapter(accountsAdapter);
@@ -112,6 +112,10 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   }
 
   private void stopCounters() {
+    if (accountsAdapter == null) {
+      return;
+    }
+
     for (int i = 0; i < accountsAdapter.getItemCount(); i++) {
       AccountViewHolder viewHolder =
           (AccountViewHolder) rvAccounts.findViewHolderForAdapterPosition(i);
