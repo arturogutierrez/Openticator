@@ -52,6 +52,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   public void onPause() {
     super.onPause();
     presenter.pause();
+    stopCounters();
   }
 
   @Override
@@ -108,5 +109,15 @@ public class AccountListFragment extends BaseFragment implements AccountListView
 
     rvAccounts.setVisibility(View.VISIBLE);
     tvEmptyView.setVisibility(View.GONE);
+  }
+
+  private void stopCounters() {
+    for (int i = 0; i < accountsAdapter.getItemCount(); i++) {
+      AccountViewHolder viewHolder =
+          (AccountViewHolder) rvAccounts.findViewHolderForAdapterPosition(i);
+      if (viewHolder != null) {
+        viewHolder.stopAniation();
+      }
+    }
   }
 }

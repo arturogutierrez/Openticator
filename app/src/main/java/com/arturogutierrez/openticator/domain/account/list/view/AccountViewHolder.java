@@ -12,6 +12,8 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
 
   @Bind(R.id.tv_account_name)
   TextView tvName;
+  @Bind(R.id.v_countdown)
+  CountdownWidget vCountdown;
 
   public AccountViewHolder(View itemView) {
     super(itemView);
@@ -21,5 +23,15 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
 
   public void showAccount(Account account) {
     tvName.setText(account.getName());
+    startAnimation();
+  }
+
+  public void startAnimation() {
+    vCountdown.startAnimation(30);
+  }
+
+  public void stopAniation() {
+    vCountdown.stopAnimation();
+    ;
   }
 }
