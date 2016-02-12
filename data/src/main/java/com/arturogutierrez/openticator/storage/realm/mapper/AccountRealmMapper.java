@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import io.realm.RealmResults;
@@ -34,7 +35,7 @@ public class AccountRealmMapper {
       accountRealm.setAccountId(account.getAccountId());
       accountRealm.setName(account.getName());
       accountRealm.setSecret(account.getSecret());
-      accountRealm.setIssuer(account.getIssuer());
+      accountRealm.setIssuer(account.getIssuer().getIdentifier());
       accountRealm.setOrder(account.getOrder());
       accountRealm.setType(transformAccountType(account.getType()));
     }
@@ -46,9 +47,10 @@ public class AccountRealmMapper {
     Account account = null;
 
     if (accountRealm != null) {
+      Issuer issuer = transformIssuer(accountRealm.getIssuer());
       account = new Account(accountRealm.getAccountId(), accountRealm.getName(),
-          transformAccountType(accountRealm.getType()), accountRealm.getSecret(),
-          accountRealm.getIssuer(), accountRealm.getOrder());
+          transformAccountType(accountRealm.getType()), accountRealm.getSecret(), issuer,
+          accountRealm.getOrder());
     }
 
     return account;
@@ -68,5 +70,9 @@ public class AccountRealmMapper {
     }
 
     return AccountRealm.TOTP_TYPE;
+  }
+
+  private Issuer transformIssuer(String issuer) {
+    return Issuer.fromString(issuer);
   }
 }

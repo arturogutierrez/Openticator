@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import org.junit.Before;
@@ -16,7 +17,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   private static final String FAKE_ID = "1";
   private static final String FAKE_NAME = "tony@stark.com";
   private static final String FAKE_SECRET = "avengers";
-  private static final String FAKE_ISSUER = "Stark Industries";
+  private static final Issuer FAKE_ISSUER = Issuer.GOOGLE;
   private static final int FAKE_ORDER = 1;
 
   private AccountRealmMapper accountRealmMapper;
@@ -43,7 +44,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     assertThat(accountRealm.getAccountId(), is(FAKE_ID));
     assertThat(accountRealm.getName(), is(FAKE_NAME));
     assertThat(accountRealm.getSecret(), is(FAKE_SECRET));
-    assertThat(accountRealm.getIssuer(), is(FAKE_ISSUER));
+    assertThat(accountRealm.getIssuer(), is(FAKE_ISSUER.getIdentifier()));
     assertThat(accountRealm.getOrder(), is(FAKE_ORDER));
   }
 
@@ -81,7 +82,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     accountRealm.setName(FAKE_NAME);
     accountRealm.setType(AccountRealm.TOTP_TYPE);
     accountRealm.setSecret(FAKE_SECRET);
-    accountRealm.setIssuer(FAKE_ISSUER);
+    accountRealm.setIssuer(FAKE_ISSUER.getIdentifier());
 
     Account account = accountRealmMapper.transform(accountRealm);
 

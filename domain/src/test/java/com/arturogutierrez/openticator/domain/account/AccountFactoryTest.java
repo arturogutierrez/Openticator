@@ -1,13 +1,13 @@
 package com.arturogutierrez.openticator.domain.account;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.account.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AccountFactoryTest {
@@ -27,7 +27,7 @@ public class AccountFactoryTest {
     assertThat(account.getName(), is("name"));
     assertThat(account.getSecret(), is("secret"));
     assertThat(account.getType(), is(OTPType.TOTP));
-    assertThat(account.getIssuer(), is(nullValue()));
+    assertThat(account.getIssuer(), is(Issuer.UNKNOWN));
     assertThat(account.getOrder(), is(Integer.MAX_VALUE));
   }
 }
