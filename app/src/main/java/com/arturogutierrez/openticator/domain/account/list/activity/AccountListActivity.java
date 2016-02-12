@@ -5,19 +5,23 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import butterknife.Bind;
+import butterknife.OnClick;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.di.HasComponent;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListModule;
 import com.arturogutierrez.openticator.domain.account.list.di.DaggerAccountListComponent;
-import com.arturogutierrez.openticator.domain.account.list.fragment.AccountListFragment;
+import com.arturogutierrez.openticator.domain.account.list.view.AccountListFragment;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
+import com.github.clans.fab.FloatingActionMenu;
 
 public class AccountListActivity extends BaseActivity
     implements HasComponent<AccountListComponent> {
 
   @Bind(R.id.drawerLayout)
   DrawerLayout drawerLayout;
+  @Bind(R.id.fab_menu)
+  FloatingActionMenu floatingActionMenu;
   ActionBarDrawerToggle drawerToggle;
 
   private AccountListComponent accountListComponent;
@@ -55,6 +59,12 @@ public class AccountListActivity extends BaseActivity
   @Override
   public AccountListComponent getComponent() {
     return accountListComponent;
+  }
+
+  @OnClick(R.id.fab_add_manually)
+  public void onAddManuallyClicked() {
+    floatingActionMenu.close(false);
+    navigator.navigateToAddAccountManually(this);
   }
 
   private void initializeActivity(Bundle savedInstanceState) {

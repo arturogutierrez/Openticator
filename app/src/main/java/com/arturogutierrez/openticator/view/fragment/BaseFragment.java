@@ -23,6 +23,7 @@ public abstract class BaseFragment extends Fragment {
     View fragmentView = inflater.inflate(getLayoutResource(), container, false);
 
     ButterKnife.bind(this, fragmentView);
+    configureUI();
 
     return fragmentView;
   }
@@ -35,4 +36,8 @@ public abstract class BaseFragment extends Fragment {
   }
 
   protected abstract int getLayoutResource();
+
+  protected void configureUI() {
+    // Nothing to do here
+  }
 }

@@ -7,7 +7,7 @@ import com.arturogutierrez.openticator.di.HasComponent;
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent;
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountModule;
 import com.arturogutierrez.openticator.domain.account.add.di.DaggerAddAccountComponent;
-import com.arturogutierrez.openticator.domain.account.add.fragment.AddAccountFormFragment;
+import com.arturogutierrez.openticator.domain.account.add.view.AddAccountFormFragment;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
 
 public class AddAccountManuallyActivity extends BaseActivity
