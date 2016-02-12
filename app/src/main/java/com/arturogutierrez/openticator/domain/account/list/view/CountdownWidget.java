@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.list.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -10,11 +11,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import com.arturogutierrez.openticator.R;
 
-public class CountdownWidget extends View {
+public class CountdownWidget extends View implements ValueAnimator.AnimatorUpdateListener {
 
   private Paint paint;
   private RectF bounds;
   private int color;
+  private int angle;
+  private ValueAnimator valueAnimator;
 
   public CountdownWidget(Context context) {
     super(context);
@@ -39,6 +42,7 @@ public class CountdownWidget extends View {
       }
     }
 
+    angle = 0;
     bounds = new RectF(0, 0, getWidth(), getHeight());
     paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setColor(color);
@@ -52,6 +56,28 @@ public class CountdownWidget extends View {
 
   @Override
   protected void onDraw(final Canvas canvas) {
-    canvas.drawArc(bounds, 0, 270, true, paint);
+    canvas.drawArc(bounds, 0, angle, true, paint);
+  }
+
+  public void startAnimation(int lengthInSeconds) {
+    stopAnimation();
+
+    valueAnimator = ValueAnimator.ofInt(360, 0);
+    valueAnimator.setDuration(lengthInSeconds * 1000);
+    valueAnimator.addUpdateListener(this);
+    valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+    valueAnimator.start();
+  }
+
+  public void stopAnimation() {
+    if (valueAnimator != null) {
+      valueAnimator.cancel();
+    }
+  }
+
+  @Override
+  public void onAnimationUpdate(ValueAnimator animation) {
+    angle = (int) animation.getAnimatedValue();
+    invalidate();
   }
 }
