@@ -1,7 +1,10 @@
 package com.arturogutierrez.openticator.di.module;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
+import com.arturogutierrez.openticator.domain.Preferences;
+import com.arturogutierrez.openticator.domain.PreferencesImpl;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepositoryImpl;
 import com.arturogutierrez.openticator.executor.JobExecutor;
@@ -31,12 +34,6 @@ public class ApplicationModule {
     return LayoutInflater.from(context);
   }
 
-  @Singleton
-  @Provides
-  AccountRepository provideAccountRepository(AccountRepositoryImpl accountRepository) {
-    return accountRepository;
-  }
-
   @Provides
   @Singleton
   ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
@@ -47,5 +44,23 @@ public class ApplicationModule {
   @Singleton
   PostExecutionThread providePostExecutionThread(MainThread mainThread) {
     return mainThread;
+  }
+
+  @Provides
+  @Singleton
+  SharedPreferences provideSharedPreferences(Context context) {
+    return context.getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE);
+  }
+
+  @Provides
+  @Singleton
+  Preferences provideUserPreferences(PreferencesImpl preferences) {
+    return preferences;
+  }
+
+  @Singleton
+  @Provides
+  AccountRepository provideAccountRepository(AccountRepositoryImpl accountRepository) {
+    return accountRepository;
   }
 }

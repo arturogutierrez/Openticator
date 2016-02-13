@@ -12,7 +12,7 @@
       android:hardwareAccelerated="true"
       >
 
-    <activity android:name=".domain.account.list.activity.AccountListActivity"
+    <activity android:name=".view.activity.ProxyActivity"
         android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -20,6 +20,8 @@
       </intent-filter>
     </activity>
 
+    <activity android:name=".domain.password.wizard.activity.MasterPasswordActivity" />
+    <activity android:name=".domain.account.list.activity.AccountListActivity"/>
     <activity android:name=".domain.account.add.activity.AddAccountManuallyActivity"/>
 
   </application>
