@@ -1,6 +1,5 @@
 package com.arturogutierrez.openticator.storage.realm.helpers;
 
-import android.content.Context;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -13,9 +12,8 @@ public final class RealmObservable {
 
   }
 
-  public static <T extends RealmObject> Observable<T> object(Context context,
-      final Func1<Realm, T> function) {
-    return Observable.create(new OnSubscribeRealm<T>(context) {
+  public static <T extends RealmObject> Observable<T> object(final Func1<Realm, T> function) {
+    return Observable.create(new OnSubscribeRealm<T>() {
       @Override
       public T get(Realm realm) {
         return function.call(realm);
@@ -23,9 +21,9 @@ public final class RealmObservable {
     });
   }
 
-  public static <T extends RealmObject> Observable<RealmResults<T>> results(Context context,
+  public static <T extends RealmObject> Observable<RealmResults<T>> results(
       final Func1<Realm, RealmResults<T>> function) {
-    return Observable.create(new OnSubscribeRealmResults<T>(context) {
+    return Observable.create(new OnSubscribeRealmResults<T>() {
       @Override
       public RealmResults<T> get(Realm realm) {
         return function.call(realm);

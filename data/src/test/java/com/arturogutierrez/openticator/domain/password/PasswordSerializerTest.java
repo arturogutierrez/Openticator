@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.password;
 
+import android.util.Base64;
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PasswordSerializerTest extends ApplicationTestCase{
+public class PasswordSerializerTest extends ApplicationTestCase {
 
   private PasswordSerializer passwordSerializer;
 
@@ -28,13 +29,15 @@ public class PasswordSerializerTest extends ApplicationTestCase{
   public void testEmptyPasswordReturnSerialization() {
     String encodedPassword = passwordSerializer.encodePassword("");
 
-    assertThat(encodedPassword, is("47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="));
+    assertThat(encodedPassword,
+        is("z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=="));
   }
 
   @Test
-  public void testSerializationWithSHA256() {
-    String encodedPassword = passwordSerializer.encodePassword("password");
+  public void testSerializationWithSHA512Returns64Bytes() {
+    String encodedPasswordInBase64 = passwordSerializer.encodePassword("password");
+    byte[] decodedPassword = Base64.decode(encodedPasswordInBase64, Base64.DEFAULT);
 
-    assertThat(encodedPassword, is("XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg="));
+    assertThat(decodedPassword.length, is(64));
   }
 }
