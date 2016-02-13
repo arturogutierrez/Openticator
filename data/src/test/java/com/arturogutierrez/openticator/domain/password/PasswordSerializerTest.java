@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.password;
 
+import com.arturogutierrez.openticator.ApplicationTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,13 +8,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PasswordSerializerTest {
+public class PasswordSerializerTest extends ApplicationTestCase{
 
   private PasswordSerializer passwordSerializer;
 
   @Before
   public void setUp() {
-    passwordSerializer = new PasswordSerializer();
+    passwordSerializer = new PasswordSerializerImpl();
   }
 
   @Test
