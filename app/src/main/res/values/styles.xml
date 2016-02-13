@@ -42,6 +42,12 @@
     <item name="fab_colorPressed">@color/colorPrimaryDark</item>
   </style>
 
+  <!-- Master Password Wizard -->
+  <style name="Explanation" parent="Base.TextAppearance.AppCompat.Body1">
+    <item name="android:textColor">@color/colorSecondaryText</item>
+  </style>
+
+
   <!-- Add account -->
   <style name="Wizard.EditText"
       parent="Base.Widget.AppCompat.EditText">
