@@ -16,6 +16,7 @@ public class CreateMasterPasswordInteractor {
 
   public void createMasterPassword(String plainPassword) {
     String encodedPassword = passwordSerializer.encodePassword(plainPassword);
+
     if (encodedPassword == null) {
       // it's a bad practice store the password in plain
       // but this should not happen (it's just in case)

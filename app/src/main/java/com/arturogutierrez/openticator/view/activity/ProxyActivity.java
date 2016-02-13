@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.arturogutierrez.openticator.application.OpenticatorApplication;
 import com.arturogutierrez.openticator.di.component.ApplicationComponent;
 import com.arturogutierrez.openticator.domain.bootstrap.InitialScreenSelector;
+import com.arturogutierrez.openticator.domain.bootstrap.StorageInitializator;
 import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import javax.inject.Inject;
 
@@ -14,6 +15,8 @@ public class ProxyActivity extends AppCompatActivity {
   Navigator navigator;
   @Inject
   InitialScreenSelector screenSelector;
+  @Inject
+  StorageInitializator storageInitializator;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class ProxyActivity extends AppCompatActivity {
     if (screenSelector.shouldShowWizard()) {
       navigator.goToInitialWizard(this);
     } else {
+      configureApplication();
       navigator.goToAccountList(this);
     }
 
@@ -40,5 +44,9 @@ public class ProxyActivity extends AppCompatActivity {
     ApplicationComponent applicationComponent =
         ((OpenticatorApplication) getApplication()).getApplicationComponent();
     applicationComponent.inject(this);
+  }
+
+  private void configureApplication() {
+    storageInitializator.configureStorage();
   }
 }

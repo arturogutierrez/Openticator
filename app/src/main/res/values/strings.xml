@@ -4,12 +4,16 @@
   <!-- Master Password -->
   <string name="configure_master_password">Configure Master Password</string>
   <string name="password">Password</string>
-  <string name="confirm_your_password">Confirm your password</string>
+  <string name="confirm_password">Confirm password</string>
   <string name="next">Next</string>
   <string name="master_password_explanation">The master password will be used to encrypt your
-    database in order to protect your accounts. Try to pick a string password with 8 chars at least
-    mixing numbers and letters\nPlease, keep in mind if you forget your master password you won\'t be
-    able to recover your database in other device.</string>
+    database in order to protect your accounts. Try to pick a string password with 10 characters at
+    least mixing numbers and letters\nPlease, keep in mind if you forget your master password you
+    won\'t be able to recover your database in other device.
+  </string>
+  <string name="your_password_is_weak">Your password is weak, must be 10 or more characters
+  </string>
+  <string name="the_passwords_are_not_equal">Check the passwords, they should be equal</string>
 
   <!-- Drawer Layout -->
   <string name="drawer_open">Open</string>

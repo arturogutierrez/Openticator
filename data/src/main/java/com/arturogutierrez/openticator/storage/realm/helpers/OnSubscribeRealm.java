@@ -1,6 +1,5 @@
 package com.arturogutierrez.openticator.storage.realm.helpers;
 
-import android.content.Context;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.exceptions.RealmException;
@@ -9,15 +8,9 @@ import rx.Subscriber;
 
 public abstract class OnSubscribeRealm<T extends RealmObject> implements Observable.OnSubscribe<T> {
 
-  private final Context context;
-
-  public OnSubscribeRealm(Context context) {
-    this.context = context;
-  }
-
   @Override
   public void call(Subscriber<? super T> subscriber) {
-    final Realm realm = Realm.getInstance(context);
+    final Realm realm = Realm.getDefaultInstance();
 
     T object;
     realm.beginTransaction();

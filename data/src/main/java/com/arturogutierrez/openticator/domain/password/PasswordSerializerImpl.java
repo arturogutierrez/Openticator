@@ -24,12 +24,12 @@ public class PasswordSerializerImpl implements PasswordSerializer {
 
     messageDigest.update(plainPassword.getBytes());
     byte[] digest = messageDigest.digest();
-    return Base64.encodeToString(digest, Base64.DEFAULT).trim();
+    return Base64.encodeToString(digest, Base64.NO_WRAP).trim();
   }
 
   private MessageDigest createMessageDigest() {
     try {
-      return MessageDigest.getInstance("SHA-256");
+      return MessageDigest.getInstance("SHA-512");
     } catch (NoSuchAlgorithmException e) {
       // Should not happen, all Android devices should support SHA-256
       return null;

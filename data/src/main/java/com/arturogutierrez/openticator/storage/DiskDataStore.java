@@ -45,7 +45,7 @@ public class DiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<List<Account>> getAccounts() {
-    return RealmObservable.results(context,
+    return RealmObservable.results(
         realm -> realm.where(AccountRealm.class).findAllSorted("order", Sort.ASCENDING))
         .map(accountRealmMapper::transform);
   }

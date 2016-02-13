@@ -12,15 +12,12 @@ import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountListView;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
-import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import com.arturogutierrez.openticator.view.fragment.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
 
 public class AccountListFragment extends BaseFragment implements AccountListView {
 
-  @Inject
-  Navigator navigator;
   @Inject
   AccountListPresenter presenter;
 

@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.di.module;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
+import com.arturogutierrez.openticator.domain.DatabaseConfigurator;
 import com.arturogutierrez.openticator.domain.Preferences;
 import com.arturogutierrez.openticator.domain.PreferencesImpl;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
@@ -11,6 +12,7 @@ import com.arturogutierrez.openticator.executor.JobExecutor;
 import com.arturogutierrez.openticator.executor.MainThread;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.storage.RealmDatabaseConfigurator;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -56,6 +58,11 @@ public class ApplicationModule {
   @Singleton
   Preferences provideUserPreferences(PreferencesImpl preferences) {
     return preferences;
+  }
+
+  @Provides
+  DatabaseConfigurator provideDatabaseConfigurator(RealmDatabaseConfigurator databaseConfigurator) {
+    return databaseConfigurator;
   }
 
   @Singleton
