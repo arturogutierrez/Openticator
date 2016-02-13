@@ -64,7 +64,7 @@ public class AccountListActivity extends BaseActivity
   @OnClick(R.id.fab_add_manually)
   public void onAddManuallyClicked() {
     floatingActionMenu.close(false);
-    navigator.navigateToAddAccountManually(this);
+    navigator.goToAddAccountManually(this);
   }
 
   private void initializeActivity(Bundle savedInstanceState) {

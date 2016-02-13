@@ -1,6 +1,11 @@
 <resources>
   <string name="app_name">Openticator</string>
 
+  <!-- Master Password -->
+  <string name="configure_master_password">Configure Master Password</string>
+  <string name="password">Password</string>
+  <string name="confirm_your_password">Confirm your password</string>
+
   <!-- Drawer Layout -->
   <string name="drawer_open">Open</string>
   <string name="drawer_close">Close</string>
