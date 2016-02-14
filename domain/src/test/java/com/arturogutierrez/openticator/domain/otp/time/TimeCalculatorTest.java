@@ -1,7 +1,5 @@
-package com.arturogutierrez.openticator.domain.otp;
+package com.arturogutierrez.openticator.domain.otp.time;
 
-import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
-import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -14,7 +12,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TimeCalculatorTest {
 
   @Mock
-  private TimeProvider timeProvider;
+  private CurrentTimeProvider timeProvider;
 
   @Before
   public void setUp() {
@@ -34,7 +32,7 @@ public class TimeCalculatorTest {
   @Test
   public void testSecondStep() {
     when(timeProvider.getCurrentTimeInSeconds()).thenReturn(50L);
-    TimeCalculator timeCalculator = new TimeCalculator(timeProvider, 40, 0);
+    TimeCalculator timeCalculator = new TimeCalculator(timeProvider, 30, 0);
 
     long step = timeCalculator.getCurrentTimeStep();
 
@@ -49,5 +47,17 @@ public class TimeCalculatorTest {
     long step = timeCalculator.getCurrentTimeStep();
 
     assertThat(step, is(1L));
+  }
+
+  @Test
+  public void testValidTimeStep() {
+    when(timeProvider.getCurrentTimeInSeconds()).thenReturn(65L);
+    TimeCalculator timeCalculator = new TimeCalculator(timeProvider, 30, 0);
+
+    long step = timeCalculator.getCurrentTimeStep();
+    long validUntilInSeconds = timeCalculator.getValidUntilInSeconds(step);
+
+    assertThat(step, is(2L));
+    assertThat(validUntilInSeconds, is(90L));
   }
 }

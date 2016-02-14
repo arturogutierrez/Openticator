@@ -1,7 +1,8 @@
 package com.arturogutierrez.openticator.domain.otp;
 
+import com.arturogutierrez.openticator.domain.otp.model.Passcode;
+import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
-import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,7 +18,7 @@ public class TimeBasedOneTimePasswordTest {
 
   private TimeBasedOneTimePassword timeBasedOneTimePassword;
   @Mock
-  private TimeProvider timeProvider;
+  private CurrentTimeProvider timeProvider;
 
   @Before
   public void setUp() {
@@ -34,17 +35,17 @@ public class TimeBasedOneTimePasswordTest {
   public void testCodeForFirstStep() {
     when(timeProvider.getCurrentTimeInSeconds()).thenReturn((long) TIME_STEP_LENGTH);
 
-    String code = timeBasedOneTimePassword.generate();
+    Passcode passcode = timeBasedOneTimePassword.generate();
 
-    assertThat(code, is("784240"));
+    assertThat(passcode.getCode(), is("784240"));
   }
 
   @Test
   public void testCodeForSecondStep() {
     when(timeProvider.getCurrentTimeInSeconds()).thenReturn((long) TIME_STEP_LENGTH * 2);
 
-    String code = timeBasedOneTimePassword.generate();
+    Passcode passcode = timeBasedOneTimePassword.generate();
 
-    assertThat(code, is("388205"));
+    assertThat(passcode.getCode(), is("388205"));
   }
 }

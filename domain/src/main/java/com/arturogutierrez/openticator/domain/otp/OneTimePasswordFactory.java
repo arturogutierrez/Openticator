@@ -4,7 +4,6 @@ import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
-import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import javax.inject.Inject;
 
 public class OneTimePasswordFactory {
@@ -29,7 +28,7 @@ public class OneTimePasswordFactory {
       int timeCorrectionInMinutes) {
     OneTimePasswordGenerator oneTimePasswordGenerator =
         new OneTimePasswordGenerator(account.getSecret(), DEFAULT_PASSWORD_LENGTH);
-    TimeProvider timeProvider = new CurrentTimeProvider();
+    CurrentTimeProvider timeProvider = new CurrentTimeProvider();
     TimeCalculator timeCalculator =
         new TimeCalculator(timeProvider, DEFAULT_TIME_STEP_LENGTH, timeCorrectionInMinutes);
     return new TimeBasedOneTimePassword(oneTimePasswordGenerator, timeCalculator);

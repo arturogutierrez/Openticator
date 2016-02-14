@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
+import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber;
 import com.arturogutierrez.openticator.view.presenter.Presenter;
 import java.util.List;
@@ -13,18 +14,18 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     implements Presenter {
 
   private final GetAccountPasscodesInteractor getAccountPasscodesInteractor;
+  private final RemainingTimeCalculator remainingTimeCalculator;
   private AccountListView view;
   private Handler handler;
   private Runnable scheduleRunnable;
 
   @Inject
-  public AccountListPresenter(GetAccountPasscodesInteractor getAccountPasscodesInteractor) {
+  public AccountListPresenter(GetAccountPasscodesInteractor getAccountPasscodesInteractor,
+      RemainingTimeCalculator remainingTimeCalculator) {
     this.getAccountPasscodesInteractor = getAccountPasscodesInteractor;
+    this.remainingTimeCalculator = remainingTimeCalculator;
     this.handler = new Handler(Looper.getMainLooper());
-    this.scheduleRunnable = () -> {
-      reloadPasscodes();
-      scheduleUpdate();
-    };
+    this.scheduleRunnable = this::reloadPasscodes;
   }
 
   public void setView(AccountListView view) {
@@ -55,7 +56,7 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     }
 
     view.renderAccounts(accountPasscodes);
-    scheduleUpdate();
+    scheduleUpdate(accountPasscodes);
   }
 
   @Override
@@ -63,9 +64,9 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     view.viewNoItems();
   }
 
-  private void scheduleUpdate() {
-    // TODO: Calculate delayed time exactly
-    handler.postDelayed(scheduleRunnable, 30 * 1000);
+  private void scheduleUpdate(List<AccountPasscode> accountPasscodes) {
+    int delayInSeconds = calculateMinimunSecondsUntilNextRefresh(accountPasscodes);
+    handler.postDelayed(scheduleRunnable, delayInSeconds * 1000);
   }
 
   private void cancelSchedule() {
@@ -75,5 +76,17 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
   private void reloadPasscodes() {
     getAccountPasscodesInteractor.unsubscribe();
     getAccountPasscodesInteractor.execute(this);
+  }
+
+  private int calculateMinimunSecondsUntilNextRefresh(List<AccountPasscode> accountPasscodes) {
+    int minTime = Integer.MAX_VALUE;
+
+    for (AccountPasscode accountPasscode : accountPasscodes) {
+      int remainingTimeInSeconds = remainingTimeCalculator.calculateRemainingSeconds(
+          accountPasscode.getPasscode().getValidUntilInSeconds());
+      minTime = Math.min(minTime, remainingTimeInSeconds);
+    }
+
+    return minTime;
   }
 }

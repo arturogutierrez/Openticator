@@ -7,6 +7,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
+import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
+import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
 
 public class AccountViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,16 +27,25 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
 
   public void showAccount(AccountPasscode accountPasscode) {
     tvName.setText(accountPasscode.getAccountName());
-    tvPasscode.setText(accountPasscode.getPasscode());
-    startAnimation();
+    tvPasscode.setText(accountPasscode.getPasscode().getCode());
+
+    int animationLength =
+        calculateRemainingSeconds(accountPasscode.getPasscode().getValidUntilInSeconds());
+    startAnimation(animationLength);
   }
 
-  public void startAnimation() {
-    vCountdown.startAnimation(30);
+  private void startAnimation(int animationLength) {
+    // TODO: Pass valid window length in Passcode
+    float percentAnimation = animationLength / 30.0f;
+    vCountdown.startAnimation(animationLength, percentAnimation);
   }
 
-  public void stopAniation() {
+  public void stopAnimation() {
     vCountdown.stopAnimation();
-    ;
+  }
+
+  private int calculateRemainingSeconds(long validUntilInSeconds) {
+    RemainingTimeCalculator timeCalculator = new RemainingTimeCalculator(new CurrentTimeProvider());
+    return timeCalculator.calculateRemainingSeconds(validUntilInSeconds);
   }
 }
