@@ -31,19 +31,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.arturogutierrez.openticator.R;
-import com.arturogutierrez.openticator.domain.account.camera.CameraManager;
-import com.arturogutierrez.openticator.domain.account.camera.CaptureActivityHandler;
-import com.arturogutierrez.openticator.domain.account.camera.DecodeFormatManager;
-import com.arturogutierrez.openticator.domain.account.camera.InactivityTimer;
-import com.arturogutierrez.openticator.domain.account.camera.Intents;
-import com.arturogutierrez.openticator.domain.account.camera.ViewfinderView;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.CameraManager;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.CaptureActivityHandler;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.DecodeFormatManager;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.InactivityTimer;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.Intents;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
@@ -56,8 +54,6 @@ import java.util.Map;
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
-
-  private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 1L;
 
   private CameraManager cameraManager;
   private String characterSet;
@@ -119,7 +115,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
     inactivityTimer.onPause();
     cameraManager.closeDriver();
-    //historyManager = null; // Keep for onActivityResult
     if (!hasSurface) {
       SurfaceView surfaceView = (SurfaceView) findViewById(R.id.sv_preview);
       SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -208,7 +203,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       drawResultPoints(barcode, scaleFactor, rawResult);
     }
 
-    handleDecodeExternally(rawResult, barcode);
+    deliverResult(rawResult, barcode);
   }
 
   /**
@@ -252,11 +247,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   }
 
   // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
-  private void handleDecodeExternally(Result rawResult, Bitmap barcode) {
-
-    if (barcode != null) {
-      viewfinderView.drawResultBitmap(barcode);
-    }
+  private void deliverResult(Result rawResult, Bitmap barcode) {
 
     // Hand back whatever action they requested - this can be changed to Intents.Scan.ACTION when
     // the deprecated intent is retired.
@@ -268,43 +259,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     if (rawBytes != null && rawBytes.length > 0) {
       intent.putExtra(Intents.Scan.RESULT_BYTES, rawBytes);
     }
-    Map<ResultMetadataType, ?> metadata = rawResult.getResultMetadata();
-    if (metadata != null) {
-      if (metadata.containsKey(ResultMetadataType.UPC_EAN_EXTENSION)) {
-        intent.putExtra(Intents.Scan.RESULT_UPC_EAN_EXTENSION,
-            metadata.get(ResultMetadataType.UPC_EAN_EXTENSION).toString());
-      }
-      Number orientation = (Number) metadata.get(ResultMetadataType.ORIENTATION);
-      if (orientation != null) {
-        intent.putExtra(Intents.Scan.RESULT_ORIENTATION, orientation.intValue());
-      }
-      String ecLevel = (String) metadata.get(ResultMetadataType.ERROR_CORRECTION_LEVEL);
-      if (ecLevel != null) {
-        intent.putExtra(Intents.Scan.RESULT_ERROR_CORRECTION_LEVEL, ecLevel);
-      }
-      @SuppressWarnings("unchecked")
-      Iterable<byte[]> byteSegments =
-          (Iterable<byte[]>) metadata.get(ResultMetadataType.BYTE_SEGMENTS);
-      if (byteSegments != null) {
-        int i = 0;
-        for (byte[] byteSegment : byteSegments) {
-          intent.putExtra(Intents.Scan.RESULT_BYTE_SEGMENTS_PREFIX + i, byteSegment);
-          i++;
-        }
-      }
-    }
-    sendReplyMessage(R.id.zx_return_scan_result, intent, DEFAULT_INTENT_RESULT_DURATION_MS);
-  }
-
-  private void sendReplyMessage(int id, Object arg, long delayMS) {
-    if (handler != null) {
-      Message message = Message.obtain(handler, id, arg);
-      if (delayMS > 0L) {
-        handler.sendMessageDelayed(message, delayMS);
-      } else {
-        handler.sendMessage(message);
-      }
-    }
+    setResult(Activity.RESULT_OK, intent);
+    finish();
   }
 
   private void initCamera(SurfaceHolder surfaceHolder) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.arturogutierrez.openticator.domain.account.camera.open;
+package com.arturogutierrez.openticator.domain.account.camera.zxing.open;
 
 import android.hardware.Camera;
 import android.util.Log;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.arturogutierrez.openticator.domain.account.camera;
+package com.arturogutierrez.openticator.domain.account.camera.zxing;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

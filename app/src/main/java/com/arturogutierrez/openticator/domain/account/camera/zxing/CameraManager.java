@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.arturogutierrez.openticator.domain.account.camera;
+package com.arturogutierrez.openticator.domain.account.camera.zxing;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -23,8 +23,8 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import com.arturogutierrez.openticator.domain.account.camera.open.OpenCamera;
-import com.arturogutierrez.openticator.domain.account.camera.open.OpenCameraInterface;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.open.OpenCamera;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.open.OpenCameraInterface;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import java.io.IOException;
 
@@ -41,10 +41,7 @@ public final class CameraManager {
 
   private static final int MIN_FRAME_WIDTH = 240;
   private static final int MIN_FRAME_HEIGHT = 240;
-  private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
-  private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
 
-  private final Context context;
   private final CameraConfigurationManager configManager;
   private OpenCamera camera;
   private AutoFocusManager autoFocusManager;
@@ -52,7 +49,6 @@ public final class CameraManager {
   private Rect framingRectInPreview;
   private boolean initialized;
   private boolean previewing;
-  private int requestedCameraId = OpenCameraInterface.NO_REQUESTED_CAMERA;
   private int requestedFramingRectWidth;
   private int requestedFramingRectHeight;
   /**
@@ -62,7 +58,6 @@ public final class CameraManager {
   private final PreviewCallback previewCallback;
 
   public CameraManager(Context context) {
-    this.context = context;
     this.configManager = new CameraConfigurationManager(context);
     previewCallback = new PreviewCallback(configManager);
   }
@@ -76,7 +71,7 @@ public final class CameraManager {
   public synchronized void openDriver(SurfaceHolder holder) throws IOException {
     OpenCamera theCamera = camera;
     if (theCamera == null) {
-      theCamera = OpenCameraInterface.open(requestedCameraId);
+      theCamera = OpenCameraInterface.open(OpenCameraInterface.NO_REQUESTED_CAMERA);
       if (theCamera == null) {
         throw new IOException("Camera.open() failed to return object from driver");
       }
@@ -145,7 +140,7 @@ public final class CameraManager {
     if (theCamera != null && !previewing) {
       theCamera.getCamera().startPreview();
       previewing = true;
-      autoFocusManager = new AutoFocusManager(context, theCamera.getCamera());
+      autoFocusManager = new AutoFocusManager(theCamera.getCamera());
     }
   }
 
@@ -180,7 +175,7 @@ public final class CameraManager {
         }
         configManager.setTorch(theCamera.getCamera(), newSetting);
         if (wasAutoFocusManager) {
-          autoFocusManager = new AutoFocusManager(context, theCamera.getCamera());
+          autoFocusManager = new AutoFocusManager(theCamera.getCamera());
           autoFocusManager.start();
         }
       }
@@ -222,25 +217,20 @@ public final class CameraManager {
         return null;
       }
 
-      int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
-      int height =
-          findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+      int size = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH);
 
-      int leftOffset = (screenResolution.x - width) / 2;
-      int topOffset = (screenResolution.y - height) / 2;
-      framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+      int leftOffset = (screenResolution.x - size) / 2;
+      int topOffset = (screenResolution.y - size) / 2;
+      framingRect = new Rect(leftOffset, topOffset, leftOffset + size, topOffset + size);
       Log.d(TAG, "Calculated framing rect: " + framingRect);
     }
     return framingRect;
   }
 
-  private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
-    int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+  private static int findDesiredDimensionInRange(int resolution, int hardMin) {
+    int dim = 6 * resolution / 8; // Target 6/8
     if (dim < hardMin) {
       return hardMin;
-    }
-    if (dim > hardMax) {
-      return hardMax;
     }
     return dim;
   }
@@ -271,16 +261,6 @@ public final class CameraManager {
       framingRectInPreview = rect;
     }
     return framingRectInPreview;
-  }
-
-  /**
-   * Allows third party apps to specify the camera ID, rather than determine
-   * it automatically based on available cameras and their orientation.
-   *
-   * @param cameraId camera ID of the camera to use. A negative value means "no preference".
-   */
-  public synchronized void setManualCameraId(int cameraId) {
-    requestedCameraId = cameraId;
   }
 
   /**

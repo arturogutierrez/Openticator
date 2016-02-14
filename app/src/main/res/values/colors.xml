@@ -9,9 +9,7 @@
 
 
   <color name="zx_viewfinder_frame">#06000000</color>
-  <color name="zx_viewfinder_laser">#ffff0000</color>
   <color name="zx_viewfinder_mask">#66000000</color>
-  <color name="zx_result_view">#ffff0000</color>
   <color name="zx_possible_result_points">#c0ffff00</color>
   <color name="zx_result_points">#7F0E007D</color>
 
