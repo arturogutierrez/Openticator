@@ -50,6 +50,7 @@ dependencies {
   compile presentationDependencies.recyclerView
   compile presentationDependencies.butterKnife
   compile presentationDependencies.fab
+  compile presentationDependencies.dexter
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger

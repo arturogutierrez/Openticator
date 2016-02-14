@@ -30,4 +30,11 @@
   <string name="tap_in_the_button_to_add_your_first_account">Tap in the circle button to add your
     first account!
   </string>
+
+  <!-- Add Account from Camera -->
+  <string name="unable_to_open_the_camera">Unable to open the camera</string>
+  <string name="camera_permission">Camera permission</string>
+  <string name="camera_permission_needed_for_scan_qr">Camera permission is needed to scan QR codes
+  </string>
+
 </resources>

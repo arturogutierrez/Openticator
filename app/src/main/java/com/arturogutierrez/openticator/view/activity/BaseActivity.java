@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.view.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+  @Nullable
   @Bind(R.id.toolbar)
   protected Toolbar toolbar;
 
@@ -62,6 +64,8 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   private void configureToolbar() {
-    setSupportActionBar(toolbar);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+    }
   }
 }
