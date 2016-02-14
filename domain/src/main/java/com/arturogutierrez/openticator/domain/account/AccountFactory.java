@@ -13,8 +13,11 @@ public class AccountFactory {
   }
 
   public Account createAccount(String name, String secret) {
-    String accountId = UUID.randomUUID().toString();
+    return createAccount(OTPType.TOTP, name, secret);
+  }
 
-    return new Account(accountId, name, OTPType.TOTP, secret);
+  public Account createAccount(OTPType otpType, String name, String secret) {
+    String accountId = UUID.randomUUID().toString();
+    return new Account(accountId, name, otpType, secret);
   }
 }
