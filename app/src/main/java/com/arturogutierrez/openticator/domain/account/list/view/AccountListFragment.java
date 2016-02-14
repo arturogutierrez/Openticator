@@ -117,7 +117,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
       AccountViewHolder viewHolder =
           (AccountViewHolder) rvAccounts.findViewHolderForAdapterPosition(i);
       if (viewHolder != null) {
-        viewHolder.stopAniation();
+        viewHolder.stopAnimation();
       }
     }
   }

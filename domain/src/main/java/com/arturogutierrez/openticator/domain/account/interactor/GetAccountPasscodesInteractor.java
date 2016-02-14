@@ -5,6 +5,7 @@ import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.otp.OneTimePassword;
 import com.arturogutierrez.openticator.domain.otp.OneTimePasswordFactory;
+import com.arturogutierrez.openticator.domain.otp.model.Passcode;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.interactor.Interactor;
@@ -35,8 +36,7 @@ public class GetAccountPasscodesInteractor extends Interactor<List<AccountPassco
   private AccountPasscode calculatePasscode(Account account) {
     // TODO: Pick right delta offset time
     OneTimePassword oneTimePassword = oneTimePasswordFactory.createOneTimePassword(account, 0);
-    String passcode = oneTimePassword.generate();
-    return new AccountPasscode(account.getName(), account.getIssuer(), passcode,
-        AccountPasscode.INFINITE);
+    Passcode passcode = oneTimePassword.generate();
+    return new AccountPasscode(account.getName(), account.getIssuer(), passcode);
   }
 }

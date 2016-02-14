@@ -1,9 +1,15 @@
 package com.arturogutierrez.openticator.domain.otp.time;
 
-public class CurrentTimeProvider implements TimeProvider {
+import javax.inject.Inject;
 
-  @Override
+public class CurrentTimeProvider {
+
+  @Inject
+  public CurrentTimeProvider() {
+
+  }
+
   public long getCurrentTimeInSeconds() {
-    return System.currentTimeMillis();
+    return System.currentTimeMillis() / 1000;
   }
 }

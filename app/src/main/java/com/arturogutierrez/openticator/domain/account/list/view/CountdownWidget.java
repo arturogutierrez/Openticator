@@ -59,10 +59,12 @@ public class CountdownWidget extends View implements ValueAnimator.AnimatorUpdat
     canvas.drawArc(bounds, 0, angle, true, paint);
   }
 
-  public void startAnimation(int lengthInSeconds) {
+  public void startAnimation(int lengthInSeconds, float initialPercent) {
     stopAnimation();
 
-    valueAnimator = ValueAnimator.ofInt(360, 0);
+    initialPercent = Math.min(initialPercent, 1.0f);
+    int initialValue = (int) (360 * initialPercent);
+    valueAnimator = ValueAnimator.ofInt(initialValue, 0);
     valueAnimator.setDuration(lengthInSeconds * 1000);
     valueAnimator.addUpdateListener(this);
     valueAnimator.start();

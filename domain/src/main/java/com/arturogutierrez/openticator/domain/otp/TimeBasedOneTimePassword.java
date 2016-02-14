@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.otp;
 
+import com.arturogutierrez.openticator.domain.otp.model.Passcode;
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
 
 class TimeBasedOneTimePassword implements OneTimePassword {
@@ -14,8 +15,10 @@ class TimeBasedOneTimePassword implements OneTimePassword {
   }
 
   @Override
-  public String generate() {
+  public Passcode generate() {
     long currentStep = timeCalculator.getCurrentTimeStep();
-    return oneTimePasswordGenerator.generate(currentStep);
+    long validUntilInSeconds = timeCalculator.getValidUntilInSeconds(currentStep);
+    String code = oneTimePasswordGenerator.generate(currentStep);
+    return new Passcode(code, validUntilInSeconds);
   }
 }

@@ -1,34 +1,28 @@
 package com.arturogutierrez.openticator.domain.account.model;
 
+import com.arturogutierrez.openticator.domain.otp.model.Passcode;
+
 public class AccountPasscode {
 
-  public static final int INFINITE = -1;
-
   private final String accountName;
-  private final String passcode;
+  private final Passcode passcode;
   private final Issuer issuer;
-  private final long validUntil;
 
-  public AccountPasscode(String accountName, Issuer issuer, String passcode, long validUntil) {
+  public AccountPasscode(String accountName, Issuer issuer, Passcode passcode) {
     this.accountName = accountName;
     this.passcode = passcode;
     this.issuer = issuer;
-    this.validUntil = validUntil;
   }
 
   public String getAccountName() {
     return accountName;
   }
 
-  public String getPasscode() {
+  public Passcode getPasscode() {
     return passcode;
   }
 
   public Issuer getIssuer() {
     return issuer;
-  }
-
-  public long getValidUntil() {
-    return validUntil;
   }
 }
