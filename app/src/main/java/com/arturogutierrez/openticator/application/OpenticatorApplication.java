@@ -4,6 +4,7 @@ import android.app.Application;
 import com.arturogutierrez.openticator.di.component.ApplicationComponent;
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent;
 import com.arturogutierrez.openticator.di.module.ApplicationModule;
+import com.karumi.dexter.Dexter;
 
 public class OpenticatorApplication extends Application {
 
@@ -16,8 +17,13 @@ public class OpenticatorApplication extends Application {
     initialize();
   }
 
+  public ApplicationComponent getApplicationComponent() {
+    return applicationComponent;
+  }
+
   private void initialize() {
     initializeDependencyInjector();
+    initializeDexter();
   }
 
   private void initializeDependencyInjector() {
@@ -25,7 +31,7 @@ public class OpenticatorApplication extends Application {
         DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
   }
 
-  public ApplicationComponent getApplicationComponent() {
-    return applicationComponent;
+  private void initializeDexter() {
+    Dexter.initialize(this);
   }
 }

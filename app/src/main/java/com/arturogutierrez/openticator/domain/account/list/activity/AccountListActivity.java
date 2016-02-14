@@ -1,5 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.list.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +16,12 @@ import com.arturogutierrez.openticator.domain.account.list.di.DaggerAccountListC
 import com.arturogutierrez.openticator.domain.account.list.view.AccountListFragment;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
 import com.github.clans.fab.FloatingActionMenu;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
+import com.karumi.dexter.listener.single.EmptyPermissionListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 public class AccountListActivity extends BaseActivity
     implements HasComponent<AccountListComponent> {
@@ -67,6 +75,11 @@ public class AccountListActivity extends BaseActivity
     navigator.goToAddAccountManually(this);
   }
 
+  @OnClick(R.id.fab_add_from_camera)
+  public void onAddFromCamera() {
+    checkCameraPermission();
+  }
+
   private void initializeActivity(Bundle savedInstanceState) {
     if (savedInstanceState == null) {
       configureInjector();
@@ -94,5 +107,30 @@ public class AccountListActivity extends BaseActivity
   private void showAccountListFragment() {
     AccountListFragment accountListFragment = new AccountListFragment();
     addFragment(R.id.content_frame, accountListFragment);
+  }
+
+  private void checkCameraPermission() {
+    PermissionListener permissionListener = new EmptyPermissionListener() {
+      @Override
+      public void onPermissionGranted(PermissionGrantedResponse response) {
+        navigator.goToAddAccountFromCamera(AccountListActivity.this);
+      }
+
+      @Override
+      public void onPermissionDenied(PermissionDeniedResponse response) {
+        showPermissionNotGranted();
+      }
+    };
+
+    Dexter.checkPermission(permissionListener, Manifest.permission.CAMERA);
+  }
+
+  private void showPermissionNotGranted() {
+    new AlertDialog.Builder(this).setTitle(R.string.camera_permission)
+        .setMessage(R.string.camera_permission_needed_for_scan_qr)
+        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+          dialog.dismiss();
+        })
+        .show();
   }
 }
