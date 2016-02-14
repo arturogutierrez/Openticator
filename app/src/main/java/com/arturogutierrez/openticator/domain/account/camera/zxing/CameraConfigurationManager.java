@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.arturogutierrez.openticator.domain.account.camera;
+package com.arturogutierrez.openticator.domain.account.camera.zxing;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -23,8 +23,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
-import com.arturogutierrez.openticator.domain.account.camera.open.CameraFacing;
-import com.arturogutierrez.openticator.domain.account.camera.open.OpenCamera;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.open.CameraFacing;
+import com.arturogutierrez.openticator.domain.account.camera.zxing.open.OpenCamera;
 import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 
 /**

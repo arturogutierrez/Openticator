@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package com.arturogutierrez.openticator.domain.account.camera;
+package com.arturogutierrez.openticator.domain.account.camera.zxing;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Browser;
-import android.util.Log;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity;
 import com.google.zxing.BarcodeFormat;
@@ -41,8 +33,6 @@ import java.util.Collection;
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class CaptureActivityHandler extends Handler {
-
-  private static final String TAG = CaptureActivityHandler.class.getSimpleName();
 
   private final CaptureActivity activity;
   private final DecodeThread decodeThread;
@@ -72,9 +62,6 @@ public final class CaptureActivityHandler extends Handler {
   @Override
   public void handleMessage(Message message) {
     switch (message.what) {
-      case R.id.zx_restart_preview:
-        restartPreviewAndDecode();
-        break;
       case R.id.zx_decode_succeeded:
         state = State.SUCCESS;
         Bundle bundle = message.getData();
@@ -96,39 +83,6 @@ public final class CaptureActivityHandler extends Handler {
         // We're decoding as fast as possible, so when one decode fails, start another.
         state = State.PREVIEW;
         cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.zx_decode);
-        break;
-      case R.id.zx_return_scan_result:
-        activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
-        activity.finish();
-        break;
-      case R.id.zx_launch_product_query:
-        String url = (String) message.obj;
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        intent.setData(Uri.parse(url));
-
-        ResolveInfo resolveInfo =
-            activity.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        String browserPackageName = null;
-        if (resolveInfo != null && resolveInfo.activityInfo != null) {
-          browserPackageName = resolveInfo.activityInfo.packageName;
-          Log.d(TAG, "Using browser in package " + browserPackageName);
-        }
-
-        // Needed for default Android browser / Chrome only apparently
-        if ("com.android.browser".equals(browserPackageName) || "com.android.chrome".equals(
-            browserPackageName)) {
-          intent.setPackage(browserPackageName);
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          intent.putExtra(Browser.EXTRA_APPLICATION_ID, browserPackageName);
-        }
-
-        try {
-          activity.startActivity(intent);
-        } catch (ActivityNotFoundException ignored) {
-          Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
-        }
         break;
     }
   }

@@ -3,8 +3,5 @@
     <item type="id" name="zx_decode" />
     <item type="id" name="zx_decode_failed" />
     <item type="id" name="zx_decode_succeeded" />
-    <item type="id" name="zx_launch_product_query" />
     <item type="id" name="zx_quit" />
-    <item type="id" name="zx_restart_preview" />
-    <item type="id" name="zx_return_scan_result" />
 </resources>
