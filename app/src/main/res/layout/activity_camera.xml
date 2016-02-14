@@ -3,8 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <SurfaceView android:id="@+id/sv_view"
+  <SurfaceView
+      android:id="@+id/sv_preview"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"/>
+
+  <com.arturogutierrez.openticator.domain.account.camera.ViewfinderView
+      android:id="@+id/v_viewfinder"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
 </RelativeLayout>

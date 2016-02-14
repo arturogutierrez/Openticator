@@ -51,6 +51,8 @@ dependencies {
   compile presentationDependencies.butterKnife
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
+  compile presentationDependencies.zxingCore
+  compile presentationDependencies.zxing
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
