@@ -2,8 +2,8 @@ package com.arturogutierrez.openticator.domain.navigator;
 
 import android.content.Context;
 import android.content.Intent;
-import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountFromCameraActivity;
 import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountManuallyActivity;
+import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity;
 import com.arturogutierrez.openticator.domain.account.list.activity.AccountListActivity;
 import com.arturogutierrez.openticator.domain.password.wizard.activity.MasterPasswordActivity;
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ public class Navigator {
   }
 
   public void goToAddAccountFromCamera(Context context) {
-    Intent intent = new Intent(context, AddAccountFromCameraActivity.class);
+    Intent intent = new Intent(context, CaptureActivity.class);
     context.startActivity(intent);
   }
 }
