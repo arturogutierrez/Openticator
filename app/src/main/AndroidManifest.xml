@@ -27,7 +27,7 @@
     <activity android:name=".domain.password.wizard.activity.MasterPasswordActivity"/>
     <activity android:name=".domain.account.list.activity.AccountListActivity"/>
     <activity android:name=".domain.account.add.activity.AddAccountManuallyActivity"/>
-    <activity android:name=".domain.account.add.activity.AddAccountFromCameraActivity"/>
+    <activity android:name=".domain.account.camera.activity.CaptureActivity"/>
 
   </application>
 

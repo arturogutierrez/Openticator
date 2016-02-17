@@ -28,6 +28,7 @@ ext {
   realmVersion = '0.87.4'
   fabVersion = '1.6.2'
   zxingVersion = '3.2.1'
+  zxingCoreVersion = '3.2.1'
   dexterVersion = '2.2.1'
 
   // Testing
@@ -48,7 +49,9 @@ ext {
                               design         : "com.android.support:design:${designVersion}",
                               recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
                               fab            : "com.github.clans:fab:${fabVersion}",
-                              dexter         : "com.karumi:dexter:${dexterVersion}"]
+                              dexter         : "com.karumi:dexter:${dexterVersion}",
+                              zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
+                              zxing          : "com.google.zxing:android-core:${zxingVersion}"]
 
   domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
@@ -64,8 +67,7 @@ ext {
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
-                      realm             : "io.realm:realm-android:${realmVersion}",
-                      zxing             : "com.google.zxing:android-core:${zxingVersion}"]
+                      realm             : "io.realm:realm-android:${realmVersion}"]
 
   dataTestDependencies = [junit              : "junit:junit:${jUnitVersion}",
                           assertj            : "org.assertj:assertj-core:${assertJVersion}",
