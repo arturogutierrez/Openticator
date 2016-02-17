@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/content_padding_right"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
+    android:background="@drawable/account_passcode_background"
     >
 
   <ImageView

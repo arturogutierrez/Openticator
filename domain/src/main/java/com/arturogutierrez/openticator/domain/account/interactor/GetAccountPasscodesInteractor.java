@@ -37,6 +37,6 @@ public class GetAccountPasscodesInteractor extends Interactor<List<AccountPassco
     // TODO: Pick right delta offset time
     OneTimePassword oneTimePassword = oneTimePasswordFactory.createOneTimePassword(account, 0);
     Passcode passcode = oneTimePassword.generate();
-    return new AccountPasscode(account.getName(), account.getIssuer(), passcode);
+    return new AccountPasscode(account, account.getIssuer(), passcode);
   }
 }

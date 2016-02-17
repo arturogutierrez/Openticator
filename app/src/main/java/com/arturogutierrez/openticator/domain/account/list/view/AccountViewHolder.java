@@ -14,6 +14,13 @@ import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
 
 public class AccountViewHolder extends RecyclerView.ViewHolder {
 
+  interface OnClickListener {
+
+    void onItemClick(int position);
+
+    void onLongItemClick(int position);
+  }
+
   @Bind(R.id.iv_icon)
   ImageView ivIcon;
   @Bind(R.id.tv_account_name)
@@ -23,16 +30,23 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
   @Bind(R.id.v_countdown)
   CountdownWidget vCountdown;
 
-  public AccountViewHolder(View itemView) {
+  public AccountViewHolder(View itemView, OnClickListener onClickListener) {
     super(itemView);
+
+    itemView.setOnClickListener(l -> onClickListener.onItemClick(getLayoutPosition()));
+    itemView.setOnLongClickListener(l -> {
+      onClickListener.onLongItemClick(getLayoutPosition());
+      return true;
+    });
 
     ButterKnife.bind(this, itemView);
   }
 
-  public void showAccount(AccountPasscode accountPasscode) {
+  public void showAccount(AccountPasscode accountPasscode, boolean isSelected) {
     ivIcon.setImageResource(getAccountIconDrawableResource(accountPasscode.getIssuer()));
-    tvName.setText(accountPasscode.getAccountName());
+    tvName.setText(accountPasscode.getAccount().getName());
     tvPasscode.setText(accountPasscode.getPasscode().getCode());
+    itemView.setSelected(isSelected);
 
     int animationLength =
         calculateRemainingSeconds(accountPasscode.getPasscode().getValidUntilInSeconds());
