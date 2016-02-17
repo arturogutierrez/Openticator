@@ -45,4 +45,8 @@
   <string name="unable_to_save_the_account">Unable to save the account</string>
   <string name="unable_to_decode_qr">Unable to decode QR</string>
 
+  <!-- List Accounts -->
+  <string name="edit">Edit</string>
+  <string name="delete">Delete</string>
+
 </resources>

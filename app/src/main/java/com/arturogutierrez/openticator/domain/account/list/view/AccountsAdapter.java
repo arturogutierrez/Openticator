@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.arturogutierrez.openticator.R;
+import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import java.util.HashSet;
 import java.util.List;
@@ -14,9 +15,15 @@ import java.util.Set;
 public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
     implements AccountViewHolder.OnClickListener {
 
+  interface OnEditListener {
+
+    void onEditMode(boolean isEditMode);
+  }
+
   private final LayoutInflater layoutInflater;
-  private final Set<AccountPasscode> selectedAccounts;
+  private final Set<Account> selectedAccounts;
   private List<AccountPasscode> accounts;
+  private OnEditListener onEditListener;
   private boolean editMode;
 
   public AccountsAdapter(Context context, List<AccountPasscode> accounts) {
@@ -24,6 +31,33 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
     this.accounts = accounts;
     this.selectedAccounts = new HashSet<>(accounts.size());
     this.editMode = false;
+  }
+
+  public void setOnEditListener(OnEditListener listener) {
+    this.onEditListener = listener;
+  }
+
+  public void setAccounts(List<AccountPasscode> accounts) {
+    this.accounts = accounts;
+  }
+
+  public void setEditMode(boolean editMode) {
+    if (this.editMode == editMode) {
+      return;
+    }
+
+    this.editMode = editMode;
+    if (!editMode) {
+      clearSelection();
+    }
+
+    if (onEditListener != null) {
+      onEditListener.onEditMode(editMode);
+    }
+  }
+
+  public Set<Account> getSelectedAccounts() {
+    return selectedAccounts;
   }
 
   @Override
@@ -35,24 +69,13 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
   @Override
   public void onBindViewHolder(AccountViewHolder viewHolder, int position) {
     AccountPasscode accountPasscode = accounts.get(position);
-    boolean isSelected = selectedAccounts.contains(accountPasscode);
+    boolean isSelected = selectedAccounts.contains(accountPasscode.getAccount());
     viewHolder.showAccount(accountPasscode, isSelected);
   }
 
   @Override
   public int getItemCount() {
     return accounts.size();
-  }
-
-  public void setAccounts(List<AccountPasscode> accounts) {
-    this.accounts = accounts;
-  }
-
-  public void setEditMode(boolean editMode) {
-    this.editMode = editMode;
-    if (!editMode) {
-      clearSelection();
-    }
   }
 
   private void clearSelection() {
@@ -72,17 +95,18 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
   @Override
   public void onLongItemClick(int position) {
     if (!editMode) {
-      editMode = true;
+      setEditMode(true);
       selectOrDeselect(position);
     }
   }
 
   private void selectOrDeselect(int position) {
     AccountPasscode accountPasscode = accounts.get(position);
-    if (selectedAccounts.contains(accountPasscode)) {
-      selectedAccounts.remove(accountPasscode);
+    Account account = accountPasscode.getAccount();
+    if (selectedAccounts.contains(account)) {
+      selectedAccounts.remove(account);
     } else {
-      selectedAccounts.add(accountPasscode);
+      selectedAccounts.add(account);
     }
     notifyItemChanged(position);
   }

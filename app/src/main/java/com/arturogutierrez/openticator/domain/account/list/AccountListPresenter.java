@@ -64,6 +64,12 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     view.viewNoItems();
   }
 
+  public void onEditModeList(boolean isEditMode) {
+    if (isEditMode) {
+      view.showEditActionButtons();
+    }
+  }
+
   private void scheduleUpdate(List<AccountPasscode> accountPasscodes) {
     int delayInSeconds = calculateMinimunSecondsUntilNextRefresh(accountPasscodes);
     handler.postDelayed(scheduleRunnable, delayInSeconds * 1000);

@@ -8,4 +8,6 @@ public interface AccountListView {
   void viewNoItems();
 
   void renderAccounts(List<AccountPasscode> accounts);
+
+  void showEditActionButtons();
 }
