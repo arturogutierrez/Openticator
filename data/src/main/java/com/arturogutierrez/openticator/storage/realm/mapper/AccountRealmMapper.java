@@ -1,8 +1,8 @@
 package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
-import com.arturogutierrez.openticator.domain.account.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import io.realm.RealmResults;
 import java.util.ArrayList;

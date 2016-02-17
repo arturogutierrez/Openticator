@@ -2,7 +2,7 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
-import com.arturogutierrez.openticator.domain.account.model.Issuer;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import org.junit.Before;

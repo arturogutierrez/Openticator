@@ -32,7 +32,7 @@ public class AccountDecoderTest extends ApplicationTestCase {
 
     accountDecoder.decode(accountUri);
 
-    verify(mockAccountFactory).createAccount(eq(OTPType.HOTP), anyString(), anyString());
+    verify(mockAccountFactory).createAccount(eq(OTPType.HOTP), anyString(), anyString(), anyString());
   }
 
   @Test
@@ -41,7 +41,7 @@ public class AccountDecoderTest extends ApplicationTestCase {
 
     accountDecoder.decode(accountUri);
 
-    verify(mockAccountFactory).createAccount(eq(OTPType.TOTP), anyString(), anyString());
+    verify(mockAccountFactory).createAccount(eq(OTPType.TOTP), anyString(), anyString(), anyString());
   }
 
   @Test
@@ -51,7 +51,7 @@ public class AccountDecoderTest extends ApplicationTestCase {
     accountDecoder.decode(accountUri);
 
     verify(mockAccountFactory).createAccount(any(), eq("tony.stark@starkindustries.com"),
-        anyString());
+        anyString(), anyString());
   }
 
   @Test
@@ -61,7 +61,7 @@ public class AccountDecoderTest extends ApplicationTestCase {
     accountDecoder.decode(accountUri);
 
     verify(mockAccountFactory).createAccount(any(), eq("tony.stark@starkindustries.com"),
-        anyString());
+        anyString(), anyString());
   }
 
   @Test
@@ -70,7 +70,16 @@ public class AccountDecoderTest extends ApplicationTestCase {
 
     accountDecoder.decode(accountUri);
 
-    verify(mockAccountFactory).createAccount(any(), anyString(), eq("SECRET"));
+    verify(mockAccountFactory).createAccount(any(), anyString(), eq("SECRET"), anyString());
+  }
+
+  @Test
+  public void testOpenticator() {
+    String accountUri = "otpauth://totp/tony.stark@starkindustries.com?secret=SECRET&issuer=OPENTICATOR";
+
+    accountDecoder.decode(accountUri);
+
+    verify(mockAccountFactory).createAccount(any(), anyString(), anyString(), eq("OPENTICATOR"));
   }
 
   @Test
@@ -81,7 +90,7 @@ public class AccountDecoderTest extends ApplicationTestCase {
     accountDecoder.decode(accountUri);
 
     verify(mockAccountFactory).createAccount(OTPType.TOTP, "tony.stark@starkindustries.com",
-        "ABCDEFGHASD");
+        "ABCDEFGHASD", "Openticator");
   }
 
   @Test
@@ -92,6 +101,6 @@ public class AccountDecoderTest extends ApplicationTestCase {
     accountDecoder.decode(accountUri);
 
     verify(mockAccountFactory).createAccount(OTPType.TOTP, "tony.stark@starkindustries.com",
-        "ABCDEFGHASD");
+        "ABCDEFGHASD", "Openticator");
   }
 }

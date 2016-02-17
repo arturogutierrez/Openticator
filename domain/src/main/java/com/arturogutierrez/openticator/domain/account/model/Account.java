@@ -1,5 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.model;
 
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
+
 public class Account {
 
   private static final int MAX_ORDER = Integer.MAX_VALUE;
@@ -11,8 +13,8 @@ public class Account {
   private final Issuer issuer;
   private final int order;
 
-  public Account(String accountId, String name, OTPType type, String secret) {
-    this(accountId, name, type, secret, Issuer.UNKNOWN, MAX_ORDER);
+  public Account(String accountId, String name, OTPType type, String secret, Issuer issuer) {
+    this(accountId, name, type, secret, issuer, MAX_ORDER);
   }
 
   public Account(String accountId, String name, OTPType type, String secret, Issuer issuer,
