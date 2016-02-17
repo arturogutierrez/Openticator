@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.domain.account.repository;
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.storage.DiskDataStore;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class AccountRepositoryTest extends ApplicationTestCase {
 
   @Test
   public void testAddAccount() {
-    Account account = new Account("id", "name", OTPType.TOTP, "secret");
+    Account account = new Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN);
 
     accountRepository.add(account);
 

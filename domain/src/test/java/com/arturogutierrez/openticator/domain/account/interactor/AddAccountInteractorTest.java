@@ -4,6 +4,7 @@ import com.arturogutierrez.openticator.domain.account.AccountFactory;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class AddAccountInteractorTest {
 
   @Test
   public void testAddNewAccount() {
-    Account account = new Account("id", "name", OTPType.TOTP, "secret");
+    Account account = new Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN);
     when(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account);
 
     addAccountInteractor.configure("name", "secret");

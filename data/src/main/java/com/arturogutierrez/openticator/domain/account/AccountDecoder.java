@@ -11,6 +11,7 @@ public class AccountDecoder {
   private static final String TOTP = "totp";
   private static final String HOTP = "hotp";
   private static final String SECRET = "secret";
+  private static final String ISSUER = "issuer";
 
   private final AccountFactory accountFactory;
 
@@ -36,6 +37,7 @@ public class AccountDecoder {
   private Account decodeAccount(Uri uri) {
     String otpString = uri.getAuthority().toLowerCase();
     String secret = uri.getQueryParameter(SECRET);
+    String issuer = uri.getQueryParameter(ISSUER);
     String accountName = getAccountName(uri.getPath());
     if (!isValidType(otpString) || !isValidSecret(secret) || accountName == null) {
       return null;
@@ -48,7 +50,7 @@ public class AccountDecoder {
       accountName = accountNamePair[1];
     }
 
-    return accountFactory.createAccount(otpType, accountName, secret);
+    return accountFactory.createAccount(otpType, accountName, secret, issuer);
   }
 
   private boolean isValidType(String otpTypeInLowercase) {
