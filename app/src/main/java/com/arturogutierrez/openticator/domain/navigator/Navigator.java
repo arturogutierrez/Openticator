@@ -2,6 +2,8 @@ package com.arturogutierrez.openticator.domain.navigator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountFromCameraActivity;
 import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountManuallyActivity;
 import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity;
 import com.arturogutierrez.openticator.domain.account.list.activity.AccountListActivity;
@@ -31,7 +33,12 @@ public class Navigator {
   }
 
   public void goToAddAccountFromCamera(Context context) {
-    Intent intent = new Intent(context, CaptureActivity.class);
+    Intent intent = new Intent(context, AddAccountFromCameraActivity.class);
     context.startActivity(intent);
+  }
+
+  public void goToCaptureCode(Context context, Fragment fragment, int requestCode) {
+    Intent intent = new Intent(context, CaptureActivity.class);
+    fragment.startActivityForResult(intent, requestCode);
   }
 }

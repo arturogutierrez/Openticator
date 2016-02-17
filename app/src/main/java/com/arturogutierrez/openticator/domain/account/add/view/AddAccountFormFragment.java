@@ -81,7 +81,7 @@ public class AddAccountFormFragment extends BaseFragment implements AddAccountVi
 
   @Override
   protected int getLayoutResource() {
-    return R.layout.fragment_account_add;
+    return R.layout.fragment_account_add_manually;
   }
 
   private void initialize() {
@@ -123,6 +123,8 @@ public class AddAccountFormFragment extends BaseFragment implements AddAccountVi
 
   @Override
   public void unableToAddAccount() {
-    // TODO: Show some error
+    Toast.makeText(getContext(), getString(R.string.unable_to_save_the_account), Toast.LENGTH_SHORT)
+        .show();
+    // TODO: Detect error and show a more friendly message
   }
 }

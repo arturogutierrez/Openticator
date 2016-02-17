@@ -32,9 +32,17 @@
   </string>
 
   <!-- Add Account from Camera -->
+  <string name="scan_qr_code">Scan QR code</string>
+  <string name="add_account">Add account</string>
   <string name="unable_to_open_the_camera">Unable to open the camera</string>
   <string name="camera_permission">Camera permission</string>
   <string name="camera_permission_needed_for_scan_qr">Camera permission is needed to scan QR codes
   </string>
+  <string name="qr_explanation">Usually, a QR code is provided by the web when activating a 2-Step
+    security, you have to scan it to add a new account.\nPress the SCAN QR CODE button and move your
+    phone over the QR code.
+  </string>
+  <string name="unable_to_save_the_account">Unable to save the account</string>
+  <string name="unable_to_decode_qr">Unable to decode QR</string>
 
 </resources>

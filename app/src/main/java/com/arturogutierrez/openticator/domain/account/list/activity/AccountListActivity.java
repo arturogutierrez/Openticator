@@ -19,7 +19,6 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
 import com.karumi.dexter.listener.single.EmptyPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
@@ -113,6 +112,7 @@ public class AccountListActivity extends BaseActivity
     PermissionListener permissionListener = new EmptyPermissionListener() {
       @Override
       public void onPermissionGranted(PermissionGrantedResponse response) {
+        floatingActionMenu.close(false);
         navigator.goToAddAccountFromCamera(AccountListActivity.this);
       }
 

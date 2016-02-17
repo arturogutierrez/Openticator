@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.domain.account;
 import android.net.Uri;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import javax.inject.Inject;
 
 public class AccountDecoder {
 
@@ -13,6 +14,7 @@ public class AccountDecoder {
 
   private final AccountFactory accountFactory;
 
+  @Inject
   public AccountDecoder(AccountFactory accountFactory) {
     this.accountFactory = accountFactory;
   }

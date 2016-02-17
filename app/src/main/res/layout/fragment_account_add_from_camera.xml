@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingTop="@dimen/content_padding_top"
+    android:paddingLeft="@dimen/content_padding_left"
+    android:paddingRight="@dimen/content_padding_right"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    >
+
+  <TextView
+      android:id="@+id/tv_add_account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAllCaps="true"
+      android:text="@string/add_account"
+      style="@style/AddAccountTitle"
+      />
+
+  <TextView
+      android:id="@+id/tv_scan_explanation"
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/qr_explanation"
+      style="@style/QRCodeExplanation"
+      />
+
+  <ImageView
+      android:id="@+id/iv_scan_example"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:layout_marginBottom="30dp"
+      android:src="@drawable/qr_scan_example"
+      android:contentDescription="@string/qr_explanation"/>
+
+  <LinearLayout
+      android:id="@+id/ll_scan_qr"
+      android:gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="8dp"
+      android:background="@android:color/black"
+      android:orientation="horizontal"
+      >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_camera"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/scan_qr_code"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        />
+
+  </LinearLayout>
+
+  <ProgressBar
+      android:id="@+id/pb_loading"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:indeterminate="true"
+      android:visibility="gone"
+      style="@style/Base.Widget.AppCompat.ProgressBar"
+      />
+
+</LinearLayout>
