@@ -5,6 +5,7 @@ import com.arturogutierrez.openticator.di.component.ActivityComponent;
 import com.arturogutierrez.openticator.di.component.ApplicationComponent;
 import com.arturogutierrez.openticator.di.module.ActivityModule;
 import com.arturogutierrez.openticator.domain.account.add.view.AddAccountFormFragment;
+import com.arturogutierrez.openticator.domain.account.add.view.AddAccountFromCameraFragment;
 import dagger.Component;
 
 @PerActivity
@@ -13,4 +14,6 @@ import dagger.Component;
 })
 public interface AddAccountComponent extends ActivityComponent {
   void inject(AddAccountFormFragment addAccountFormFragment);
+
+  void inject(AddAccountFromCameraFragment addAccountFromCameraFragment);
 }

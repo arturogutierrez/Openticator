@@ -4,7 +4,7 @@ public interface AddAccountView {
 
   enum FieldError {
     NAME,
-    SECRET;
+    SECRET
   }
 
   void dismissForm();

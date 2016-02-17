@@ -23,6 +23,7 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity;
 import com.arturogutierrez.openticator.domain.account.camera.zxing.open.OpenCamera;
 import com.arturogutierrez.openticator.domain.account.camera.zxing.open.OpenCameraInterface;
 import com.google.zxing.PlanarYUVLuminanceSource;
@@ -160,7 +161,7 @@ public final class CameraManager {
   }
 
   /**
-   * Convenience method for {@link com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity}
+   * Convenience method for {@link CaptureActivity}
    *
    * @param newSetting if {@code true}, light should be turned on if currently off. And vice versa.
    */
