@@ -9,5 +9,5 @@ public interface AccountListView {
 
   void renderAccounts(List<AccountPasscode> accounts);
 
-  void showEditActionButtons();
+  void startEditMode();
 }

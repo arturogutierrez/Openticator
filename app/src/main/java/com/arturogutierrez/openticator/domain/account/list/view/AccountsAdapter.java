@@ -11,34 +11,39 @@ import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
     implements AccountViewHolder.OnClickListener {
 
-  interface OnEditListener {
-
-    void onEditMode(boolean isEditMode);
-  }
-
   private final LayoutInflater layoutInflater;
   private final Set<Account> selectedAccounts;
   private List<AccountPasscode> accounts;
-  private OnEditListener onEditListener;
   private boolean editMode;
+
+  private PublishSubject<Boolean> editModeSubject;
+  private PublishSubject<Set<Account>> selectedAccountsSubject;
 
   public AccountsAdapter(Context context, List<AccountPasscode> accounts) {
     this.layoutInflater = LayoutInflater.from(context);
     this.accounts = accounts;
     this.selectedAccounts = new HashSet<>(accounts.size());
     this.editMode = false;
-  }
-
-  public void setOnEditListener(OnEditListener listener) {
-    this.onEditListener = listener;
+    this.editModeSubject = PublishSubject.create();
+    this.selectedAccountsSubject = PublishSubject.create();
   }
 
   public void setAccounts(List<AccountPasscode> accounts) {
     this.accounts = accounts;
+  }
+
+  public Observable<Boolean> editMode() {
+    return editModeSubject;
+  }
+
+  public Observable<Set<Account>> selectedAccounts() {
+    return selectedAccountsSubject;
   }
 
   public void setEditMode(boolean editMode) {
@@ -51,9 +56,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
       clearSelection();
     }
 
-    if (onEditListener != null) {
-      onEditListener.onEditMode(editMode);
-    }
+    editModeSubject.onNext(editMode);
   }
 
   public Set<Account> getSelectedAccounts() {
@@ -109,5 +112,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountViewHolder>
       selectedAccounts.add(account);
     }
     notifyItemChanged(position);
+
+    selectedAccountsSubject.onNext(selectedAccounts);
   }
 }
