@@ -78,6 +78,7 @@
 
   <style name="PINCode" parent="Base.TextAppearance.AppCompat.Headline">
     <item name="android:textColor">@color/colorPrimaryText</item>
+    <item name="android:textSize">28sp</item>
   </style>
 
 </resources>
