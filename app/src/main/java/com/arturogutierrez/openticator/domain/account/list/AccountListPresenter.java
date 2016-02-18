@@ -66,12 +66,12 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
 
   public void onEditModeList(boolean isEditMode) {
     if (isEditMode) {
-      view.showEditActionButtons();
+      view.startEditMode();
     }
   }
 
   private void scheduleUpdate(List<AccountPasscode> accountPasscodes) {
-    int delayInSeconds = calculateMinimunSecondsUntilNextRefresh(accountPasscodes);
+    int delayInSeconds = calculateMinimumSecondsUntilNextRefresh(accountPasscodes);
     handler.postDelayed(scheduleRunnable, delayInSeconds * 1000);
   }
 
@@ -84,7 +84,7 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     getAccountPasscodesInteractor.execute(this);
   }
 
-  private int calculateMinimunSecondsUntilNextRefresh(List<AccountPasscode> accountPasscodes) {
+  private int calculateMinimumSecondsUntilNextRefresh(List<AccountPasscode> accountPasscodes) {
     int minTime = Integer.MAX_VALUE;
 
     for (AccountPasscode accountPasscode : accountPasscodes) {
