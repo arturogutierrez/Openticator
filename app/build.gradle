@@ -53,6 +53,7 @@ dependencies {
   compile presentationDependencies.dexter
   compile presentationDependencies.zxingCore
   compile presentationDependencies.zxing
+  compile presentationDependencies.materialDialogs
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger

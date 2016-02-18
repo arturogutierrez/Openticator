@@ -1,6 +1,7 @@
 allprojects {
   repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
   }
 }
 
@@ -30,6 +31,7 @@ ext {
   zxingVersion = '3.2.1'
   zxingCoreVersion = '3.2.1'
   dexterVersion = '2.2.1'
+  materialDialogsVersion = '0.8.5.4'
 
   // Testing
   robolectricVersion = '3.0'
@@ -51,7 +53,8 @@ ext {
                               fab            : "com.github.clans:fab:${fabVersion}",
                               dexter         : "com.karumi:dexter:${dexterVersion}",
                               zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
-                              zxing          : "com.google.zxing:android-core:${zxingVersion}"]
+                              zxing          : "com.google.zxing:android-core:${zxingVersion}",
+                              materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}"]
 
   domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
