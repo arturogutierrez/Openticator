@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.list.di;
 
 import com.arturogutierrez.openticator.di.PerActivity;
+import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
@@ -31,5 +32,12 @@ public class AccountListModule {
       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     return new GetAccountPasscodesInteractor(accountRepository, oneTimePasswordFactory,
         threadExecutor, postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  DeleteAccountsInteractor provideDeleteAccountsInteractor(AccountRepository accountRepository,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    return new DeleteAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
   }
 }

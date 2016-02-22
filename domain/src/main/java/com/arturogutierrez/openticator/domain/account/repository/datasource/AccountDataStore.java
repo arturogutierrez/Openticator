@@ -9,4 +9,6 @@ public interface AccountDataStore {
   Observable<Account> add(Account account);
 
   Observable<List<Account>> getAccounts();
+
+  Observable<Void> remove(Account account);
 }

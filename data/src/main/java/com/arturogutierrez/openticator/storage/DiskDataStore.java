@@ -16,20 +16,17 @@ import rx.subjects.Subject;
 public class DiskDataStore implements AccountDataStore {
 
   private final AccountRealmMapper accountRealmMapper;
-  private final Realm realm;
   private final Subject<Void, Void> changesPublishSubject;
 
   @Inject
   public DiskDataStore(AccountRealmMapper accountRealmMapper) {
     this.accountRealmMapper = accountRealmMapper;
     this.changesPublishSubject = PublishSubject.<Void>create().toSerialized();
-    this.realm = Realm.getDefaultInstance();
-    this.realm.addChangeListener(() -> changesPublishSubject.onNext(null));
   }
 
   @Override
   public Observable<Account> add(Account account) {
-    return getAccounts().flatMap(accounts -> {
+    Observable<Account> accountObservable = getAccounts().flatMap(accounts -> {
       int numberOfAccounts = accounts.size();
 
       return Observable.create(subscriber -> {
@@ -38,11 +35,14 @@ public class DiskDataStore implements AccountDataStore {
 
         Realm defaultRealm = Realm.getDefaultInstance();
         defaultRealm.executeTransaction(realm -> realm.copyToRealm(accountRealm));
+        defaultRealm.refresh();
 
         subscriber.onNext(account);
         subscriber.onCompleted();
       });
     });
+
+    return accountObservable.doOnNext(accountAdded -> changesPublishSubject.onNext(null));
   }
 
   @Override
@@ -52,6 +52,31 @@ public class DiskDataStore implements AccountDataStore {
           subscriber.onNext(getAccountsAsBlocking());
           subscriber.onCompleted();
         }));
+  }
+
+  @Override
+  public Observable<Void> remove(Account account) {
+    Observable<Void> removeAccountObservable = Observable.create(subscriber -> {
+      Realm defaultRealm = Realm.getDefaultInstance();
+      defaultRealm.executeTransaction(realm -> {
+
+        AccountRealm accountRealm = realm.where(AccountRealm.class)
+            .equalTo("accountId", account.getAccountId())
+            .findFirst();
+
+        if (accountRealm == null) {
+          return;
+        }
+
+        accountRealm.removeFromRealm();
+      });
+      defaultRealm.refresh();
+
+      subscriber.onNext(null);
+      subscriber.onCompleted();
+    });
+
+    return removeAccountObservable.doOnNext(aVoid -> changesPublishSubject.onNext(null));
   }
 
   private List<Account> getAccountsAsBlocking() {

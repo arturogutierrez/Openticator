@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -83,7 +82,11 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   }
 
   private void initializeInjector() {
-    getComponent(AccountListComponent.class).inject(this);
+    getComponent().inject(this);
+  }
+
+  private AccountListComponent getComponent() {
+    return getComponent(AccountListComponent.class);
   }
 
   @Override
@@ -100,8 +103,9 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   public void startEditMode() {
     AppCompatActivity activity = (AppCompatActivity) getActivity();
     if (activity != null) {
-      EditActionMode editActionMode = new EditActionMode(accountsAdapter);
-      activity.startSupportActionMode(editActionMode);
+      AccountEditActionMode accountEditActionMode =
+          new AccountEditActionMode(getComponent(), accountsAdapter);
+      activity.startSupportActionMode(accountEditActionMode);
     }
   }
 
