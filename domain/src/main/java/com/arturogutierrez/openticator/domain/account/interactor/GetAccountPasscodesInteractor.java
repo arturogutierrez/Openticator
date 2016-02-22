@@ -9,6 +9,7 @@ import com.arturogutierrez.openticator.domain.otp.model.Passcode;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.interactor.Interactor;
+import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 
@@ -27,10 +28,16 @@ public class GetAccountPasscodesInteractor extends Interactor<List<AccountPassco
 
   @Override
   public Observable<List<AccountPasscode>> createObservable() {
-    return accountRepository.getAccounts()
-        .flatMap(Observable::from)
-        .map(this::calculatePasscode)
-        .toList();
+    return accountRepository.getAccounts().map(this::calculatePasscodes);
+  }
+
+  private List<AccountPasscode> calculatePasscodes(List<Account> accountList) {
+    List<AccountPasscode> accountPasscodeList = new ArrayList<>(accountList.size());
+    for (Account account : accountList) {
+      AccountPasscode accountPasscode = calculatePasscode(account);
+      accountPasscodeList.add(accountPasscode);
+    }
+    return accountPasscodeList;
   }
 
   private AccountPasscode calculatePasscode(Account account) {
