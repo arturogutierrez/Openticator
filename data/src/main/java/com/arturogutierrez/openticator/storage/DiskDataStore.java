@@ -35,7 +35,6 @@ public class DiskDataStore implements AccountDataStore {
 
         Realm defaultRealm = Realm.getDefaultInstance();
         defaultRealm.executeTransaction(realm -> realm.copyToRealm(accountRealm));
-        defaultRealm.refresh();
 
         subscriber.onNext(account);
         subscriber.onCompleted();
@@ -70,7 +69,6 @@ public class DiskDataStore implements AccountDataStore {
 
         accountRealm.removeFromRealm();
       });
-      defaultRealm.refresh();
 
       subscriber.onNext(null);
       subscriber.onCompleted();
@@ -81,6 +79,7 @@ public class DiskDataStore implements AccountDataStore {
 
   private List<Account> getAccountsAsBlocking() {
     Realm realm = Realm.getDefaultInstance();
+    realm.refresh();
     RealmResults<AccountRealm> realmResults =
         realm.where(AccountRealm.class).findAllSorted("order", Sort.ASCENDING);
     return accountRealmMapper.transform(realmResults);
