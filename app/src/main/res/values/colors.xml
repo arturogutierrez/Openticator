@@ -13,4 +13,6 @@
   <color name="zx_possible_result_points">#c0ffff00</color>
   <color name="zx_result_points">#7F0E007D</color>
 
+  <color name="material_red_500">#F44336</color>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.list;
 
 import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor;
+import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber;
 import com.arturogutierrez.openticator.view.presenter.Presenter;
@@ -10,10 +11,13 @@ import javax.inject.Inject;
 public class AccountEditModePresenter extends DefaultSubscriber<Void> implements Presenter {
 
   private final DeleteAccountsInteractor deleteAccountsInteractor;
+  private final UpdateAccountInteractor updateAccountInteractor;
   private AccountEditModeView view;
 
   @Inject
-  public AccountEditModePresenter(DeleteAccountsInteractor deleteAccountsInteractor) {
+  public AccountEditModePresenter(UpdateAccountInteractor updateAccountInteractor,
+      DeleteAccountsInteractor deleteAccountsInteractor) {
+    this.updateAccountInteractor = updateAccountInteractor;
     this.deleteAccountsInteractor = deleteAccountsInteractor;
   }
 
@@ -38,9 +42,7 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
 
   public void deleteAccounts(Set<Account> selectedAccounts) {
     deleteAccountsInteractor.configure(selectedAccounts);
-    deleteAccountsInteractor.execute(this);
-
-    view.dismissActionMode();
+    deleteAccountsInteractor.execute(new DeleteAccountsSubscriber());
   }
 
   public void onSelectedAccounts(Set<Account> selectedAccounts) {
@@ -50,5 +52,28 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
     }
 
     view.showEditButton(selectedAccounts.size() == 1);
+  }
+
+  public void updateAccount(Account account, String newName) {
+    if (newName.length() > 0) {
+      updateAccountInteractor.configure(account, newName);
+      updateAccountInteractor.execute(new UpdateAccountSubscriber());
+    }
+
+    view.dismissActionMode();
+  }
+
+  private class UpdateAccountSubscriber extends DefaultSubscriber<Account> {
+    @Override
+    public void onNext(Account account) {
+      view.dismissActionMode();
+    }
+  }
+
+  private class DeleteAccountsSubscriber extends DefaultSubscriber<Void> {
+    @Override
+    public void onNext(Void aVoid) {
+      view.dismissActionMode();
+    }
   }
 }

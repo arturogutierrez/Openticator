@@ -32,12 +32,7 @@ public class AccountRealmMapper {
 
     if (account != null) {
       accountRealm = new AccountRealm();
-      accountRealm.setAccountId(account.getAccountId());
-      accountRealm.setName(account.getName());
-      accountRealm.setSecret(account.getSecret());
-      accountRealm.setIssuer(account.getIssuer().getIdentifier());
-      accountRealm.setOrder(account.getOrder());
-      accountRealm.setType(transformAccountType(account.getType()));
+      copyToAccountRealm(accountRealm, account);
     }
 
     return accountRealm;
@@ -54,6 +49,19 @@ public class AccountRealmMapper {
     }
 
     return account;
+  }
+
+  public void copyToAccountRealm(AccountRealm accountRealm, Account account) {
+    if (accountRealm == null || account == null) {
+      return;
+    }
+
+    accountRealm.setAccountId(account.getAccountId());
+    accountRealm.setName(account.getName());
+    accountRealm.setSecret(account.getSecret());
+    accountRealm.setIssuer(account.getIssuer().getIdentifier());
+    accountRealm.setOrder(account.getOrder());
+    accountRealm.setType(transformAccountType(account.getType()));
   }
 
   private OTPType transformAccountType(String otpType) {

@@ -49,4 +49,7 @@
   <string name="edit">Edit</string>
   <string name="delete">Delete</string>
 
+  <!-- Account Action Mode -->
+  <string name="rename_account">Rename account</string>
+
 </resources>

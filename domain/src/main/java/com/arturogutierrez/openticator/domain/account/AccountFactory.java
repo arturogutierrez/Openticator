@@ -25,4 +25,9 @@ public class AccountFactory {
     Issuer decodedIssuer = issuerDecoder.decode(name, issuer);
     return new Account(accountId, name, otpType, secret, decodedIssuer);
   }
+
+  public Account createAccount(Account account, String newName) {
+    return new Account(account.getAccountId(), newName, account.getType(), account.getSecret(),
+        account.getIssuer(), account.getOrder());
+  }
 }

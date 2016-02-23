@@ -8,7 +8,9 @@ public interface AccountRepository {
 
   Observable<Account> add(Account account);
 
-  Observable<List<Account>> getAccounts();
+  Observable<Account> update(Account account);
 
   Observable<Void> remove(Account account);
+
+  Observable<List<Account>> getAccounts();
 }

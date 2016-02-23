@@ -1,9 +1,11 @@
 package com.arturogutierrez.openticator.domain.account.list.view;
 
+import android.app.Activity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.list.AccountEditModePresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountEditModeView;
@@ -15,6 +17,8 @@ import rx.Subscription;
 
 public class AccountEditActionMode implements ActionMode.Callback, AccountEditModeView {
 
+  @Inject
+  Activity activity;
   @Inject
   AccountEditModePresenter presenter;
 
@@ -59,6 +63,9 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
       case R.id.action_delete:
         deleteSelectedAccounts();
         return true;
+      case R.id.action_edit:
+        changeNameForSelectedAccount();
+        return true;
     }
 
     return false;
@@ -82,6 +89,16 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
 
   private void deleteSelectedAccounts() {
     presenter.deleteAccounts(accountsAdapter.getSelectedAccounts());
+  }
+
+  private void changeNameForSelectedAccount() {
+    Account account = accountsAdapter.getSelectedAccounts().iterator().next();
+
+    new MaterialDialog.Builder(activity).title(R.string.rename_account)
+        .input(null, account.getName(), (dialog, input) -> {
+          presenter.updateAccount(account, input.toString());
+        })
+        .show();
   }
 
   @Override

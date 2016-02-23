@@ -41,16 +41,27 @@ public class DiskDataStore implements AccountDataStore {
       });
     });
 
-    return accountObservable.doOnNext(accountAdded -> changesPublishSubject.onNext(null));
+    return accountObservable.doOnNext(accountAdded -> notifyAccountChanges());
   }
 
   @Override
-  public Observable<List<Account>> getAccounts() {
-    return changesPublishSubject.map(aVoid1 -> getAccountsAsBlocking())
-        .startWith(Observable.create(subscriber -> {
-          subscriber.onNext(getAccountsAsBlocking());
-          subscriber.onCompleted();
-        }));
+  public Observable<Account> update(Account account) {
+    Observable<Account> updateAccountObservable = Observable.create(subscriber -> {
+      Realm defaultRealm = Realm.getDefaultInstance();
+      defaultRealm.executeTransaction(realm -> {
+        AccountRealm accountRealm = getAccountRealmAsBlocking(realm, account.getAccountId());
+        if (accountRealm == null) {
+          return;
+        }
+
+        accountRealmMapper.copyToAccountRealm(accountRealm, account);
+      });
+
+      subscriber.onNext(account);
+      subscriber.onCompleted();
+    });
+
+    return updateAccountObservable.doOnNext(aVoid -> notifyAccountChanges());
   }
 
   @Override
@@ -59,10 +70,7 @@ public class DiskDataStore implements AccountDataStore {
       Realm defaultRealm = Realm.getDefaultInstance();
       defaultRealm.executeTransaction(realm -> {
 
-        AccountRealm accountRealm = realm.where(AccountRealm.class)
-            .equalTo("accountId", account.getAccountId())
-            .findFirst();
-
+        AccountRealm accountRealm = getAccountRealmAsBlocking(realm, account.getAccountId());
         if (accountRealm == null) {
           return;
         }
@@ -74,7 +82,16 @@ public class DiskDataStore implements AccountDataStore {
       subscriber.onCompleted();
     });
 
-    return removeAccountObservable.doOnNext(aVoid -> changesPublishSubject.onNext(null));
+    return removeAccountObservable.doOnNext(aVoid -> notifyAccountChanges());
+  }
+
+  @Override
+  public Observable<List<Account>> getAccounts() {
+    return changesPublishSubject.map(aVoid1 -> getAccountsAsBlocking())
+        .startWith(Observable.create(subscriber -> {
+          subscriber.onNext(getAccountsAsBlocking());
+          subscriber.onCompleted();
+        }));
   }
 
   private List<Account> getAccountsAsBlocking() {
@@ -83,5 +100,13 @@ public class DiskDataStore implements AccountDataStore {
     RealmResults<AccountRealm> realmResults =
         realm.where(AccountRealm.class).findAllSorted("order", Sort.ASCENDING);
     return accountRealmMapper.transform(realmResults);
+  }
+
+  private AccountRealm getAccountRealmAsBlocking(Realm realm, String accountId) {
+    return realm.where(AccountRealm.class).equalTo("accountId", accountId).findFirst();
+  }
+
+  private void notifyAccountChanges() {
+    changesPublishSubject.onNext(null);
   }
 }

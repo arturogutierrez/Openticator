@@ -22,12 +22,17 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
-  public Observable<List<Account>> getAccounts() {
-    return accountDataStore.getAccounts();
+  public Observable<Account> update(Account account) {
+    return accountDataStore.update(account);
   }
 
   @Override
   public Observable<Void> remove(Account account) {
     return accountDataStore.remove(account);
+  }
+
+  @Override
+  public Observable<List<Account>> getAccounts() {
+    return accountDataStore.getAccounts();
   }
 }
