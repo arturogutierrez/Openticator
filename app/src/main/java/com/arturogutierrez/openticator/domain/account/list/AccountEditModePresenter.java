@@ -33,7 +33,7 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
 
   @Override
   public void destroy() {
-
+    deleteAccountsInteractor.unsubscribe();
   }
 
   public void deleteAccounts(Set<Account> selectedAccounts) {

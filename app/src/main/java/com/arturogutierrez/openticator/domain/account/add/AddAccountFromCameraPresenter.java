@@ -38,7 +38,7 @@ public class AddAccountFromCameraPresenter extends DefaultSubscriber<Account> im
 
   @Override
   public void destroy() {
-
+    addAccountInteractorInteractor.unsubscribe();
   }
 
   @Override
