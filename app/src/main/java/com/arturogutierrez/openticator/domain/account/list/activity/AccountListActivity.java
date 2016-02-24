@@ -80,9 +80,10 @@ public class AccountListActivity extends BaseActivity
   }
 
   private void initializeActivity(Bundle savedInstanceState) {
+    configureInjector();
+    showDrawerLayout();
+
     if (savedInstanceState == null) {
-      configureInjector();
-      showDrawerLayout();
       showAccountListFragment();
     }
   }

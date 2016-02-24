@@ -33,9 +33,10 @@ public class AddAccountManuallyActivity extends BaseActivity
   }
 
   private void initializeActivity(Bundle savedInstanceState) {
+    configureInjector();
+    configureToolbar();
+
     if (savedInstanceState == null) {
-      configureInjector();
-      configureToolbar();
       showAddAccountFormFragment();
     }
   }
