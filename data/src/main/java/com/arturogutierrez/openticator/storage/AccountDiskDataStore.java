@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.storage;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
-import com.arturogutierrez.openticator.domain.account.repository.datasource.AccountDataStore;
+import com.arturogutierrez.openticator.domain.account.repository.AccountDataStore;
 import com.arturogutierrez.openticator.storage.realm.mapper.AccountRealmMapper;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import io.realm.Realm;
@@ -13,13 +13,13 @@ import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
-public class DiskDataStore implements AccountDataStore {
+public class AccountDiskDataStore implements AccountDataStore {
 
   private final AccountRealmMapper accountRealmMapper;
   private final Subject<Void, Void> changesPublishSubject;
 
   @Inject
-  public DiskDataStore(AccountRealmMapper accountRealmMapper) {
+  public AccountDiskDataStore(AccountRealmMapper accountRealmMapper) {
     this.accountRealmMapper = accountRealmMapper;
     this.changesPublishSubject = PublishSubject.<Void>create().toSerialized();
   }
@@ -99,7 +99,7 @@ public class DiskDataStore implements AccountDataStore {
     realm.refresh();
     RealmResults<AccountRealm> realmResults =
         realm.where(AccountRealm.class).findAllSorted("order", Sort.ASCENDING);
-    return accountRealmMapper.transform(realmResults);
+    return accountRealmMapper.reverseTransform(realmResults);
   }
 
   private AccountRealm getAccountRealmAsBlocking(Realm realm, String accountId) {
