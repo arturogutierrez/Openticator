@@ -54,6 +54,9 @@ dependencies {
   compile presentationDependencies.zxingCore
   compile presentationDependencies.zxing
   compile presentationDependencies.materialDialogs
+  compile (presentationDependencies.materialDrawer) {
+    transitive = true
+  }
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
