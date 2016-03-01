@@ -23,6 +23,11 @@ android {
     incremental true
     preDexLibraries false
   }
+
+  // Avoid lint error validating Realm dependency
+  lintOptions {
+    ignore 'InvalidPackage'
+  }
 }
 
 dependencies {

@@ -2,8 +2,8 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
-import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,7 +70,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
 
   @Test
   public void testNullAccountRealmToAccount() {
-    Account account = accountRealmMapper.transform((AccountRealm) null);
+    Account account = accountRealmMapper.reverseTransform((AccountRealm) null);
 
     assertThat(account, is(nullValue()));
   }
@@ -84,7 +84,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     accountRealm.setSecret(FAKE_SECRET);
     accountRealm.setIssuer(FAKE_ISSUER.getIdentifier());
 
-    Account account = accountRealmMapper.transform(accountRealm);
+    Account account = accountRealmMapper.reverseTransform(accountRealm);
 
     assertThat(account.getAccountId(), is(FAKE_ID));
     assertThat(account.getName(), is(FAKE_NAME));
@@ -97,7 +97,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     AccountRealm accountRealm = new AccountRealm();
     accountRealm.setType(AccountRealm.HOTP_TYPE);
 
-    Account account = accountRealmMapper.transform(accountRealm);
+    Account account = accountRealmMapper.reverseTransform(accountRealm);
 
     assertThat(account.getType(), is(OTPType.HOTP));
   }
@@ -107,7 +107,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
     AccountRealm accountRealm = new AccountRealm();
     accountRealm.setType(AccountRealm.TOTP_TYPE);
 
-    Account account = accountRealmMapper.transform(accountRealm);
+    Account account = accountRealmMapper.reverseTransform(accountRealm);
 
     assertThat(account.getType(), is(OTPType.TOTP));
   }

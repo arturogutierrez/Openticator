@@ -11,6 +11,9 @@ import com.arturogutierrez.openticator.domain.account.list.AccountEditModePresen
 import com.arturogutierrez.openticator.domain.account.list.AccountEditModeView;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.category.model.Category;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -25,6 +28,7 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   private final AccountsAdapter accountsAdapter;
   private Subscription accountsSubscription;
   private ActionMode actionMode;
+  private MenuItem menuItemCategory;
   private MenuItem menuItemEdit;
 
   public AccountEditActionMode(AccountListComponent accountListComponent,
@@ -66,6 +70,9 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
       case R.id.action_edit:
         changeNameForSelectedAccount();
         return true;
+      case R.id.action_category:
+        changeCategoryForSelectedAccount();
+        return true;
     }
 
     return false;
@@ -81,6 +88,7 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   private void configureActionMenu(MenuInflater inflater, Menu menu) {
     inflater.inflate(R.menu.list_account, menu);
     menuItemEdit = menu.findItem(R.id.action_edit);
+    menuItemCategory = menu.findItem(R.id.action_category);
   }
 
   private void onSelectedAccounts(Set<Account> selectedAccounts) {
@@ -92,13 +100,19 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   }
 
   private void changeNameForSelectedAccount() {
-    Account account = accountsAdapter.getSelectedAccounts().iterator().next();
+    Account selectedAccount = accountsAdapter.getSelectedAccounts().iterator().next();
 
     new MaterialDialog.Builder(activity).title(R.string.rename_account)
-        .input(null, account.getName(), (dialog, input) -> {
-          presenter.updateAccount(account, input.toString());
+        .input(null, selectedAccount.getName(), (dialog, input) -> {
+          presenter.updateAccount(selectedAccount, input.toString());
         })
         .show();
+  }
+
+  private void changeCategoryForSelectedAccount() {
+    Account selectedAccount = accountsAdapter.getSelectedAccounts().iterator().next();
+
+    presenter.pickCategoryForAccount(selectedAccount);
   }
 
   @Override
@@ -107,7 +121,46 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   }
 
   @Override
+  public void showCategoryButton(boolean isVisible) {
+    menuItemCategory.setVisible(isVisible);
+  }
+
+  @Override
   public void showEditButton(boolean isVisible) {
     menuItemEdit.setVisible(isVisible);
+  }
+
+  @Override
+  public void showChooseEmptyCategory(Account account) {
+    new MaterialDialog.Builder(activity).title(R.string.add_to_category)
+        .content(R.string.no_categories)
+        .positiveText(R.string.create_new_category)
+        .onPositive((dialog, which) -> showAddNewCategory(account))
+        .show();
+  }
+
+  private void showAddNewCategory(Account account) {
+    new MaterialDialog.Builder(activity).title(R.string.add_to_category)
+        .input(R.string.category, 0, (dialog, input) -> {
+          presenter.createCategory(input.toString(), account);
+        })
+        .show();
+  }
+
+  @Override
+  public void showChooseCategory(List<Category> categories, Account account) {
+    List<String> stringCategories = new ArrayList<>(categories.size());
+    for (Category category : categories) {
+      stringCategories.add(category.getName());
+    }
+
+    new MaterialDialog.Builder(activity).title(R.string.add_to_category)
+        .items(stringCategories)
+        .itemsCallback((dialog, itemView, which, text) -> {
+          Category category = categories.get(which);
+          presenter.addAccountToCategory(category, account);
+        })
+        .positiveText(R.string.create_new_category)
+        .show();
   }
 }

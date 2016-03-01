@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.account.repository.datasource;
+package com.arturogutierrez.openticator.domain.account.repository;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import java.util.List;
