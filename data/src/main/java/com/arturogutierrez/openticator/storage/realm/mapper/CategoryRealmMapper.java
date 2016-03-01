@@ -5,7 +5,7 @@ import com.arturogutierrez.openticator.mapper.Mapper;
 import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm;
 import javax.inject.Inject;
 
-public class CategoryRealmMapper extends Mapper<CategoryRealm, Category> {
+public class CategoryRealmMapper extends Mapper<Category, CategoryRealm> {
 
   @Inject
   public CategoryRealmMapper() {
@@ -13,16 +13,7 @@ public class CategoryRealmMapper extends Mapper<CategoryRealm, Category> {
   }
 
   @Override
-  public Category transform(CategoryRealm categoryRealm) {
-    Category category = null;
-    if (categoryRealm != null) {
-      category = new Category(categoryRealm.getCategoryId(), categoryRealm.getName());
-    }
-    return category;
-  }
-
-  @Override
-  public CategoryRealm reverseTransform(Category category) {
+  public CategoryRealm transform(Category category) {
     CategoryRealm categoryRealm = null;
     if (category != null) {
       categoryRealm = new CategoryRealm();
@@ -30,5 +21,14 @@ public class CategoryRealmMapper extends Mapper<CategoryRealm, Category> {
       categoryRealm.setName(category.getName());
     }
     return categoryRealm;
+  }
+
+  @Override
+  public Category reverseTransform(CategoryRealm categoryRealm) {
+    Category category = null;
+    if (categoryRealm != null) {
+      category = new Category(categoryRealm.getCategoryId(), categoryRealm.getName());
+    }
+    return category;
   }
 }

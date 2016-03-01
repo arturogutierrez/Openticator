@@ -42,6 +42,6 @@ public class CategoryDiskDataStore implements CategoryDataStore {
           subscriber.onNext(results);
           subscriber.onCompleted();
         });
-    return getCategoriesObservable.map(categoryRealmMapper::transform);
+    return getCategoriesObservable.map(categoryRealmMapper::reverseTransform);
   }
 }
