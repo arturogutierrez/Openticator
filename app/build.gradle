@@ -15,6 +15,14 @@ android {
     applicationId globalConfiguration.getAt("androidApplicationId")
     versionCode globalConfiguration.getAt("androidVersionCode")
     versionName globalConfiguration.getAt("androidVersionName")
+
+    // VectorDrawableCompat for Gradle Plugin 1.5:
+    generatedDensities = []
+  }
+
+  // VectorDrawableCompat for Gradle Plugin 1.5:
+  aaptOptions {
+    additionalParameters "--no-version-vectors"
   }
 
   compileOptions {
