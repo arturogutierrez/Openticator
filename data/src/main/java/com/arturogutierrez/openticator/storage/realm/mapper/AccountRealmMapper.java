@@ -3,30 +3,18 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
+import com.arturogutierrez.openticator.mapper.Mapper;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
-import io.realm.RealmResults;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 
-public class AccountRealmMapper {
+public class AccountRealmMapper extends Mapper<Account, AccountRealm> {
 
   @Inject
   public AccountRealmMapper() {
 
   }
 
-  public List<Account> transform(RealmResults<AccountRealm> accountRealms) {
-    List<Account> accounts = new ArrayList<>();
-
-    for (AccountRealm accountRealm : accountRealms) {
-      Account account = transform(accountRealm);
-      accounts.add(account);
-    }
-
-    return accounts;
-  }
-
+  @Override
   public AccountRealm transform(Account account) {
     AccountRealm accountRealm = null;
 
@@ -38,7 +26,8 @@ public class AccountRealmMapper {
     return accountRealm;
   }
 
-  public Account transform(AccountRealm accountRealm) {
+  @Override
+  public Account reverseTransform(AccountRealm accountRealm) {
     Account account = null;
 
     if (accountRealm != null) {

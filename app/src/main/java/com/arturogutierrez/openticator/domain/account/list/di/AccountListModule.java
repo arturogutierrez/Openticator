@@ -7,6 +7,12 @@ import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPassc
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
+import com.arturogutierrez.openticator.domain.category.CategoryFactory;
+import com.arturogutierrez.openticator.domain.category.CategorySelector;
+import com.arturogutierrez.openticator.domain.category.interactor.AddAccountToCategoryInteractor;
+import com.arturogutierrez.openticator.domain.category.interactor.AddCategoryInteractor;
+import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor;
+import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
 import com.arturogutierrez.openticator.domain.otp.OneTimePasswordFactory;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
@@ -30,10 +36,11 @@ public class AccountListModule {
   @Provides
   @PerActivity
   GetAccountPasscodesInteractor provideGetAccountPasscodesInteractor(
+      CategorySelector categorySelector, CategoryFactory categoryFactory,
       AccountRepository accountRepository, OneTimePasswordFactory oneTimePasswordFactory,
       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetAccountPasscodesInteractor(accountRepository, oneTimePasswordFactory,
-        threadExecutor, postExecutionThread);
+    return new GetAccountPasscodesInteractor(categorySelector, categoryFactory, accountRepository,
+        oneTimePasswordFactory, threadExecutor, postExecutionThread);
   }
 
   @Provides
@@ -49,6 +56,31 @@ public class AccountListModule {
       AccountFactory accountFactory, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     return new UpdateAccountInteractor(accountRepository, accountFactory, threadExecutor,
+        postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  GetCategoriesInteractor provideGetCategoriesInteractor(CategoryRepository categoryRepository,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    return new GetCategoriesInteractor(categoryRepository, threadExecutor, postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  AddCategoryInteractor provideAddCategoryInteractor(CategoryRepository categoryRepository,
+      CategoryFactory categoryFactory, ThreadExecutor threadExecutor,
+      PostExecutionThread postExecutionThread) {
+    return new AddCategoryInteractor(categoryRepository, categoryFactory, threadExecutor,
+        postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  AddAccountToCategoryInteractor providesAddAccountToCategoryInteractor(
+      CategoryRepository categoryRepository, ThreadExecutor threadExecutor,
+      PostExecutionThread postExecutionThread) {
+    return new AddAccountToCategoryInteractor(categoryRepository, threadExecutor,
         postExecutionThread);
   }
 }

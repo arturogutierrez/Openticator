@@ -4,7 +4,7 @@ import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
-import com.arturogutierrez.openticator.storage.DiskDataStore;
+import com.arturogutierrez.openticator.storage.AccountDiskDataStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,13 +16,13 @@ public class AccountRepositoryTest extends ApplicationTestCase {
 
   private AccountRepository accountRepository;
   @Mock
-  private DiskDataStore diskDataStore;
+  private AccountDiskDataStore accountDiskDataStore;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
 
-    accountRepository = new AccountRepositoryImpl(diskDataStore);
+    accountRepository = new AccountRepositoryImpl(accountDiskDataStore);
   }
 
   @Test
@@ -31,13 +31,13 @@ public class AccountRepositoryTest extends ApplicationTestCase {
 
     accountRepository.add(account);
 
-    verify(diskDataStore).add(account);
+    verify(accountDiskDataStore).add(account);
   }
 
   @Test
   public void testGetAccounts() {
-    accountRepository.getAccounts();
+    accountRepository.getAllAccounts();
 
-    verify(diskDataStore).getAccounts();
+    verify(accountDiskDataStore).getAllAccounts();
   }
 }

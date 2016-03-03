@@ -15,6 +15,10 @@ android {
     applicationId globalConfiguration.getAt("androidApplicationId")
     versionCode globalConfiguration.getAt("androidVersionCode")
     versionName globalConfiguration.getAt("androidVersionName")
+
+    // Vector Drawables for Gradle 2.0.
+    // Compat toolbar use it internalle
+    vectorDrawables.useSupportLibrary = true
   }
 
   compileOptions {
@@ -24,7 +28,8 @@ android {
 
   dexOptions {
     incremental true
-    preDexLibraries false
+    preDexLibraries true
+    javaMaxHeapSize '2G'
   }
 
   packagingOptions {
@@ -54,6 +59,9 @@ dependencies {
   compile presentationDependencies.zxingCore
   compile presentationDependencies.zxing
   compile presentationDependencies.materialDialogs
+  compile (presentationDependencies.materialDrawer) {
+    transitive = true
+  }
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger

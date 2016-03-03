@@ -20,6 +20,6 @@ public class GetAccountsInteractor extends Interactor<List<Account>> {
 
   @Override
   public Observable<List<Account>> createObservable() {
-    return accountRepository.getAccounts();
+    return accountRepository.getAllAccounts();
   }
 }

@@ -2,10 +2,8 @@ package com.arturogutierrez.openticator.domain.account.list.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.OnClick;
 import com.arturogutierrez.openticator.R;
@@ -14,6 +12,7 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListModule;
 import com.arturogutierrez.openticator.domain.account.list.di.DaggerAccountListComponent;
 import com.arturogutierrez.openticator.domain.account.list.view.AccountListFragment;
+import com.arturogutierrez.openticator.domain.navigator.drawer.NavigationDrawer;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
 import com.github.clans.fab.FloatingActionMenu;
 import com.karumi.dexter.Dexter;
@@ -21,15 +20,16 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.EmptyPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+import javax.inject.Inject;
 
 public class AccountListActivity extends BaseActivity
     implements HasComponent<AccountListComponent> {
 
-  @Bind(R.id.drawerLayout)
-  DrawerLayout drawerLayout;
   @Bind(R.id.fab_menu)
   FloatingActionMenu floatingActionMenu;
-  ActionBarDrawerToggle drawerToggle;
+
+  @Inject
+  NavigationDrawer navigationDrawer;
 
   private AccountListComponent accountListComponent;
 
@@ -41,20 +41,37 @@ public class AccountListActivity extends BaseActivity
   }
 
   @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-
-    if (drawerToggle != null) {
-      drawerToggle.syncState();
-    }
+  protected void onResume() {
+    super.onResume();
+    navigationDrawer.onResume();
   }
 
   @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
+  protected void onPause() {
+    navigationDrawer.onPause();
+    super.onPause();
+  }
 
-    if (drawerToggle != null) {
-      drawerToggle.onConfigurationChanged(newConfig);
+  @Override
+  protected void onDestroy() {
+    navigationDrawer.onDestroy();
+    super.onDestroy();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        onBackPressed();
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (!navigationDrawer.onBackPressed()) {
+      super.onBackPressed();
     }
   }
 
@@ -81,7 +98,7 @@ public class AccountListActivity extends BaseActivity
 
   private void initializeActivity(Bundle savedInstanceState) {
     configureInjector();
-    showDrawerLayout();
+    navigationDrawer.onCreate(savedInstanceState);
 
     if (savedInstanceState == null) {
       showAccountListFragment();
@@ -94,14 +111,7 @@ public class AccountListActivity extends BaseActivity
         .activityModule(getActivityModule())
         .accountListModule(new AccountListModule())
         .build();
-  }
-
-  private void showDrawerLayout() {
-    if (drawerLayout != null) {
-      drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
-          R.string.drawer_close);
-      drawerLayout.setDrawerListener(drawerToggle);
-    }
+    accountListComponent.inject(this);
   }
 
   private void showAccountListFragment() {
