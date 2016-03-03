@@ -66,10 +66,10 @@ public class NavigationDrawer implements NavigationDrawerView {
   }
 
   private void createDrawerLayout(Bundle savedInstanceState) {
-    allAccountsDrawerItem = new PrimaryDrawerItem().withName("All accounts")
+    allAccountsDrawerItem = new PrimaryDrawerItem().withName(R.string.all_accounts)
         .withIcon(R.drawable.ic_folder_black_24dp)
         .withIconTintingEnabled(true);
-    categoriesSectionDrawerItem = new SectionDrawerItem().withName("Categories").withDivider(false);
+    categoriesSectionDrawerItem = new SectionDrawerItem().withName(R.string.categories).withDivider(false);
 
     drawer = new DrawerBuilder().withSavedInstance(savedInstanceState)
         .withActivity(activity)

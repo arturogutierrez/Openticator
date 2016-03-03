@@ -18,6 +18,8 @@
   <!-- Drawer Layout -->
   <string name="drawer_open">Open</string>
   <string name="drawer_close">Close</string>
+  <string name="categories">Categories</string>
+  <string name="all_accounts">All accounts</string>
 
   <!-- Add Account Manually -->
   <string name="add_account_manually">Add Account Manually</string>
