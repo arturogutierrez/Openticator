@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.repository;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.storage.AccountDiskDataStore;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,7 +32,12 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
-  public Observable<List<Account>> getAccounts() {
-    return accountDataStore.getAccounts();
+  public Observable<List<Account>> getAccounts(Category category) {
+    return accountDataStore.getAccounts(category);
+  }
+
+  @Override
+  public Observable<List<Account>> getAllAccounts() {
+    return accountDataStore.getAllAccounts();
   }
 }

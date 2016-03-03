@@ -135,13 +135,17 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
     new MaterialDialog.Builder(activity).title(R.string.add_to_category)
         .content(R.string.no_categories)
         .positiveText(R.string.create_new_category)
-        .onPositive((dialog, which) -> showAddNewCategory(account))
+        .onPositive((dialog, which) -> {
+          dialog.dismiss();
+          showAddNewCategory(account);
+        })
         .show();
   }
 
   private void showAddNewCategory(Account account) {
     new MaterialDialog.Builder(activity).title(R.string.add_to_category)
         .input(R.string.category, 0, (dialog, input) -> {
+          dialog.dismiss();
           presenter.createCategory(input.toString(), account);
         })
         .show();
@@ -161,6 +165,10 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
           presenter.addAccountToCategory(category, account);
         })
         .positiveText(R.string.create_new_category)
+        .onPositive((dialog, which) -> {
+          dialog.dismiss();
+          showAddNewCategory(account);
+        })
         .show();
   }
 }

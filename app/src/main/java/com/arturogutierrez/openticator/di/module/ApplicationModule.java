@@ -8,6 +8,7 @@ import com.arturogutierrez.openticator.domain.Preferences;
 import com.arturogutierrez.openticator.domain.PreferencesImpl;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepositoryImpl;
+import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepositoryImpl;
 import com.arturogutierrez.openticator.executor.JobExecutor;
@@ -77,5 +78,11 @@ public class ApplicationModule {
   @Provides
   CategoryRepository provideCategoryRepository(CategoryRepositoryImpl categoryRepository) {
     return categoryRepository;
+  }
+
+  @Singleton
+  @Provides
+  CategorySelector provideCategorySelector() {
+    return new CategorySelector();
   }
 }

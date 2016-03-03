@@ -4,6 +4,9 @@ import com.arturogutierrez.openticator.domain.account.AccountFactory;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
+import com.arturogutierrez.openticator.domain.category.CategoryFactory;
+import com.arturogutierrez.openticator.domain.category.CategorySelector;
+import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
@@ -13,6 +16,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import rx.observers.TestSubscriber;
+import rx.schedulers.TestScheduler;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -25,6 +30,8 @@ public class AddAccountInteractorTest {
   private AccountRepository mockAccountRepository;
   @Mock
   private AccountFactory mockAccountFactory;
+  @Mock
+  private CategoryRepository mockCategoryRepository;
   @Mock
   private ThreadExecutor mockThreadExecutor;
   @Mock
@@ -40,7 +47,8 @@ public class AddAccountInteractorTest {
     MockitoAnnotations.initMocks(this);
 
     addAccountInteractor =
-        new AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockThreadExecutor,
+        new AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockCategoryRepository,
+            new CategorySelector(), new CategoryFactory(), mockThreadExecutor,
             mockPostExecutionThread);
   }
 
@@ -48,9 +56,10 @@ public class AddAccountInteractorTest {
   public void testAddNewAccount() {
     Account account = new Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN);
     when(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account);
+    TestSubscriber<Account> testSubscriber = new TestSubscriber<>();
 
     addAccountInteractor.configure("name", "secret");
-    addAccountInteractor.createObservable();
+    addAccountInteractor.createObservable().subscribe(testSubscriber);
 
     verify(mockAccountRepository).add(account);
     verifyZeroInteractions(mockThreadExecutor);

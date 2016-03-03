@@ -13,11 +13,11 @@ ext {
   androidCompileSdkVersion = 23
 
   // Google Libraries
-  supportVersion = '23.1.0'
-  appCompatVersion = '23.1.0'
-  recyclerViewVersion = '23.1.0'
-  cardViewVersion = '23.1.0'
-  designVersion = '23.1.0'
+  supportVersion = '23.2.0'
+  appCompatVersion = '23.2.0'
+  recyclerViewVersion = '23.2.0'
+  cardViewVersion = '23.2.0'
+  designVersion = '23.2.0'
 
   // Libraries
   daggerVersion = '2.0.2'
@@ -26,12 +26,13 @@ ext {
   javaxAnnotationVersion = '1.0'
   androidAnnotationsVersion = '22.2.0'
   butterKnifeVersion = '7.0.1'
-  realmVersion = '0.87.4'
+  realmVersion = '0.87.5'
   fabVersion = '1.6.2'
   zxingVersion = '3.2.1'
   zxingCoreVersion = '3.2.1'
   dexterVersion = '2.2.1'
-  materialDialogsVersion = '0.8.5.4'
+  materialDialogsVersion = '0.8.5.6'
+  materialDrawerVersion = '5.0.9'
 
   // Testing
   robolectricVersion = '3.0'
@@ -54,7 +55,8 @@ ext {
                               dexter         : "com.karumi:dexter:${dexterVersion}",
                               zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
                               zxing          : "com.google.zxing:android-core:${zxingVersion}",
-                              materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}"]
+                              materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
+                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar"]
 
   domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",

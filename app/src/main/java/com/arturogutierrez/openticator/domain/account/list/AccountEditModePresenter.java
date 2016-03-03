@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.domain.account.list;
 import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor;
 import com.arturogutierrez.openticator.domain.account.model.Account;
+import com.arturogutierrez.openticator.domain.category.interactor.AddAccountToCategoryInteractor;
 import com.arturogutierrez.openticator.domain.category.interactor.AddCategoryInteractor;
 import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor;
 import com.arturogutierrez.openticator.domain.category.model.Category;
@@ -18,17 +19,19 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
   private final UpdateAccountInteractor updateAccountInteractor;
   private final GetCategoriesInteractor getCategoriesInteractor;
   private final AddCategoryInteractor addCategoryInteractor;
+  private final AddAccountToCategoryInteractor addAccountToCategoryInteractor;
   private AccountEditModeView view;
 
   @Inject
   public AccountEditModePresenter(UpdateAccountInteractor updateAccountInteractor,
       DeleteAccountsInteractor deleteAccountsInteractor,
-      GetCategoriesInteractor getCategoriesInteractor,
-      AddCategoryInteractor addCategoryInteractor) {
+      GetCategoriesInteractor getCategoriesInteractor, AddCategoryInteractor addCategoryInteractor,
+      AddAccountToCategoryInteractor addAccountToCategoryInteractor) {
     this.updateAccountInteractor = updateAccountInteractor;
     this.deleteAccountsInteractor = deleteAccountsInteractor;
     this.getCategoriesInteractor = getCategoriesInteractor;
     this.addCategoryInteractor = addCategoryInteractor;
+    this.addAccountToCategoryInteractor = addAccountToCategoryInteractor;
   }
 
   public void setView(AccountEditModeView view) {
@@ -79,13 +82,15 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
   }
 
   public void addAccountToCategory(Category category, Account account) {
-    // TODO: Add account to category
+    addAccountToCategoryInteractor.configure(category, account);
+    addAccountToCategoryInteractor.execute(new AddAccountToCategorySubscriber());
 
     view.dismissActionMode();
   }
 
   public void createCategory(String categoryName, Account account) {
-    // TODO: Create category and add account to it
+    addCategoryInteractor.configure(categoryName, account);
+    addCategoryInteractor.execute(new CreateCategorySubscriber());
 
     view.dismissActionMode();
   }
@@ -123,11 +128,39 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
 
     @Override
     public void onNext(List<Category> categories) {
+      getCategoriesInteractor.unsubscribe();
+
       if (categories.size() == 0) {
         view.showChooseEmptyCategory(account);
       } else {
         view.showChooseCategory(categories, account);
       }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      view.dismissActionMode();
+    }
+  }
+
+  private class CreateCategorySubscriber extends DefaultSubscriber<Category> {
+
+    @Override
+    public void onNext(Category category) {
+      view.dismissActionMode();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      view.dismissActionMode();
+    }
+  }
+
+  private class AddAccountToCategorySubscriber extends DefaultSubscriber<Category> {
+
+    @Override
+    public void onNext(Category category) {
+      view.dismissActionMode();
     }
 
     @Override
