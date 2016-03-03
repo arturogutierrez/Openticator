@@ -36,8 +36,8 @@ public class AccountRepositoryTest extends ApplicationTestCase {
 
   @Test
   public void testGetAccounts() {
-    accountRepository.getAccounts();
+    accountRepository.getAllAccounts();
 
-    verify(accountDiskDataStore).getAccounts();
+    verify(accountDiskDataStore).getAllAccounts();
   }
 }

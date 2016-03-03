@@ -15,6 +15,7 @@ public class AccountRealm extends RealmObject {
   private String secret;
   private String issuer;
   private int order;
+  private CategoryRealm category;
 
   public String getAccountId() {
     return accountId;
@@ -62,5 +63,13 @@ public class AccountRealm extends RealmObject {
 
   public void setOrder(int order) {
     this.order = order;
+  }
+
+  public CategoryRealm getCategory() {
+    return category;
+  }
+
+  public void setCategory(CategoryRealm category) {
+    this.category = category;
   }
 }

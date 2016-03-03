@@ -2,9 +2,7 @@ package com.arturogutierrez.openticator.domain.account.list.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -14,6 +12,7 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListModule;
 import com.arturogutierrez.openticator.domain.account.list.di.DaggerAccountListComponent;
 import com.arturogutierrez.openticator.domain.account.list.view.AccountListFragment;
+import com.arturogutierrez.openticator.domain.navigator.drawer.NavigationDrawer;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
 import com.github.clans.fab.FloatingActionMenu;
 import com.karumi.dexter.Dexter;
@@ -21,19 +20,17 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.EmptyPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import javax.inject.Inject;
 
 public class AccountListActivity extends BaseActivity
     implements HasComponent<AccountListComponent> {
 
   @Bind(R.id.fab_menu)
   FloatingActionMenu floatingActionMenu;
-  ActionBarDrawerToggle drawerToggle;
 
-  private Drawer drawer;
+  @Inject
+  NavigationDrawer navigationDrawer;
+
   private AccountListComponent accountListComponent;
 
   @Override
@@ -44,21 +41,21 @@ public class AccountListActivity extends BaseActivity
   }
 
   @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-
-    if (drawerToggle != null) {
-      drawerToggle.syncState();
-    }
+  protected void onResume() {
+    super.onResume();
+    navigationDrawer.onResume();
   }
 
   @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
+  protected void onPause() {
+    navigationDrawer.onPause();
+    super.onPause();
+  }
 
-    if (drawerToggle != null) {
-      drawerToggle.onConfigurationChanged(newConfig);
-    }
+  @Override
+  protected void onDestroy() {
+    navigationDrawer.onDestroy();
+    super.onDestroy();
   }
 
   @Override
@@ -73,9 +70,7 @@ public class AccountListActivity extends BaseActivity
 
   @Override
   public void onBackPressed() {
-    if (drawer != null && drawer.isDrawerOpen()) {
-      drawer.closeDrawer();
-    } else {
+    if (!navigationDrawer.onBackPressed()) {
       super.onBackPressed();
     }
   }
@@ -103,7 +98,7 @@ public class AccountListActivity extends BaseActivity
 
   private void initializeActivity(Bundle savedInstanceState) {
     configureInjector();
-    showDrawerLayout(savedInstanceState);
+    navigationDrawer.onCreate(savedInstanceState);
 
     if (savedInstanceState == null) {
       showAccountListFragment();
@@ -116,24 +111,7 @@ public class AccountListActivity extends BaseActivity
         .activityModule(getActivityModule())
         .accountListModule(new AccountListModule())
         .build();
-  }
-
-  private void showDrawerLayout(Bundle savedInstanceState) {
-
-    PrimaryDrawerItem allAccountsItem = new PrimaryDrawerItem().withName("All accounts")
-        .withIcon(R.drawable.ic_folder_black_24dp)
-        .withIconTintingEnabled(true);
-    SectionDrawerItem sectionDrawerItem = new SectionDrawerItem().withName("Categories").withDivider(false);
-    PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Home").withLevel(5);
-
-    drawer = new DrawerBuilder().withSavedInstance(savedInstanceState)
-        .withActivity(this)
-        .withToolbar(toolbar)
-        .withActionBarDrawerToggle(drawerToggle)
-        .withActionBarDrawerToggleAnimated(true)
-        .addDrawerItems(sectionDrawerItem, allAccountsItem, item1)
-        .withSelectedItemByPosition(1)
-        .build();
+    accountListComponent.inject(this);
   }
 
   private void showAccountListFragment() {

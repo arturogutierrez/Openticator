@@ -2,8 +2,10 @@ package com.arturogutierrez.openticator.storage;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.repository.AccountDataStore;
+import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.storage.realm.mapper.AccountRealmMapper;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
+import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -26,7 +28,7 @@ public class AccountDiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<Account> add(Account account) {
-    Observable<Account> accountObservable = getAccounts().flatMap(accounts -> {
+    Observable<Account> accountObservable = getAllAccounts().flatMap(accounts -> {
       int numberOfAccounts = accounts.size();
 
       return Observable.create(subscriber -> {
@@ -86,15 +88,24 @@ public class AccountDiskDataStore implements AccountDataStore {
   }
 
   @Override
-  public Observable<List<Account>> getAccounts() {
-    return changesPublishSubject.map(aVoid1 -> getAccountsAsBlocking())
+  public Observable<List<Account>> getAccounts(Category category) {
+    return changesPublishSubject.map(aVoid -> getAccountsForCategoryAsBlocking(category))
         .startWith(Observable.create(subscriber -> {
-          subscriber.onNext(getAccountsAsBlocking());
+          subscriber.onNext(getAccountsForCategoryAsBlocking(category));
           subscriber.onCompleted();
         }));
   }
 
-  private List<Account> getAccountsAsBlocking() {
+  @Override
+  public Observable<List<Account>> getAllAccounts() {
+    return changesPublishSubject.map(aVoid -> getAccountsForCategoryAsBlocking())
+        .startWith(Observable.create(subscriber -> {
+          subscriber.onNext(getAccountsForCategoryAsBlocking());
+          subscriber.onCompleted();
+        }));
+  }
+
+  private List<Account> getAccountsForCategoryAsBlocking() {
     Realm realm = Realm.getDefaultInstance();
     realm.refresh();
     RealmResults<AccountRealm> realmResults =
@@ -102,8 +113,22 @@ public class AccountDiskDataStore implements AccountDataStore {
     return accountRealmMapper.reverseTransform(realmResults);
   }
 
+  private List<Account> getAccountsForCategoryAsBlocking(Category category) {
+    Realm realm = Realm.getDefaultInstance();
+    realm.refresh();
+
+    RealmResults<AccountRealm> realmResults = realm.where(AccountRealm.class)
+        .equalTo("category.categoryId", category.getCategoryId())
+        .findAllSorted("order", Sort.ASCENDING);
+    return accountRealmMapper.reverseTransform(realmResults);
+  }
+
   private AccountRealm getAccountRealmAsBlocking(Realm realm, String accountId) {
     return realm.where(AccountRealm.class).equalTo("accountId", accountId).findFirst();
+  }
+
+  private CategoryRealm getCategoryAsBlocking(Realm realm, String categoryId) {
+    return realm.where(CategoryRealm.class).equalTo("categoryId", categoryId).findFirst();
   }
 
   private void notifyAccountChanges() {

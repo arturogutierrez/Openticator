@@ -34,7 +34,7 @@ public class GetAccountsInteractorTest {
   public void testUsingAccountsFromRepository() {
     getAccountsInteractor.createObservable();
 
-    verify(mockAccountRepository).getAccounts();
+    verify(mockAccountRepository).getAllAccounts();
     verifyZeroInteractions(mockThreadExecutor);
     verifyZeroInteractions(mockPostExecutionThread);
   }

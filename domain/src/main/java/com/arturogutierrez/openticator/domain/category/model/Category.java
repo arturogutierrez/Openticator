@@ -17,4 +17,21 @@ public class Category {
   public String getName() {
     return name;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Category)) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+
+    return categoryId.equals(((Category) obj).getCategoryId());
+  }
+
+  @Override
+  public int hashCode() {
+    return categoryId.hashCode();
+  }
 }
