@@ -37,7 +37,6 @@ public class CategoryRealmMapperTest extends ApplicationTestCase {
 
     assertThat(categoryRealm.getCategoryId(), is(FAKE_ID));
     assertThat(categoryRealm.getName(), is(FAKE_NAME));
-    assertThat(categoryRealm.getAccounts(), is(nullValue()));
   }
 
   @Test
