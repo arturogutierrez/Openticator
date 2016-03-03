@@ -26,7 +26,7 @@ ext {
   javaxAnnotationVersion = '1.0'
   androidAnnotationsVersion = '22.2.0'
   butterKnifeVersion = '7.0.1'
-  realmVersion = '0.87.4'
+  realmVersion = '0.87.5'
   fabVersion = '1.6.2'
   zxingVersion = '3.2.1'
   zxingCoreVersion = '3.2.1'

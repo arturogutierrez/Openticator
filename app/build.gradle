@@ -16,13 +16,9 @@ android {
     versionCode globalConfiguration.getAt("androidVersionCode")
     versionName globalConfiguration.getAt("androidVersionName")
 
-    // VectorDrawableCompat for Gradle Plugin 1.5:
-    generatedDensities = []
-  }
-
-  // VectorDrawableCompat for Gradle Plugin 1.5:
-  aaptOptions {
-    additionalParameters "--no-version-vectors"
+    // Vector Drawables for Gradle 2.0.
+    // Compat toolbar use it internalle
+    vectorDrawables.useSupportLibrary = true
   }
 
   compileOptions {
@@ -32,7 +28,8 @@ android {
 
   dexOptions {
     incremental true
-    preDexLibraries false
+    preDexLibraries true
+    javaMaxHeapSize '2G'
   }
 
   packagingOptions {
