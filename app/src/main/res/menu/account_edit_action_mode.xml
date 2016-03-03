@@ -12,6 +12,12 @@
       android:id="@+id/action_edit"
       android:title="@string/edit"
       android:icon="@drawable/ic_mode_edit_white_24dp"
+      app:showAsAction="always"/>
+
+  <item
+      android:id="@+id/action_logo"
+      android:title="@string/logo"
+      android:icon="@drawable/ic_image_white_24dp"
       app:showAsAction="ifRoom"/>
 
   <item

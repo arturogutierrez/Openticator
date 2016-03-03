@@ -28,8 +28,10 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   private final AccountsAdapter accountsAdapter;
   private Subscription accountsSubscription;
   private ActionMode actionMode;
+  private MenuItem menuItemDelete;
   private MenuItem menuItemCategory;
   private MenuItem menuItemEdit;
+  private MenuItem menuItemLogo;
 
   public AccountEditActionMode(AccountListComponent accountListComponent,
       AccountsAdapter accountsAdapter) {
@@ -58,7 +60,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
 
   @Override
   public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-    return false;
+    menuItemDelete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemEdit.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemCategory.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemLogo.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    return true;
   }
 
   @Override
@@ -73,6 +79,9 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
       case R.id.action_category:
         changeCategoryForSelectedAccount();
         return true;
+      case R.id.action_logo:
+        changeLogoForSelectedAccount();
+        return true;
     }
 
     return false;
@@ -86,9 +95,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   }
 
   private void configureActionMenu(MenuInflater inflater, Menu menu) {
-    inflater.inflate(R.menu.list_account, menu);
+    inflater.inflate(R.menu.account_edit_action_mode, menu);
+    menuItemDelete = menu.findItem(R.id.action_delete);
     menuItemEdit = menu.findItem(R.id.action_edit);
     menuItemCategory = menu.findItem(R.id.action_category);
+    menuItemLogo = menu.findItem(R.id.action_logo);
   }
 
   private void onSelectedAccounts(Set<Account> selectedAccounts) {
@@ -115,6 +126,10 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
     presenter.pickCategoryForAccount(selectedAccount);
   }
 
+  private void changeLogoForSelectedAccount() {
+    // TODO: Show logos
+  }
+
   @Override
   public void dismissActionMode() {
     actionMode.finish();
@@ -128,6 +143,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   @Override
   public void showEditButton(boolean isVisible) {
     menuItemEdit.setVisible(isVisible);
+  }
+
+  @Override
+  public void showLogoButton(boolean isVisible) {
+    menuItemLogo.setVisible(isVisible);
   }
 
   @Override

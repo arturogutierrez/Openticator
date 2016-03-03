@@ -49,8 +49,7 @@
   <string name="edit">Edit</string>
   <string name="delete">Delete</string>
   <string name="category">Category</string>
-
-  <!-- Account Action Mode -->
+  <string name="logo">Logo</string>
   <string name="rename_account">Rename account</string>
   <string name="add_to_category">Add to category</string>
   <string name="create_new_category">Create new category</string>

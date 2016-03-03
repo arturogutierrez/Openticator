@@ -66,6 +66,7 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
 
     view.showCategoryButton(selectedAccounts.size() == 1);
     view.showEditButton(selectedAccounts.size() == 1);
+    view.showLogoButton(selectedAccounts.size() == 1);
   }
 
   public void updateAccount(Account account, String newName) {

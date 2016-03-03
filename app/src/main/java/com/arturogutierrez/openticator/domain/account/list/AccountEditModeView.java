@@ -12,6 +12,8 @@ public interface AccountEditModeView {
 
   void showEditButton(boolean isVisible);
 
+  void showLogoButton(boolean isVisible);
+
   void showChooseEmptyCategory(Account account);
 
   void showChooseCategory(List<Category> categories, Account account);
