@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.account.list.view;
+package com.arturogutierrez.openticator.domain.account.list.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

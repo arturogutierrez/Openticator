@@ -13,6 +13,8 @@ import com.arturogutierrez.openticator.domain.category.interactor.AddAccountToCa
 import com.arturogutierrez.openticator.domain.category.interactor.AddCategoryInteractor;
 import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
+import com.arturogutierrez.openticator.domain.issuer.interactor.GetIssuersInteractor;
+import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository;
 import com.arturogutierrez.openticator.domain.otp.OneTimePasswordFactory;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
@@ -77,10 +79,17 @@ public class AccountListModule {
 
   @Provides
   @PerActivity
-  AddAccountToCategoryInteractor providesAddAccountToCategoryInteractor(
+  AddAccountToCategoryInteractor provideAddAccountToCategoryInteractor(
       CategoryRepository categoryRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     return new AddAccountToCategoryInteractor(categoryRepository, threadExecutor,
         postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  GetIssuersInteractor provideGetIssuerInteractor(IssuerRepository issuerRepository,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    return new GetIssuersInteractor(issuerRepository, threadExecutor, postExecutionThread);
   }
 }

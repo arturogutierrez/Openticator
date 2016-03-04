@@ -47,7 +47,7 @@ public class AddAccountFormFragment extends BaseFragment implements AddAccountVi
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
 
-    inflater.inflate(R.menu.add_account, menu);
+    inflater.inflate(R.menu.account_add, menu);
   }
 
   @Override

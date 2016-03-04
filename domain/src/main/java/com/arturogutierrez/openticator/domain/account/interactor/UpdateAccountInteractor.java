@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.domain.account.interactor;
 import com.arturogutierrez.openticator.domain.account.AccountFactory;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.interactor.Interactor;
@@ -23,6 +24,10 @@ public class UpdateAccountInteractor extends Interactor<Account> {
 
   public void configure(Account account, String newName) {
     this.account = accountFactory.createAccount(account, newName);
+  }
+
+  public void configure(Account account, Issuer newIssuer) {
+    this.account = accountFactory.createAccount(account, newIssuer);
   }
 
   @Override
