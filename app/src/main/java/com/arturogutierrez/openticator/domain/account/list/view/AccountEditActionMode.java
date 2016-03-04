@@ -2,16 +2,23 @@ package com.arturogutierrez.openticator.domain.account.list.view;
 
 import android.app.Activity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.list.AccountEditModePresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountEditModeView;
+import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapter;
+import com.arturogutierrez.openticator.domain.account.list.adapter.IssuersAdapter;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.category.model.Category;
+import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +31,16 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   Activity activity;
   @Inject
   AccountEditModePresenter presenter;
+  @Inject
+  LayoutInflater layoutInflater;
 
   private final AccountsAdapter accountsAdapter;
   private Subscription accountsSubscription;
   private ActionMode actionMode;
+  private MenuItem menuItemDelete;
   private MenuItem menuItemCategory;
   private MenuItem menuItemEdit;
+  private MenuItem menuItemLogo;
 
   public AccountEditActionMode(AccountListComponent accountListComponent,
       AccountsAdapter accountsAdapter) {
@@ -58,7 +69,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
 
   @Override
   public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-    return false;
+    menuItemDelete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemEdit.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemCategory.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    menuItemLogo.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    return true;
   }
 
   @Override
@@ -73,6 +88,9 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
       case R.id.action_category:
         changeCategoryForSelectedAccount();
         return true;
+      case R.id.action_logo:
+        changeLogoForSelectedAccount();
+        return true;
     }
 
     return false;
@@ -86,9 +104,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   }
 
   private void configureActionMenu(MenuInflater inflater, Menu menu) {
-    inflater.inflate(R.menu.list_account, menu);
+    inflater.inflate(R.menu.account_edit_action_mode, menu);
+    menuItemDelete = menu.findItem(R.id.action_delete);
     menuItemEdit = menu.findItem(R.id.action_edit);
     menuItemCategory = menu.findItem(R.id.action_category);
+    menuItemLogo = menu.findItem(R.id.action_logo);
   }
 
   private void onSelectedAccounts(Set<Account> selectedAccounts) {
@@ -111,8 +131,12 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
 
   private void changeCategoryForSelectedAccount() {
     Account selectedAccount = accountsAdapter.getSelectedAccounts().iterator().next();
-
     presenter.pickCategoryForAccount(selectedAccount);
+  }
+
+  private void changeLogoForSelectedAccount() {
+    Account selectedAccount = accountsAdapter.getSelectedAccounts().iterator().next();
+    presenter.pickLogoForAccount(selectedAccount);
   }
 
   @Override
@@ -128,6 +152,11 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
   @Override
   public void showEditButton(boolean isVisible) {
     menuItemEdit.setVisible(isVisible);
+  }
+
+  @Override
+  public void showLogoButton(boolean isVisible) {
+    menuItemLogo.setVisible(isVisible);
   }
 
   @Override
@@ -170,5 +199,23 @@ public class AccountEditActionMode implements ActionMode.Callback, AccountEditMo
           showAddNewCategory(account);
         })
         .show();
+  }
+
+  @Override
+  public void showChooseLogo(List<IssuerDecorator> issuers, Account account) {
+    View logosView = layoutInflater.inflate(R.layout.dialog_issuers, null);
+    RecyclerView recyclerView = (RecyclerView) logosView.findViewById(R.id.rv_logos);
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(activity, 3);
+    recyclerView.setLayoutManager(gridLayoutManager);
+
+    MaterialDialog dialog = new MaterialDialog.Builder(activity).title(R.string.choose_logo)
+        .customView(logosView, false)
+        .negativeText(android.R.string.cancel)
+        .show();
+
+    recyclerView.setAdapter(new IssuersAdapter(activity, issuers, issuer -> {
+      presenter.updateAccount(account, issuer);
+      dialog.dismiss();
+    }));
   }
 }

@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.domain.account.list;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.category.model.Category;
+import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator;
 import java.util.List;
 
 public interface AccountEditModeView {
@@ -12,7 +13,11 @@ public interface AccountEditModeView {
 
   void showEditButton(boolean isVisible);
 
+  void showLogoButton(boolean isVisible);
+
   void showChooseEmptyCategory(Account account);
 
   void showChooseCategory(List<Category> categories, Account account);
+
+  void showChooseLogo(List<IssuerDecorator> issuers, Account account);
 }

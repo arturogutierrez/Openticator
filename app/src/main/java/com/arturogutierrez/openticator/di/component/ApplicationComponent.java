@@ -9,6 +9,7 @@ import com.arturogutierrez.openticator.domain.Preferences;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
+import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
@@ -41,6 +42,8 @@ public interface ApplicationComponent {
   AccountRepository provideAccountRepository();
 
   CategoryRepository provideCategoryRepository();
+
+  IssuerRepository provideIssuerRepository();
 
   CategorySelector provideCategorySelector();
 }
