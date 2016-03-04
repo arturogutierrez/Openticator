@@ -30,4 +30,9 @@ public class AccountFactory {
     return new Account(account.getAccountId(), newName, account.getType(), account.getSecret(),
         account.getIssuer(), account.getOrder());
   }
+
+  public Account createAccount(Account account, Issuer newIssuer) {
+    return new Account(account.getAccountId(), account.getName(), account.getType(),
+        account.getSecret(), newIssuer, account.getOrder());
+  }
 }

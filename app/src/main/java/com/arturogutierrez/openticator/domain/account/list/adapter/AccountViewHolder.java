@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain.account.list.view;
+package com.arturogutierrez.openticator.domain.account.list.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.arturogutierrez.openticator.R;
+import com.arturogutierrez.openticator.domain.account.list.view.CountdownWidget;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;

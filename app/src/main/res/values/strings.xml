@@ -54,5 +54,19 @@
   <string name="add_to_category">Add to category</string>
   <string name="create_new_category">Create new category</string>
   <string name="no_categories">No categories</string>
+  <string name="choose_logo">Choose logo</string>
+
+  <!-- Issuers -->
+  <string name="aws">AWS</string>
+  <string name="digital_ocean">Digital Ocean</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="dropbox">Dropbox</string>
+  <string name="evernote">Evernote</string>
+  <string name="facebook">Facebook</string>
+  <string name="github">GitHub</string>
+  <string name="google">Google</string>
+  <string name="microsoft">Microsoft</string>
+  <string name="slack">Slack</string>
+  <string name="wordpress">WordPress</string>
 
 </resources>

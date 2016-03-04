@@ -7,6 +7,10 @@ import com.arturogutierrez.openticator.domain.category.interactor.AddAccountToCa
 import com.arturogutierrez.openticator.domain.category.interactor.AddCategoryInteractor;
 import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor;
 import com.arturogutierrez.openticator.domain.category.model.Category;
+import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator;
+import com.arturogutierrez.openticator.domain.issuer.IssuerDecoratorFactory;
+import com.arturogutierrez.openticator.domain.issuer.interactor.GetIssuersInteractor;
+import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber;
 import com.arturogutierrez.openticator.view.presenter.Presenter;
 import java.util.List;
@@ -20,18 +24,23 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
   private final GetCategoriesInteractor getCategoriesInteractor;
   private final AddCategoryInteractor addCategoryInteractor;
   private final AddAccountToCategoryInteractor addAccountToCategoryInteractor;
+  private final GetIssuersInteractor getIssuersInteractor;
+  private final IssuerDecoratorFactory issuerDecoratorFactory;
   private AccountEditModeView view;
 
   @Inject
   public AccountEditModePresenter(UpdateAccountInteractor updateAccountInteractor,
       DeleteAccountsInteractor deleteAccountsInteractor,
       GetCategoriesInteractor getCategoriesInteractor, AddCategoryInteractor addCategoryInteractor,
-      AddAccountToCategoryInteractor addAccountToCategoryInteractor) {
+      AddAccountToCategoryInteractor addAccountToCategoryInteractor,
+      GetIssuersInteractor getIssuersInteractor, IssuerDecoratorFactory issuerDecoratorFactory) {
     this.updateAccountInteractor = updateAccountInteractor;
     this.deleteAccountsInteractor = deleteAccountsInteractor;
     this.getCategoriesInteractor = getCategoriesInteractor;
     this.addCategoryInteractor = addCategoryInteractor;
     this.addAccountToCategoryInteractor = addAccountToCategoryInteractor;
+    this.getIssuersInteractor = getIssuersInteractor;
+    this.issuerDecoratorFactory = issuerDecoratorFactory;
   }
 
   public void setView(AccountEditModeView view) {
@@ -78,8 +87,19 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
     view.dismissActionMode();
   }
 
+  public void updateAccount(Account account, Issuer issuer) {
+    updateAccountInteractor.configure(account, issuer);
+    updateAccountInteractor.execute(new UpdateAccountSubscriber());
+
+    view.dismissActionMode();
+  }
+
   public void pickCategoryForAccount(Account account) {
     getCategoriesInteractor.execute(new GetCategoriesSubscriber(account));
+  }
+
+  public void pickLogoForAccount(Account account) {
+    getIssuersInteractor.execute(new GetIssuersSubscriber(account));
   }
 
   public void addAccountToCategory(Category category, Account account) {
@@ -167,6 +187,20 @@ public class AccountEditModePresenter extends DefaultSubscriber<Void> implements
     @Override
     public void onError(Throwable e) {
       view.dismissActionMode();
+    }
+  }
+
+  private class GetIssuersSubscriber extends DefaultSubscriber<List<Issuer>> {
+    private final Account account;
+
+    public GetIssuersSubscriber(Account account) {
+      this.account = account;
+    }
+
+    @Override
+    public void onNext(List<Issuer> issuers) {
+      List<IssuerDecorator> issuerDecorators = issuerDecoratorFactory.create(issuers);
+      view.showChooseLogo(issuerDecorators, account);
     }
   }
 }

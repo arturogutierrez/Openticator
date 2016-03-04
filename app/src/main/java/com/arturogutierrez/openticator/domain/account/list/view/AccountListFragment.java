@@ -12,6 +12,8 @@ import butterknife.Bind;
 import com.arturogutierrez.openticator.R;
 import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountListView;
+import com.arturogutierrez.openticator.domain.account.list.adapter.AccountViewHolder;
+import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapter;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.view.fragment.BaseFragment;
