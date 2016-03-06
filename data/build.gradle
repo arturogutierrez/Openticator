@@ -43,6 +43,7 @@ dependencies {
   compile dataDependencies.rxAndroid
   compile dataDependencies.androidAnnotations
   compile dataDependencies.realm
+  compile dataDependencies.gson
 
   testCompile testDependencies.junit
   testCompile testDependencies.assertj

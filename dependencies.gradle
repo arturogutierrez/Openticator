@@ -33,6 +33,7 @@ ext {
   dexterVersion = '2.2.1'
   materialDialogsVersion = '0.8.5.6'
   materialDrawerVersion = '5.0.9'
+  gsonVersion = '2.6.2'
 
   // Testing
   robolectricVersion = '3.0'
@@ -72,7 +73,8 @@ ext {
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
-                      realm             : "io.realm:realm-android:${realmVersion}"]
+                      realm             : "io.realm:realm-android:${realmVersion}",
+                      gson              : "com.google.code.gson:gson:${gsonVersion}"]
 
   dataTestDependencies = [junit              : "junit:junit:${jUnitVersion}",
                           assertj            : "org.assertj:assertj-core:${assertJVersion}",
