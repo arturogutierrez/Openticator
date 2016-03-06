@@ -28,11 +28,11 @@ public class AccountFactory {
 
   public Account createAccount(Account account, String newName) {
     return new Account(account.getAccountId(), newName, account.getType(), account.getSecret(),
-        account.getIssuer(), account.getOrder());
+        account.getIssuer(), account.getCategory(), account.getOrder());
   }
 
   public Account createAccount(Account account, Issuer newIssuer) {
     return new Account(account.getAccountId(), account.getName(), account.getType(),
-        account.getSecret(), newIssuer, account.getOrder());
+        account.getSecret(), newIssuer, account.getCategory(), account.getOrder());
   }
 }

@@ -37,7 +37,7 @@ public class GetAccountPasscodesInteractor extends Interactor<List<AccountPassco
   @Override
   public Observable<List<AccountPasscode>> createObservable() {
     return categorySelector.getSelectedCategory().flatMap(category -> {
-      Category emptyCategory = categoryFactory.createEmptyCategory();
+      Category emptyCategory = Category.emptyCategory();
       if (category.equals(emptyCategory)) {
         return accountRepository.getAllAccounts();
       }

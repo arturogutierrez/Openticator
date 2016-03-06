@@ -34,4 +34,8 @@ public class Category {
   public int hashCode() {
     return categoryId.hashCode();
   }
+
+  public static Category emptyCategory() {
+    return new EmptyCategory();
+  }
 }

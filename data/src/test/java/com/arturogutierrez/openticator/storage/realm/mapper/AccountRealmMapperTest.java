@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
 import org.junit.Before;
@@ -24,7 +25,8 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
 
   @Before
   public void setUp() {
-    accountRealmMapper = new AccountRealmMapper();
+    CategoryRealmMapper categoryRealmMapper = new CategoryRealmMapper();
+    accountRealmMapper = new AccountRealmMapper(categoryRealmMapper);
   }
 
   @Test
@@ -36,8 +38,10 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
 
   @Test
   public void testAccountToAccountRealm() {
+    Category category = new Category("id", "name");
     Account account =
-        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
+        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, category,
+            FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 
@@ -51,7 +55,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   @Test
   public void testHOTPTypeToRealm() {
     Account account =
-        new Account(FAKE_ID, FAKE_NAME, OTPType.HOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
+        new Account(FAKE_ID, FAKE_NAME, OTPType.HOTP, FAKE_SECRET, FAKE_ISSUER, null, FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 
@@ -61,7 +65,7 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   @Test
   public void testTOTPTypeToRealm() {
     Account account =
-        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, FAKE_ORDER);
+        new Account(FAKE_ID, FAKE_NAME, OTPType.TOTP, FAKE_SECRET, FAKE_ISSUER, null, FAKE_ORDER);
 
     AccountRealm accountRealm = accountRealmMapper.transform(account);
 

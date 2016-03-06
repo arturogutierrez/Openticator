@@ -31,4 +31,13 @@ public class CategoryRealmMapper extends Mapper<Category, CategoryRealm> {
     }
     return category;
   }
+
+  public void copyToCategoryRealm(CategoryRealm categoryRealm, Category category) {
+    if (categoryRealm == null || category == null) {
+      return;
+    }
+
+    categoryRealm.setCategoryId(category.getCategoryId());
+    categoryRealm.setName(category.getName());
+  }
 }

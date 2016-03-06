@@ -2,16 +2,20 @@ package com.arturogutierrez.openticator.storage.realm.mapper;
 
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
+import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.mapper.Mapper;
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm;
+import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm;
 import javax.inject.Inject;
 
 public class AccountRealmMapper extends Mapper<Account, AccountRealm> {
 
-  @Inject
-  public AccountRealmMapper() {
+  private final CategoryRealmMapper categoryRealmMapper;
 
+  @Inject
+  public AccountRealmMapper(CategoryRealmMapper categoryRealmMapper) {
+    this.categoryRealmMapper = categoryRealmMapper;
   }
 
   @Override
@@ -32,8 +36,9 @@ public class AccountRealmMapper extends Mapper<Account, AccountRealm> {
 
     if (accountRealm != null) {
       Issuer issuer = transformIssuer(accountRealm.getIssuer());
+      Category category = categoryRealmMapper.reverseTransform(accountRealm.getCategory());
       account = new Account(accountRealm.getAccountId(), accountRealm.getName(),
-          transformAccountType(accountRealm.getType()), accountRealm.getSecret(), issuer,
+          transformAccountType(accountRealm.getType()), accountRealm.getSecret(), issuer, category,
           accountRealm.getOrder());
     }
 
@@ -51,6 +56,8 @@ public class AccountRealmMapper extends Mapper<Account, AccountRealm> {
     accountRealm.setIssuer(account.getIssuer().getIdentifier());
     accountRealm.setOrder(account.getOrder());
     accountRealm.setType(transformAccountType(account.getType()));
+    CategoryRealm categoryRealm = accountRealm.getCategory();
+    categoryRealmMapper.copyToCategoryRealm(categoryRealm, account.getCategory());
   }
 
   private OTPType transformAccountType(String otpType) {
