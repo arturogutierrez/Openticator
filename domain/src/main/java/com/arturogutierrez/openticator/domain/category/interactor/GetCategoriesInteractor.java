@@ -20,6 +20,11 @@ public class GetCategoriesInteractor extends Interactor<List<Category>> {
 
   @Override
   public Observable<List<Category>> createObservable() {
-    return categoryRepository.getCategories();
+    return categoryRepository.getCategories().map(this::filterEmptyCategory);
+  }
+
+  private List<Category> filterEmptyCategory(List<Category> categories) {
+    categories.remove(Category.emptyCategory());
+    return categories;
   }
 }

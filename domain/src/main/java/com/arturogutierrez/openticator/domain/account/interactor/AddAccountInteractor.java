@@ -45,7 +45,7 @@ public class AddAccountInteractor extends Interactor<Account> {
     }
 
     return categorySelector.getSelectedCategory().flatMap(category -> {
-      Category emptyCategory = categoryFactory.createEmptyCategory();
+      Category emptyCategory = Category.emptyCategory();
       if (category.equals(emptyCategory)) {
         return accountRepository.add(newAccount);
       }
