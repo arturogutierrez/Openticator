@@ -9,4 +9,12 @@ public interface Preferences {
   String getMasterPassword();
 
   void setMasterPassword(String masterPassword);
+
+  long getLastSyncTimestamp();
+
+  void setLastSyncTimestamp(long timestamp);
+
+  long getLastLocalModifiedTimestamp();
+
+  void setLastLocalModifiedTimestamp(long timestamp);
 }
