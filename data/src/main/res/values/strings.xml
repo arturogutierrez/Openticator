@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">data</string>
+  <string name="sync_account_type">com.arturogutierrez.openticator</string>
+  <string name="sync_content_authority">com.arturogutierrez.openticator.sync</string>
 </resources>

@@ -30,6 +30,13 @@
     <activity android:name=".domain.account.add.activity.AddAccountFromCameraActivity"/>
     <activity android:name=".domain.account.camera.activity.CaptureActivity"/>
 
+    <service android:exported="true" android:name=".domain.sync.CloudSyncService">
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter"/>
+      </intent-filter>
+      <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/sync_adapter"/>
+    </service>
+
   </application>
 
 </manifest>
