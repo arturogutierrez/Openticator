@@ -7,17 +7,17 @@ allprojects {
 
 ext {
   // SDK version
-  androidBuildToolsVersion = "23.0.2"
+  androidBuildToolsVersion = "23.0.3"
   androidMinSdkVersion = 16
   androidTargetSdkVersion = 23
   androidCompileSdkVersion = 23
 
   // Google Libraries
-  supportVersion = '23.2.0'
-  appCompatVersion = '23.2.0'
-  recyclerViewVersion = '23.2.0'
-  cardViewVersion = '23.2.0'
-  designVersion = '23.2.0'
+  supportVersion = '23.2.1'
+  appCompatVersion = '23.2.1'
+  recyclerViewVersion = '23.2.1'
+  cardViewVersion = '23.2.1'
+  designVersion = '23.2.1'
 
   // Libraries
   daggerVersion = '2.0.2'
