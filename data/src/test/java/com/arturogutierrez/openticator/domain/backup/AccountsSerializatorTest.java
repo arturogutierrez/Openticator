@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.backup;
 
+import com.arturogutierrez.openticator.ApplicationTestCase;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.category.model.Category;
@@ -10,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -18,14 +18,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AccountsSerializatorTest {
+public class AccountsSerializatorTest extends ApplicationTestCase {
 
   private AccountsSerializator accountsSerializator;
 
   @Before
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
-
     CategoryEntityMapper categoryEntityMapper = new CategoryEntityMapper();
     AccountEntityMapper accountEntityMapper = new AccountEntityMapper(categoryEntityMapper);
     accountsSerializator = new AccountsSerializatorImpl(accountEntityMapper);
@@ -60,7 +58,8 @@ public class AccountsSerializatorTest {
 
   @Test
   public void testDeserializeJSON() {
-    String JSON = "[{\"accountId\":\"id\",\"name\":\"name\",\"type\":\"TOTP\",\"secret\":\"secret\",\"issuer\":\"github\",\"category\":{\"categoryId\":\"catId\",\"name\":\"catName\"},\"order\":5}]";
+    String JSON =
+        "[{\"accountId\":\"id\",\"name\":\"name\",\"type\":\"TOTP\",\"secret\":\"secret\",\"issuer\":\"github\",\"category\":{\"categoryId\":\"catId\",\"name\":\"catName\"},\"order\":5}]";
     Observable<List<Account>> accountsObservable = accountsSerializator.deserializeJSON(JSON);
 
     TestSubscriber<List<Account>> testSubscriber = new TestSubscriber<>();
