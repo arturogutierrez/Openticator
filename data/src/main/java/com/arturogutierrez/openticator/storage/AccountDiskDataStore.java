@@ -31,15 +31,14 @@ public class AccountDiskDataStore implements AccountDataStore {
     Observable<Account> accountObservable = getAllAccounts().flatMap(accounts -> {
       int numberOfAccounts = accounts.size();
 
-      return Observable.create(subscriber -> {
+      return Observable.fromCallable(() -> {
         AccountRealm accountRealm = accountRealmMapper.transform(account);
         accountRealm.setOrder(numberOfAccounts);
 
         Realm defaultRealm = Realm.getDefaultInstance();
         defaultRealm.executeTransaction(realm -> realm.copyToRealm(accountRealm));
 
-        subscriber.onNext(account);
-        subscriber.onCompleted();
+        return account;
       });
     });
 
@@ -48,7 +47,7 @@ public class AccountDiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<Account> update(Account account) {
-    Observable<Account> updateAccountObservable = Observable.create(subscriber -> {
+    Observable<Account> updateAccountObservable = Observable.fromCallable(() -> {
       Realm defaultRealm = Realm.getDefaultInstance();
       defaultRealm.executeTransaction(realm -> {
         AccountRealm accountRealm = getAccountRealmAsBlocking(realm, account.getAccountId());
@@ -59,8 +58,7 @@ public class AccountDiskDataStore implements AccountDataStore {
         accountRealmMapper.copyToAccountRealm(accountRealm, account);
       });
 
-      subscriber.onNext(account);
-      subscriber.onCompleted();
+      return account;
     });
 
     return updateAccountObservable.doOnNext(aVoid -> notifyAccountChanges());
@@ -68,7 +66,7 @@ public class AccountDiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<Void> remove(Account account) {
-    Observable<Void> removeAccountObservable = Observable.create(subscriber -> {
+    Observable<Void> removeAccountObservable = Observable.fromCallable(() -> {
       Realm defaultRealm = Realm.getDefaultInstance();
       defaultRealm.executeTransaction(realm -> {
 
@@ -80,8 +78,7 @@ public class AccountDiskDataStore implements AccountDataStore {
         accountRealm.removeFromRealm();
       });
 
-      subscriber.onNext(null);
-      subscriber.onCompleted();
+      return null;
     });
 
     return removeAccountObservable.doOnNext(aVoid -> notifyAccountChanges());
@@ -90,19 +87,13 @@ public class AccountDiskDataStore implements AccountDataStore {
   @Override
   public Observable<List<Account>> getAccounts(Category category) {
     return changesPublishSubject.map(aVoid -> getAccountsForCategoryAsBlocking(category))
-        .startWith(Observable.create(subscriber -> {
-          subscriber.onNext(getAccountsForCategoryAsBlocking(category));
-          subscriber.onCompleted();
-        }));
+        .startWith(Observable.fromCallable(() -> getAccountsForCategoryAsBlocking(category)));
   }
 
   @Override
   public Observable<List<Account>> getAllAccounts() {
     return changesPublishSubject.map(aVoid -> getAccountsForCategoryAsBlocking())
-        .startWith(Observable.create(subscriber -> {
-          subscriber.onNext(getAccountsForCategoryAsBlocking());
-          subscriber.onCompleted();
-        }));
+        .startWith(Observable.fromCallable(() -> getAccountsForCategoryAsBlocking()));
   }
 
   private List<Account> getAccountsForCategoryAsBlocking() {

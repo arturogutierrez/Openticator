@@ -27,14 +27,13 @@ public class CategoryDiskDataStore implements CategoryDataStore {
 
   @Override
   public Observable<Category> add(Category category) {
-    Observable<Category> categoryObservable = Observable.create(subscriber -> {
+    Observable<Category> categoryObservable = Observable.fromCallable(() -> {
       CategoryRealm categoryRealm = categoryRealmMapper.transform(category);
 
       Realm defaultRealm = Realm.getDefaultInstance();
       defaultRealm.executeTransaction(realm -> realm.copyToRealm(categoryRealm));
 
-      subscriber.onNext(category);
-      subscriber.onCompleted();
+      return category;
     });
 
     return categoryObservable.doOnNext(categoryAdded -> notifyAccountChanges());
@@ -42,7 +41,7 @@ public class CategoryDiskDataStore implements CategoryDataStore {
 
   @Override
   public Observable<Category> addAccount(Category category, Account account) {
-    return Observable.create(subscriber -> {
+    return Observable.fromCallable(() -> {
       Realm defaultRealm = Realm.getDefaultInstance();
       defaultRealm.executeTransaction(realm -> {
         CategoryRealm categoryRealm = getCategoryAsBlocking(realm, category.getCategoryId());
@@ -54,8 +53,7 @@ public class CategoryDiskDataStore implements CategoryDataStore {
         accountRealm.setCategory(categoryRealm);
       });
 
-      subscriber.onNext(category);
-      subscriber.onCompleted();
+      return category;
     });
   }
 
