@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.Arrays;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 
 public class AccountsSerializatorImpl implements AccountsSerializator {
@@ -14,6 +15,7 @@ public class AccountsSerializatorImpl implements AccountsSerializator {
   private final AccountEntityMapper accountEntityMapper;
   private final Gson gson;
 
+  @Inject
   public AccountsSerializatorImpl(AccountEntityMapper accountEntityMapper) {
     this.accountEntityMapper = accountEntityMapper;
     this.gson = new GsonBuilder().create();

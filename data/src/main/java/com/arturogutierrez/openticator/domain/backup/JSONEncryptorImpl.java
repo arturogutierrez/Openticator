@@ -10,6 +10,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
+import javax.inject.Inject;
 
 public class JSONEncryptorImpl implements JSONEncryptor {
 
@@ -24,6 +25,7 @@ public class JSONEncryptorImpl implements JSONEncryptor {
 
   private final SecureRandom secureRandom;
 
+  @Inject
   public JSONEncryptorImpl() {
     this.secureRandom = new SecureRandom();
   }

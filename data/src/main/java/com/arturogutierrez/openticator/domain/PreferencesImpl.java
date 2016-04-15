@@ -25,7 +25,7 @@ public class PreferencesImpl implements Preferences {
   }
 
   @Override
-  public void setMasterPassword(String masterPassword) {
-    sharedPreferences.edit().putString(MASTER_PASSWORD_ID, masterPassword).apply();
+  public void setMasterPassword(String plainMasterPassword) {
+    sharedPreferences.edit().putString(MASTER_PASSWORD_ID, plainMasterPassword).apply();
   }
 }

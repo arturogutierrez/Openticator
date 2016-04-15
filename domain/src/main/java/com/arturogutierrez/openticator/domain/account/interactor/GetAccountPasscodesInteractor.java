@@ -3,7 +3,6 @@ package com.arturogutierrez.openticator.domain.account.interactor;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
-import com.arturogutierrez.openticator.domain.category.CategoryFactory;
 import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.domain.otp.OneTimePassword;
@@ -19,17 +18,14 @@ import rx.Observable;
 public class GetAccountPasscodesInteractor extends Interactor<List<AccountPasscode>> {
 
   private final CategorySelector categorySelector;
-  private final CategoryFactory categoryFactory;
   private final AccountRepository accountRepository;
   private final OneTimePasswordFactory oneTimePasswordFactory;
 
   public GetAccountPasscodesInteractor(CategorySelector categorySelector,
-      CategoryFactory categoryFactory, AccountRepository accountRepository,
-      OneTimePasswordFactory oneTimePasswordFactory, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
+      AccountRepository accountRepository, OneTimePasswordFactory oneTimePasswordFactory,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.categorySelector = categorySelector;
-    this.categoryFactory = categoryFactory;
     this.accountRepository = accountRepository;
     this.oneTimePasswordFactory = oneTimePasswordFactory;
   }

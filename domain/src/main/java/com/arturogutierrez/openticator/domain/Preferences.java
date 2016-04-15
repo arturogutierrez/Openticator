@@ -8,5 +8,5 @@ public interface Preferences {
 
   String getMasterPassword();
 
-  void setMasterPassword(String masterPassword);
+  void setMasterPassword(String plainMasterPassword);
 }

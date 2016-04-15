@@ -26,6 +26,6 @@ public class AddAccountModule {
       CategorySelector categorySelector, CategoryFactory categoryFactory,
       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     return new AddAccountInteractor(accountRepository, accountFactory, categoryRepository,
-        categorySelector, categoryFactory, threadExecutor, postExecutionThread);
+        categorySelector, threadExecutor, postExecutionThread);
   }
 }

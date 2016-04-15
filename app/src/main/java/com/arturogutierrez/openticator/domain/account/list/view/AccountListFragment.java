@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -16,6 +19,7 @@ import com.arturogutierrez.openticator.domain.account.list.adapter.AccountViewHo
 import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapter;
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
+import com.arturogutierrez.openticator.domain.backup.BackupManager;
 import com.arturogutierrez.openticator.view.fragment.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
@@ -70,6 +74,24 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   }
 
   @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.account_list, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()){
+      case R.id.action_export:
+        presenter.createBackup();
+        break;
+      case R.id.action_import:
+        break;
+    }
+
+    return false;
+  }
+
+  @Override
   protected void configureUI() {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -81,6 +103,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
     initializeInjector();
     actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     presenter.setView(this);
+    setHasOptionsMenu(true);
   }
 
   private void initializeInjector() {

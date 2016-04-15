@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.domain.account.list;
 
 import android.os.Handler;
 import android.os.Looper;
+import com.arturogutierrez.openticator.domain.account.interactor.CreateExternalBackupInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
@@ -14,6 +15,7 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     implements Presenter {
 
   private final GetAccountPasscodesInteractor getAccountPasscodesInteractor;
+  private final CreateExternalBackupInteractor createExternalBackupInteractor;
   private final RemainingTimeCalculator remainingTimeCalculator;
   private AccountListView view;
   private Handler handler;
@@ -21,8 +23,10 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
 
   @Inject
   public AccountListPresenter(GetAccountPasscodesInteractor getAccountPasscodesInteractor,
+      CreateExternalBackupInteractor createExternalBackupInteractor,
       RemainingTimeCalculator remainingTimeCalculator) {
     this.getAccountPasscodesInteractor = getAccountPasscodesInteractor;
+    this.createExternalBackupInteractor = createExternalBackupInteractor;
     this.remainingTimeCalculator = remainingTimeCalculator;
     this.handler = new Handler(Looper.getMainLooper());
     this.scheduleRunnable = this::reloadPasscodes;
@@ -70,6 +74,10 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     }
   }
 
+  public void createBackup() {
+    createExternalBackupInteractor.execute(new CreateBackupSubscriber());
+  }
+
   private void scheduleUpdate(List<AccountPasscode> accountPasscodes) {
     int delayInSeconds = calculateMinimumSecondsUntilNextRefresh(accountPasscodes);
     handler.postDelayed(scheduleRunnable, delayInSeconds * 1000);
@@ -94,5 +102,8 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     }
 
     return minTime;
+  }
+
+  private class CreateBackupSubscriber extends DefaultSubscriber<String> {
   }
 }

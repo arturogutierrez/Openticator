@@ -3,7 +3,6 @@ package com.arturogutierrez.openticator.domain.account.interactor;
 import com.arturogutierrez.openticator.domain.account.AccountFactory;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
-import com.arturogutierrez.openticator.domain.category.CategoryFactory;
 import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.model.Category;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
@@ -18,20 +17,17 @@ public class AddAccountInteractor extends Interactor<Account> {
   private final AccountFactory accountFactory;
   private final CategoryRepository categoryRepository;
   private final CategorySelector categorySelector;
-  private final CategoryFactory categoryFactory;
 
   private Account newAccount;
 
   public AddAccountInteractor(AccountRepository accountRepository, AccountFactory accountFactory,
       CategoryRepository categoryRepository, CategorySelector categorySelector,
-      CategoryFactory categoryFactory, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.accountRepository = accountRepository;
     this.accountFactory = accountFactory;
     this.categoryRepository = categoryRepository;
     this.categorySelector = categorySelector;
-    this.categoryFactory = categoryFactory;
   }
 
   public void configure(String accountName, String accountSecret) {

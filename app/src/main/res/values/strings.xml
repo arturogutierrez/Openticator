@@ -48,6 +48,8 @@
   <string name="unable_to_decode_qr">Unable to decode QR</string>
 
   <!-- List Accounts -->
+  <string name="collapsed_import">Import…</string>
+  <string name="collapsed_export">Export…</string>
   <string name="edit">Edit</string>
   <string name="delete">Delete</string>
   <string name="category">Category</string>

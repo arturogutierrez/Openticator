@@ -8,6 +8,10 @@ import com.arturogutierrez.openticator.domain.Preferences;
 import com.arturogutierrez.openticator.domain.PreferencesImpl;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepositoryImpl;
+import com.arturogutierrez.openticator.domain.backup.AccountsSerializator;
+import com.arturogutierrez.openticator.domain.backup.AccountsSerializatorImpl;
+import com.arturogutierrez.openticator.domain.backup.JSONEncryptor;
+import com.arturogutierrez.openticator.domain.backup.JSONEncryptorImpl;
 import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepositoryImpl;
@@ -92,5 +96,15 @@ public class ApplicationModule {
   @Provides
   CategorySelector provideCategorySelector() {
     return new CategorySelector();
+  }
+
+  @Provides
+  AccountsSerializator provideAccountSerializator(AccountsSerializatorImpl accountsSerializator) {
+    return accountsSerializator;
+  }
+
+  @Provides
+  JSONEncryptor provideJSONEncryptor(JSONEncryptorImpl jsonEncryptor) {
+    return jsonEncryptor;
   }
 }
