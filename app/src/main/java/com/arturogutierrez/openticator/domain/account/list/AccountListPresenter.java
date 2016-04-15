@@ -5,6 +5,7 @@ import android.os.Looper;
 import com.arturogutierrez.openticator.domain.account.interactor.CreateExternalBackupInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
+import com.arturogutierrez.openticator.domain.backup.exceptions.EncryptionException;
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber;
 import com.arturogutierrez.openticator.view.presenter.Presenter;
@@ -105,5 +106,18 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
   }
 
   private class CreateBackupSubscriber extends DefaultSubscriber<String> {
+    @Override
+    public void onNext(String backupFilePath) {
+      view.showBackupCreated(backupFilePath);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      if (e instanceof EncryptionException) {
+        view.showEncryptionError();
+      } else {
+        view.showUnableToCreateBackupError();
+      }
+    }
   }
 }

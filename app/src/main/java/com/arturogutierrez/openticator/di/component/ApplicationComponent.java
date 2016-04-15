@@ -14,6 +14,7 @@ import com.arturogutierrez.openticator.domain.category.repository.CategoryReposi
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.storage.ExternalStorage;
 import com.arturogutierrez.openticator.view.activity.BaseActivity;
 import com.arturogutierrez.openticator.view.activity.ProxyActivity;
 import dagger.Component;
@@ -52,4 +53,6 @@ public interface ApplicationComponent {
   AccountsSerializator provideAccountSerializator();
 
   JSONEncryptor provideJSONEncryptor();
+
+  ExternalStorage provideExternalStorage();
 }

@@ -21,6 +21,8 @@ import com.arturogutierrez.openticator.executor.JobExecutor;
 import com.arturogutierrez.openticator.executor.MainThread;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.storage.ExternalStorage;
+import com.arturogutierrez.openticator.storage.ExternalStorageImpl;
 import com.arturogutierrez.openticator.storage.RealmDatabaseConfigurator;
 import dagger.Module;
 import dagger.Provides;
@@ -106,5 +108,10 @@ public class ApplicationModule {
   @Provides
   JSONEncryptor provideJSONEncryptor(JSONEncryptorImpl jsonEncryptor) {
     return jsonEncryptor;
+  }
+
+  @Provides
+  ExternalStorage provideExternalStorage(ExternalStorageImpl externalStorage) {
+    return externalStorage;
   }
 }
