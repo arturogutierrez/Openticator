@@ -4,7 +4,6 @@ import com.arturogutierrez.openticator.domain.account.AccountFactory;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.domain.account.model.OTPType;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
-import com.arturogutierrez.openticator.domain.category.CategoryFactory;
 import com.arturogutierrez.openticator.domain.category.CategorySelector;
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
@@ -47,7 +46,7 @@ public class AddAccountInteractorTest {
 
     addAccountInteractor =
         new AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockCategoryRepository,
-            new CategorySelector(), new CategoryFactory(), mockThreadExecutor,
+            new CategorySelector(), mockThreadExecutor,
             mockPostExecutionThread);
   }
 

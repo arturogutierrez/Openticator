@@ -48,6 +48,8 @@
   <string name="unable_to_decode_qr">Unable to decode QR</string>
 
   <!-- List Accounts -->
+  <string name="collapsed_import">Import…</string>
+  <string name="collapsed_export">Export…</string>
   <string name="edit">Edit</string>
   <string name="delete">Delete</string>
   <string name="category">Category</string>
@@ -70,5 +72,14 @@
   <string name="microsoft">Microsoft</string>
   <string name="slack">Slack</string>
   <string name="wordpress">WordPress</string>
+
+  <!-- Backup -->
+  <string name="backup_created_successfully">Backup created successfully in %s.</string>
+  <string name="error_encrypting_backup">Unable to create backup due to an error in the encryption.
+    Please, contact me to try to resolve the problem with this device.
+  </string>
+  <string name="error_creating_backup_file">Unable to create the backup file in your external
+    storage. Please, check there is free space or if the external storage is unmounted.
+  </string>
 
 </resources>

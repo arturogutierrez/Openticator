@@ -10,4 +10,10 @@ public interface AccountListView {
   void renderAccounts(List<AccountPasscode> accounts);
 
   void startEditMode();
+
+  void showBackupCreated(String backupFilePath);
+
+  void showEncryptionError();
+
+  void showUnableToCreateBackupError();
 }

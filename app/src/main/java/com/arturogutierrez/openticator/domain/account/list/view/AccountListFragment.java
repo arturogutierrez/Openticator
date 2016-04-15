@@ -2,10 +2,15 @@ package com.arturogutierrez.openticator.domain.account.list.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -70,6 +75,24 @@ public class AccountListFragment extends BaseFragment implements AccountListView
   }
 
   @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.account_list, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_export:
+        presenter.createBackup();
+        break;
+      case R.id.action_import:
+        break;
+    }
+
+    return false;
+  }
+
+  @Override
   protected void configureUI() {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -81,6 +104,7 @@ public class AccountListFragment extends BaseFragment implements AccountListView
     initializeInjector();
     actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     presenter.setView(this);
+    setHasOptionsMenu(true);
   }
 
   private void initializeInjector() {
@@ -109,6 +133,22 @@ public class AccountListFragment extends BaseFragment implements AccountListView
           new AccountEditActionMode(getComponent(), accountsAdapter);
       activity.startSupportActionMode(accountEditActionMode);
     }
+  }
+
+  @Override
+  public void showBackupCreated(String backupFilePath) {
+    String message = getContext().getString(R.string.backup_created_successfully, backupFilePath);
+    Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showEncryptionError() {
+    Snackbar.make(coordinatorLayout, R.string.error_encrypting_backup, Snackbar.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void showUnableToCreateBackupError() {
+    Snackbar.make(coordinatorLayout, R.string.error_creating_backup_file, Snackbar.LENGTH_LONG).show();
   }
 
   private void showEmptyView() {

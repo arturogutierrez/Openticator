@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,9 @@ import com.arturogutierrez.openticator.domain.navigator.Navigator;
 import javax.inject.Inject;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+  @Bind(R.id.coordinator_layout)
+  CoordinatorLayout coordinatorLayout;
 
   @Nullable
   @Bind(R.id.toolbar)
@@ -45,6 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  public CoordinatorLayout getCoordinatorLayout() {
+    return coordinatorLayout;
   }
 
   protected ApplicationComponent getApplicationComponent() {
