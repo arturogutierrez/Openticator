@@ -7,6 +7,7 @@ import com.arturogutierrez.openticator.domain.account.interactor.CreateExternalB
 import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor;
+import com.arturogutierrez.openticator.domain.account.interactor.ImportExternalBackupInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor;
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository;
 import com.arturogutierrez.openticator.domain.backup.BackupManager;
@@ -103,5 +104,12 @@ public class AccountListModule {
       PostExecutionThread postExecutionThread) {
     return new CreateExternalBackupInteractor(backupManager, preferences, threadExecutor,
         postExecutionThread);
+  }
+
+  @Provides
+  @PerActivity
+  ImportExternalBackupInteractor provideImportExternalBackupInteractor(BackupManager backupManager,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    return new ImportExternalBackupInteractor(backupManager, threadExecutor, postExecutionThread);
   }
 }

@@ -2,8 +2,10 @@ package com.arturogutierrez.openticator.domain.account.list;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import com.arturogutierrez.openticator.domain.account.interactor.CreateExternalBackupInteractor;
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor;
+import com.arturogutierrez.openticator.domain.account.interactor.ImportExternalBackupInteractor;
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode;
 import com.arturogutierrez.openticator.domain.backup.exceptions.EncryptionException;
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator;
@@ -17,6 +19,7 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
 
   private final GetAccountPasscodesInteractor getAccountPasscodesInteractor;
   private final CreateExternalBackupInteractor createExternalBackupInteractor;
+  private final ImportExternalBackupInteractor importExternalBackupInteractor;
   private final RemainingTimeCalculator remainingTimeCalculator;
   private AccountListView view;
   private Handler handler;
@@ -25,9 +28,11 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
   @Inject
   public AccountListPresenter(GetAccountPasscodesInteractor getAccountPasscodesInteractor,
       CreateExternalBackupInteractor createExternalBackupInteractor,
+      ImportExternalBackupInteractor importExternalBackupInteractor,
       RemainingTimeCalculator remainingTimeCalculator) {
     this.getAccountPasscodesInteractor = getAccountPasscodesInteractor;
     this.createExternalBackupInteractor = createExternalBackupInteractor;
+    this.importExternalBackupInteractor = importExternalBackupInteractor;
     this.remainingTimeCalculator = remainingTimeCalculator;
     this.handler = new Handler(Looper.getMainLooper());
     this.scheduleRunnable = this::reloadPasscodes;
@@ -79,6 +84,11 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
     createExternalBackupInteractor.execute(new CreateBackupSubscriber());
   }
 
+  public void importBackup(String password) {
+    importExternalBackupInteractor.configure(password);
+    importExternalBackupInteractor.execute(new ImportBackupSubscriber());
+  }
+
   private void scheduleUpdate(List<AccountPasscode> accountPasscodes) {
     int delayInSeconds = calculateMinimumSecondsUntilNextRefresh(accountPasscodes);
     handler.postDelayed(scheduleRunnable, delayInSeconds * 1000);
@@ -118,6 +128,19 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
       } else {
         view.showUnableToCreateBackupError();
       }
+    }
+  }
+
+  private class ImportBackupSubscriber extends DefaultSubscriber<Integer> {
+    @Override
+    public void onNext(Integer numAccountsImported) {
+      // TODO:
+      Log.d("ImportBackupSubscriber", numAccountsImported + " accounts imported");
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      e.printStackTrace();
     }
   }
 }

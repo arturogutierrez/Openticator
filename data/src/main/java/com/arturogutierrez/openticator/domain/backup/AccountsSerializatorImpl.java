@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.backup;
 
+import android.util.Log;
 import com.arturogutierrez.openticator.domain.account.model.Account;
 import com.arturogutierrez.openticator.storage.export.mapper.AccountEntityMapper;
 import com.arturogutierrez.openticator.storage.export.model.AccountEntity;

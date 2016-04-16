@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.arturogutierrez.openticator.R;
+import com.arturogutierrez.openticator.domain.Preferences;
 import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter;
 import com.arturogutierrez.openticator.domain.account.list.AccountListView;
 import com.arturogutierrez.openticator.domain.account.list.adapter.AccountViewHolder;
@@ -29,6 +29,8 @@ public class AccountListFragment extends BaseFragment implements AccountListView
 
   @Inject
   AccountListPresenter presenter;
+  @Inject
+  Preferences preferences;
 
   @Bind(R.id.rv_accounts)
   RecyclerView rvAccounts;
@@ -86,6 +88,8 @@ public class AccountListFragment extends BaseFragment implements AccountListView
         presenter.createBackup();
         break;
       case R.id.action_import:
+        // TODO: Ask password to the user
+        presenter.importBackup(preferences.getMasterPassword());
         break;
     }
 
