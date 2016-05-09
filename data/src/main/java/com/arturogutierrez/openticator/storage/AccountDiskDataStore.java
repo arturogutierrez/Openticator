@@ -92,11 +92,11 @@ public class AccountDiskDataStore implements AccountDataStore {
 
   @Override
   public Observable<List<Account>> getAllAccounts() {
-    return changesPublishSubject.map(aVoid -> getAccountsForCategoryAsBlocking())
-        .startWith(Observable.fromCallable(() -> getAccountsForCategoryAsBlocking()));
+    return changesPublishSubject.map(aVoid -> getAccountsAsBlocking())
+        .startWith(Observable.fromCallable(this::getAccountsAsBlocking));
   }
 
-  private List<Account> getAccountsForCategoryAsBlocking() {
+  private List<Account> getAccountsAsBlocking() {
     Realm realm = Realm.getDefaultInstance();
     realm.refresh();
     RealmResults<AccountRealm> realmResults =
