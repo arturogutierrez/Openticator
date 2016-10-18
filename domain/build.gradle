@@ -2,9 +2,9 @@ apply plugin: 'kotlin'
 apply plugin: 'java'
 
 //noinspection GroovyUnusedAssignment
-sourceCompatibility = 1.7
+sourceCompatibility = JavaVersion.VERSION_1_7
 //noinspection GroovyUnusedAssignment
-targetCompatibility = 1.7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 configurations {
   provided
