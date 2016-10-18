@@ -7,5 +7,5 @@ interface Preferences {
 
     fun reset()
 
-    var masterPassword: String
+    var masterPassword: String?
 }

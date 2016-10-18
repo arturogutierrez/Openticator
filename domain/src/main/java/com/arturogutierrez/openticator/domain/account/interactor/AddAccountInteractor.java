@@ -46,9 +46,9 @@ public class AddAccountInteractor extends Interactor<Account> {
     }
 
     return categorySelector.getSelectedCategory()
-        .flatMap(new Func1<Category, Observable<? extends Account>>() {
+        .flatMap(new Func1<Category, Observable<Account>>() {
           @Override
-          public Observable<? extends Account> call(final Category category) {
+          public Observable<Account> call(final Category category) {
             Category emptyCategory = categoryFactory.createEmptyCategory();
             if (category.equals(emptyCategory)) {
               return accountRepository.add(newAccount);
