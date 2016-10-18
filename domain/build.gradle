@@ -26,4 +26,5 @@ dependencies {
   testCompile domainDependencies.kotlinStdLib
   testCompile domainTestDependencies.junit
   testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.hamkrest
 }

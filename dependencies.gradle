@@ -8,7 +8,7 @@ allprojects {
 ext {
   // Kotlin
   kotlinVersion = '1.0.3'
-  
+
   // SDK version
   androidBuildToolsVersion = "23.0.3"
   androidMinSdkVersion = 16
@@ -43,6 +43,7 @@ ext {
   assertJVersion = '1.7.1'
   mockitoVersion = '1.9.5'
   powerMockitoVersion = '1.6.2'
+  hamkrestVersion = '1.2.3.0'
 
   presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                               daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -71,6 +72,7 @@ ext {
   domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                             junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
                             junit       : "junit:junit:${jUnitVersion}",
+                            hamkrest    : "com.natpryce:hamkrest:${hamkrestVersion}",
                             mockito     : "org.mockito:mockito-core:${mockitoVersion}",]
 
   dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
