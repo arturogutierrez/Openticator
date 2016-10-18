@@ -20,7 +20,6 @@ android {
   }
 
   dexOptions {
-    incremental true
     preDexLibraries false
   }
 

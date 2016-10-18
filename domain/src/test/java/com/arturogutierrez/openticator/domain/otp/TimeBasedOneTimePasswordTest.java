@@ -1,11 +1,11 @@
 package com.arturogutierrez.openticator.domain.otp;
 
 import com.arturogutierrez.openticator.domain.otp.model.Passcode;
-import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
+import com.arturogutierrez.openticator.domain.otp.time.StubTimeProvider;
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator;
+import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,24 +16,20 @@ public class TimeBasedOneTimePasswordTest {
 
   private static int TIME_STEP_LENGTH = 30;
 
-  private TimeBasedOneTimePassword timeBasedOneTimePassword;
-  @Mock
-  private CurrentTimeProvider timeProvider;
+  private OneTimePasswordGenerator oneTimePasswordGenerator;
+  private TimeCalculator timeCalculator;
 
   @Before
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
-
-    OneTimePasswordGenerator oneTimePasswordGenerator =
-        new OneTimePasswordGenerator("ABCDEFGHIJK23456", 6);
-    TimeCalculator timeCalculator = new TimeCalculator(timeProvider, TIME_STEP_LENGTH, 0);
-    timeBasedOneTimePassword =
-        new TimeBasedOneTimePassword(oneTimePasswordGenerator, timeCalculator);
+    oneTimePasswordGenerator = new OneTimePasswordGenerator("ABCDEFGHIJK23456", 6);
+    timeCalculator = new TimeCalculator(TIME_STEP_LENGTH, 0);
   }
 
   @Test
   public void testCodeForFirstStep() {
-    when(timeProvider.getCurrentTimeInSeconds()).thenReturn((long) TIME_STEP_LENGTH);
+    TimeProvider timeProvider = new StubTimeProvider(TIME_STEP_LENGTH);
+    TimeBasedOneTimePassword timeBasedOneTimePassword =
+        new TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator, timeCalculator);
 
     Passcode passcode = timeBasedOneTimePassword.generate();
 
@@ -42,7 +38,9 @@ public class TimeBasedOneTimePasswordTest {
 
   @Test
   public void testCodeForSecondStep() {
-    when(timeProvider.getCurrentTimeInSeconds()).thenReturn((long) TIME_STEP_LENGTH * 2);
+    TimeProvider timeProvider = new StubTimeProvider(TIME_STEP_LENGTH * 2);
+    TimeBasedOneTimePassword timeBasedOneTimePassword =
+        new TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator, timeCalculator);
 
     Passcode passcode = timeBasedOneTimePassword.generate();
 

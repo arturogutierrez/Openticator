@@ -6,6 +6,9 @@ allprojects {
 }
 
 ext {
+  // Kotlin
+  kotlinVersion = '1.0.3'
+  
   // SDK version
   androidBuildToolsVersion = "23.0.3"
   androidMinSdkVersion = 16
@@ -41,7 +44,8 @@ ext {
   mockitoVersion = '1.9.5'
   powerMockitoVersion = '1.6.2'
 
-  presentationDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                              daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger         : "com.google.dagger:dagger:${daggerVersion}",
                               rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
                               rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
@@ -58,15 +62,19 @@ ext {
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
                               materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar"]
 
-  domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                        daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
                         javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                         rxJava         : "io.reactivex:rxjava:${rxJavaVersion}"]
 
-  domainTestDependencies = [junit  : "junit:junit:${jUnitVersion}",
-                            mockito: "org.mockito:mockito-core:${mockitoVersion}",]
+  domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                            junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+                            junit       : "junit:junit:${jUnitVersion}",
+                            mockito     : "org.mockito:mockito-core:${mockitoVersion}",]
 
-  dataDependencies = [daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                      daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
                       dagger            : "com.google.dagger:dagger:${daggerVersion}",
                       rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
@@ -74,7 +82,8 @@ ext {
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
                       realm             : "io.realm:realm-android:${realmVersion}"]
 
-  dataTestDependencies = [junit              : "junit:junit:${jUnitVersion}",
+  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                          junit              : "junit:junit:${jUnitVersion}",
                           assertj            : "org.assertj:assertj-core:${assertJVersion}",
                           mockito            : "org.mockito:mockito-core:${mockitoVersion}",
                           robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
