@@ -2,9 +2,9 @@ package com.arturogutierrez.openticator.interactor
 
 import rx.Observer
 
-abstract class DefaultSubscriber<T> : Observer<T> {
+abstract class DefaultSubscriber<U> : Observer<U> {
 
-    override fun onNext(t: T) {
+    override fun onNext(item: U) {
         // Do nothing by default
     }
 
