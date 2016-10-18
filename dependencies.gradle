@@ -10,17 +10,17 @@ ext {
   kotlinVersion = '1.0.3'
 
   // SDK version
-  androidBuildToolsVersion = "23.0.3"
+  androidBuildToolsVersion = "24.0.3"
   androidMinSdkVersion = 16
-  androidTargetSdkVersion = 23
-  androidCompileSdkVersion = 23
+  androidTargetSdkVersion = 24
+  androidCompileSdkVersion = 24
 
   // Google Libraries
-  supportVersion = '23.2.1'
-  appCompatVersion = '23.2.1'
-  recyclerViewVersion = '23.2.1'
-  cardViewVersion = '23.2.1'
-  designVersion = '23.2.1'
+  supportVersion = '24.2.1'
+  appCompatVersion = '24.2.1'
+  recyclerViewVersion = '24.2.1'
+  cardViewVersion = '24.2.1'
+  designVersion = '24.2.1'
 
   // Libraries
   daggerVersion = '2.0.2'

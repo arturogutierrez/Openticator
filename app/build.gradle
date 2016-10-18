@@ -18,7 +18,7 @@ android {
     versionName globalConfiguration.getAt("androidVersionName")
 
     // Vector Drawables for Gradle 2.0.
-    // Compat toolbar use it internalle
+    // Compat toolbar use it internally
     vectorDrawables.useSupportLibrary = true
   }
 
