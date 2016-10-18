@@ -56,7 +56,7 @@ public class ApplicationModule {
   @Provides
   @Singleton
   SharedPreferences provideSharedPreferences(Context context) {
-    return context.getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE);
+    return context.getSharedPreferences(Preferences.Companion.getPreferencesName(), Context.MODE_PRIVATE);
   }
 
   @Provides

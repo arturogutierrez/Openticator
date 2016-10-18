@@ -5,7 +5,6 @@ import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 data class Account @JvmOverloads constructor(val accountId: String, val name: String,
                                              val type: OTPType, val secret: String,
                                              val issuer: Issuer, val order: Int = maxOrder) {
-
     companion object {
         val maxOrder = Int.MAX_VALUE
     }
