@@ -4,8 +4,9 @@ import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider
 import com.arturogutierrez.openticator.domain.otp.time.TimeCalculator
+import javax.inject.Inject
 
-class OneTimePasswordFactory {
+class OneTimePasswordFactory @Inject constructor() {
 
     companion object {
         private val DEFAULT_TIME_STEP_LENGTH = 30

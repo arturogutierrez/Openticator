@@ -1,6 +1,5 @@
 apply plugin: 'kotlin'
 apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
 
 configurations {
   provided

@@ -50,7 +50,7 @@ public class AccountViewHolder extends RecyclerView.ViewHolder {
     itemView.setSelected(isSelected);
 
     int animationLength =
-        calculateRemainingSeconds(accountPasscode.getPasscode().getValidUntilInSeconds());
+        calculateRemainingSeconds(accountPasscode.getPasscode().getValidUntil());
     startAnimation(animationLength);
   }
 

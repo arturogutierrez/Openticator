@@ -89,7 +89,7 @@ public class AccountListPresenter extends DefaultSubscriber<List<AccountPasscode
 
     for (AccountPasscode accountPasscode : accountPasscodes) {
       int remainingTimeInSeconds = remainingTimeCalculator.calculateRemainingSeconds(
-          accountPasscode.getPasscode().getValidUntilInSeconds());
+          accountPasscode.getPasscode().getValidUntil());
       minTime = Math.min(minTime, remainingTimeInSeconds);
     }
 
