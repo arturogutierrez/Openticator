@@ -1,13 +1,17 @@
 apply from: 'dependencies.gradle'
 
 buildscript {
+
+  ext.kotlin_version = '1.0.4'
+
   repositories {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.2'
+    classpath 'com.android.tools.build:gradle:2.2.1'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
+    classpath 'me.tatarka:gradle-retrolambda:3.3.0'
   }
 }
 

@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PasswordSerializerTest extends ApplicationTestCase {
@@ -16,13 +15,6 @@ public class PasswordSerializerTest extends ApplicationTestCase {
   @Before
   public void setUp() {
     passwordSerializer = new PasswordSerializerImpl();
-  }
-
-  @Test
-  public void testNullPasswordReturnNullSerialization() {
-    String encodedPassword = passwordSerializer.encodePassword(null);
-
-    assertThat(encodedPassword, is(nullValue()));
   }
 
   @Test

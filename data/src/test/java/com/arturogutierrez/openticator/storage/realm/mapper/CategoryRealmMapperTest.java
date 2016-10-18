@@ -31,6 +31,7 @@ public class CategoryRealmMapperTest extends ApplicationTestCase {
 
   @Test
   public void testCategoryToRealm() {
+    // TODO: Remove last argument (false) when converted to Kotlin
     Category category = new Category(FAKE_ID, FAKE_NAME);
 
     CategoryRealm categoryRealm = categoryRealmMapper.transform(category);

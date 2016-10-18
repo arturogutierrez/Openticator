@@ -8,6 +8,7 @@ import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.interactor.Interactor;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class AddCategoryInteractor extends Interactor<Category> {
 
@@ -36,7 +37,11 @@ public class AddCategoryInteractor extends Interactor<Category> {
       throw new IllegalStateException("You must call configure before execute the interactor");
     }
 
-    return categoryRepository.add(newCategory)
-        .flatMap(category -> categoryRepository.addAccount(category, accountToAddToCategory));
+    return categoryRepository.add(newCategory).flatMap(new Func1<Category, Observable<Category>>() {
+      @Override
+      public Observable<Category> call(Category category) {
+        return categoryRepository.addAccount(category, accountToAddToCategory);
+      }
+    });
   }
 }

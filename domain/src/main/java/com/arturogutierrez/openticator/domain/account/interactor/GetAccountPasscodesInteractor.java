@@ -15,6 +15,7 @@ import com.arturogutierrez.openticator.interactor.Interactor;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class GetAccountPasscodesInteractor extends Interactor<List<AccountPasscode>> {
 
@@ -36,13 +37,23 @@ public class GetAccountPasscodesInteractor extends Interactor<List<AccountPassco
 
   @Override
   public Observable<List<AccountPasscode>> createObservable() {
-    return categorySelector.getSelectedCategory().flatMap(category -> {
-      Category emptyCategory = categoryFactory.createEmptyCategory();
-      if (category.equals(emptyCategory)) {
-        return accountRepository.getAllAccounts();
-      }
-      return accountRepository.getAccounts(category);
-    }).map(this::calculatePasscodes);
+    return categorySelector.getSelectedCategory()
+        .flatMap(new Func1<Category, Observable<List<Account>>>() {
+          @Override
+          public Observable<List<Account>> call(Category category) {
+            Category emptyCategory = categoryFactory.createEmptyCategory();
+            if (category.equals(emptyCategory)) {
+              return accountRepository.getAllAccounts();
+            }
+            return accountRepository.getAccounts(category);
+          }
+        })
+        .map(new Func1<List<Account>, List<AccountPasscode>>() {
+          @Override
+          public List<AccountPasscode> call(List<Account> accountList) {
+            return GetAccountPasscodesInteractor.this.calculatePasscodes(accountList);
+          }
+        });
   }
 
   private List<AccountPasscode> calculatePasscodes(List<Account> accountList) {

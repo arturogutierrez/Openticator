@@ -11,6 +11,7 @@ import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import com.arturogutierrez.openticator.interactor.Interactor;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class AddAccountInteractor extends Interactor<Account> {
 
@@ -44,15 +45,30 @@ public class AddAccountInteractor extends Interactor<Account> {
       throw new IllegalStateException("You must call configure before execute the interactor");
     }
 
-    return categorySelector.getSelectedCategory().flatMap(category -> {
-      Category emptyCategory = categoryFactory.createEmptyCategory();
-      if (category.equals(emptyCategory)) {
-        return accountRepository.add(newAccount);
-      }
+    return categorySelector.getSelectedCategory()
+        .flatMap(new Func1<Category, Observable<? extends Account>>() {
+          @Override
+          public Observable<? extends Account> call(final Category category) {
+            Category emptyCategory = categoryFactory.createEmptyCategory();
+            if (category.equals(emptyCategory)) {
+              return accountRepository.add(newAccount);
+            }
 
-      return accountRepository.add(newAccount)
-          .flatMap(createdAccount -> categoryRepository.addAccount(category, createdAccount)
-              .flatMap(categoryWhereAccountJustAdded -> Observable.just(createdAccount)));
-    });
+            return accountRepository.add(newAccount)
+                .flatMap(new Func1<Account, Observable<Account>>() {
+                  @Override
+                  public Observable<Account> call(final Account createdAccount) {
+                    return categoryRepository.addAccount(category, createdAccount)
+                        .flatMap(new Func1<Category, Observable<Account>>() {
+                          @Override
+                          public Observable<Account> call(
+                              Category categoryWhereAccountJustAdded) {
+                            return Observable.just(createdAccount);
+                          }
+                        });
+                  }
+                });
+          }
+        });
   }
 }
