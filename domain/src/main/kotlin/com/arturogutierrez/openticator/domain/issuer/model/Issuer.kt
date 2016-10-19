@@ -17,6 +17,9 @@ enum class Issuer(val identifier: String) {
 
     companion object {
         private val map = Issuer.values().associateBy(Issuer::identifier)
-        fun fromString(identifier: String) = map[identifier]
+        fun fromString(identifier: String): Issuer {
+            val issuer = map[identifier]
+            return issuer ?: UNKNOWN
+        }
     }
 }
