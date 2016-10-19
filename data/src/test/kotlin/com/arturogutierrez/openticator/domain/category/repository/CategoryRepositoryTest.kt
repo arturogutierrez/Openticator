@@ -13,13 +13,13 @@ class CategoryRepositoryTest : ApplicationTestCase() {
 
     private lateinit var categoryRepository: CategoryRepository
     @Mock
-    private lateinit var mockCategoryDiskDataStore: CategoryDiskDataStore
+    private lateinit var mockCategoryDataStore: CategoryDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        categoryRepository = CategoryRepositoryImpl(mockCategoryDiskDataStore)
+        categoryRepository = CategoryRepositoryImpl(mockCategoryDataStore)
     }
 
     @Test
@@ -28,13 +28,13 @@ class CategoryRepositoryTest : ApplicationTestCase() {
 
         categoryRepository.add(category)
 
-        verify<CategoryDiskDataStore>(mockCategoryDiskDataStore).add(category)
+        verify<CategoryDataStore>(mockCategoryDataStore).add(category)
     }
 
     @Test
     fun testGetCategories() {
         categoryRepository.categories
 
-        verify<CategoryDiskDataStore>(mockCategoryDiskDataStore).categories
+        verify<CategoryDataStore>(mockCategoryDataStore).categories
     }
 }

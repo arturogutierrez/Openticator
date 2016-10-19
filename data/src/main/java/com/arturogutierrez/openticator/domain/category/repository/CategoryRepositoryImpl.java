@@ -12,8 +12,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
   private final CategoryDataStore categoryDataStore;
 
   @Inject
-  public CategoryRepositoryImpl(CategoryDiskDataStore categoryDiskDataStore) {
-    this.categoryDataStore = categoryDiskDataStore;
+  public CategoryRepositoryImpl(CategoryDataStore categoryDataStore) {
+    this.categoryDataStore = categoryDataStore;
   }
 
   @Override

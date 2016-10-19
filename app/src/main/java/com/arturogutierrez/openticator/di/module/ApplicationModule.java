@@ -17,6 +17,8 @@ import com.arturogutierrez.openticator.executor.JobExecutor;
 import com.arturogutierrez.openticator.executor.MainThread;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
+import com.arturogutierrez.openticator.storage.AccountDiskDataStore;
+import com.arturogutierrez.openticator.storage.CategoryDiskDataStore;
 import com.arturogutierrez.openticator.storage.RealmDatabaseConfigurator;
 import dagger.Module;
 import dagger.Provides;
@@ -72,14 +74,14 @@ public class ApplicationModule {
 
   @Singleton
   @Provides
-  AccountRepository provideAccountRepository(AccountRepositoryImpl accountRepository) {
-    return accountRepository;
+  AccountRepository provideAccountRepository(AccountDiskDataStore accountDiskDataStore) {
+    return new AccountRepositoryImpl(accountDiskDataStore);
   }
 
   @Singleton
   @Provides
-  CategoryRepository provideCategoryRepository(CategoryRepositoryImpl categoryRepository) {
-    return categoryRepository;
+  CategoryRepository provideCategoryRepository(CategoryDiskDataStore categoryDiskDataStore) {
+    return new CategoryRepositoryImpl(categoryDiskDataStore);
   }
 
   @Singleton

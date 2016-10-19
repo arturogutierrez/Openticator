@@ -4,25 +4,23 @@ import com.arturogutierrez.openticator.ApplicationTestCase
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
-import com.arturogutierrez.openticator.storage.AccountDiskDataStore
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-
 import org.mockito.Mockito.verify
+import org.mockito.MockitoAnnotations
 
 class AccountRepositoryTest : ApplicationTestCase() {
 
     private lateinit var accountRepository: AccountRepository
     @Mock
-    private lateinit var accountDiskDataStore: AccountDiskDataStore
+    private lateinit var mockAccountDataStore: AccountDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        accountRepository = AccountRepositoryImpl(accountDiskDataStore)
+        accountRepository = AccountRepositoryImpl(mockAccountDataStore)
     }
 
     @Test
@@ -31,13 +29,13 @@ class AccountRepositoryTest : ApplicationTestCase() {
 
         accountRepository.add(account)
 
-        verify<AccountDiskDataStore>(accountDiskDataStore).add(account)
+        verify<AccountDataStore>(mockAccountDataStore).add(account)
     }
 
     @Test
     fun testGetAccounts() {
         accountRepository.allAccounts
 
-        verify<AccountDiskDataStore>(accountDiskDataStore).allAccounts
+        verify<AccountDataStore>(mockAccountDataStore).allAccounts
     }
 }
