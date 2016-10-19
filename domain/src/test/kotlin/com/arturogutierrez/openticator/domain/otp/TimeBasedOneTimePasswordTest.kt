@@ -21,7 +21,7 @@ class TimeBasedOneTimePasswordTest {
     @Test
     fun testCodeForFirstStep() {
         val timeProvider = StubTimeProvider(TIME_STEP_LENGTH.toLong())
-        val timeBasedOneTimePassword = TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator!!, timeCalculator!!)
+        val timeBasedOneTimePassword = TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator, timeCalculator)
 
         val passcode = timeBasedOneTimePassword.generate()
 
@@ -31,7 +31,7 @@ class TimeBasedOneTimePasswordTest {
     @Test
     fun testCodeForSecondStep() {
         val timeProvider = StubTimeProvider((TIME_STEP_LENGTH * 2).toLong())
-        val timeBasedOneTimePassword = TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator!!, timeCalculator!!)
+        val timeBasedOneTimePassword = TimeBasedOneTimePassword(timeProvider, oneTimePasswordGenerator, timeCalculator)
 
         val passcode = timeBasedOneTimePassword.generate()
 

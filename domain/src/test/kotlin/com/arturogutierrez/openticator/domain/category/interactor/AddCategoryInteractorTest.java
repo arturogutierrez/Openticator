@@ -9,9 +9,7 @@ import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import rx.Observable;
@@ -33,9 +31,6 @@ public class AddCategoryInteractorTest {
   private PostExecutionThread mockPostExecutionThread;
 
   private AddCategoryInteractor addCategoryInteractor;
-
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
 
   @Before
   public void setUp() {
@@ -59,12 +54,5 @@ public class AddCategoryInteractorTest {
     verify(mockCategoryRepository).add(category);
     verifyZeroInteractions(mockThreadExecutor);
     verifyZeroInteractions(mockPostExecutionThread);
-  }
-
-  @Test
-  public void testExceptionRaisedWhenAddNewAccountWithNoConfiguration() {
-    expectedException.expect(IllegalStateException.class);
-
-    addCategoryInteractor.createObservable();
   }
 }

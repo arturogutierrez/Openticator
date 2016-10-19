@@ -41,7 +41,7 @@ ext {
   robolectricVersion = '3.0'
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
-  mockitoVersion = '1.9.5'
+  mockitoVersion = '2.2.5'
   powerMockitoVersion = '1.6.2'
   hamkrestVersion = '1.2.3.0'
 

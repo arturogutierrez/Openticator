@@ -25,7 +25,7 @@ class IssuerDecoder @Inject constructor() {
     }
 
     fun decode(accountName: String, issuerText: String): Issuer {
-        val issuer = decode(issuerText)
+        val issuer = decode(issuerText.toLowerCase())
         if (issuer != Issuer.UNKNOWN) {
             return issuer
         }

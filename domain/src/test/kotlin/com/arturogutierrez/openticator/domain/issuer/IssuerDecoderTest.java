@@ -17,13 +17,6 @@ public class IssuerDecoderTest {
   }
 
   @Test
-  public void testNullIssuerTextAndNullAccountNameIsUnknown() {
-    Issuer issuer = issuerDecoder.decode(null, null);
-
-    assertThat(issuer, is(Issuer.UNKNOWN));
-  }
-
-  @Test
   public void testEmptyTextsIsUnknown() {
     Issuer issuer = issuerDecoder.decode("", "");
 
@@ -32,107 +25,107 @@ public class IssuerDecoderTest {
 
   @Test
   public void testMatchFullIssuerText() {
-    Issuer issuer = issuerDecoder.decode(null, "google");
+    Issuer issuer = issuerDecoder.decode("", "google");
 
     assertThat(issuer, is(Issuer.GOOGLE));
   }
 
   @Test
   public void testMatchPartialIssuerText() {
-    Issuer issuer = issuerDecoder.decode(null, "a google b");
+    Issuer issuer = issuerDecoder.decode("", "a google b");
 
     assertThat(issuer, is(Issuer.GOOGLE));
   }
 
   @Test
   public void testMatchFullAccountNameText() {
-    Issuer issuer = issuerDecoder.decode("google", null);
+    Issuer issuer = issuerDecoder.decode("google", "");
 
     assertThat(issuer, is(Issuer.GOOGLE));
   }
 
   @Test
   public void testMatchPartialAccountNameText() {
-    Issuer issuer = issuerDecoder.decode("a google b", null);
+    Issuer issuer = issuerDecoder.decode("a google b", "");
 
     assertThat(issuer, is(Issuer.GOOGLE));
   }
 
   @Test
   public void testAWSAccountName() {
-    Issuer issuer = issuerDecoder.decode("root-account-mfa-device@1234567890", null);
+    Issuer issuer = issuerDecoder.decode("root-account-mfa-device@1234567890", "");
 
     assertThat(issuer, is(Issuer.AWS));
   }
 
   @Test
   public void testBitcoinIssuer() {
-    Issuer issuer = issuerDecoder.decode("local-bitcoins-account", null);
+    Issuer issuer = issuerDecoder.decode("local-bitcoins-account", "");
 
     assertThat(issuer, is(Issuer.BITCOIN));
   }
 
   @Test
   public void testDigitalOceanIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "digital ocean");
-    Issuer issuer2 = issuerDecoder.decode(null, "DigitalOcean");
+    Issuer issuer = issuerDecoder.decode("", "digital ocean");
+    Issuer issuer2 = issuerDecoder.decode("", "DigitalOcean");
 
     assertThat(issuer, is(Issuer.DIGITALOCEAN));
-    assertThat(issuer, is(Issuer.DIGITALOCEAN));
+    assertThat(issuer2, is(Issuer.DIGITALOCEAN));
   }
 
   @Test
   public void testDropboxIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "dropbox");
+    Issuer issuer = issuerDecoder.decode("", "dropbox");
 
     assertThat(issuer, is(Issuer.DROPBOX));
   }
 
   @Test
   public void testEvernoteIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "evernote");
+    Issuer issuer = issuerDecoder.decode("", "evernote");
 
     assertThat(issuer, is(Issuer.EVERNOTE));
   }
 
   @Test
   public void testFacebookIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "facebook");
+    Issuer issuer = issuerDecoder.decode("", "facebook");
 
     assertThat(issuer, is(Issuer.FACEBOOK));
   }
 
   @Test
   public void testGitHubIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "github");
+    Issuer issuer = issuerDecoder.decode("", "github");
 
     assertThat(issuer, is(Issuer.GITHUB));
   }
 
   @Test
   public void testGoogleIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "google");
+    Issuer issuer = issuerDecoder.decode("", "google");
 
     assertThat(issuer, is(Issuer.GOOGLE));
   }
 
   @Test
   public void testMicrosoftIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "microsoft");
+    Issuer issuer = issuerDecoder.decode("", "microsoft");
 
     assertThat(issuer, is(Issuer.MICROSOFT));
   }
 
   @Test
   public void testSlackIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "slack");
+    Issuer issuer = issuerDecoder.decode("", "slack");
 
     assertThat(issuer, is(Issuer.SLACK));
   }
 
   @Test
   public void testWordpressIssuer() {
-    Issuer issuer = issuerDecoder.decode(null, "wordpress");
+    Issuer issuer = issuerDecoder.decode("", "wordpress");
 
     assertThat(issuer, is(Issuer.WORDPRESS));
   }

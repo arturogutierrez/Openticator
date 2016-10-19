@@ -29,10 +29,10 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
         return categorySelector.selectedCategory.flatMap { category ->
             val emptyCategory = categoryFactory.createEmptyCategory()
             if (category == emptyCategory) {
-                accountRepository.add(newAccount)
+                return@flatMap accountRepository.add(newAccount)
             }
 
-            accountRepository.add(newAccount).flatMap { createdAccount ->
+            return@flatMap accountRepository.add(newAccount).flatMap { createdAccount ->
                 categoryRepository.addAccount(category, createdAccount).flatMap { Observable.just(createdAccount) }
             }
         }

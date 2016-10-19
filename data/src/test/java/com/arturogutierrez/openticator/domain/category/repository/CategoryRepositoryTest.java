@@ -25,7 +25,6 @@ public class CategoryRepositoryTest extends ApplicationTestCase {
 
   @Test
   public void testAddCategory() {
-    // TODO: Remove last argument (false) when converted to Kotlin
     Category category = new Category("id", "name");
 
     categoryRepository.add(category);

@@ -2,7 +2,7 @@ package com.arturogutierrez.openticator.domain.otp.time
 
 import javax.inject.Inject
 
-class RemainingTimeCalculator @Inject constructor(val timeProvider: CurrentTimeProvider) {
+class RemainingTimeCalculator @Inject constructor(val timeProvider: TimeProvider) {
 
     fun calculateRemainingSeconds(validUntilInSeconds: Long): Int {
         val remainingSeconds = (validUntilInSeconds - timeProvider.currentTimeInSeconds()).toInt()
