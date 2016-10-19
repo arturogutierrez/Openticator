@@ -38,7 +38,7 @@ ext {
   materialDrawerVersion = '5.0.9'
 
   // Testing
-  robolectricVersion = '3.0'
+  robolectricVersion = '3.1'
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
   mockitoVersion = '2.2.5'
@@ -84,14 +84,10 @@ ext {
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
                       realm             : "io.realm:realm-android:${realmVersion}"]
 
-  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-                          junit              : "junit:junit:${jUnitVersion}",
-                          assertj            : "org.assertj:assertj-core:${assertJVersion}",
-                          hamkrest           : "com.natpryce:hamkrest:${hamkrestVersion}",
-                          mockito            : "org.mockito:mockito-core:${mockitoVersion}",
-                          robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
-                          powerMockitoJUnit  : "org.powermock:powermock-module-junit4:${powerMockitoVersion}",
-                          powerMockitoRules  : "org.powermock:powermock-module-junit4-rule:${powerMockitoVersion}",
-                          powerMockito       : "org.powermock:powermock-api-mockito:${powerMockitoVersion}",
-                          powerMockitoXStream: "org.powermock:powermock-classloading-xstream:${powerMockitoVersion}"]
+  dataTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                          junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+                          junit       : "junit:junit:${jUnitVersion}",
+                          hamkrest    : "com.natpryce:hamkrest:${hamkrestVersion}",
+                          mockito     : "org.mockito:mockito-core:${mockitoVersion}",
+                          robolectric : "org.robolectric:robolectric:${robolectricVersion}"]
 }
