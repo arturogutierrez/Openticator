@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -12,6 +13,11 @@ android {
     minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
     targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
     versionCode globalConfiguration.getAt("androidVersionCode")
+  }
+
+  sourceSets {
+    test.java.srcDirs += 'src/test/kotlin'
+    test.resources.srcDirs += 'src/test/resources'
   }
 
   compileOptions {
@@ -35,21 +41,19 @@ dependencies {
 
   compile project(':domain')
 
-  apt dataDependencies.daggerCompiler
+  kapt dataDependencies.daggerCompiler
   provided dataDependencies.javaxAnnotation
+  compile domainDependencies.kotlinStdLib
   compile dataDependencies.dagger
   compile dataDependencies.rxJava
   compile dataDependencies.rxAndroid
   compile dataDependencies.androidAnnotations
   compile dataDependencies.realm
 
+  testCompile testDependencies.kotlinStdLib
+  testCompile testDependencies.junitKotlin
   testCompile testDependencies.junit
-  testCompile testDependencies.assertj
   testCompile testDependencies.mockito
+  testCompile testDependencies.hamkrest
   testCompile testDependencies.robolectric
-
-  testCompile testDependencies.powerMockitoJUnit
-  testCompile testDependencies.powerMockitoRules
-  testCompile testDependencies.powerMockito
-  testCompile testDependencies.powerMockitoXStream
 }

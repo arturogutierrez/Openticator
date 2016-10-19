@@ -13,9 +13,9 @@ open class AccountFactory @Inject constructor(val issuerDecoder: IssuerDecoder) 
         return createAccount(OTPType.TOTP, name, secret)
     }
 
-    fun createAccount(otpType: OTPType, name: String, secret: String, issuer: String = Issuer.UNKNOWN.identifier): Account {
+    fun createAccount(otpType: OTPType, name: String, secret: String, issuer: String? = Issuer.UNKNOWN.identifier): Account {
         val accountId = UUID.randomUUID().toString()
-        val decodedIssuer = issuerDecoder.decode(name, issuer)
+        val decodedIssuer = issuerDecoder.decode(name, issuer ?: Issuer.UNKNOWN.identifier)
         return Account(accountId, name, otpType, secret, decodedIssuer)
     }
 
