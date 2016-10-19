@@ -7,16 +7,11 @@ import com.arturogutierrez.openticator.domain.issuer.IssuerDecoder;
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.mockito.ArgumentMatchers.isNotNull;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
 
 public class AccountDecoderTest extends ApplicationTestCase {
 

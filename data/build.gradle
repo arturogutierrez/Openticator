@@ -17,7 +17,6 @@ android {
 
   sourceSets {
     test.java.srcDirs += 'src/test/kotlin'
-    test.resources.srcDirs += 'src/test/resources'
   }
 
   compileOptions {
@@ -53,7 +52,11 @@ dependencies {
   testCompile testDependencies.kotlinStdLib
   testCompile testDependencies.junitKotlin
   testCompile testDependencies.junit
-  testCompile testDependencies.mockito
   testCompile testDependencies.hamkrest
   testCompile testDependencies.robolectric
+
+  testCompile testDependencies.powerMockitoJUnit
+  testCompile testDependencies.powerMockitoRules
+  testCompile testDependencies.powerMockito
+  testCompile testDependencies.powerMockitoXStream
 }
