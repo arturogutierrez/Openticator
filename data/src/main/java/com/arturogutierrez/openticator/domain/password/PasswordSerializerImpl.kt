@@ -5,15 +5,9 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
 
-class PasswordSerializerImpl
-@Inject
-constructor() : PasswordSerializer {
+class PasswordSerializerImpl @Inject constructor() : PasswordSerializer {
 
     override fun encodePassword(plainPassword: String): String? {
-        if (plainPassword == null) {
-            return null
-        }
-
         val messageDigest = createMessageDigest() ?: return null
 
         messageDigest.update(plainPassword.toByteArray())
@@ -28,6 +22,5 @@ constructor() : PasswordSerializer {
             // Should not happen, all Android devices should support SHA-256
             return null
         }
-
     }
 }
