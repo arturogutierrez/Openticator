@@ -16,8 +16,8 @@ public class MasterPasswordModule {
   }
 
   @Provides
-  PasswordSerializer providePasswordSerializer(PasswordSerializerImpl passwordSerializer) {
-    return passwordSerializer;
+  PasswordSerializer providePasswordSerializer() {
+    return new PasswordSerializerImpl();
   }
 
   @Provides

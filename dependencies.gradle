@@ -6,18 +6,21 @@ allprojects {
 }
 
 ext {
+  // Kotlin
+  kotlinVersion = '1.0.3'
+
   // SDK version
-  androidBuildToolsVersion = "23.0.3"
+  androidBuildToolsVersion = "24.0.3"
   androidMinSdkVersion = 16
-  androidTargetSdkVersion = 23
-  androidCompileSdkVersion = 23
+  androidTargetSdkVersion = 24
+  androidCompileSdkVersion = 24
 
   // Google Libraries
-  supportVersion = '23.2.1'
-  appCompatVersion = '23.2.1'
-  recyclerViewVersion = '23.2.1'
-  cardViewVersion = '23.2.1'
-  designVersion = '23.2.1'
+  supportVersion = '24.2.1'
+  appCompatVersion = '24.2.1'
+  recyclerViewVersion = '24.2.1'
+  cardViewVersion = '24.2.1'
+  designVersion = '24.2.1'
 
   // Libraries
   daggerVersion = '2.0.2'
@@ -38,10 +41,12 @@ ext {
   robolectricVersion = '3.0'
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
-  mockitoVersion = '1.9.5'
+  mockitoVersion = '2.2.5'
   powerMockitoVersion = '1.6.2'
+  hamkrestVersion = '1.2.3.0'
 
-  presentationDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                              daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger         : "com.google.dagger:dagger:${daggerVersion}",
                               rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
                               rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
@@ -58,15 +63,20 @@ ext {
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
                               materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar"]
 
-  domainDependencies = [daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                        daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
                         javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                         rxJava         : "io.reactivex:rxjava:${rxJavaVersion}"]
 
-  domainTestDependencies = [junit  : "junit:junit:${jUnitVersion}",
-                            mockito: "org.mockito:mockito-core:${mockitoVersion}",]
+  domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                            junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+                            junit       : "junit:junit:${jUnitVersion}",
+                            hamkrest    : "com.natpryce:hamkrest:${hamkrestVersion}",
+                            mockito     : "org.mockito:mockito-core:${mockitoVersion}",]
 
-  dataDependencies = [daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+  dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                      daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
                       dagger            : "com.google.dagger:dagger:${daggerVersion}",
                       rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
@@ -74,8 +84,10 @@ ext {
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
                       realm             : "io.realm:realm-android:${realmVersion}"]
 
-  dataTestDependencies = [junit              : "junit:junit:${jUnitVersion}",
+  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                          junit              : "junit:junit:${jUnitVersion}",
                           assertj            : "org.assertj:assertj-core:${assertJVersion}",
+                          hamkrest           : "com.natpryce:hamkrest:${hamkrestVersion}",
                           mockito            : "org.mockito:mockito-core:${mockitoVersion}",
                           robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
                           powerMockitoJUnit  : "org.powermock:powermock-module-junit4:${powerMockitoVersion}",

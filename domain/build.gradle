@@ -1,11 +1,19 @@
+apply plugin: 'kotlin'
 apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = JavaVersion.VERSION_1_7
+//noinspection GroovyUnusedAssignment
+targetCompatibility = JavaVersion.VERSION_1_7
 
 configurations {
   provided
 }
 
 sourceSets {
+  test.java.srcDirs += 'src/test/kotlin'
+  test.resources.srcDirs += 'src/test/resources'
+
   main {
     compileClasspath += configurations.provided
   }
@@ -18,9 +26,16 @@ dependencies {
   provided domainDependencies.daggerCompiler
   provided domainDependencies.javaxAnnotation
 
+  compile domainDependencies.kotlinStdLib
   compile domainDependencies.dagger
   compile domainDependencies.rxJava
 
+  testCompile domainDependencies.kotlinStdLib
+  testCompile domainTestDependencies.junitKotlin
   testCompile domainTestDependencies.junit
   testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.hamkrest
+  // AS is not adding the test resources to the classpath when executing from UI for Java Modules.
+  // https://code.google.com/p/android/issues/detail?id=64887
+  testRuntime files('build/resources/test')
 }
