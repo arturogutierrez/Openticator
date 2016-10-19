@@ -16,80 +16,89 @@ import com.arturogutierrez.openticator.domain.category.repository.CategoryReposi
 import com.arturogutierrez.openticator.domain.issuer.interactor.GetIssuersInteractor;
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository;
 import com.arturogutierrez.openticator.domain.otp.OneTimePasswordFactory;
+import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider;
+import com.arturogutierrez.openticator.domain.otp.time.TimeProvider;
 import com.arturogutierrez.openticator.executor.PostExecutionThread;
 import com.arturogutierrez.openticator.executor.ThreadExecutor;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class AccountListModule {
 
-  public AccountListModule() {
+    public AccountListModule() {
 
-  }
+    }
 
-  @Provides
-  @PerActivity
-  GetAccountsInteractor provideGetAccountsInteractor(AccountRepository accountRepository,
-      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    GetAccountsInteractor provideGetAccountsInteractor(AccountRepository accountRepository,
+            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  GetAccountPasscodesInteractor provideGetAccountPasscodesInteractor(
-      CategorySelector categorySelector, CategoryFactory categoryFactory,
-      AccountRepository accountRepository, OneTimePasswordFactory oneTimePasswordFactory,
-      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetAccountPasscodesInteractor(categorySelector, categoryFactory, accountRepository,
-        oneTimePasswordFactory, threadExecutor, postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    GetAccountPasscodesInteractor provideGetAccountPasscodesInteractor(
+            CategorySelector categorySelector, CategoryFactory categoryFactory,
+            AccountRepository accountRepository, OneTimePasswordFactory oneTimePasswordFactory,
+            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetAccountPasscodesInteractor(categorySelector, categoryFactory, accountRepository,
+                oneTimePasswordFactory, threadExecutor, postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  DeleteAccountsInteractor provideDeleteAccountsInteractor(AccountRepository accountRepository,
-      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new DeleteAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    DeleteAccountsInteractor provideDeleteAccountsInteractor(AccountRepository accountRepository,
+            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new DeleteAccountsInteractor(accountRepository, threadExecutor, postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  UpdateAccountInteractor provideUpdateAccountInteractor(AccountRepository accountRepository,
-      AccountFactory accountFactory, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
-    return new UpdateAccountInteractor(accountRepository, accountFactory, threadExecutor,
-        postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    UpdateAccountInteractor provideUpdateAccountInteractor(AccountRepository accountRepository,
+            AccountFactory accountFactory, ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new UpdateAccountInteractor(accountRepository, accountFactory, threadExecutor,
+                postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  GetCategoriesInteractor provideGetCategoriesInteractor(CategoryRepository categoryRepository,
-      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetCategoriesInteractor(categoryRepository, threadExecutor, postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    GetCategoriesInteractor provideGetCategoriesInteractor(CategoryRepository categoryRepository,
+            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetCategoriesInteractor(categoryRepository, threadExecutor, postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  AddCategoryInteractor provideAddCategoryInteractor(CategoryRepository categoryRepository,
-      CategoryFactory categoryFactory, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
-    return new AddCategoryInteractor(categoryRepository, categoryFactory, threadExecutor,
-        postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    AddCategoryInteractor provideAddCategoryInteractor(CategoryRepository categoryRepository,
+            CategoryFactory categoryFactory, ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new AddCategoryInteractor(categoryRepository, categoryFactory, threadExecutor,
+                postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  AddAccountToCategoryInteractor provideAddAccountToCategoryInteractor(
-      CategoryRepository categoryRepository, ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
-    return new AddAccountToCategoryInteractor(categoryRepository, threadExecutor,
-        postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    AddAccountToCategoryInteractor provideAddAccountToCategoryInteractor(
+            CategoryRepository categoryRepository, ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new AddAccountToCategoryInteractor(categoryRepository, threadExecutor,
+                postExecutionThread);
+    }
 
-  @Provides
-  @PerActivity
-  GetIssuersInteractor provideGetIssuerInteractor(IssuerRepository issuerRepository,
-      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    return new GetIssuersInteractor(issuerRepository, threadExecutor, postExecutionThread);
-  }
+    @Provides
+    @PerActivity
+    GetIssuersInteractor provideGetIssuerInteractor(IssuerRepository issuerRepository,
+            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new GetIssuersInteractor(issuerRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    TimeProvider provideTimeProvider() {
+        return new CurrentTimeProvider();
+    }
 }

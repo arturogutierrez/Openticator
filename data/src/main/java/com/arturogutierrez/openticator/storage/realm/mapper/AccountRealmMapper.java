@@ -70,6 +70,6 @@ public class AccountRealmMapper extends Mapper<Account, AccountRealm> {
   }
 
   private Issuer transformIssuer(String issuer) {
-    return Issuer.fromString(issuer);
+    return Issuer.Companion.fromString(issuer);
   }
 }

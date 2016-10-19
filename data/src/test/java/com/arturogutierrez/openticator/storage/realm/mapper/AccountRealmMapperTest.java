@@ -96,6 +96,10 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   public void testHOTPRealmTypeToOTPType() {
     AccountRealm accountRealm = new AccountRealm();
     accountRealm.setType(AccountRealm.HOTP_TYPE);
+    accountRealm.setAccountId(FAKE_ID);
+    accountRealm.setName(FAKE_NAME);
+    accountRealm.setSecret(FAKE_SECRET);
+    accountRealm.setIssuer(FAKE_ISSUER.getIdentifier());
 
     Account account = accountRealmMapper.reverseTransform(accountRealm);
 
@@ -106,6 +110,10 @@ public class AccountRealmMapperTest extends ApplicationTestCase {
   public void testTOTPRealmTypeToOTPType() {
     AccountRealm accountRealm = new AccountRealm();
     accountRealm.setType(AccountRealm.TOTP_TYPE);
+    accountRealm.setAccountId(FAKE_ID);
+    accountRealm.setName(FAKE_NAME);
+    accountRealm.setSecret(FAKE_SECRET);
+    accountRealm.setIssuer(FAKE_ISSUER.getIdentifier());
 
     Account account = accountRealmMapper.reverseTransform(accountRealm);
 

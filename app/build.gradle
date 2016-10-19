@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -17,17 +18,16 @@ android {
     versionName globalConfiguration.getAt("androidVersionName")
 
     // Vector Drawables for Gradle 2.0.
-    // Compat toolbar use it internalle
+    // Compat toolbar use it internally
     vectorDrawables.useSupportLibrary = true
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
   }
 
   dexOptions {
-    incremental true
     preDexLibraries true
     javaMaxHeapSize '2G'
   }
@@ -41,6 +41,10 @@ android {
   lintOptions {
     ignore 'InvalidPackage'
   }
+}
+
+kapt {
+  generateStubs = true
 }
 
 dependencies {
@@ -63,7 +67,7 @@ dependencies {
     transitive = true
   }
 
-  apt presentationDependencies.daggerCompiler
+  kapt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid

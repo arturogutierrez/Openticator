@@ -2,12 +2,10 @@ package com.arturogutierrez.openticator;
 
 import com.arturogutierrez.openticator.data.BuildConfig;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, application = ApplicationStub.class, sdk = 21)
-@PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, application = ApplicationStub.class, manifest = Config.NONE, sdk = 23)
 public abstract class ApplicationTestCase {
 }
