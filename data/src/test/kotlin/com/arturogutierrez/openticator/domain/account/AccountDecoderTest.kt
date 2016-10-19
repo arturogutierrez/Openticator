@@ -5,6 +5,7 @@ import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecoder
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
 import org.junit.Before
@@ -27,10 +28,19 @@ class AccountDecoderTest : ApplicationTestCase() {
     }
 
     @Test
+    fun testWrontUri() {
+        val accountUri = ""
+
+        val account = accountDecoder.decode(accountUri)
+
+        assertThat(account, `is`(nullValue()))
+    }
+
+    @Test
     fun testHOTPType() {
         val accountUri = "otpauth://hotp/a:b?secret=SECRET"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.HOTP))
@@ -40,7 +50,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testTOTPType() {
         val accountUri = "otpauth://totp/Openticator:tony.stark@starkindustries.com?secret=SECRET"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -50,7 +60,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testAccountNameIfThereIsAPair() {
         val accountUri = "otpauth://totp/Openticator:tony.stark@starkindustries.com?secret=SECRET"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -61,7 +71,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testAccountNameWithNoPair() {
         val accountUri = "otpauth://totp/tony.stark@starkindustries.com?secret=SECRET"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -72,7 +82,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testSecret() {
         val accountUri = "otpauth://totp/tony.stark@starkindustries.com?secret=SECRET"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -83,7 +93,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testOpenticator() {
         val accountUri = "otpauth://totp/tony.stark@starkindustries.com?secret=SECRET&issuer=OPENTICATOR"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -94,7 +104,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testDecodingHappyCase() {
         val accountUri = "otpauth://totp/Openticator:tony.stark@starkindustries.com?secret=ABCDEFGHASD&issuer=Openticator"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
@@ -107,7 +117,7 @@ class AccountDecoderTest : ApplicationTestCase() {
     fun testDecodingHappyCaseURLEncoded() {
         val accountUri = "otpauth://totp/Openticator%3Atony.stark%40starkindustries.com?secret=ABCDEFGHASD&issuer=Openticator"
 
-        val account = accountDecoder.decode(accountUri)
+        val account = accountDecoder.decode(accountUri)!!
 
         assertThat(account, `is`(notNullValue()))
         assertThat(account.type, `is`(OTPType.TOTP))
