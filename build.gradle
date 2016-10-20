@@ -3,6 +3,7 @@ apply from: 'dependencies.gradle'
 buildscript {
 
   ext.kotlin_version = '1.0.4'
+  ext.realm_version = '2.0.2'
 
   repositories {
     jcenter()
@@ -10,7 +11,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.2'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath "io.realm:realm-gradle-plugin:$realm_version"
     classpath 'me.tatarka:gradle-retrolambda:3.3.0'
   }
 }

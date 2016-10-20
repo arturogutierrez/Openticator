@@ -13,6 +13,7 @@ class NavigationDrawerPresenter @Inject constructor(
         val categorySelector: CategorySelector) : DefaultSubscriber<List<Category>>(), Presenter {
 
     private lateinit var view: NavigationDrawerView
+    // TODO: Presenter shouldn't has state
     private var categories: List<Category> = emptyList()
 
     fun setView(view: NavigationDrawerView) {

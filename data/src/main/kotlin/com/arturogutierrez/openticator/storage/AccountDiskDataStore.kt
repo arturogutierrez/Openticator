@@ -56,7 +56,7 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
             val defaultRealm = Realm.getDefaultInstance()
             defaultRealm.executeTransaction { realm ->
                 val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
-                accountRealm.removeFromRealm()
+                accountRealm.deleteFromRealm()
             }
 
             null
@@ -76,14 +76,14 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
     private val accountsAsBlocking: List<Account>
         get() {
             val realm = Realm.getDefaultInstance()
-            realm.refresh()
+            realm.waitForChange()
             val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
             return accountRealmMapper.reverseTransform(realmResults)
         }
 
     private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
         val realm = Realm.getDefaultInstance()
-        realm.refresh()
+        realm.waitForChange()
 
         val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
         return accountRealmMapper.reverseTransform(realmResults)

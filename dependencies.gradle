@@ -29,13 +29,13 @@ ext {
   javaxAnnotationVersion = '1.0'
   androidAnnotationsVersion = '22.2.0'
   butterKnifeVersion = '7.0.1'
-  realmVersion = '0.87.5'
   fabVersion = '1.6.2'
   zxingVersion = '3.2.1'
   zxingCoreVersion = '3.2.1'
   dexterVersion = '2.2.1'
   materialDialogsVersion = '0.8.5.6'
   materialDrawerVersion = '5.0.9'
+  ankoVersion = '0.9'
 
   // Testing
   robolectricVersion = '3.1'
@@ -61,7 +61,9 @@ ext {
                               zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
                               zxing          : "com.google.zxing:android-core:${zxingVersion}",
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
-                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar"]
+                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
+                              anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
+                              ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -81,8 +83,7 @@ ext {
                       rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                      androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
-                      realm             : "io.realm:realm-android:${realmVersion}"]
+                      androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}"]
 
   dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                           junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",

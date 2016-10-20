@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'realm-android'
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -48,7 +47,6 @@ dependencies {
   compile dataDependencies.rxJava
   compile dataDependencies.rxAndroid
   compile dataDependencies.androidAnnotations
-  compile dataDependencies.realm
 
   testCompile testDependencies.kotlinStdLib
   testCompile testDependencies.junitKotlin
