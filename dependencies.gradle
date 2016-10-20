@@ -35,6 +35,7 @@ ext {
   dexterVersion = '2.2.1'
   materialDialogsVersion = '0.8.5.6'
   materialDrawerVersion = '5.0.9'
+  ankoVersion = '0.9'
 
   // Testing
   robolectricVersion = '3.1'
@@ -60,7 +61,8 @@ ext {
                               zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
                               zxing          : "com.google.zxing:android-core:${zxingVersion}",
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
-                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar"]
+                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
+                              anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",

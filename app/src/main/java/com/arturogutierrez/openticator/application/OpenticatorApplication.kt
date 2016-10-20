@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.application
 
 import android.app.Application
+import butterknife.ButterKnife
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent
 import com.arturogutierrez.openticator.di.module.ApplicationModule
@@ -17,6 +18,7 @@ class OpenticatorApplication : Application() {
   }
 
   private fun initialize() {
+    ButterKnife.setDebug(true)
     initializeDependencyInjector()
     initializeDexter()
   }

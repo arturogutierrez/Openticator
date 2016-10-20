@@ -88,7 +88,7 @@ public class AccountListActivity extends BaseActivity
   @OnClick(R.id.fab_add_manually)
   public void onAddManuallyClicked() {
     floatingActionMenu.close(false);
-    navigator.goToAddAccountManually(this);
+    getNavigator().goToAddAccountManually(this);
   }
 
   @OnClick(R.id.fab_add_from_camera)
@@ -124,7 +124,7 @@ public class AccountListActivity extends BaseActivity
       @Override
       public void onPermissionGranted(PermissionGrantedResponse response) {
         floatingActionMenu.close(false);
-        navigator.goToAddAccountFromCamera(AccountListActivity.this);
+        getNavigator().goToAddAccountFromCamera(AccountListActivity.this);
       }
 
       @Override

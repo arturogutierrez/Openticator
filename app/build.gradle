@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -58,6 +56,7 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
+  compile presentationDependencies.anko
   compile presentationDependencies.supportVersion
   compile presentationDependencies.appCompat
   compile presentationDependencies.design
