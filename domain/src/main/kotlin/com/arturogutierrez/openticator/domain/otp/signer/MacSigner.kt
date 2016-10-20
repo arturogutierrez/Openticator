@@ -4,7 +4,7 @@ import javax.crypto.Mac
 
 class MacSigner(val mac: Mac) {
 
-    fun sign(dataToSign: ByteArray): ByteArray {
-        return mac.doFinal(dataToSign)
-    }
+  fun sign(dataToSign: ByteArray): ByteArray {
+    return mac.doFinal(dataToSign)
+  }
 }

@@ -7,22 +7,22 @@ import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(val accountDataStore: AccountDataStore) : AccountRepository {
 
-    override fun add(account: Account): Observable<Account> {
-        return accountDataStore.add(account)
-    }
+  override fun add(account: Account): Observable<Account> {
+    return accountDataStore.add(account)
+  }
 
-    override fun update(account: Account): Observable<Account> {
-        return accountDataStore.update(account)
-    }
+  override fun update(account: Account): Observable<Account> {
+    return accountDataStore.update(account)
+  }
 
-    override fun remove(account: Account): Observable<Void> {
-        return accountDataStore.remove(account)
-    }
+  override fun remove(account: Account): Observable<Void> {
+    return accountDataStore.remove(account)
+  }
 
-    override fun getAccounts(category: Category): Observable<List<Account>> {
-        return accountDataStore.getAccounts(category)
-    }
+  override fun getAccounts(category: Category): Observable<List<Account>> {
+    return accountDataStore.getAccounts(category)
+  }
 
-    override val allAccounts: Observable<List<Account>>
-        get() = accountDataStore.allAccounts
+  override val allAccounts: Observable<List<Account>>
+    get() = accountDataStore.allAccounts
 }

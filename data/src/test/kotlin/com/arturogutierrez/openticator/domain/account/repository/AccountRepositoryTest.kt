@@ -12,30 +12,30 @@ import org.mockito.MockitoAnnotations
 
 class AccountRepositoryTest : ApplicationTestCase() {
 
-    private lateinit var accountRepository: AccountRepository
-    @Mock
-    private lateinit var mockAccountDataStore: AccountDataStore
+  private lateinit var accountRepository: AccountRepository
+  @Mock
+  private lateinit var mockAccountDataStore: AccountDataStore
 
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
+  @Before
+  fun setUp() {
+    MockitoAnnotations.initMocks(this)
 
-        accountRepository = AccountRepositoryImpl(mockAccountDataStore)
-    }
+    accountRepository = AccountRepositoryImpl(mockAccountDataStore)
+  }
 
-    @Test
-    fun testAddAccount() {
-        val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
+  @Test
+  fun testAddAccount() {
+    val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
 
-        accountRepository.add(account)
+    accountRepository.add(account)
 
-        verify<AccountDataStore>(mockAccountDataStore).add(account)
-    }
+    verify<AccountDataStore>(mockAccountDataStore).add(account)
+  }
 
-    @Test
-    fun testGetAccounts() {
-        accountRepository.allAccounts
+  @Test
+  fun testGetAccounts() {
+    accountRepository.allAccounts
 
-        verify<AccountDataStore>(mockAccountDataStore).allAccounts
-    }
+    verify<AccountDataStore>(mockAccountDataStore).allAccounts
+  }
 }

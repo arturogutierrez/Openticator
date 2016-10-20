@@ -6,13 +6,13 @@ import rx.Observable
 
 interface AccountRepository {
 
-    fun add(account: Account): Observable<Account>
+  fun add(account: Account): Observable<Account>
 
-    fun update(account: Account): Observable<Account>
+  fun update(account: Account): Observable<Account>
 
-    fun remove(account: Account): Observable<Void>
+  fun remove(account: Account): Observable<Void>
 
-    fun getAccounts(category: Category): Observable<List<Account>>
+  fun getAccounts(category: Category): Observable<List<Account>>
 
-    val allAccounts: Observable<List<Account>>
+  val allAccounts: Observable<List<Account>>
 }

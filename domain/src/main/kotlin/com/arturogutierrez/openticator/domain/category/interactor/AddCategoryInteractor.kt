@@ -14,16 +14,16 @@ class AddCategoryInteractor(val categoryRepository: CategoryRepository,
                             val threadExecutor: ThreadExecutor,
                             val postExecutionThread: PostExecutionThread) : Interactor<Category>(threadExecutor, postExecutionThread) {
 
-    private lateinit var newCategory: Category
-    private lateinit var accountToAddToCategory: Account
+  private lateinit var newCategory: Category
+  private lateinit var accountToAddToCategory: Account
 
-    fun configure(categoryName: String, account: Account) {
-        this.newCategory = categoryFactory.createCategory(categoryName)
-        this.accountToAddToCategory = account
-    }
+  fun configure(categoryName: String, account: Account) {
+    this.newCategory = categoryFactory.createCategory(categoryName)
+    this.accountToAddToCategory = account
+  }
 
-    override fun createObservable(): Observable<Category> {
-        return categoryRepository.add(newCategory)
-                .flatMap { category -> categoryRepository.addAccount(category, accountToAddToCategory) }
-    }
+  override fun createObservable(): Observable<Category> {
+    return categoryRepository.add(newCategory)
+        .flatMap { category -> categoryRepository.addAccount(category, accountToAddToCategory) }
+  }
 }

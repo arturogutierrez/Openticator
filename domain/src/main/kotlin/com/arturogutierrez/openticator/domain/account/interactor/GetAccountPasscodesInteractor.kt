@@ -19,29 +19,29 @@ class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
                                     val threadExecutor: ThreadExecutor,
                                     val postExecutionThread: PostExecutionThread) : Interactor<List<AccountPasscode>>(threadExecutor, postExecutionThread) {
 
-    override fun createObservable(): Observable<List<AccountPasscode>> {
-        return categorySelector.selectedCategory.flatMap { category ->
-            val emptyCategory = categoryFactory.createEmptyCategory()
-            if (category == emptyCategory) {
-                accountRepository.allAccounts
-            }
-            accountRepository.getAccounts(category)
-        }.map { accountList -> calculatePasscodes(accountList) }
-    }
+  override fun createObservable(): Observable<List<AccountPasscode>> {
+    return categorySelector.selectedCategory.flatMap { category ->
+      val emptyCategory = categoryFactory.createEmptyCategory()
+      if (category == emptyCategory) {
+        accountRepository.allAccounts
+      }
+      accountRepository.getAccounts(category)
+    }.map { accountList -> calculatePasscodes(accountList) }
+  }
 
-    private fun calculatePasscodes(accountList: List<Account>): List<AccountPasscode> {
-        val accountPasscodeList = ArrayList<AccountPasscode>(accountList.size)
-        for (account in accountList) {
-            val accountPasscode = calculatePasscode(account)
-            accountPasscodeList.add(accountPasscode)
-        }
-        return accountPasscodeList
+  private fun calculatePasscodes(accountList: List<Account>): List<AccountPasscode> {
+    val accountPasscodeList = ArrayList<AccountPasscode>(accountList.size)
+    for (account in accountList) {
+      val accountPasscode = calculatePasscode(account)
+      accountPasscodeList.add(accountPasscode)
     }
+    return accountPasscodeList
+  }
 
-    private fun calculatePasscode(account: Account): AccountPasscode {
-        // TODO: Pick right delta offset time
-        val oneTimePassword = oneTimePasswordFactory.createOneTimePassword(account, 0)
-        val passcode = oneTimePassword.generate()
-        return AccountPasscode(account, account.issuer, passcode)
-    }
+  private fun calculatePasscode(account: Account): AccountPasscode {
+    // TODO: Pick right delta offset time
+    val oneTimePassword = oneTimePasswordFactory.createOneTimePassword(account, 0)
+    val passcode = oneTimePassword.generate()
+    return AccountPasscode(account, account.issuer, passcode)
+  }
 }

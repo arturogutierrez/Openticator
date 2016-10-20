@@ -11,7 +11,7 @@ class GetAccountsInteractor(val accountRepository: AccountRepository,
                             val threadExecutor: ThreadExecutor,
                             val postExecutionThread: PostExecutionThread) : Interactor<List<Account>>(threadExecutor, postExecutionThread) {
 
-    override fun createObservable(): Observable<List<Account>> {
-        return accountRepository.allAccounts
-    }
+  override fun createObservable(): Observable<List<Account>> {
+    return accountRepository.allAccounts
+  }
 }

@@ -13,17 +13,17 @@ class UpdateAccountInteractor(val accountRepository: AccountRepository,
                               val accountFactory: AccountFactory,
                               val threadExecutor: ThreadExecutor,
                               val postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
-    private lateinit var account: Account
+  private lateinit var account: Account
 
-    fun configure(account: Account, newName: String) {
-        this.account = accountFactory.createAccount(account, newName)
-    }
+  fun configure(account: Account, newName: String) {
+    this.account = accountFactory.createAccount(account, newName)
+  }
 
-    fun configure(account: Account, newIssuer: Issuer) {
-        this.account = accountFactory.createAccount(account, newIssuer)
-    }
+  fun configure(account: Account, newIssuer: Issuer) {
+    this.account = accountFactory.createAccount(account, newIssuer)
+  }
 
-    override fun createObservable(): Observable<Account> {
-        return accountRepository.update(account)
-    }
+  override fun createObservable(): Observable<Account> {
+    return accountRepository.update(account)
+  }
 }

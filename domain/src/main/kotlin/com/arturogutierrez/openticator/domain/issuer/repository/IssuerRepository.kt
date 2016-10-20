@@ -6,5 +6,5 @@ import rx.Observable
 
 interface IssuerRepository {
 
-    val issuers: Observable<List<Issuer>>
+  val issuers: Observable<List<Issuer>>
 }

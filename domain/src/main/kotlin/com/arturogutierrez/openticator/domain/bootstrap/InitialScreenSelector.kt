@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class InitialScreenSelector @Inject constructor(private val preferences: Preferences) {
 
-    fun shouldShowWizard(): Boolean {
-        return preferences.masterPassword == null
-    }
+  fun shouldShowWizard(): Boolean {
+    return preferences.masterPassword == null
+  }
 }

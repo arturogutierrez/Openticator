@@ -16,150 +16,150 @@ import javax.inject.Inject
 
 @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountEditModePresenter @Inject constructor(
-        val updateAccountInteractor: UpdateAccountInteractor,
-        val deleteAccountsInteractor: DeleteAccountsInteractor,
-        val getCategoriesInteractor: GetCategoriesInteractor,
-        val addCategoryInteractor: AddCategoryInteractor,
-        val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
-        val getIssuersInteractor: GetIssuersInteractor,
-        val issuerDecoratorFactory: IssuerDecoratorFactory) : DefaultSubscriber<Void>(), Presenter {
+    val updateAccountInteractor: UpdateAccountInteractor,
+    val deleteAccountsInteractor: DeleteAccountsInteractor,
+    val getCategoriesInteractor: GetCategoriesInteractor,
+    val addCategoryInteractor: AddCategoryInteractor,
+    val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
+    val getIssuersInteractor: GetIssuersInteractor,
+    val issuerDecoratorFactory: IssuerDecoratorFactory) : DefaultSubscriber<Void>(), Presenter {
 
-    private lateinit var view: AccountEditModeView
+  private lateinit var view: AccountEditModeView
 
-    fun setView(view: AccountEditModeView) {
-        this.view = view
+  fun setView(view: AccountEditModeView) {
+    this.view = view
+  }
+
+  override fun resume() {
+
+  }
+
+  override fun pause() {
+
+  }
+
+  override fun destroy() {
+    deleteAccountsInteractor.unsubscribe()
+  }
+
+  fun deleteAccounts(selectedAccounts: Set<Account>) {
+    deleteAccountsInteractor.configure(selectedAccounts)
+    deleteAccountsInteractor.execute(DeleteAccountsSubscriber())
+  }
+
+  fun onSelectedAccounts(selectedAccounts: Set<Account>) {
+    if (selectedAccounts.size == 0) {
+      view.dismissActionMode()
+      return
     }
 
-    override fun resume() {
+    view.showCategoryButton(selectedAccounts.size == 1)
+    view.showEditButton(selectedAccounts.size == 1)
+    view.showLogoButton(selectedAccounts.size == 1)
+  }
 
+  fun updateAccount(account: Account, newName: String) {
+    if (newName.length > 0) {
+      updateAccountInteractor.configure(account, newName)
+      updateAccountInteractor.execute(UpdateAccountSubscriber())
     }
 
-    override fun pause() {
+    view.dismissActionMode()
+  }
 
+  fun updateAccount(account: Account, issuer: Issuer) {
+    updateAccountInteractor.configure(account, issuer)
+    updateAccountInteractor.execute(UpdateAccountSubscriber())
+
+    view.dismissActionMode()
+  }
+
+  fun pickCategoryForAccount(account: Account) {
+    getCategoriesInteractor.execute(GetCategoriesSubscriber(account))
+  }
+
+  fun pickLogoForAccount(account: Account) {
+    getIssuersInteractor.execute(GetIssuersSubscriber(account))
+  }
+
+  fun addAccountToCategory(category: Category, account: Account) {
+    addAccountToCategoryInteractor.configure(category, account)
+    addAccountToCategoryInteractor.execute(AddAccountToCategorySubscriber())
+
+    view.dismissActionMode()
+  }
+
+  fun createCategory(categoryName: String, account: Account) {
+    addCategoryInteractor.configure(categoryName, account)
+    addCategoryInteractor.execute(CreateCategorySubscriber())
+
+    view.dismissActionMode()
+  }
+
+  private inner class UpdateAccountSubscriber : DefaultSubscriber<Account>() {
+    override fun onNext(item: Account) {
+      view.dismissActionMode()
     }
 
-    override fun destroy() {
-        deleteAccountsInteractor.unsubscribe()
+    override fun onError(e: Throwable) {
+      view.dismissActionMode()
+    }
+  }
+
+  private inner class DeleteAccountsSubscriber : DefaultSubscriber<Void>() {
+    override fun onNext(aVoid: Void) {
+      view.dismissActionMode()
     }
 
-    fun deleteAccounts(selectedAccounts: Set<Account>) {
-        deleteAccountsInteractor.configure(selectedAccounts)
-        deleteAccountsInteractor.execute(DeleteAccountsSubscriber())
+    override fun onError(e: Throwable) {
+      view.dismissActionMode()
+    }
+  }
+
+  private inner class GetCategoriesSubscriber(private val account: Account) : DefaultSubscriber<List<Category>>() {
+
+    override fun onNext(categories: List<Category>) {
+      getCategoriesInteractor.unsubscribe()
+
+      if (categories.size == 0) {
+        view.showChooseEmptyCategory(account)
+      } else {
+        view.showChooseCategory(categories, account)
+      }
     }
 
-    fun onSelectedAccounts(selectedAccounts: Set<Account>) {
-        if (selectedAccounts.size == 0) {
-            view.dismissActionMode()
-            return
-        }
+    override fun onError(e: Throwable) {
+      view.dismissActionMode()
+    }
+  }
 
-        view.showCategoryButton(selectedAccounts.size == 1)
-        view.showEditButton(selectedAccounts.size == 1)
-        view.showLogoButton(selectedAccounts.size == 1)
+  private inner class CreateCategorySubscriber : DefaultSubscriber<Category>() {
+
+    override fun onNext(category: Category) {
+      view.dismissActionMode()
     }
 
-    fun updateAccount(account: Account, newName: String) {
-        if (newName.length > 0) {
-            updateAccountInteractor.configure(account, newName)
-            updateAccountInteractor.execute(UpdateAccountSubscriber())
-        }
+    override fun onError(e: Throwable) {
+      view.dismissActionMode()
+    }
+  }
 
-        view.dismissActionMode()
+  private inner class AddAccountToCategorySubscriber : DefaultSubscriber<Category>() {
+
+    override fun onNext(category: Category) {
+      view.dismissActionMode()
     }
 
-    fun updateAccount(account: Account, issuer: Issuer) {
-        updateAccountInteractor.configure(account, issuer)
-        updateAccountInteractor.execute(UpdateAccountSubscriber())
-
-        view.dismissActionMode()
+    override fun onError(e: Throwable) {
+      view.dismissActionMode()
     }
+  }
 
-    fun pickCategoryForAccount(account: Account) {
-        getCategoriesInteractor.execute(GetCategoriesSubscriber(account))
+  private inner class GetIssuersSubscriber(private val account: Account) : DefaultSubscriber<List<Issuer>>() {
+
+    override fun onNext(issuers: List<Issuer>) {
+      val issuerDecorators = issuerDecoratorFactory.create(issuers)
+      view.showChooseLogo(issuerDecorators, account)
     }
-
-    fun pickLogoForAccount(account: Account) {
-        getIssuersInteractor.execute(GetIssuersSubscriber(account))
-    }
-
-    fun addAccountToCategory(category: Category, account: Account) {
-        addAccountToCategoryInteractor.configure(category, account)
-        addAccountToCategoryInteractor.execute(AddAccountToCategorySubscriber())
-
-        view.dismissActionMode()
-    }
-
-    fun createCategory(categoryName: String, account: Account) {
-        addCategoryInteractor.configure(categoryName, account)
-        addCategoryInteractor.execute(CreateCategorySubscriber())
-
-        view.dismissActionMode()
-    }
-
-    private inner class UpdateAccountSubscriber : DefaultSubscriber<Account>() {
-        override fun onNext(item: Account) {
-            view.dismissActionMode()
-        }
-
-        override fun onError(e: Throwable) {
-            view.dismissActionMode()
-        }
-    }
-
-    private inner class DeleteAccountsSubscriber : DefaultSubscriber<Void>() {
-        override fun onNext(aVoid: Void) {
-            view.dismissActionMode()
-        }
-
-        override fun onError(e: Throwable) {
-            view.dismissActionMode()
-        }
-    }
-
-    private inner class GetCategoriesSubscriber(private val account: Account) : DefaultSubscriber<List<Category>>() {
-
-        override fun onNext(categories: List<Category>) {
-            getCategoriesInteractor.unsubscribe()
-
-            if (categories.size == 0) {
-                view.showChooseEmptyCategory(account)
-            } else {
-                view.showChooseCategory(categories, account)
-            }
-        }
-
-        override fun onError(e: Throwable) {
-            view.dismissActionMode()
-        }
-    }
-
-    private inner class CreateCategorySubscriber : DefaultSubscriber<Category>() {
-
-        override fun onNext(category: Category) {
-            view.dismissActionMode()
-        }
-
-        override fun onError(e: Throwable) {
-            view.dismissActionMode()
-        }
-    }
-
-    private inner class AddAccountToCategorySubscriber : DefaultSubscriber<Category>() {
-
-        override fun onNext(category: Category) {
-            view.dismissActionMode()
-        }
-
-        override fun onError(e: Throwable) {
-            view.dismissActionMode()
-        }
-    }
-
-    private inner class GetIssuersSubscriber(private val account: Account) : DefaultSubscriber<List<Issuer>>() {
-
-        override fun onNext(issuers: List<Issuer>) {
-            val issuerDecorators = issuerDecoratorFactory.create(issuers)
-            view.showChooseLogo(issuerDecorators, account)
-        }
-    }
+  }
 }

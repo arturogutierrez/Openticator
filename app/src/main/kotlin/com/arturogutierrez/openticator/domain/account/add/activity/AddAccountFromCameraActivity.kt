@@ -1,7 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.add.activity
 
 import android.os.Bundle
-import android.support.v7.app.ActionBar
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.HasComponent
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent

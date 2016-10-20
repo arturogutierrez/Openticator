@@ -19,22 +19,22 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
                            val threadExecutor: ThreadExecutor,
                            val postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
 
-    private lateinit var newAccount: Account
+  private lateinit var newAccount: Account
 
-    fun configure(accountName: String, accountSecret: String) {
-        newAccount = accountFactory.createAccount(accountName, accountSecret)
+  fun configure(accountName: String, accountSecret: String) {
+    newAccount = accountFactory.createAccount(accountName, accountSecret)
+  }
+
+  override fun createObservable(): Observable<Account> {
+    return categorySelector.selectedCategory.flatMap { category ->
+      val emptyCategory = categoryFactory.createEmptyCategory()
+      if (category == emptyCategory) {
+        return@flatMap accountRepository.add(newAccount)
+      }
+
+      return@flatMap accountRepository.add(newAccount).flatMap { createdAccount ->
+        categoryRepository.addAccount(category, createdAccount).flatMap { Observable.just(createdAccount) }
+      }
     }
-
-    override fun createObservable(): Observable<Account> {
-        return categorySelector.selectedCategory.flatMap { category ->
-            val emptyCategory = categoryFactory.createEmptyCategory()
-            if (category == emptyCategory) {
-                return@flatMap accountRepository.add(newAccount)
-            }
-
-            return@flatMap accountRepository.add(newAccount).flatMap { createdAccount ->
-                categoryRepository.addAccount(category, createdAccount).flatMap { Observable.just(createdAccount) }
-            }
-        }
-    }
+  }
 }

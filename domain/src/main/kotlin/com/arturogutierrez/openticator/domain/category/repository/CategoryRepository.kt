@@ -6,9 +6,9 @@ import rx.Observable
 
 interface CategoryRepository {
 
-    fun add(category: Category): Observable<Category>
+  fun add(category: Category): Observable<Category>
 
-    fun addAccount(category: Category, account: Account): Observable<Category>
+  fun addAccount(category: Category, account: Account): Observable<Category>
 
-    val categories: Observable<List<Category>>
+  val categories: Observable<List<Category>>
 }

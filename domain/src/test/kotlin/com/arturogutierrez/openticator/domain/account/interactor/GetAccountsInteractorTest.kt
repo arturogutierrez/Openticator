@@ -6,10 +6,9 @@ import com.arturogutierrez.openticator.executor.ThreadExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyZeroInteractions
+import org.mockito.MockitoAnnotations
 
 class GetAccountsInteractorTest {
 

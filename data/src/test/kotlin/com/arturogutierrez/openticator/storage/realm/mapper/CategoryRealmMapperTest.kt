@@ -10,37 +10,37 @@ import org.junit.Test
 
 class CategoryRealmMapperTest : ApplicationTestCase() {
 
-    companion object {
-        private val FAKE_ID = "id"
-        private val FAKE_NAME = "name"
-    }
+  companion object {
+    private val FAKE_ID = "id"
+    private val FAKE_NAME = "name"
+  }
 
-    private lateinit var categoryRealmMapper: CategoryRealmMapper
+  private lateinit var categoryRealmMapper: CategoryRealmMapper
 
-    @Before
-    fun setUp() {
-        categoryRealmMapper = CategoryRealmMapper()
-    }
+  @Before
+  fun setUp() {
+    categoryRealmMapper = CategoryRealmMapper()
+  }
 
-    @Test
-    fun testCategoryToRealm() {
-        val category = Category(FAKE_ID, FAKE_NAME)
+  @Test
+  fun testCategoryToRealm() {
+    val category = Category(FAKE_ID, FAKE_NAME)
 
-        val categoryRealm = categoryRealmMapper.transform(category)
+    val categoryRealm = categoryRealmMapper.transform(category)
 
-        assertThat(categoryRealm.categoryId, `is`(FAKE_ID))
-        assertThat(categoryRealm.name, `is`(FAKE_NAME))
-    }
+    assertThat(categoryRealm.categoryId, `is`(FAKE_ID))
+    assertThat(categoryRealm.name, `is`(FAKE_NAME))
+  }
 
-    @Test
-    fun testCategoryRealmToCategory() {
-        val categoryRealm = CategoryRealm()
-        categoryRealm.categoryId = FAKE_ID
-        categoryRealm.name = FAKE_NAME
+  @Test
+  fun testCategoryRealmToCategory() {
+    val categoryRealm = CategoryRealm()
+    categoryRealm.categoryId = FAKE_ID
+    categoryRealm.name = FAKE_NAME
 
-        val category = categoryRealmMapper.reverseTransform(categoryRealm)
+    val category = categoryRealmMapper.reverseTransform(categoryRealm)
 
-        assertThat(category.categoryId, `is`(FAKE_ID))
-        assertThat(category.name, `is`(FAKE_NAME))
-    }
+    assertThat(category.categoryId, `is`(FAKE_ID))
+    assertThat(category.name, `is`(FAKE_NAME))
+  }
 }

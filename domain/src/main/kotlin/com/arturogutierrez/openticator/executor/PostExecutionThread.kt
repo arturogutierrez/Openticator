@@ -7,5 +7,5 @@ import rx.Scheduler
  * UI thread to allow modify the UI
  */
 interface PostExecutionThread {
-    val scheduler: Scheduler
+  val scheduler: Scheduler
 }

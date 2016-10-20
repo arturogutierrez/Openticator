@@ -7,14 +7,14 @@ import javax.inject.Inject
 
 class CategoryRealmMapper @Inject constructor() : Mapper<Category, CategoryRealm>() {
 
-    override fun transform(value: Category): CategoryRealm {
-        val categoryRealm = CategoryRealm()
-        categoryRealm.categoryId = value.categoryId
-        categoryRealm.name = value.name
-        return categoryRealm
-    }
+  override fun transform(value: Category): CategoryRealm {
+    val categoryRealm = CategoryRealm()
+    categoryRealm.categoryId = value.categoryId
+    categoryRealm.name = value.name
+    return categoryRealm
+  }
 
-    override fun reverseTransform(value: CategoryRealm): Category {
-        return Category(value.categoryId, value.name)
-    }
+  override fun reverseTransform(value: CategoryRealm): Category {
+    return Category(value.categoryId, value.name)
+  }
 }

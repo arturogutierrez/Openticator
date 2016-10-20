@@ -9,46 +9,46 @@ import javax.inject.Inject
 
 class AccountRealmMapper @Inject constructor() : Mapper<Account, AccountRealm>() {
 
-    override fun transform(value: Account): AccountRealm {
-        val accountRealm = AccountRealm()
-        copyToAccountRealm(accountRealm, value)
-        return accountRealm
+  override fun transform(value: Account): AccountRealm {
+    val accountRealm = AccountRealm()
+    copyToAccountRealm(accountRealm, value)
+    return accountRealm
+  }
+
+  override fun reverseTransform(value: AccountRealm): Account {
+    val issuer = transformIssuer(value.issuer)
+    val account = Account(value.accountId, value.name,
+        transformAccountType(value.type), value.secret, issuer,
+        value.order)
+    return account
+  }
+
+  fun copyToAccountRealm(accountRealm: AccountRealm, account: Account) {
+    accountRealm.accountId = account.accountId
+    accountRealm.name = account.name
+    accountRealm.secret = account.secret
+    accountRealm.issuer = account.issuer.identifier
+    accountRealm.order = account.order
+    accountRealm.type = transformAccountType(account.type)
+  }
+
+  private fun transformAccountType(otpType: String): OTPType {
+    if (otpType == AccountRealm.HOTP_TYPE) {
+      return OTPType.HOTP
     }
 
-    override fun reverseTransform(value: AccountRealm): Account {
-        val issuer = transformIssuer(value.issuer)
-        val account = Account(value.accountId, value.name,
-                transformAccountType(value.type), value.secret, issuer,
-                value.order)
-        return account
+    return OTPType.TOTP
+  }
+
+  private fun transformAccountType(otpType: OTPType): String {
+    if (otpType === OTPType.HOTP) {
+      return AccountRealm.HOTP_TYPE
     }
 
-    fun copyToAccountRealm(accountRealm: AccountRealm, account: Account) {
-        accountRealm.accountId = account.accountId
-        accountRealm.name = account.name
-        accountRealm.secret = account.secret
-        accountRealm.issuer = account.issuer.identifier
-        accountRealm.order = account.order
-        accountRealm.type = transformAccountType(account.type)
-    }
+    return AccountRealm.TOTP_TYPE
+  }
 
-    private fun transformAccountType(otpType: String): OTPType {
-        if (otpType == AccountRealm.HOTP_TYPE) {
-            return OTPType.HOTP
-        }
-
-        return OTPType.TOTP
-    }
-
-    private fun transformAccountType(otpType: OTPType): String {
-        if (otpType === OTPType.HOTP) {
-            return AccountRealm.HOTP_TYPE
-        }
-
-        return AccountRealm.TOTP_TYPE
-    }
-
-    private fun transformIssuer(issuer: String): Issuer {
-        return Issuer.fromString(issuer)
-    }
+  private fun transformIssuer(issuer: String): Issuer {
+    return Issuer.fromString(issuer)
+  }
 }

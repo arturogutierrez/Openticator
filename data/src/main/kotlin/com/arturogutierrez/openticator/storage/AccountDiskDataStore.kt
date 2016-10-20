@@ -13,87 +13,87 @@ import rx.subjects.Subject
 import javax.inject.Inject
 
 class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: AccountRealmMapper) : AccountDataStore {
-    private val changesPublishSubject: Subject<Void, Void>
+  private val changesPublishSubject: Subject<Void, Void>
 
-    init {
-        this.changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+  init {
+    this.changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+  }
+
+  override fun add(account: Account): Observable<Account> {
+    val accountObservable = allAccounts.flatMap { accounts ->
+      val numberOfAccounts = accounts.size
+
+      Observable.fromCallable {
+        val accountRealm = accountRealmMapper.transform(account)
+        accountRealm.order = numberOfAccounts
+
+        val defaultRealm = Realm.getDefaultInstance()
+        defaultRealm.executeTransaction { realm -> realm.copyToRealm(accountRealm) }
+
+        account
+      }
     }
 
-    override fun add(account: Account): Observable<Account> {
-        val accountObservable = allAccounts.flatMap { accounts ->
-            val numberOfAccounts = accounts.size
+    return accountObservable.doOnNext { accountAdded -> notifyAccountChanges() }
+  }
 
-            Observable.fromCallable {
-                val accountRealm = accountRealmMapper.transform(account)
-                accountRealm.order = numberOfAccounts
+  override fun update(account: Account): Observable<Account> {
+    val updateAccountObservable = Observable.fromCallable {
+      val defaultRealm = Realm.getDefaultInstance()
+      defaultRealm.executeTransaction { realm ->
+        val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
+        accountRealmMapper.copyToAccountRealm(accountRealm, account)
+      }
 
-                val defaultRealm = Realm.getDefaultInstance()
-                defaultRealm.executeTransaction { realm -> realm.copyToRealm(accountRealm) }
-
-                account
-            }
-        }
-
-        return accountObservable.doOnNext { accountAdded -> notifyAccountChanges() }
+      account
     }
 
-    override fun update(account: Account): Observable<Account> {
-        val updateAccountObservable = Observable.fromCallable {
-            val defaultRealm = Realm.getDefaultInstance()
-            defaultRealm.executeTransaction { realm ->
-                val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
-                accountRealmMapper.copyToAccountRealm(accountRealm, account)
-            }
+    return updateAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+  }
 
-            account
-        }
+  override fun remove(account: Account): Observable<Void> {
+    val removeAccountObservable = Observable.fromCallable<Void> {
+      val defaultRealm = Realm.getDefaultInstance()
+      defaultRealm.executeTransaction { realm ->
+        val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
+        accountRealm.deleteFromRealm()
+      }
 
-        return updateAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+      null
     }
 
-    override fun remove(account: Account): Observable<Void> {
-        val removeAccountObservable = Observable.fromCallable<Void> {
-            val defaultRealm = Realm.getDefaultInstance()
-            defaultRealm.executeTransaction { realm ->
-                val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
-                accountRealm.deleteFromRealm()
-            }
+    return removeAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+  }
 
-            null
-        }
+  override fun getAccounts(category: Category): Observable<List<Account>> {
+    return changesPublishSubject.map { getAccountsForCategoryAsBlocking(category) }
+        .startWith(Observable.fromCallable { getAccountsForCategoryAsBlocking(category) })
+  }
 
-        return removeAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+  override val allAccounts: Observable<List<Account>>
+    get() = changesPublishSubject.map { accountsAsBlocking }.startWith(Observable.just(accountsAsBlocking))
+
+  private val accountsAsBlocking: List<Account>
+    get() {
+      val realm = Realm.getDefaultInstance()
+      realm.waitForChange()
+      val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
+      return accountRealmMapper.reverseTransform(realmResults)
     }
 
-    override fun getAccounts(category: Category): Observable<List<Account>> {
-        return changesPublishSubject.map { getAccountsForCategoryAsBlocking(category) }
-                .startWith(Observable.fromCallable { getAccountsForCategoryAsBlocking(category) })
-    }
+  private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
+    val realm = Realm.getDefaultInstance()
+    realm.waitForChange()
 
-    override val allAccounts: Observable<List<Account>>
-        get() = changesPublishSubject.map { accountsAsBlocking }.startWith(Observable.just(accountsAsBlocking))
+    val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
+    return accountRealmMapper.reverseTransform(realmResults)
+  }
 
-    private val accountsAsBlocking: List<Account>
-        get() {
-            val realm = Realm.getDefaultInstance()
-            realm.waitForChange()
-            val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
-            return accountRealmMapper.reverseTransform(realmResults)
-        }
+  private fun getAccountRealmAsBlocking(realm: Realm, accountId: String): AccountRealm? {
+    return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
+  }
 
-    private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
-        val realm = Realm.getDefaultInstance()
-        realm.waitForChange()
-
-        val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
-        return accountRealmMapper.reverseTransform(realmResults)
-    }
-
-    private fun getAccountRealmAsBlocking(realm: Realm, accountId: String): AccountRealm? {
-        return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
-    }
-
-    private fun notifyAccountChanges() {
-        changesPublishSubject.onNext(null)
-    }
+  private fun notifyAccountChanges() {
+    changesPublishSubject.onNext(null)
+  }
 }

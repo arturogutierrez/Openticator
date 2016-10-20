@@ -12,15 +12,15 @@ class AddAccountToCategoryInteractor(val categoryRepository: CategoryRepository,
                                      val threadExecutor: ThreadExecutor,
                                      val postExecutionThread: PostExecutionThread) : Interactor<Category>(threadExecutor, postExecutionThread) {
 
-    private lateinit var category: Category
-    private lateinit var accountToAddToCategory: Account
+  private lateinit var category: Category
+  private lateinit var accountToAddToCategory: Account
 
-    fun configure(category: Category, account: Account) {
-        this.category = category
-        this.accountToAddToCategory = account
-    }
+  fun configure(category: Category, account: Account) {
+    this.category = category
+    this.accountToAddToCategory = account
+  }
 
-    override fun createObservable(): Observable<Category> {
-        return categoryRepository.addAccount(category, accountToAddToCategory)
-    }
+  override fun createObservable(): Observable<Category> {
+    return categoryRepository.addAccount(category, accountToAddToCategory)
+  }
 }

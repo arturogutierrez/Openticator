@@ -11,7 +11,7 @@ class GetCategoriesInteractor(val categoryRepository: CategoryRepository,
                               val threadExecutor: ThreadExecutor,
                               val postExecutionThread: PostExecutionThread) : Interactor<List<Category>>(threadExecutor, postExecutionThread) {
 
-    override fun createObservable(): Observable<List<Category>> {
-        return categoryRepository.categories
-    }
+  override fun createObservable(): Observable<List<Category>> {
+    return categoryRepository.categories
+  }
 }

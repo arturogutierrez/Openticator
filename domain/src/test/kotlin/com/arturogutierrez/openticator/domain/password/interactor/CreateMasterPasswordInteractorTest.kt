@@ -12,40 +12,40 @@ import org.mockito.MockitoAnnotations
 
 class CreateMasterPasswordInteractorTest {
 
-    @Mock
-    private lateinit var mockPreferences: Preferences
-    @Mock
-    private lateinit var mockPasswordSerializer: PasswordSerializer
+  @Mock
+  private lateinit var mockPreferences: Preferences
+  @Mock
+  private lateinit var mockPasswordSerializer: PasswordSerializer
 
-    private lateinit var createMasterPasswordInteractor: CreateMasterPasswordInteractor
+  private lateinit var createMasterPasswordInteractor: CreateMasterPasswordInteractor
 
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
+  @Before
+  fun setUp() {
+    MockitoAnnotations.initMocks(this)
 
-        createMasterPasswordInteractor = CreateMasterPasswordInteractor(mockPreferences, mockPasswordSerializer)
-    }
+    createMasterPasswordInteractor = CreateMasterPasswordInteractor(mockPreferences, mockPasswordSerializer)
+  }
 
-    @Test
-    fun testCreateMasterPasswordIsUsingPasswordSerializer() {
-        createMasterPasswordInteractor.createMasterPassword("password")
+  @Test
+  fun testCreateMasterPasswordIsUsingPasswordSerializer() {
+    createMasterPasswordInteractor.createMasterPassword("password")
 
-        verify<PasswordSerializer>(mockPasswordSerializer).encodePassword("password")
-    }
+    verify<PasswordSerializer>(mockPasswordSerializer).encodePassword("password")
+  }
 
-    @Test
-    fun testCreateMasterPasswordIsSavingTheHashInPreferences() {
-        `when`(mockPasswordSerializer.encodePassword(anyString())).thenReturn("hash")
+  @Test
+  fun testCreateMasterPasswordIsSavingTheHashInPreferences() {
+    `when`(mockPasswordSerializer.encodePassword(anyString())).thenReturn("hash")
 
-        createMasterPasswordInteractor.createMasterPassword("password")
+    createMasterPasswordInteractor.createMasterPassword("password")
 
-        verify<Preferences>(mockPreferences).masterPassword = "hash"
-    }
+    verify<Preferences>(mockPreferences).masterPassword = "hash"
+  }
 
-    @Test
-    fun testUsingPlainPasswordIfThereIsNoAlgorithm() {
-        createMasterPasswordInteractor.createMasterPassword("password")
+  @Test
+  fun testUsingPlainPasswordIfThereIsNoAlgorithm() {
+    createMasterPasswordInteractor.createMasterPassword("password")
 
-        verify<Preferences>(mockPreferences).masterPassword = "password"
-    }
+    verify<Preferences>(mockPreferences).masterPassword = "password"
+  }
 }

@@ -7,23 +7,23 @@ import org.junit.Test
 
 class RemainingTimeCalculatorTest {
 
-    @Test
-    fun testCalculateRemainingSeconds() {
-        val timeProvider = StubTimeProvider(100L)
-        val remainingTimeCalculator = RemainingTimeCalculator(timeProvider)
+  @Test
+  fun testCalculateRemainingSeconds() {
+    val timeProvider = StubTimeProvider(100L)
+    val remainingTimeCalculator = RemainingTimeCalculator(timeProvider)
 
-        val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(120L)
+    val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(120L)
 
-        assertThat(remainingSeconds, equalTo(20))
-    }
+    assertThat(remainingSeconds, equalTo(20))
+  }
 
-    @Test
-    fun testRemainingSecondsShouldBeZeroIfCurrentTimeIsAfterValidUntilDate() {
-        val timeProvider = StubTimeProvider(50L)
-        val remainingTimeCalculator = RemainingTimeCalculator(timeProvider)
+  @Test
+  fun testRemainingSecondsShouldBeZeroIfCurrentTimeIsAfterValidUntilDate() {
+    val timeProvider = StubTimeProvider(50L)
+    val remainingTimeCalculator = RemainingTimeCalculator(timeProvider)
 
-        val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(20L)
+    val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(20L)
 
-        assertThat(remainingSeconds, equalTo(0))
-    }
+    assertThat(remainingSeconds, equalTo(0))
+  }
 }

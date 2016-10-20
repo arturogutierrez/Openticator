@@ -6,23 +6,23 @@ import org.junit.Test
 
 class OneTimePasswordGeneratorTest {
 
-    @Test
-    fun testGenerateCodeForFirstState() {
-        val secret = "ABCDEFGHIJK23456"
-        val oneTimePasswordGenerator = OneTimePasswordGenerator(secret, 6)
+  @Test
+  fun testGenerateCodeForFirstState() {
+    val secret = "ABCDEFGHIJK23456"
+    val oneTimePasswordGenerator = OneTimePasswordGenerator(secret, 6)
 
-        val code = oneTimePasswordGenerator.generate(0)
+    val code = oneTimePasswordGenerator.generate(0)
 
-        assertThat(code, equalTo("867671"))
-    }
+    assertThat(code, equalTo("867671"))
+  }
 
-    @Test
-    fun testGenerateCodeForNinthState() {
-        val secret = "ABCDEFGHIJK23456"
-        val oneTimePasswordGenerator = OneTimePasswordGenerator(secret, 6)
+  @Test
+  fun testGenerateCodeForNinthState() {
+    val secret = "ABCDEFGHIJK23456"
+    val oneTimePasswordGenerator = OneTimePasswordGenerator(secret, 6)
 
-        val code = oneTimePasswordGenerator.generate(9)
+    val code = oneTimePasswordGenerator.generate(9)
 
-        assertThat(code, equalTo("877436"))
-    }
+    assertThat(code, equalTo("877436"))
+  }
 }

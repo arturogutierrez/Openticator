@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class StorageInitializator @Inject constructor(val preferences: Preferences, val databaseConfigurator: DatabaseConfigurator) {
 
-    fun configureStorage() {
-        preferences.masterPassword?.let {
-            databaseConfigurator.configure(it)
-        }
+  fun configureStorage() {
+    preferences.masterPassword?.let {
+      databaseConfigurator.configure(it)
     }
+  }
 }

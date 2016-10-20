@@ -68,7 +68,7 @@ dependencies {
   compile presentationDependencies.zxingCore
   compile presentationDependencies.zxing
   compile presentationDependencies.materialDialogs
-  compile (presentationDependencies.materialDrawer) {
+  compile(presentationDependencies.materialDrawer) {
     transitive = true
   }
 

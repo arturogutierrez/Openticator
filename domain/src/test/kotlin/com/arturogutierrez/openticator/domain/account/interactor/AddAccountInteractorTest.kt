@@ -19,39 +19,39 @@ import rx.observers.TestSubscriber
 
 class AddAccountInteractorTest {
 
-    @Mock
-    private lateinit var mockAccountRepository: AccountRepository
-    @Mock
-    private lateinit var mockAccountFactory: AccountFactory
-    @Mock
-    private lateinit var mockCategoryRepository: CategoryRepository
-    @Mock
-    private lateinit var mockThreadExecutor: ThreadExecutor
-    @Mock
-    private lateinit var mockPostExecutionThread: PostExecutionThread
+  @Mock
+  private lateinit var mockAccountRepository: AccountRepository
+  @Mock
+  private lateinit var mockAccountFactory: AccountFactory
+  @Mock
+  private lateinit var mockCategoryRepository: CategoryRepository
+  @Mock
+  private lateinit var mockThreadExecutor: ThreadExecutor
+  @Mock
+  private lateinit var mockPostExecutionThread: PostExecutionThread
 
-    private lateinit var addAccountInteractor: AddAccountInteractor
+  private lateinit var addAccountInteractor: AddAccountInteractor
 
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
+  @Before
+  fun setUp() {
+    MockitoAnnotations.initMocks(this)
 
-        addAccountInteractor = AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockCategoryRepository,
-                CategorySelector(), CategoryFactory(), mockThreadExecutor,
-                mockPostExecutionThread)
-    }
+    addAccountInteractor = AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockCategoryRepository,
+        CategorySelector(), CategoryFactory(), mockThreadExecutor,
+        mockPostExecutionThread)
+  }
 
-    @Test
-    fun testAddNewAccount() {
-        val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
-        `when`(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account)
-        val testSubscriber = TestSubscriber<Account>()
+  @Test
+  fun testAddNewAccount() {
+    val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
+    `when`(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account)
+    val testSubscriber = TestSubscriber<Account>()
 
-        addAccountInteractor.configure("name", "secret")
-        addAccountInteractor.createObservable().subscribe(testSubscriber)
+    addAccountInteractor.configure("name", "secret")
+    addAccountInteractor.createObservable().subscribe(testSubscriber)
 
-        verify<AccountRepository>(mockAccountRepository).add(account)
-        verifyZeroInteractions(mockThreadExecutor)
-        verifyZeroInteractions(mockPostExecutionThread)
-    }
+    verify<AccountRepository>(mockAccountRepository).add(account)
+    verifyZeroInteractions(mockThreadExecutor)
+    verifyZeroInteractions(mockPostExecutionThread)
+  }
 }

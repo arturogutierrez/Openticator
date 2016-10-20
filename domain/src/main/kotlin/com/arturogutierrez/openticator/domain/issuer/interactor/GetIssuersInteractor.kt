@@ -11,7 +11,7 @@ class GetIssuersInteractor(val issuerRepository: IssuerRepository,
                            val threadExecutor: ThreadExecutor,
                            val postExecutionThread: PostExecutionThread) : Interactor<List<Issuer>>(threadExecutor, postExecutionThread) {
 
-    override fun createObservable(): Observable<List<Issuer>> {
-        return issuerRepository.issuers
-    }
+  override fun createObservable(): Observable<List<Issuer>> {
+    return issuerRepository.issuers
+  }
 }

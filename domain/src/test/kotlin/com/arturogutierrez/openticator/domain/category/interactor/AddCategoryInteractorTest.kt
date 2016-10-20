@@ -18,37 +18,37 @@ import rx.Observable
 
 class AddCategoryInteractorTest {
 
-    @Mock
-    private lateinit var mockCategoryRepository: CategoryRepository
-    @Mock
-    private lateinit var mockCategoryFactory: CategoryFactory
-    @Mock
-    private lateinit var mockThreadExecutor: ThreadExecutor
-    @Mock
-    private lateinit var mockPostExecutionThread: PostExecutionThread
+  @Mock
+  private lateinit var mockCategoryRepository: CategoryRepository
+  @Mock
+  private lateinit var mockCategoryFactory: CategoryFactory
+  @Mock
+  private lateinit var mockThreadExecutor: ThreadExecutor
+  @Mock
+  private lateinit var mockPostExecutionThread: PostExecutionThread
 
-    private lateinit var addCategoryInteractor: AddCategoryInteractor
+  private lateinit var addCategoryInteractor: AddCategoryInteractor
 
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
+  @Before
+  fun setUp() {
+    MockitoAnnotations.initMocks(this)
 
-        addCategoryInteractor = AddCategoryInteractor(mockCategoryRepository, mockCategoryFactory, mockThreadExecutor,
-                mockPostExecutionThread)
-    }
+    addCategoryInteractor = AddCategoryInteractor(mockCategoryRepository, mockCategoryFactory, mockThreadExecutor,
+        mockPostExecutionThread)
+  }
 
-    @Test
-    fun testAddNewCategory() {
-        val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
-        val category = Category("id", "name")
-        `when`(mockCategoryFactory.createCategory(anyString())).thenReturn(category)
-        `when`(mockCategoryRepository.add(category)).thenReturn(Observable.just(category))
+  @Test
+  fun testAddNewCategory() {
+    val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
+    val category = Category("id", "name")
+    `when`(mockCategoryFactory.createCategory(anyString())).thenReturn(category)
+    `when`(mockCategoryRepository.add(category)).thenReturn(Observable.just(category))
 
-        addCategoryInteractor.configure("name", account)
-        addCategoryInteractor.createObservable()
+    addCategoryInteractor.configure("name", account)
+    addCategoryInteractor.createObservable()
 
-        verify(mockCategoryRepository).add(category)
-        verifyZeroInteractions(mockThreadExecutor)
-        verifyZeroInteractions(mockPostExecutionThread)
-    }
+    verify(mockCategoryRepository).add(category)
+    verifyZeroInteractions(mockThreadExecutor)
+    verifyZeroInteractions(mockPostExecutionThread)
+  }
 }

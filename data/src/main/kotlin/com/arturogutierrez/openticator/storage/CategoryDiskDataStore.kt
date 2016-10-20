@@ -13,60 +13,60 @@ import javax.inject.Inject
 
 class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper: CategoryRealmMapper) : CategoryDataStore {
 
-    private val changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+  private val changesPublishSubject = PublishSubject.create<Void>().toSerialized()
 
-    override fun add(category: Category): Observable<Category> {
-        val categoryObservable = Observable.fromCallable {
-            val categoryRealm = categoryRealmMapper.transform(category)
+  override fun add(category: Category): Observable<Category> {
+    val categoryObservable = Observable.fromCallable {
+      val categoryRealm = categoryRealmMapper.transform(category)
 
-            val defaultRealm = Realm.getDefaultInstance()
-            defaultRealm.executeTransaction { realm -> realm.copyToRealm(categoryRealm) }
+      val defaultRealm = Realm.getDefaultInstance()
+      defaultRealm.executeTransaction { realm -> realm.copyToRealm(categoryRealm) }
 
-            category
+      category
+    }
+
+    return categoryObservable.doOnNext { categoryAdded -> notifyAccountChanges() }
+  }
+
+  override fun addAccount(category: Category, account: Account): Observable<Category> {
+    return Observable.fromCallable {
+      val defaultRealm = Realm.getDefaultInstance()
+      defaultRealm.executeTransaction { realm ->
+        val categoryRealm = getCategoryAsBlocking(realm, category.categoryId)
+        val accountRealm = getAccountAsBlocking(realm, account.accountId)
+        if (categoryRealm == null || accountRealm == null) {
+          return@executeTransaction
         }
 
-        return categoryObservable.doOnNext { categoryAdded -> notifyAccountChanges() }
+        accountRealm.category = categoryRealm
+      }
+
+      category
+    }
+  }
+
+  override val categories: Observable<List<Category>>
+    get() = changesPublishSubject.map { categoriesAsBlocking }
+        .startWith(Observable.just(categoriesAsBlocking))
+
+  private val categoriesAsBlocking: List<Category>
+    get() {
+      val realm = Realm.getDefaultInstance()
+      // TODO: Check why this is being done when the observable is created
+      //realm.waitForChange()
+      val realmResults = realm.where(CategoryRealm::class.java).findAllSorted("name")
+      return categoryRealmMapper.reverseTransform(realmResults)
     }
 
-    override fun addAccount(category: Category, account: Account): Observable<Category> {
-        return Observable.fromCallable {
-            val defaultRealm = Realm.getDefaultInstance()
-            defaultRealm.executeTransaction { realm ->
-                val categoryRealm = getCategoryAsBlocking(realm, category.categoryId)
-                val accountRealm = getAccountAsBlocking(realm, account.accountId)
-                if (categoryRealm == null || accountRealm == null) {
-                    return@executeTransaction
-                }
+  private fun getCategoryAsBlocking(realm: Realm, categoryId: String): CategoryRealm? {
+    return realm.where(CategoryRealm::class.java).equalTo("categoryId", categoryId).findFirst()
+  }
 
-                accountRealm.category = categoryRealm
-            }
+  private fun getAccountAsBlocking(realm: Realm, accountId: String): AccountRealm? {
+    return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
+  }
 
-            category
-        }
-    }
-
-    override val categories: Observable<List<Category>>
-        get() = changesPublishSubject.map { categoriesAsBlocking }
-                .startWith(Observable.just(categoriesAsBlocking))
-
-    private val categoriesAsBlocking: List<Category>
-        get() {
-            val realm = Realm.getDefaultInstance()
-            // TODO: Check why this is being done when the observable is created
-            //realm.waitForChange()
-            val realmResults = realm.where(CategoryRealm::class.java).findAllSorted("name")
-            return categoryRealmMapper.reverseTransform(realmResults)
-        }
-
-    private fun getCategoryAsBlocking(realm: Realm, categoryId: String): CategoryRealm? {
-        return realm.where(CategoryRealm::class.java).equalTo("categoryId", categoryId).findFirst()
-    }
-
-    private fun getAccountAsBlocking(realm: Realm, accountId: String): AccountRealm? {
-        return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
-    }
-
-    private fun notifyAccountChanges() {
-        changesPublishSubject.onNext(null)
-    }
+  private fun notifyAccountChanges() {
+    changesPublishSubject.onNext(null)
+  }
 }

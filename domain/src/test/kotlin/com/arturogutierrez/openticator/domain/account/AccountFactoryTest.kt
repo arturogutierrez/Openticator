@@ -16,36 +16,36 @@ import org.mockito.MockitoAnnotations
 
 class AccountFactoryTest {
 
-    @Mock
-    private lateinit var mockIssuerDecoder: IssuerDecoder
-    private lateinit var accountFactory: AccountFactory
+  @Mock
+  private lateinit var mockIssuerDecoder: IssuerDecoder
+  private lateinit var accountFactory: AccountFactory
 
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        accountFactory = AccountFactory(mockIssuerDecoder)
-    }
+  @Before
+  fun setUp() {
+    MockitoAnnotations.initMocks(this)
+    accountFactory = AccountFactory(mockIssuerDecoder)
+  }
 
-    @Test
-    fun testTryingToDecodeIssuer() {
-        `when`(mockIssuerDecoder.decode(anyString(), anyString())).thenReturn(Issuer.GOOGLE)
+  @Test
+  fun testTryingToDecodeIssuer() {
+    `when`(mockIssuerDecoder.decode(anyString(), anyString())).thenReturn(Issuer.GOOGLE)
 
-        accountFactory.createAccount(OTPType.TOTP, "name", "secret", "issuer")
+    accountFactory.createAccount(OTPType.TOTP, "name", "secret", "issuer")
 
-        verify(mockIssuerDecoder).decode("name", "issuer")
-    }
+    verify(mockIssuerDecoder).decode("name", "issuer")
+  }
 
-    @Test
-    fun testCreateAccount() {
-        `when`(mockIssuerDecoder.decode(anyString(), anyString())).thenReturn(Issuer.UNKNOWN)
+  @Test
+  fun testCreateAccount() {
+    `when`(mockIssuerDecoder.decode(anyString(), anyString())).thenReturn(Issuer.UNKNOWN)
 
-        val account = accountFactory.createAccount("name", "secret")
+    val account = accountFactory.createAccount("name", "secret")
 
-        assertThat(account.accountId, `is`(notNullValue()))
-        assertThat(account.name, `is`("name"))
-        assertThat(account.secret, `is`("secret"))
-        assertThat(account.type, `is`(OTPType.TOTP))
-        assertThat(account.issuer, `is`(Issuer.UNKNOWN))
-        assertThat(account.order, `is`(Integer.MAX_VALUE))
-    }
+    assertThat(account.accountId, `is`(notNullValue()))
+    assertThat(account.name, `is`("name"))
+    assertThat(account.secret, `is`("secret"))
+    assertThat(account.type, `is`(OTPType.TOTP))
+    assertThat(account.issuer, `is`(Issuer.UNKNOWN))
+    assertThat(account.order, `is`(Integer.MAX_VALUE))
+  }
 }

@@ -8,11 +8,11 @@ internal class TimeBasedOneTimePassword(private val currentTimeProvider: TimePro
                                         private val oneTimePasswordGenerator: OneTimePasswordGenerator,
                                         private val timeCalculator: TimeCalculator) : OneTimePassword {
 
-    override fun generate(): Passcode {
-        val currentTimeInSeconds = currentTimeProvider.currentTimeInSeconds()
-        val currentStep = timeCalculator.getCurrentTimeStep(currentTimeInSeconds)
-        val validUntilInSeconds = timeCalculator.getValidUntilInSeconds(currentStep)
-        val code = oneTimePasswordGenerator.generate(currentStep)
-        return Passcode(code, validUntilInSeconds)
-    }
+  override fun generate(): Passcode {
+    val currentTimeInSeconds = currentTimeProvider.currentTimeInSeconds()
+    val currentStep = timeCalculator.getCurrentTimeStep(currentTimeInSeconds)
+    val validUntilInSeconds = timeCalculator.getValidUntilInSeconds(currentStep)
+    val code = oneTimePasswordGenerator.generate(currentStep)
+    return Passcode(code, validUntilInSeconds)
+  }
 }

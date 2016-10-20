@@ -6,11 +6,11 @@ import org.junit.Test
 
 class CategoryTest {
 
-    @Test
-    fun testCategoryModelFields() {
-        val category = Category("id", "name")
+  @Test
+  fun testCategoryModelFields() {
+    val category = Category("id", "name")
 
-        assertThat(category.categoryId, `is`("id"))
-        assertThat(category.name, `is`("name"))
-    }
+    assertThat(category.categoryId, `is`("id"))
+    assertThat(category.name, `is`("name"))
+  }
 }

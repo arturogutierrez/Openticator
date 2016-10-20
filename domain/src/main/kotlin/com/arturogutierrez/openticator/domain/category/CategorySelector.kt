@@ -6,18 +6,18 @@ import rx.subjects.PublishSubject
 
 class CategorySelector {
 
-    private val publishSubject = PublishSubject.create<Category>()
-    private var currentCategory = Category.empty
+  private val publishSubject = PublishSubject.create<Category>()
+  private var currentCategory = Category.empty
 
-    val selectedCategory: Observable<Category>
-        get() = publishSubject.startWith(currentCategory)
+  val selectedCategory: Observable<Category>
+    get() = publishSubject.startWith(currentCategory)
 
-    fun setSelectedCategory(category: Category) {
-        currentCategory = category
-        publishSubject.onNext(category)
-    }
+  fun setSelectedCategory(category: Category) {
+    currentCategory = category
+    publishSubject.onNext(category)
+  }
 
-    fun removeSelectedCategory() {
-        setSelectedCategory(Category.empty)
-    }
+  fun removeSelectedCategory() {
+    setSelectedCategory(Category.empty)
+  }
 }

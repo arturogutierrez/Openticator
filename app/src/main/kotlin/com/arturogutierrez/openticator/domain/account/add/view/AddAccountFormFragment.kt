@@ -90,7 +90,7 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
   }
 
   override fun showFieldError(fieldError: AddAccountView.FieldError) {
-    val message = when(fieldError) {
+    val message = when (fieldError) {
       AddAccountView.FieldError.NAME -> getString(R.string.please_set_account_name)
       AddAccountView.FieldError.SECRET -> getString(R.string.please_set_account_secret)
     }
