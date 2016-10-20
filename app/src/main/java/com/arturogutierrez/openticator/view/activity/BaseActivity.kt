@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import butterknife.ButterKnife
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.application.OpenticatorApplication
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
@@ -27,7 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
     setContentView(layoutResource)
 
     applicationComponent.inject(this)
-    ButterKnife.bind(this)
 
     configureToolbar()
   }
