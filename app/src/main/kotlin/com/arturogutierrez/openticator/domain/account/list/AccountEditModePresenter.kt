@@ -97,7 +97,7 @@ class AccountEditModePresenter @Inject constructor(
     }
 
     private inner class UpdateAccountSubscriber : DefaultSubscriber<Account>() {
-        override fun onNext(account: Account) {
+        override fun onNext(item: Account) {
             view.dismissActionMode()
         }
 
