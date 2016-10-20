@@ -57,6 +57,7 @@ dependencies {
   compile project(':data')
 
   compile presentationDependencies.anko
+  compile presentationDependencies.ankoSupport
   compile presentationDependencies.supportVersion
   compile presentationDependencies.appCompat
   compile presentationDependencies.design

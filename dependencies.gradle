@@ -62,7 +62,8 @@ ext {
                               zxing          : "com.google.zxing:android-core:${zxingVersion}",
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
                               materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
-                              anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}"]
+                              anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
+                              ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
