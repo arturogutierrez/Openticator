@@ -42,7 +42,7 @@ public class AddAccountFromCameraPresenter extends DefaultSubscriber<Account> im
   }
 
   @Override
-  public void onNext(Account account) {
+  public void onNext(Account item) {
     view.dismissScreen();
   }
 
