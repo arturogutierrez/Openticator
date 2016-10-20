@@ -52,8 +52,6 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
   private val categoriesAsBlocking: List<Category>
     get() {
       val realm = Realm.getDefaultInstance()
-      // TODO: Check why this is being done when the observable is created
-      //realm.waitForChange()
       val realmResults = realm.where(CategoryRealm::class.java).findAllSorted("name")
       return categoryRealmMapper.reverseTransform(realmResults)
     }

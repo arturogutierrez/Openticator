@@ -13,6 +13,7 @@ abstract class DefaultSubscriber<U> : Observer<U> {
   }
 
   override fun onError(e: Throwable) {
+    // TODO: Log to crashlytics
     // Do nothing by default
   }
 }

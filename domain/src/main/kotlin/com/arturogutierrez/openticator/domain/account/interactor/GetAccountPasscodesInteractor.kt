@@ -23,10 +23,12 @@ class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
     return categorySelector.selectedCategory.flatMap { category ->
       val emptyCategory = categoryFactory.createEmptyCategory()
       if (category == emptyCategory) {
-        accountRepository.allAccounts
+        return@flatMap accountRepository.allAccounts
       }
       accountRepository.getAccounts(category)
-    }.map { accountList -> calculatePasscodes(accountList) }
+    }.map {
+      accountList -> calculatePasscodes(accountList)
+    }
   }
 
   private fun calculatePasscodes(accountList: List<Account>): List<AccountPasscode> {

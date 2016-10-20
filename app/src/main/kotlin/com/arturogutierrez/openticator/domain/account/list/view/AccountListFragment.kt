@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.account.list.AccountListPresenter
 import com.arturogutierrez.openticator.domain.account.list.AccountListView
@@ -14,6 +15,7 @@ import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapt
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
@@ -24,8 +26,8 @@ class AccountListFragment : BaseFragment(), AccountListView {
   @Inject
   internal lateinit var layoutInflater: LayoutInflater
 
-  private val rvAccounts by lazy { find<RecyclerView>(R.id.rv_accounts) }
-  private val tvEmptyView by lazy { find<RecyclerView>(R.id.tv_empty_view) }
+  private lateinit var rvAccounts: RecyclerView
+  private lateinit var tvEmptyView: TextView
 
   private var accountsAdapter: AccountsAdapter? = null
 
@@ -54,10 +56,12 @@ class AccountListFragment : BaseFragment(), AccountListView {
   override val layoutResource: Int
     get() = R.layout.fragment_account_list
 
-  override fun configureUI() {
+  override fun configureUI(view: View) {
+    tvEmptyView = view.find(R.id.tv_empty_view)
+    rvAccounts = view.find(R.id.rv_accounts)
+
     val linearLayoutManager = LinearLayoutManager(context)
     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-
     rvAccounts.layoutManager = linearLayoutManager
   }
 

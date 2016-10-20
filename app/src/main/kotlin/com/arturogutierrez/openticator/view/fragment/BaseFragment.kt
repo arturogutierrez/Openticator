@@ -17,14 +17,14 @@ abstract class BaseFragment : Fragment() {
                             savedInstanceState: Bundle?): View? {
     val fragmentView = inflater!!.inflate(layoutResource, container, false)
 
-    configureUI()
+    configureUI(fragmentView)
 
     return fragmentView
   }
 
   protected abstract val layoutResource: Int
 
-  protected open fun configureUI() {
+  protected open fun configureUI(view: View) {
     // Nothing to do here
   }
 }

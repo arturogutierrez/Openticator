@@ -69,7 +69,7 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
   private fun initializeActivity(savedInstanceState: Bundle?) {
     configureInjector()
     configureViews()
-    navigationDrawer.onCreate(savedInstanceState!!)
+    navigationDrawer.onCreate(savedInstanceState)
 
     if (savedInstanceState == null) {
       showAccountListFragment()

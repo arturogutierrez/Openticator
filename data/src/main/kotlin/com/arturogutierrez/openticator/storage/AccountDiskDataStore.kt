@@ -13,10 +13,11 @@ import rx.subjects.Subject
 import javax.inject.Inject
 
 class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: AccountRealmMapper) : AccountDataStore {
+
   private val changesPublishSubject: Subject<Void, Void>
 
   init {
-    this.changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+    changesPublishSubject = PublishSubject.create<Void>().toSerialized()
   }
 
   override fun add(account: Account): Observable<Account> {
@@ -76,15 +77,12 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
   private val accountsAsBlocking: List<Account>
     get() {
       val realm = Realm.getDefaultInstance()
-      realm.waitForChange()
       val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
       return accountRealmMapper.reverseTransform(realmResults)
     }
 
   private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
     val realm = Realm.getDefaultInstance()
-    realm.waitForChange()
-
     val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
     return accountRealmMapper.reverseTransform(realmResults)
   }

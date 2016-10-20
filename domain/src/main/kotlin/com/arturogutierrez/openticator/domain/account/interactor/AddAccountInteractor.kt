@@ -32,7 +32,7 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
         return@flatMap accountRepository.add(newAccount)
       }
 
-      return@flatMap accountRepository.add(newAccount).flatMap { createdAccount ->
+      accountRepository.add(newAccount).flatMap { createdAccount ->
         categoryRepository.addAccount(category, createdAccount).flatMap { Observable.just(createdAccount) }
       }
     }

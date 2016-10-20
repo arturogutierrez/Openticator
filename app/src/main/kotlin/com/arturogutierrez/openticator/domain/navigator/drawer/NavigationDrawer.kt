@@ -24,7 +24,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
     initialize(activity)
   }
 
-  fun onCreate(savedInstanceState: Bundle) {
+  fun onCreate(savedInstanceState: Bundle?) {
     createDrawerLayout(savedInstanceState)
   }
 
@@ -54,7 +54,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
     presenter.setView(this)
   }
 
-  private fun createDrawerLayout(savedInstanceState: Bundle) {
+  private fun createDrawerLayout(savedInstanceState: Bundle?) {
     allAccountsDrawerItem = PrimaryDrawerItem().withName(R.string.all_accounts).withIcon(R.drawable.ic_folder_black_24dp).withIconTintingEnabled(true)
     categoriesSectionDrawerItem = SectionDrawerItem().withName(R.string.categories).withDivider(false)
 
