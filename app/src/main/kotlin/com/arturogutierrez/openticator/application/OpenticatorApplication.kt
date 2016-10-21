@@ -1,7 +1,6 @@
 package com.arturogutierrez.openticator.application
 
 import android.app.Application
-import butterknife.ButterKnife
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent

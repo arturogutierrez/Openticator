@@ -59,7 +59,8 @@ android {
       applicationIdSuffix ".debug"
     }
     release {
-      minifyEnabled false
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       signingConfig = signingConfigs.release
     }
   }
@@ -81,7 +82,6 @@ dependencies {
   compile presentationDependencies.appCompat
   compile presentationDependencies.design
   compile presentationDependencies.recyclerView
-  compile presentationDependencies.butterKnife
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
   compile presentationDependencies.zxingCore

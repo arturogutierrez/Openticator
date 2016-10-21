@@ -31,7 +31,6 @@ ext {
   rxAndroidVersion = '1.1.0'
   javaxAnnotationVersion = '1.0'
   androidAnnotationsVersion = '22.2.0'
-  butterKnifeVersion = '7.0.1'
   fabVersion = '1.6.2'
   zxingVersion = '3.2.1'
   zxingCoreVersion = '3.2.1'
@@ -55,7 +54,6 @@ ext {
                               rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
                               rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
                               javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                              butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
                               supportVersion : "com.android.support:support-v4:${supportVersion}",
                               appCompat      : "com.android.support:appcompat-v7:${appCompatVersion}",
                               design         : "com.android.support:design:${designVersion}",
