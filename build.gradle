@@ -2,25 +2,27 @@ apply from: 'dependencies.gradle'
 
 buildscript {
 
+  ext.gradle_build_tools = '2.2.2'
   ext.kotlin_version = '1.0.4'
   ext.realm_version = '2.0.2'
+  ext.play_publisher_version = '1.1.5'
 
   repositories {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.2.2'
+    classpath "com.android.tools.build:gradle:$gradle_build_tools"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath "io.realm:realm-gradle-plugin:$realm_version"
-    classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+    classpath "com.github.triplet.gradle:play-publisher:${play_publisher_version}"
   }
 }
 
 allprojects {
   ext {
     androidApplicationId = 'com.arturogutierrez.openticator'
-    androidVersionCode = 1
-    androidVersionName = "0.0.1"
+    androidVersionCode = 4000
+    androidVersionName = "0.4.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 }

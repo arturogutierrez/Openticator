@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.github.triplet.play'
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -44,6 +44,19 @@ android {
   lintOptions {
     ignore 'InvalidPackage'
   }
+
+  signingConfigs {
+    release {
+      storeFile file("../app.keystore.jks")
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      signingConfig = signingConfigs.release
+    }
+  }
 }
 
 kapt {
@@ -77,4 +90,44 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
+}
+
+play {
+  jsonFile = file('../gplay-secret.json')
+  track = 'beta'
+}
+
+def (releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword) = signingConfigFromFile()
+if (releaseKeystorePassword != null && releaseKeyAlias != null && releaseKeyPassword != null) {
+  android.signingConfigs.release.storePassword = releaseKeystorePassword
+  android.signingConfigs.release.keyAlias = releaseKeyAlias
+  android.signingConfigs.release.keyPassword = releaseKeyPassword
+} else {
+  println "Unable to find the right credentials to sign the apk :("
+  android.buildTypes.release.signingConfig = null
+}
+
+def signingConfigFromFile() {
+  println '-> signingConfigFromFile'
+  def Properties props = new Properties()
+  def propFile = file('../signing.properties')
+
+  if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('STORE_PASSWORD') && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+
+      def keystorePassword = props['STORE_PASSWORD']
+      def keyAlias = props['KEY_ALIAS']
+      def keyPassword = props['KEY_PASSWORD']
+
+      return [keystorePassword, keyAlias, keyPassword]
+    } else {
+      println 'signing.properties found but some entries are missing'
+    }
+  } else {
+    println 'signing.properties not found'
+  }
+
+  return [null, null, null]
 }
