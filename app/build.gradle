@@ -53,6 +53,9 @@ android {
   }
 
   buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+    }
     release {
       minifyEnabled false
       signingConfig = signingConfigs.release
@@ -119,7 +122,10 @@ def signingConfigFromFile() {
   if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
 
-    if (props != null && props.containsKey('STORE_PASSWORD') && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+    if (props != null &&
+        props.containsKey('STORE_PASSWORD') &&
+        props.containsKey('KEY_ALIAS') &&
+        props.containsKey('KEY_PASSWORD')) {
 
       def keystorePassword = props['STORE_PASSWORD']
       def keyAlias = props['KEY_ALIAS']
