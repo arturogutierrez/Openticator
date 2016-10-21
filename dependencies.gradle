@@ -6,8 +6,9 @@ allprojects {
 }
 
 ext {
+
   // Kotlin
-  kotlinVersion = '1.0.3'
+  kotlinVersion = rootProject.ext.kotlin_version
 
   // SDK version
   androidBuildToolsVersion = "24.0.3"
