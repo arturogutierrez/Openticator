@@ -17,6 +17,8 @@ android {
     versionCode globalConfiguration.getAt("androidVersionCode")
     versionName globalConfiguration.getAt("androidVersionName")
 
+    resValue "string", "default_package_name", globalConfiguration.getAt("androidApplicationId")
+
     // Vector Drawables for Gradle 2.0.
     // Compat toolbar use it internally
     vectorDrawables.useSupportLibrary = true
@@ -53,6 +55,9 @@ android {
   }
 
   buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+    }
     release {
       minifyEnabled false
       signingConfig = signingConfigs.release
@@ -119,7 +124,10 @@ def signingConfigFromFile() {
   if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
 
-    if (props != null && props.containsKey('STORE_PASSWORD') && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+    if (props != null &&
+        props.containsKey('STORE_PASSWORD') &&
+        props.containsKey('KEY_ALIAS') &&
+        props.containsKey('KEY_PASSWORD')) {
 
       def keystorePassword = props['STORE_PASSWORD']
       def keyAlias = props['KEY_ALIAS']
