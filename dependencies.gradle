@@ -2,6 +2,7 @@ allprojects {
   repositories {
     jcenter()
     maven { url "https://jitpack.io" }
+    maven { url 'https://maven.fabric.io/public' }
   }
 }
 
@@ -24,6 +25,7 @@ ext {
   designVersion = '24.2.1'
 
   // Libraries
+  crashlyticsVersion = '2.6.5'
   daggerVersion = '2.0.2'
   rxJavaVersion = '1.1.3'
   rxAndroidVersion = '1.1.0'
@@ -47,6 +49,7 @@ ext {
   hamkrestVersion = '1.2.3.0'
 
   presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+                              crashlytics    : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger         : "com.google.dagger:dagger:${daggerVersion}",
                               rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",

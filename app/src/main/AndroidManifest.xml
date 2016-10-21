@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.arturogutierrez.openticator">
 
+  <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.CAMERA"/>
   <uses-feature android:name="android.hardware.camera"/>
   <uses-feature android:name="android.hardware.camera.autofocus"/>
@@ -30,6 +31,10 @@
     <activity android:name=".domain.account.add.activity.AddAccountFromCameraActivity"/>
     <activity android:name=".domain.account.camera.activity.CaptureActivity"/>
 
+    <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="5f7a6aa642eaf873015e5bdc17b0053e880b39f2"
+    />
   </application>
 
 </manifest>

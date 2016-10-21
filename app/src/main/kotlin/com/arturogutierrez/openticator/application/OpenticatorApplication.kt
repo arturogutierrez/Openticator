@@ -5,7 +5,9 @@ import butterknife.ButterKnife
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent
 import com.arturogutierrez.openticator.di.module.ApplicationModule
+import com.crashlytics.android.Crashlytics
 import com.karumi.dexter.Dexter
+import io.fabric.sdk.android.Fabric
 
 class OpenticatorApplication : Application() {
 
@@ -18,9 +20,13 @@ class OpenticatorApplication : Application() {
   }
 
   private fun initialize() {
-    ButterKnife.setDebug(true)
+    initializeFabric()
     initializeDependencyInjector()
     initializeDexter()
+  }
+
+  private fun initializeFabric() {
+    Fabric.with(this, Crashlytics())
   }
 
   private fun initializeDependencyInjector() {

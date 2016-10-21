@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'io.fabric'
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -83,6 +84,9 @@ dependencies {
   compile presentationDependencies.materialDialogs
   compile(presentationDependencies.materialDrawer) {
     transitive = true
+  }
+  compile(presentationDependencies.crashlytics) {
+    transitive = true;
   }
 
   kapt presentationDependencies.daggerCompiler
