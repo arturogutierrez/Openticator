@@ -4,6 +4,10 @@
 -keepattributes Exceptions,SourceFile,LineNumberTable,*Annotation*,Signature
 -optimizationpasses 3
 
+# Crashlytics
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+
 # RxJava
 -dontwarn sun.misc.**
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
