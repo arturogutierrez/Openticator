@@ -16,20 +16,17 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import org.jetbrains.anko.find
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
 
   @Inject
   internal lateinit var presenter: AccountListPresenter
-  @Inject
-  internal lateinit var layoutInflater: LayoutInflater
 
   private lateinit var rvAccounts: RecyclerView
   private lateinit var tvEmptyView: TextView
 
-  private var accountsAdapter: AccountsAdapter? = null
+  private lateinit var accountsAdapter: AccountsAdapter
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -56,13 +53,17 @@ class AccountListFragment : BaseFragment(), AccountListView {
   override val layoutResource: Int
     get() = R.layout.fragment_account_list
 
-  override fun configureUI(view: View) {
+  override fun configureUI(inflater: LayoutInflater, view: View) {
     tvEmptyView = view.find(R.id.tv_empty_view)
     rvAccounts = view.find(R.id.rv_accounts)
+
+    accountsAdapter = AccountsAdapter(inflater)
+    accountsAdapter.editMode().subscribe { presenter.onEditModeList(it) }
 
     val linearLayoutManager = LinearLayoutManager(context)
     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
     rvAccounts.layoutManager = linearLayoutManager
+    rvAccounts.adapter = accountsAdapter
   }
 
   private fun initialize() {
@@ -88,7 +89,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   override fun startEditMode() {
     val activity = activity as AppCompatActivity
-    val accountEditActionMode = AccountEditActionMode(component, accountsAdapter!!)
+    val accountEditActionMode = AccountEditActionMode(component, accountsAdapter)
     activity.startSupportActionMode(accountEditActionMode)
   }
 
@@ -98,23 +99,13 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun showAccountList(accounts: List<AccountPasscode>) {
-    if (accountsAdapter == null) {
-      accountsAdapter = AccountsAdapter(layoutInflater, accounts)
-      accountsAdapter?.let {
-        it.editMode().subscribe { presenter.onEditModeList(it) }
-        rvAccounts.adapter = accountsAdapter
-      }
-    } else {
-      updateAccounts(accounts)
-    }
+    updateAccounts(accounts)
 
     rvAccounts.visibility = View.VISIBLE
     tvEmptyView.visibility = View.GONE
   }
 
   private fun stopCounters() {
-    val accountsAdapter = accountsAdapter ?: return
-
     for (i in 0..accountsAdapter.itemCount - 1) {
       val viewHolder = rvAccounts.findViewHolderForAdapterPosition(i) as AccountViewHolder
       viewHolder.stopAnimation()
@@ -122,9 +113,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {
-    accountsAdapter?.let {
-      it.accounts = accounts
-      it.notifyDataSetChanged()
-    }
+    accountsAdapter.accounts = accounts
+    accountsAdapter.notifyDataSetChanged()
   }
 }

@@ -10,12 +10,13 @@ import rx.Observable
 import rx.subjects.PublishSubject
 import java.util.*
 
-class AccountsAdapter(val layoutInflater: LayoutInflater, var accounts: List<AccountPasscode>) : RecyclerView.Adapter<AccountViewHolder>(), AccountViewHolder.OnClickListener {
+class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>(), AccountViewHolder.OnClickListener {
 
   private var editMode: Boolean = false
   private val editModeSubject: PublishSubject<Boolean>
   private val selectedAccountsSubject: PublishSubject<Set<Account>>
 
+  var accounts = emptyList<AccountPasscode>()
   val selectedAccounts: MutableSet<Account>
 
   init {
