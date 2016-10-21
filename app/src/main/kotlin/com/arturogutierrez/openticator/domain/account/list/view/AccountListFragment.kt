@@ -89,7 +89,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   override fun startEditMode() {
     val activity = activity as AppCompatActivity
-    val accountEditActionMode = AccountEditActionMode(component, accountsAdapter!!)
+    val accountEditActionMode = AccountEditActionMode(component, accountsAdapter)
     activity.startSupportActionMode(accountEditActionMode)
   }
 
