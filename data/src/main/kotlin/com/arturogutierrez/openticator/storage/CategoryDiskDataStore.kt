@@ -21,6 +21,7 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
 
       val defaultRealm = Realm.getDefaultInstance()
       defaultRealm.executeTransaction { realm -> realm.copyToRealm(categoryRealm) }
+      defaultRealm.close()
 
       category
     }
@@ -40,6 +41,7 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
 
         accountRealm.category = categoryRealm
       }
+      defaultRealm.close()
 
       category
     }
@@ -53,7 +55,10 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
     get() {
       val realm = Realm.getDefaultInstance()
       val realmResults = realm.where(CategoryRealm::class.java).findAllSorted("name")
-      return categoryRealmMapper.reverseTransform(realmResults)
+      val categories = categoryRealmMapper.reverseTransform(realmResults)
+      realm.close()
+
+      return categories
     }
 
   private fun getCategoryAsBlocking(realm: Realm, categoryId: String): CategoryRealm? {

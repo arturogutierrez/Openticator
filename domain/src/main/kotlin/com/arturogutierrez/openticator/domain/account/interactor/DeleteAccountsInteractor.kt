@@ -10,19 +10,19 @@ import java.util.*
 
 class DeleteAccountsInteractor(val accountRepository: AccountRepository,
                                val threadExecutor: ThreadExecutor,
-                               val postExecutionThread: PostExecutionThread) : Interactor<Void>(threadExecutor, postExecutionThread) {
+                               val postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
   private lateinit var accounts: Set<Account>
 
   fun configure(accounts: Set<Account>) {
     this.accounts = accounts
   }
 
-  override fun createObservable(): Observable<Void> {
+  override fun createObservable(): Observable<Unit> {
     if (accounts.size == 0) {
       throw IllegalStateException("You can't delete no one accounts")
     }
 
-    val removeAccountObservables = ArrayList<Observable<Void>>(accounts.size)
+    val removeAccountObservables = ArrayList<Observable<Unit>>(accounts.size)
     for (account in accounts) {
       removeAccountObservables.add(accountRepository.remove(account))
     }

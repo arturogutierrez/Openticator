@@ -63,10 +63,10 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-    menuItemDelete!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-    menuItemEdit!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-    menuItemCategory!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-    menuItemLogo!!.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+    menuItemDelete?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+    menuItemEdit?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+    menuItemCategory?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+    menuItemLogo?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
     return true
   }
 
@@ -132,19 +132,19 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun dismissActionMode() {
-    actionMode!!.finish()
+    actionMode?.finish()
   }
 
   override fun showCategoryButton(isVisible: Boolean) {
-    menuItemCategory!!.isVisible = isVisible
+    menuItemCategory?.isVisible = isVisible
   }
 
   override fun showEditButton(isVisible: Boolean) {
-    menuItemEdit!!.isVisible = isVisible
+    menuItemEdit?.isVisible = isVisible
   }
 
   override fun showLogoButton(isVisible: Boolean) {
-    menuItemLogo!!.isVisible = isVisible
+    menuItemLogo?.isVisible = isVisible
   }
 
   override fun showChooseEmptyCategory(account: Account) {

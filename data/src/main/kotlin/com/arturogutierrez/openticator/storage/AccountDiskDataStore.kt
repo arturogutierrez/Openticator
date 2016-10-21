@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: AccountRealmMapper) : AccountDataStore {
 
-  private val changesPublishSubject: Subject<Void, Void>
+  private val changesPublishSubject: Subject<Unit, Unit>
 
   init {
-    changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+    changesPublishSubject = PublishSubject.create<Unit>().toSerialized()
   }
 
   override fun add(account: Account): Observable<Account> {
@@ -30,6 +30,7 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
 
         val defaultRealm = Realm.getDefaultInstance()
         defaultRealm.executeTransaction { realm -> realm.copyToRealm(accountRealm) }
+        defaultRealm.close()
 
         account
       }
@@ -45,25 +46,25 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
         val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
         accountRealmMapper.copyToAccountRealm(accountRealm, account)
       }
+      defaultRealm.close()
 
       account
     }
 
-    return updateAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+    return updateAccountObservable.doOnNext { notifyAccountChanges() }
   }
 
-  override fun remove(account: Account): Observable<Void> {
-    val removeAccountObservable = Observable.fromCallable<Void> {
+  override fun remove(account: Account): Observable<Unit> {
+    val removeAccountObservable = Observable.fromCallable<Unit> {
       val defaultRealm = Realm.getDefaultInstance()
       defaultRealm.executeTransaction { realm ->
         val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
         accountRealm.deleteFromRealm()
       }
-
-      null
+      defaultRealm.close()
     }
 
-    return removeAccountObservable.doOnNext { aVoid -> notifyAccountChanges() }
+    return removeAccountObservable.doOnNext { notifyAccountChanges() }
   }
 
   override fun getAccounts(category: Category): Observable<List<Account>> {
@@ -78,20 +79,24 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
     get() {
       val realm = Realm.getDefaultInstance()
       val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
-      return accountRealmMapper.reverseTransform(realmResults)
+      val accounts = accountRealmMapper.reverseTransform(realmResults)
+      realm.close()
+
+      return accounts
     }
 
   private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
     val realm = Realm.getDefaultInstance()
     val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
-    return accountRealmMapper.reverseTransform(realmResults)
+    val accounts = accountRealmMapper.reverseTransform(realmResults)
+    realm.close()
+
+    return accounts
   }
 
   private fun getAccountRealmAsBlocking(realm: Realm, accountId: String): AccountRealm? {
     return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
   }
 
-  private fun notifyAccountChanges() {
-    changesPublishSubject.onNext(null)
-  }
+  private fun notifyAccountChanges() = changesPublishSubject.onNext(null)
 }

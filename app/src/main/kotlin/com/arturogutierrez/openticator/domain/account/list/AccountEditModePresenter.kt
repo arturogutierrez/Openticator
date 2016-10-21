@@ -106,8 +106,8 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class DeleteAccountsSubscriber : DefaultSubscriber<Void>() {
-    override fun onNext(aVoid: Void) {
+  private inner class DeleteAccountsSubscriber : DefaultSubscriber<Unit>() {
+    override fun onNext(aVoid: Unit) {
       view.dismissActionMode()
     }
 

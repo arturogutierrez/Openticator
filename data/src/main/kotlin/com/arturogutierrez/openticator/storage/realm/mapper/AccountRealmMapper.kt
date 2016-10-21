@@ -24,12 +24,16 @@ class AccountRealmMapper @Inject constructor() : Mapper<Account, AccountRealm>()
   }
 
   fun copyToAccountRealm(accountRealm: AccountRealm, account: Account) {
-    accountRealm.accountId = account.accountId
-    accountRealm.name = account.name
-    accountRealm.secret = account.secret
-    accountRealm.issuer = account.issuer.identifier
-    accountRealm.order = account.order
-    accountRealm.type = transformAccountType(account.type)
+    with(accountRealm) {
+      if (accountId != account.accountId) {
+        accountId = account.accountId
+      }
+      name = account.name
+      secret = account.secret
+      issuer = account.issuer.identifier
+      order = account.order
+      type = transformAccountType(account.type)
+    }
   }
 
   private fun transformAccountType(otpType: String): OTPType {

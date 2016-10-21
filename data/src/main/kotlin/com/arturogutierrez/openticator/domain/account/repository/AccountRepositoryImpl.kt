@@ -15,7 +15,7 @@ class AccountRepositoryImpl @Inject constructor(val accountDataStore: AccountDat
     return accountDataStore.update(account)
   }
 
-  override fun remove(account: Account): Observable<Void> {
+  override fun remove(account: Account): Observable<Unit> {
     return accountDataStore.remove(account)
   }
 
