@@ -21,8 +21,8 @@ buildscript {
 allprojects {
   ext {
     androidApplicationId = 'com.arturogutierrez.openticator'
-    androidVersionCode = 4000
-    androidVersionName = "0.4.0"
+    androidVersionCode = 4001
+    androidVersionName = "0.4.1"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 }
