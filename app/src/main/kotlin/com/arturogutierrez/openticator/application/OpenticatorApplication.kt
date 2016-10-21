@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.application
 
 import android.app.Application
 import butterknife.ButterKnife
+import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent
 import com.arturogutierrez.openticator.di.module.ApplicationModule
@@ -26,7 +27,9 @@ class OpenticatorApplication : Application() {
   }
 
   private fun initializeFabric() {
-    Fabric.with(this, Crashlytics())
+    val packageName = getString(R.string.default_package_name)
+    val fabric = Fabric.Builder(this).kits(Crashlytics()).appIdentifier(packageName).build()
+    Fabric.with(fabric)
   }
 
   private fun initializeDependencyInjector() {

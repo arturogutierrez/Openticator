@@ -17,6 +17,8 @@ android {
     versionCode globalConfiguration.getAt("androidVersionCode")
     versionName globalConfiguration.getAt("androidVersionName")
 
+    resValue "string", "default_package_name", globalConfiguration.getAt("androidApplicationId")
+
     // Vector Drawables for Gradle 2.0.
     // Compat toolbar use it internally
     vectorDrawables.useSupportLibrary = true
