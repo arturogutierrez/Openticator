@@ -78,6 +78,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
     get() = getComponent(AccountListComponent::class.java)
 
   override fun viewNoItems() {
+    updateAccounts(emptyList())
     showEmptyView()
   }
 
@@ -104,10 +105,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
         rvAccounts.adapter = accountsAdapter
       }
     } else {
-      accountsAdapter?.let {
-        it.accounts = accounts
-        it.notifyDataSetChanged()
-      }
+      updateAccounts(accounts)
     }
 
     rvAccounts.visibility = View.VISIBLE
@@ -120,6 +118,13 @@ class AccountListFragment : BaseFragment(), AccountListView {
     for (i in 0..accountsAdapter.itemCount - 1) {
       val viewHolder = rvAccounts.findViewHolderForAdapterPosition(i) as AccountViewHolder
       viewHolder.stopAnimation()
+    }
+  }
+
+  private fun updateAccounts(accounts: List<AccountPasscode>) {
+    accountsAdapter?.let {
+      it.accounts = accounts
+      it.notifyDataSetChanged()
     }
   }
 }

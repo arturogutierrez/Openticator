@@ -10,7 +10,7 @@ interface AccountDataStore {
 
   fun update(account: Account): Observable<Account>
 
-  fun remove(account: Account): Observable<Void>
+  fun remove(account: Account): Observable<Unit>
 
   fun getAccounts(category: Category): Observable<List<Account>>
 
