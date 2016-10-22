@@ -12,18 +12,15 @@ import javax.inject.Inject
 @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountListPresenter @Inject constructor(
     val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
-    val remainingTimeCalculator: RemainingTimeCalculator) : DefaultSubscriber<List<AccountPasscode>>(), Presenter {
+    val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView> {
 
-  private lateinit var view: AccountListView
   private val handler = Handler(Looper.getMainLooper())
   private val scheduleRunnable = Runnable { this.reloadPasscodes() }
 
-  fun setView(view: AccountListView) {
-    this.view = view
-  }
+  lateinit override var view: AccountListView
 
   override fun resume() {
-    getAccountPasscodesInteractor.execute(this)
+    loadAccountPasscodes()
   }
 
   override fun pause() {
@@ -35,9 +32,27 @@ class AccountListPresenter @Inject constructor(
     getAccountPasscodesInteractor.unsubscribe()
   }
 
-  override fun onNext(accountPasscodes: List<AccountPasscode>) {
+  fun onEditModeList(isEditMode: Boolean) {
+    if (isEditMode) {
+      view.startEditMode()
+    }
+  }
+
+  private fun loadAccountPasscodes() {
+    getAccountPasscodesInteractor.execute(object : DefaultSubscriber<List<AccountPasscode>>() {
+      override fun onNext(items: List<AccountPasscode>) {
+        onFetchAccountPasscodes(items)
+      }
+
+      override fun onError(e: Throwable) {
+        onFetchError()
+      }
+    })
+  }
+
+  private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {
     if (accountPasscodes.size == 0) {
-      view.viewNoItems()
+      view.noItems()
       return
     }
 
@@ -45,14 +60,8 @@ class AccountListPresenter @Inject constructor(
     scheduleUpdate(accountPasscodes)
   }
 
-  override fun onError(e: Throwable) {
-    view.viewNoItems()
-  }
-
-  fun onEditModeList(isEditMode: Boolean) {
-    if (isEditMode) {
-      view.startEditMode()
-    }
+  private fun onFetchError() {
+    view.noItems()
   }
 
   private fun scheduleUpdate(accountPasscodes: List<AccountPasscode>) {
@@ -66,7 +75,7 @@ class AccountListPresenter @Inject constructor(
 
   private fun reloadPasscodes() {
     getAccountPasscodesInteractor.unsubscribe()
-    getAccountPasscodesInteractor.execute(this)
+    loadAccountPasscodes()
   }
 
   private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Int {

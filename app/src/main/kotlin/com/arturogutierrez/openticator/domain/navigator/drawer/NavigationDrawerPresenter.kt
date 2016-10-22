@@ -7,21 +7,21 @@ import com.arturogutierrez.openticator.interactor.DefaultSubscriber
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class NavigationDrawerPresenter @Inject constructor(
     val getCategoriesInteractor: GetCategoriesInteractor,
-    val categorySelector: CategorySelector) : DefaultSubscriber<List<Category>>(), Presenter {
+    val categorySelector: CategorySelector) : Presenter<NavigationDrawerView> {
 
-  private lateinit var view: NavigationDrawerView
+  lateinit override var view: NavigationDrawerView
+
   // TODO: Presenter shouldn't has state
   private var categories: List<Category> = emptyList()
 
-  fun setView(view: NavigationDrawerView) {
-    this.view = view
-  }
-
   override fun resume() {
-    getCategoriesInteractor.execute(this)
+    getCategoriesInteractor.execute(object : DefaultSubscriber<List<Category>>() {
+      override fun onNext(item: List<Category>) {
+        onFetchCategories(item)
+      }
+    })
   }
 
   override fun pause() {
@@ -32,7 +32,7 @@ class NavigationDrawerPresenter @Inject constructor(
     getCategoriesInteractor.unsubscribe()
   }
 
-  override fun onNext(categories: List<Category>) {
+  private fun onFetchCategories(categories: List<Category>) {
     this.categories = categories
     view.renderCategories(categories)
   }

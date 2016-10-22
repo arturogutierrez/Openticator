@@ -70,7 +70,7 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
 
   private fun initialize() {
     initializeInjector()
-    presenter.setView(this)
+    presenter.view = this
   }
 
   private fun initializeInjector() {

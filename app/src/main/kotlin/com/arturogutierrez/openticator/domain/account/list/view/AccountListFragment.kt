@@ -68,7 +68,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun initialize() {
     initializeInjector()
-    presenter.setView(this)
+    presenter.view = this
   }
 
   private fun initializeInjector() {
@@ -78,7 +78,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
   private val component: AccountListComponent
     get() = getComponent(AccountListComponent::class.java)
 
-  override fun viewNoItems() {
+  override fun noItems() {
     updateAccounts(emptyList())
     showEmptyView()
   }

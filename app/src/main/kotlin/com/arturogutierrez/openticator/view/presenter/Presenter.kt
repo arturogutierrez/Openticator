@@ -1,6 +1,8 @@
 package com.arturogutierrez.openticator.view.presenter
 
-interface Presenter {
+interface Presenter<V : Presenter.View> {
+
+  var view: V
 
   fun resume() {
 
@@ -11,6 +13,10 @@ interface Presenter {
   }
 
   fun destroy() {
+
+  }
+
+  interface View {
 
   }
 }

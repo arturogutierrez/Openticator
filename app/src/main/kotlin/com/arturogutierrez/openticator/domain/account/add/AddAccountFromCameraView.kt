@@ -1,10 +1,8 @@
 package com.arturogutierrez.openticator.domain.account.add
 
-interface AddAccountFromCameraView {
+import com.arturogutierrez.openticator.view.LoadDataView
 
-  fun showLoading()
-
-  fun hideLoading()
+interface AddAccountFromCameraView : LoadDataView {
 
   fun openCaptureCode()
 
