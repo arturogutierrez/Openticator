@@ -17,6 +17,8 @@ import com.arturogutierrez.openticator.executor.JobExecutor
 import com.arturogutierrez.openticator.executor.MainThread
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
+import com.arturogutierrez.openticator.storage.ClipboardRepositoryImpl
+import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
 import com.arturogutierrez.openticator.storage.realm.AccountDiskDataStore
 import com.arturogutierrez.openticator.storage.realm.CategoryDiskDataStore
 import com.arturogutierrez.openticator.storage.realm.RealmDatabaseConfigurator
@@ -88,5 +90,10 @@ class ApplicationModule(val context: Context) {
   @Provides
   internal fun provideCategorySelector(): CategorySelector {
     return CategorySelector()
+  }
+
+  @Provides
+  internal fun provideClipboardRepository(clipboardRepository: ClipboardRepositoryImpl): ClipboardRepository {
+    return clipboardRepository
   }
 }

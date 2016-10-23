@@ -12,6 +12,7 @@ import com.arturogutierrez.openticator.domain.category.repository.CategoryReposi
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
+import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
 import com.arturogutierrez.openticator.view.activity.BaseActivity
 import com.arturogutierrez.openticator.view.activity.ProxyActivity
 import dagger.Component
@@ -45,4 +46,6 @@ interface ApplicationComponent {
   fun provideIssuerRepository(): IssuerRepository
 
   fun provideCategorySelector(): CategorySelector
+
+  fun provideClipboardRepository(): ClipboardRepository
 }

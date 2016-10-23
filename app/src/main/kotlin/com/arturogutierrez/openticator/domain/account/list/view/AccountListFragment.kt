@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.list.view
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,17 +16,16 @@ import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapt
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
+import com.arturogutierrez.openticator.view.fragment.makeSnackbar
 import org.jetbrains.anko.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
-
   @Inject
   internal lateinit var presenter: AccountListPresenter
 
   private lateinit var rvAccounts: RecyclerView
   private lateinit var tvEmptyView: TextView
-
   private lateinit var accountsAdapter: AccountsAdapter
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -59,6 +59,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
     accountsAdapter = AccountsAdapter(inflater)
     accountsAdapter.editMode().subscribe { presenter.onEditModeList(it) }
+    accountsAdapter.onSelectedAccount = { presenter.onPasscodeSelected(it) }
 
     val linearLayoutManager = LinearLayoutManager(context)
     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -91,6 +92,10 @@ class AccountListFragment : BaseFragment(), AccountListView {
     val activity = activity as AppCompatActivity
     val accountEditActionMode = AccountEditActionMode(component, accountsAdapter)
     activity.startSupportActionMode(accountEditActionMode)
+  }
+
+  override fun passcodeCopiedToClipboard() {
+    makeSnackbar(R.string.passcode_copied_to_clipboard, Snackbar.LENGTH_LONG)
   }
 
   private fun showEmptyView() {

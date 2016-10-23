@@ -10,4 +10,6 @@ interface AccountListView : Presenter.View {
   fun renderAccounts(accounts: List<AccountPasscode>)
 
   fun startEditMode()
+
+  fun passcodeCopiedToClipboard()
 }

@@ -57,6 +57,7 @@
   <string name="create_new_category">Create new category</string>
   <string name="no_categories">No categories</string>
   <string name="choose_logo">Choose logo</string>
+  <string name="passcode_copied_to_clipboard">Code copied to clipboard!</string>
 
   <!-- Issuers -->
   <string name="aws">AWS</string>

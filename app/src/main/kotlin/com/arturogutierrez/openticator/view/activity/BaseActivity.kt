@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.view.activity
 
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -10,12 +11,14 @@ import com.arturogutierrez.openticator.application.OpenticatorApplication
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.module.ActivityModule
 import com.arturogutierrez.openticator.domain.navigator.Navigator
+import org.jetbrains.anko.find
 import org.jetbrains.anko.findOptional
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
 
   protected val toolbar by lazy { findOptional<Toolbar>(R.id.toolbar) }
+  val coordinatorLayout by lazy { find<CoordinatorLayout>(R.id.coordinator_layout) }
 
   @Inject
   lateinit var navigator: Navigator

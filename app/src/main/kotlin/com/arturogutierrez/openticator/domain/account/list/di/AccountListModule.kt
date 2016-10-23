@@ -2,10 +2,7 @@ package com.arturogutierrez.openticator.domain.account.list.di
 
 import com.arturogutierrez.openticator.di.PerActivity
 import com.arturogutierrez.openticator.domain.account.AccountFactory
-import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor
-import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor
-import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor
-import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.*
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
 import com.arturogutierrez.openticator.domain.category.CategorySelector
@@ -20,6 +17,7 @@ import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider
 import com.arturogutierrez.openticator.domain.otp.time.TimeProvider
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
+import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
 
 import dagger.Module
 import dagger.Provides
@@ -96,5 +94,13 @@ class AccountListModule {
   @PerActivity
   internal fun provideTimeProvider(): TimeProvider {
     return CurrentTimeProvider()
+  }
+
+  @Provides
+  @PerActivity
+  internal fun provideCopyToClipboardInteractor(clipboardRepository: ClipboardRepository,
+                                                threadExecutor: ThreadExecutor,
+                                                postExecutionThread: PostExecutionThread): CopyToClipboardInteractor {
+    return CopyToClipboardInteractor(clipboardRepository, threadExecutor, postExecutionThread)
   }
 }

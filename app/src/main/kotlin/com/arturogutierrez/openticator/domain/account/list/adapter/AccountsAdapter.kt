@@ -18,6 +18,7 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
 
   var accounts = emptyList<AccountPasscode>()
   val selectedAccounts: MutableSet<Account>
+  var onSelectedAccount: ((AccountPasscode) -> Unit)? = null
 
   init {
     this.selectedAccounts = HashSet<Account>(accounts.size)
@@ -72,7 +73,10 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
   override fun onItemClick(position: Int) {
     if (editMode) {
       selectOrDeselect(position)
+      return
     }
+
+    onSelectedAccount?.invoke(accounts[position])
   }
 
   override fun onLongItemClick(position: Int) {

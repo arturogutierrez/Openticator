@@ -2,6 +2,7 @@ package com.arturogutierrez.openticator.domain.account.list
 
 import android.os.Handler
 import android.os.Looper
+import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboardInteractor
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
@@ -12,6 +13,7 @@ import javax.inject.Inject
 @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountListPresenter @Inject constructor(
     val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
+    val copyToClipboardInteractor: CopyToClipboardInteractor,
     val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView> {
 
   private val handler = Handler(Looper.getMainLooper())
@@ -25,17 +27,28 @@ class AccountListPresenter @Inject constructor(
 
   override fun pause() {
     getAccountPasscodesInteractor.unsubscribe()
+    copyToClipboardInteractor.unsubscribe()
     cancelSchedule()
   }
 
   override fun destroy() {
     getAccountPasscodesInteractor.unsubscribe()
+    copyToClipboardInteractor.unsubscribe()
   }
 
   fun onEditModeList(isEditMode: Boolean) {
     if (isEditMode) {
       view.startEditMode()
     }
+  }
+
+  fun onPasscodeSelected(accountPasscode: AccountPasscode) {
+    copyToClipboardInteractor.configure(accountPasscode)
+    copyToClipboardInteractor.execute(object : DefaultSubscriber<Unit>() {
+      override fun onNext(item: Unit) {
+        onPasscodeCopiedToClipboard()
+      }
+    })
   }
 
   private fun loadAccountPasscodes() {
@@ -62,6 +75,10 @@ class AccountListPresenter @Inject constructor(
 
   private fun onFetchError() {
     view.noItems()
+  }
+
+  private fun onPasscodeCopiedToClipboard() {
+    view.passcodeCopiedToClipboard()
   }
 
   private fun scheduleUpdate(accountPasscodes: List<AccountPasscode>) {
