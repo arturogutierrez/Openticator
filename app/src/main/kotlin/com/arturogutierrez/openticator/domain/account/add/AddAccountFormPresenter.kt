@@ -15,13 +15,13 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
   }
 
   fun createTimeBasedAccount(accountName: String?, accountSecret: String?) {
-    if (accountName == null || accountName.trim { it <= ' ' }.length == 0) {
+    if (accountName == null || accountName.trim().length == 0) {
       view.showFieldError(AddAccountView.FieldError.NAME)
-    } else if (accountSecret == null || accountSecret.trim { it <= ' ' }.length == 0) {
+    } else if (accountSecret == null || accountSecret.trim().length == 0) {
       // TODO: Add validation to support only base 32 chars
       view.showFieldError(AddAccountView.FieldError.SECRET)
     } else {
-      addAccountInteractorInteractor.configure(accountName.trim { it <= ' ' }, accountSecret.trim { it <= ' ' })
+      addAccountInteractorInteractor.configure(accountName.trim(), accountSecret.trim())
       addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
         override fun onNext(item: Account) {
           onAccountAdded()
