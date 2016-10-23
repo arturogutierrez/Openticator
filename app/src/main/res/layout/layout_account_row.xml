@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/content_padding_right"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
+    android:foreground="?attr/selectableItemBackground"
     android:background="@drawable/account_passcode_background"
     >
 
