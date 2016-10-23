@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.storage
+package com.arturogutierrez.openticator.storage.realm
 
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category

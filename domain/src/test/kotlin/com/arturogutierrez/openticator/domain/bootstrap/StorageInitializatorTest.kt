@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.domain.bootstrap
 
-import com.arturogutierrez.openticator.domain.DatabaseConfigurator
-import com.arturogutierrez.openticator.domain.Preferences
+import com.arturogutierrez.openticator.storage.database.DatabaseConfigurator
+import com.arturogutierrez.openticator.storage.preferences.Preferences
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

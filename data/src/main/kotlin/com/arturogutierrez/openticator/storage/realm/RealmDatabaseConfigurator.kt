@@ -1,8 +1,8 @@
-package com.arturogutierrez.openticator.storage
+package com.arturogutierrez.openticator.storage.realm
 
 import android.content.Context
 import android.util.Base64
-import com.arturogutierrez.openticator.domain.DatabaseConfigurator
+import com.arturogutierrez.openticator.storage.database.DatabaseConfigurator
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import javax.inject.Inject

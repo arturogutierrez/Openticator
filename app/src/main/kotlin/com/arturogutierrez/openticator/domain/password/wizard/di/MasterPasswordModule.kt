@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.domain.password.wizard.di
 
 import com.arturogutierrez.openticator.di.PerActivity
-import com.arturogutierrez.openticator.domain.Preferences
+import com.arturogutierrez.openticator.storage.preferences.Preferences
 import com.arturogutierrez.openticator.domain.password.PasswordSerializer
 import com.arturogutierrez.openticator.domain.password.PasswordSerializerImpl
 import com.arturogutierrez.openticator.domain.password.interactor.CreateMasterPasswordInteractor

@@ -16,8 +16,8 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
                            val categoryRepository: CategoryRepository,
                            val categorySelector: CategorySelector,
                            val categoryFactory: CategoryFactory,
-                           val threadExecutor: ThreadExecutor,
-                           val postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
+                           threadExecutor: ThreadExecutor,
+                           postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
 
   private lateinit var newAccount: Account
 

@@ -11,8 +11,8 @@ import rx.Observable
 
 class UpdateAccountInteractor(val accountRepository: AccountRepository,
                               val accountFactory: AccountFactory,
-                              val threadExecutor: ThreadExecutor,
-                              val postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
+                              threadExecutor: ThreadExecutor,
+                              postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
   private lateinit var account: Account
 
   fun configure(account: Account, newName: String) {
