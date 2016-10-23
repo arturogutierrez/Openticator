@@ -51,7 +51,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
 
   private fun initialize(activity: Activity) {
     toolbar = activity.find(R.id.toolbar)
-    presenter.setView(this)
+    presenter.view = this
   }
 
   private fun createDrawerLayout(savedInstanceState: Bundle?) {

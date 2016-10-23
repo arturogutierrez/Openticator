@@ -7,12 +7,8 @@ import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
 class MasterPasswordPresenter @Inject constructor(val createMasterPasswordInteractor: CreateMasterPasswordInteractor,
-                                                  val storageInitializator: StorageInitializator) : Presenter {
-  private lateinit var view: MasterPasswordView
-
-  fun setView(view: MasterPasswordView) {
-    this.view = view
-  }
+                                                  val storageInitializator: StorageInitializator) : Presenter<MasterPasswordView> {
+  lateinit override var view: MasterPasswordView
 
   fun createMasterPassword(password: String, confirmPassword: String) {
     if (!isStrongPassword(password)) {
@@ -26,11 +22,7 @@ class MasterPasswordPresenter @Inject constructor(val createMasterPasswordIntera
     }
   }
 
-  private fun isStrongPassword(password: String?): Boolean {
-    if (password == null) {
-      return false
-    }
-
+  private fun isStrongPassword(password: String): Boolean {
     return password.length >= 10
   }
 }

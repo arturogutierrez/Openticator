@@ -10,24 +10,12 @@ import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
 class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor,
-                                                        val accountDecoder: AccountDecoder) : DefaultSubscriber<Account>(), Presenter {
+                                                        val accountDecoder: AccountDecoder) : Presenter<AddAccountFromCameraView> {
 
-  private lateinit var view: AddAccountFromCameraView
-
-  fun setView(view: AddAccountFromCameraView) {
-    this.view = view
-  }
+  lateinit override var view: AddAccountFromCameraView
 
   override fun destroy() {
     addAccountInteractorInteractor.unsubscribe()
-  }
-
-  override fun onNext(item: Account) {
-    view.dismissScreen()
-  }
-
-  override fun onError(e: Throwable) {
-    showQRError()
   }
 
   fun onScanQR() {
@@ -38,7 +26,7 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
   fun onScannedQR(data: Intent) {
     val accountUri = data.getStringExtra(Intents.Scan.RESULT)
     if (accountUri == null) {
-      showQRError()
+      showErrorAddingAccount()
       return
     }
 
@@ -48,14 +36,30 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
   private fun decodeAccount(accountUri: String) {
     val account = accountDecoder.decode(accountUri)
     if (account == null) {
-      showQRError()
+      showErrorAddingAccount()
     } else {
       addAccountInteractorInteractor.configure(account.name, account.secret)
-      addAccountInteractorInteractor.execute(this)
+      addAccountInteractorInteractor.execute(object: DefaultSubscriber<Account>() {
+        override fun onNext(item: Account) {
+          onAccountAdded()
+        }
+
+        override fun onError(e: Throwable) {
+          onErrorAddingAccount()
+        }
+      })
     }
   }
 
-  private fun showQRError() {
+  private fun onAccountAdded() {
+    view.dismissScreen()
+  }
+
+  private fun onErrorAddingAccount() {
+    showErrorAddingAccount()
+  }
+
+  private fun showErrorAddingAccount() {
     view.showQRError()
     view.hideLoading()
   }

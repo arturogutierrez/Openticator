@@ -65,7 +65,7 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
 
   private fun initialize() {
     initializeInjector()
-    presenter.setView(this)
+    presenter.view = this
     llScanQR.setOnClickListener { presenter.onScanQR() }
   }
 

@@ -49,7 +49,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
     accountsSubscription = accountsAdapter.selectedAccounts().subscribe {
       onSelectedAccounts(it)
     }
-    presenter.setView(this)
+    presenter.view = this
   }
 
   private fun initializeInjector(accountListComponent: AccountListComponent) {

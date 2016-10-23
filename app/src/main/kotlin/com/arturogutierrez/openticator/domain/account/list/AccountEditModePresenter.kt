@@ -22,21 +22,9 @@ class AccountEditModePresenter @Inject constructor(
     val addCategoryInteractor: AddCategoryInteractor,
     val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
     val getIssuersInteractor: GetIssuersInteractor,
-    val issuerDecoratorFactory: IssuerDecoratorFactory) : DefaultSubscriber<Void>(), Presenter {
+    val issuerDecoratorFactory: IssuerDecoratorFactory) : Presenter<AccountEditModeView> {
 
-  private lateinit var view: AccountEditModeView
-
-  fun setView(view: AccountEditModeView) {
-    this.view = view
-  }
-
-  override fun resume() {
-
-  }
-
-  override fun pause() {
-
-  }
+  lateinit override var view: AccountEditModeView
 
   override fun destroy() {
     deleteAccountsInteractor.unsubscribe()
@@ -116,7 +104,7 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class GetCategoriesSubscriber(private val account: Account) : DefaultSubscriber<List<Category>>() {
+  private inner class GetCategoriesSubscriber(val account: Account) : DefaultSubscriber<List<Category>>() {
 
     override fun onNext(categories: List<Category>) {
       getCategoriesInteractor.unsubscribe()

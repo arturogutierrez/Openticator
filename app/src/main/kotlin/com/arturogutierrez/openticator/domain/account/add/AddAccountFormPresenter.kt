@@ -6,13 +6,9 @@ import com.arturogutierrez.openticator.interactor.DefaultSubscriber
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-class AddAccountFormPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor) : DefaultSubscriber<Account>(), Presenter {
+class AddAccountFormPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView> {
 
-  private lateinit var view: AddAccountView
-
-  fun setView(view: AddAccountView) {
-    this.view = view
-  }
+  lateinit override var view: AddAccountView
 
   override fun destroy() {
     addAccountInteractorInteractor.unsubscribe()
@@ -26,15 +22,23 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
       view.showFieldError(AddAccountView.FieldError.SECRET)
     } else {
       addAccountInteractorInteractor.configure(accountName.trim { it <= ' ' }, accountSecret.trim { it <= ' ' })
-      addAccountInteractorInteractor.execute(this)
+      addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
+        override fun onNext(item: Account) {
+          onAccountAdded()
+        }
+
+        override fun onError(e: Throwable) {
+          onErrorAddingAccount()
+        }
+      })
     }
   }
 
-  override fun onNext(item: Account) {
+  private fun onAccountAdded() {
     view.dismissForm()
   }
 
-  override fun onError(e: Throwable) {
+  private fun onErrorAddingAccount() {
     view.unableToAddAccount()
   }
 }

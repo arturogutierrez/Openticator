@@ -1,6 +1,8 @@
 package com.arturogutierrez.openticator.view
 
-interface LoadDataView {
+import com.arturogutierrez.openticator.view.presenter.Presenter
+
+interface LoadDataView : Presenter.View {
 
   fun showLoading()
 

@@ -3,8 +3,9 @@ package com.arturogutierrez.openticator.domain.account.list
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
+import com.arturogutierrez.openticator.view.presenter.Presenter
 
-interface AccountEditModeView {
+interface AccountEditModeView : Presenter.View {
 
   fun dismissActionMode()
 

@@ -1,6 +1,8 @@
 package com.arturogutierrez.openticator.domain.password.wizard.view
 
-interface MasterPasswordView {
+import com.arturogutierrez.openticator.view.presenter.Presenter
+
+interface MasterPasswordView: Presenter.View {
 
   fun showWeakPasswordError()
 
