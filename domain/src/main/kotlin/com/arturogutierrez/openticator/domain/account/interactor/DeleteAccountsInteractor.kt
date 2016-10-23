@@ -9,8 +9,8 @@ import rx.Observable
 import java.util.*
 
 class DeleteAccountsInteractor(val accountRepository: AccountRepository,
-                               val threadExecutor: ThreadExecutor,
-                               val postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
+                               threadExecutor: ThreadExecutor,
+                               postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
   private lateinit var accounts: Set<Account>
 
   fun configure(accounts: Set<Account>) {

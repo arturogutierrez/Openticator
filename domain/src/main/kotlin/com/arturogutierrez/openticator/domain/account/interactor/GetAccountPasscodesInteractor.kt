@@ -16,8 +16,8 @@ class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
                                     val categoryFactory: CategoryFactory,
                                     val accountRepository: AccountRepository,
                                     val oneTimePasswordFactory: OneTimePasswordFactory,
-                                    val threadExecutor: ThreadExecutor,
-                                    val postExecutionThread: PostExecutionThread) : Interactor<List<AccountPasscode>>(threadExecutor, postExecutionThread) {
+                                    threadExecutor: ThreadExecutor,
+                                    postExecutionThread: PostExecutionThread) : Interactor<List<AccountPasscode>>(threadExecutor, postExecutionThread) {
 
   override fun createObservable(): Observable<List<AccountPasscode>> {
     return categorySelector.selectedCategory.flatMap { category ->

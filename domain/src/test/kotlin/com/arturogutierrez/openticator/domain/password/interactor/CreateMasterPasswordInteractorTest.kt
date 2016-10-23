@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.domain.password.interactor
 
-import com.arturogutierrez.openticator.domain.Preferences
+import com.arturogutierrez.openticator.storage.preferences.Preferences
 import com.arturogutierrez.openticator.domain.password.PasswordSerializer
 import org.junit.Before
 import org.junit.Test

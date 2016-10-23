@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.domain
+package com.arturogutierrez.openticator.storage.preferences
 
 interface Preferences {
   companion object {

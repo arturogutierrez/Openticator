@@ -8,8 +8,8 @@ import com.arturogutierrez.openticator.interactor.Interactor
 import rx.Observable
 
 class GetAccountsInteractor(val accountRepository: AccountRepository,
-                            val threadExecutor: ThreadExecutor,
-                            val postExecutionThread: PostExecutionThread) : Interactor<List<Account>>(threadExecutor, postExecutionThread) {
+                            threadExecutor: ThreadExecutor,
+                            postExecutionThread: PostExecutionThread) : Interactor<List<Account>>(threadExecutor, postExecutionThread) {
 
   override fun createObservable(): Observable<List<Account>> {
     return accountRepository.allAccounts
