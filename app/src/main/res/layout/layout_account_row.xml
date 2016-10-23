@@ -45,7 +45,6 @@
         android:id="@+id/tv_account_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tony.stark@starkindustries.com"
         android:lines="1"
         android:ellipsize="end"
         style="@style/AccountName"
@@ -55,7 +54,6 @@
         android:id="@+id/tv_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="752145"
         style="@style/PINCode"
         />
 

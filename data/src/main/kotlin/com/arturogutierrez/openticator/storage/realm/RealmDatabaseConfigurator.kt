@@ -1,4 +1,4 @@
-package com.arturogutierrez.openticator.storage.database
+package com.arturogutierrez.openticator.storage.realm
 
 import android.content.Context
 import android.util.Base64
