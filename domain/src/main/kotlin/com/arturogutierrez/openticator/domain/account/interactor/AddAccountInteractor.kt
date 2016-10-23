@@ -22,7 +22,11 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
   private lateinit var newAccount: Account
 
   fun configure(accountName: String, accountSecret: String) {
-    newAccount = accountFactory.createAccount(accountName, accountSecret)
+    this.newAccount = accountFactory.createAccount(accountName, accountSecret)
+  }
+
+  fun configure(newAccount: Account) {
+    this.newAccount = newAccount
   }
 
   override fun createObservable(): Observable<Account> {

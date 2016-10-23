@@ -38,7 +38,7 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
     if (account == null) {
       showErrorAddingAccount()
     } else {
-      addAccountInteractorInteractor.configure(account.name, account.secret)
+      addAccountInteractorInteractor.configure(account)
       addAccountInteractorInteractor.execute(object: DefaultSubscriber<Account>() {
         override fun onNext(item: Account) {
           onAccountAdded()

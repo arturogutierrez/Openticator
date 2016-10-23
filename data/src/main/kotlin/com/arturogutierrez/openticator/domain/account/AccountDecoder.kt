@@ -4,6 +4,7 @@ import android.net.Uri
 
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
+import java.net.URLDecoder
 import javax.inject.Inject
 
 class AccountDecoder @Inject constructor(val accountFactory: AccountFactory) {
@@ -37,10 +38,11 @@ class AccountDecoder @Inject constructor(val accountFactory: AccountFactory) {
     }
 
     val otpType = getOTPType(otpString)
-    // Try to get only right part if the account name has the template (issuer:account)
-    val accountNamePair = accountName.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    val accountNamePair = accountName.split(":".toRegex())
     if (accountNamePair.size == 2) {
-      accountName = accountNamePair[1]
+      if (accountNamePair[0].equals(issuer, ignoreCase = true)) {
+        accountName = accountNamePair[1]
+      }
     }
 
     return accountFactory.createAccount(otpType, accountName, secret, issuer)
@@ -62,12 +64,14 @@ class AccountDecoder @Inject constructor(val accountFactory: AccountFactory) {
   }
 
   private fun getAccountName(path: String?): String? {
-    if (path == null || !path.startsWith("/")) {
+    val decodedPath = if (path != null) URLDecoder.decode(path, "UTF-8") else return null
+
+    if (!decodedPath.startsWith("/")) {
       return null
     }
 
     // Remove leading '/'
-    val accountName = path.substring(1).trim { it <= ' ' }
+    val accountName = decodedPath.substring(1).trim { it <= ' ' }
     if (accountName.length == 0) {
       return null
     }

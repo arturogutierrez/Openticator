@@ -28,7 +28,7 @@ class AccountDecoderTest : ApplicationTestCase() {
   }
 
   @Test
-  fun testWrontUri() {
+  fun testWrongUri() {
     val accountUri = ""
 
     val account = accountDecoder.decode(accountUri)
@@ -57,14 +57,40 @@ class AccountDecoderTest : ApplicationTestCase() {
   }
 
   @Test
-  fun testAccountNameIfThereIsAPair() {
+  fun testAccountNameIfThereIsAPairWithOutIssuer() {
     val accountUri = "otpauth://totp/Openticator:tony.stark@starkindustries.com?secret=SECRET"
 
     val account = accountDecoder.decode(accountUri)!!
 
     assertThat(account, `is`(notNullValue()))
     assertThat(account.type, `is`(OTPType.TOTP))
+    assertThat(account.name, `is`("Openticator:tony.stark@starkindustries.com"))
+  }
+
+  @Test
+  fun testRemovingPairInAccountWhenEqualsToIssuer() {
+    val accountUri = "otpauth://totp/Slack:tony.stark@starkindustries.com?secret=ABCDEFGHASD&issuer=Slack"
+
+    val account = accountDecoder.decode(accountUri)!!
+
+    assertThat(account, `is`(notNullValue()))
+    assertThat(account.type, `is`(OTPType.TOTP))
     assertThat(account.name, `is`("tony.stark@starkindustries.com"))
+    assertThat(account.secret, `is`("ABCDEFGHASD"))
+    assertThat(account.issuer, `is`(Issuer.SLACK))
+  }
+
+  @Test
+  fun testIgnoringIssuerInAccountWhenNotEqualsToIssuer() {
+    val accountUri = "otpauth://totp/Slack+%28TU%29:tony.stark@starkindustries.com?secret=ABCDEFGHASD&issuer=Slack"
+
+    val account = accountDecoder.decode(accountUri)!!
+
+    assertThat(account, `is`(notNullValue()))
+    assertThat(account.type, `is`(OTPType.TOTP))
+    assertThat(account.name, `is`("Slack (TU):tony.stark@starkindustries.com"))
+    assertThat(account.secret, `is`("ABCDEFGHASD"))
+    assertThat(account.issuer, `is`(Issuer.SLACK))
   }
 
   @Test
@@ -97,19 +123,6 @@ class AccountDecoderTest : ApplicationTestCase() {
 
     assertThat(account, `is`(notNullValue()))
     assertThat(account.type, `is`(OTPType.TOTP))
-    assertThat(account.issuer, `is`(Issuer.UNKNOWN))
-  }
-
-  @Test
-  fun testDecodingHappyCase() {
-    val accountUri = "otpauth://totp/Openticator:tony.stark@starkindustries.com?secret=ABCDEFGHASD&issuer=Openticator"
-
-    val account = accountDecoder.decode(accountUri)!!
-
-    assertThat(account, `is`(notNullValue()))
-    assertThat(account.type, `is`(OTPType.TOTP))
-    assertThat(account.name, `is`("tony.stark@starkindustries.com"))
-    assertThat(account.secret, `is`("ABCDEFGHASD"))
     assertThat(account.issuer, `is`(Issuer.UNKNOWN))
   }
 
