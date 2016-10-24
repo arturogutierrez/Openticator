@@ -40,9 +40,7 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
       return
     }
 
-    data?.let {
-      presenter.onScannedQR(data)
-    }
+    presenter.onScannedQR(data)
   }
 
   override fun onResume() {
