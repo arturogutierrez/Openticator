@@ -4,13 +4,13 @@ import com.arturogutierrez.openticator.view.presenter.Presenter
 
 interface AddAccountView : Presenter.View {
 
-  enum class FieldError {
-    NAME, SECRET
+  enum class InputError {
+    EMPTY_ACCOUNT_NAME, EMPTY_SECRET, INVALID_SECRET
   }
 
   fun dismissForm()
 
   fun unableToAddAccount()
 
-  fun showFieldError(fieldError: FieldError)
+  fun showFieldError(inputError: InputError)
 }

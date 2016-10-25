@@ -9,8 +9,7 @@ import android.widget.Toast
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.account.add.AddAccountFormPresenter
 import com.arturogutierrez.openticator.domain.account.add.AddAccountView
-import com.arturogutierrez.openticator.domain.account.add.AddAccountView.FieldError.NAME
-import com.arturogutierrez.openticator.domain.account.add.AddAccountView.FieldError.SECRET
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.*
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent
 import com.arturogutierrez.openticator.helpers.consume
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
@@ -89,10 +88,11 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
     activity?.finish()
   }
 
-  override fun showFieldError(fieldError: AddAccountView.FieldError) {
-    val message = when (fieldError) {
-      NAME -> getString(R.string.please_set_account_name)
-      SECRET -> getString(R.string.please_set_account_secret)
+  override fun showFieldError(inputError: AddAccountView.InputError) {
+    val message = when (inputError) {
+      EMPTY_ACCOUNT_NAME -> getString(R.string.please_set_account_name)
+      EMPTY_SECRET -> getString(R.string.please_set_account_secret)
+      INVALID_SECRET -> getString(R.string.invalid_secret)
     }
 
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
