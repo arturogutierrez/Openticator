@@ -1,7 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.list.di
 
 import com.arturogutierrez.openticator.di.PerActivity
-import com.arturogutierrez.openticator.domain.account.AccountFactory
 import com.arturogutierrez.openticator.domain.account.interactor.*
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
@@ -18,7 +17,6 @@ import com.arturogutierrez.openticator.domain.otp.time.TimeProvider
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
-
 import dagger.Module
 import dagger.Provides
 
@@ -52,10 +50,9 @@ class AccountListModule {
   @Provides
   @PerActivity
   internal fun provideUpdateAccountInteractor(accountRepository: AccountRepository,
-                                              accountFactory: AccountFactory, threadExecutor: ThreadExecutor,
+                                              threadExecutor: ThreadExecutor,
                                               postExecutionThread: PostExecutionThread): UpdateAccountInteractor {
-    return UpdateAccountInteractor(accountRepository, accountFactory, threadExecutor,
-        postExecutionThread)
+    return UpdateAccountInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
