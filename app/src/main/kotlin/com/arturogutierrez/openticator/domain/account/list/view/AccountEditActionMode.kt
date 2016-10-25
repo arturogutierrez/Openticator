@@ -76,7 +76,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
 
   override fun onDestroyActionMode(mode: ActionMode) {
     menuItemEdit = null
-    accountsAdapter.setEditMode(false)
+    accountsAdapter.editMode = false
     accountsSubscription.unsubscribe()
   }
 
@@ -88,7 +88,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
     menuItemLogo = menu.findItem(R.id.action_logo)
   }
 
-  private fun onSelectedAccounts(selectedAccounts: Set<Account>) {
+  private fun onSelectedAccounts(selectedAccounts: List<Account>) {
     presenter.onSelectedAccounts(selectedAccounts)
   }
 

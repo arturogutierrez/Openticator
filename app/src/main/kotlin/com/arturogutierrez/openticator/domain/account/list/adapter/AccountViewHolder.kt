@@ -47,9 +47,7 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
     vCountdown.startAnimation(animationLength, percentAnimation)
   }
 
-  fun stopAnimation() {
-    vCountdown.stopAnimation()
-  }
+  fun stopAnimation() = vCountdown.stopAnimation()
 
   private fun calculateRemainingSeconds(validUntilInSeconds: Long): Int {
     val timeCalculator = RemainingTimeCalculator(CurrentTimeProvider())

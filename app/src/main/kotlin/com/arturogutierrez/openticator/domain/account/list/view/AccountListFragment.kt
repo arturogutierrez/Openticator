@@ -56,8 +56,8 @@ class AccountListFragment : BaseFragment(), AccountListView {
     get() = R.layout.fragment_account_list
 
   override fun configureUI(view: View) {
-    accountsAdapter.editMode().subscribe { presenter.onEditModeList(it) }
-    accountsAdapter.onSelectedAccount = { presenter.onPasscodeSelected(it) }
+    accountsAdapter.editModeObservable().subscribe { presenter.onEditModeList(it) }
+    accountsAdapter.onSelectedAccountPasscode = { presenter.onPasscodeSelected(it) }
 
     val linearLayoutManager = LinearLayoutManager(context)
     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -117,6 +117,5 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {
     accountsAdapter.accounts = accounts
-    accountsAdapter.notifyDataSetChanged()
   }
 }

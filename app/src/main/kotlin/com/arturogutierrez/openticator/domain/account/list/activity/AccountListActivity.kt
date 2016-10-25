@@ -26,8 +26,8 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
 
   @Inject
   lateinit var navigationDrawer: NavigationDrawer
-  private val floatingActionMenu by lazy { find<FloatingActionMenu>(R.id.fab_menu) }
 
+  private val floatingActionMenu by lazy { find<FloatingActionMenu>(R.id.fab_menu) }
   override val component by lazy { buildComponent() }
 
   override fun onCreate(savedInstanceState: Bundle?) {

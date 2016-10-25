@@ -8,45 +8,26 @@ import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import rx.Observable
 import rx.subjects.PublishSubject
-import java.util.*
+import kotlin.properties.Delegates
 
 class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>() {
 
-  private var editMode: Boolean = false
-  private val editModeSubject: PublishSubject<Boolean>
-  private val selectedAccountsSubject: PublishSubject<Set<Account>>
+  private val selectedAccountsSubject = PublishSubject.create<List<Account>>()
+  private val editModeSubject = PublishSubject.create<Boolean>()
 
-  var accounts = emptyList<AccountPasscode>()
-  val selectedAccounts: MutableSet<Account>
-  var onSelectedAccount: ((AccountPasscode) -> Unit)? = null
-
-  init {
-    this.selectedAccounts = HashSet<Account>(accounts.size)
-    this.editMode = false
-    this.editModeSubject = PublishSubject.create<Boolean>()
-    this.selectedAccountsSubject = PublishSubject.create<Set<Account>>()
-  }
-
-  fun editMode(): Observable<Boolean> {
-    return editModeSubject
-  }
-
-  fun selectedAccounts(): Observable<Set<Account>> {
-    return selectedAccountsSubject
-  }
-
-  fun setEditMode(editMode: Boolean) {
-    if (this.editMode == editMode) {
-      return
-    }
-
-    this.editMode = editMode
-    if (!editMode) {
+  var editMode by Delegates.observable(false) { p, old, newEditMode ->
+    if (!newEditMode) {
       clearSelection()
     }
-
-    editModeSubject.onNext(editMode)
+    editModeSubject.onNext(newEditMode)
   }
+  var accounts by Delegates.observable(emptyList<AccountPasscode>()) { p, old, new ->
+    notifyDataSetChanged()
+  }
+  var selectedAccounts by Delegates.observable(emptyList<Account>()) { p, old, new ->
+    selectedAccountsSubject.onNext(new)
+  }
+  var onSelectedAccountPasscode: ((AccountPasscode) -> Unit) = { }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
     val view = layoutInflater.inflate(R.layout.layout_account_row, parent, false)
@@ -59,13 +40,15 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
     viewHolder.showAccount(accountPasscode, isSelected)
   }
 
-  override fun getItemCount(): Int {
-    return accounts.size
-  }
+  override fun getItemCount() = accounts.size
+
+  fun editModeObservable(): Observable<Boolean> = editModeSubject
+
+  fun selectedAccounts(): Observable<List<Account>> = selectedAccountsSubject
 
   private fun clearSelection() {
     if (selectedAccounts.size > 0) {
-      selectedAccounts.clear()
+      selectedAccounts = emptyList()
       notifyDataSetChanged()
     }
   }
@@ -76,12 +59,12 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
       return
     }
 
-    onSelectedAccount?.invoke(accounts[position])
+    onSelectedAccountPasscode.invoke(accounts[position])
   }
 
   private fun onLongItemClick(position: Int): Boolean {
     if (!editMode) {
-      setEditMode(true)
+      editMode = true
       selectOrDeselect(position)
     }
 
@@ -92,12 +75,10 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
     val accountPasscode = accounts[position]
     val account = accountPasscode.account
     if (selectedAccounts.contains(account)) {
-      selectedAccounts.remove(account)
+      selectedAccounts = selectedAccounts.filter { it != account }
     } else {
-      selectedAccounts.add(account)
+      selectedAccounts = selectedAccounts.plus(account)
     }
     notifyItemChanged(position)
-
-    selectedAccountsSubject.onNext(selectedAccounts)
   }
 }

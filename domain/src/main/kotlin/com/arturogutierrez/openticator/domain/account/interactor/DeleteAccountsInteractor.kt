@@ -11,9 +11,9 @@ import java.util.*
 class DeleteAccountsInteractor(val accountRepository: AccountRepository,
                                threadExecutor: ThreadExecutor,
                                postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
-  private lateinit var accounts: Set<Account>
+  private lateinit var accounts: List<Account>
 
-  fun configure(accounts: Set<Account>) {
+  fun configure(accounts: List<Account>) {
     this.accounts = accounts
   }
 
