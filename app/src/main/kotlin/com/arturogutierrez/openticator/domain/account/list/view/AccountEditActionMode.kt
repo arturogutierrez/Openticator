@@ -18,6 +18,7 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
+import com.arturogutierrez.openticator.helpers.consume
 import rx.Subscription
 import java.util.*
 import javax.inject.Inject
@@ -71,26 +72,13 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.action_delete -> {
-        deleteSelectedAccounts()
-        return true
-      }
-      R.id.action_edit -> {
-        changeNameForSelectedAccount()
-        return true
-      }
-      R.id.action_category -> {
-        changeCategoryForSelectedAccount()
-        return true
-      }
-      R.id.action_logo -> {
-        changeLogoForSelectedAccount()
-        return true
-      }
+    return when (item.itemId) {
+      R.id.action_delete -> consume { deleteSelectedAccounts() }
+      R.id.action_edit -> consume { changeNameForSelectedAccount() }
+      R.id.action_category -> consume { changeCategoryForSelectedAccount() }
+      R.id.action_logo -> consume { changeLogoForSelectedAccount() }
+      else -> false
     }
-
-    return false
   }
 
   override fun onDestroyActionMode(mode: ActionMode) {
@@ -118,7 +106,11 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   private fun changeNameForSelectedAccount() {
     val selectedAccount = accountsAdapter.selectedAccounts.iterator().next()
 
-    MaterialDialog.Builder(activity).title(R.string.rename_account).input(null, selectedAccount.name) { dialog, input -> presenter.updateAccount(selectedAccount, input.toString()) }.show()
+    MaterialDialog.Builder(activity)
+        .title(R.string.rename_account)
+        .input(null, selectedAccount.name) { dialog, input ->
+          presenter.updateAccount(selectedAccount, input.toString())
+        }.show()
   }
 
   private fun changeCategoryForSelectedAccount() {

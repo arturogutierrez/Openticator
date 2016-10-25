@@ -9,7 +9,10 @@ import android.widget.Toast
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.account.add.AddAccountFormPresenter
 import com.arturogutierrez.openticator.domain.account.add.AddAccountView
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.FieldError.NAME
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.FieldError.SECRET
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent
+import com.arturogutierrez.openticator.helpers.consume
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
@@ -41,12 +44,9 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when (item?.itemId) {
-      R.id.action_add -> {
-        onAddAccountClicked()
-        return true
-      }
-      else -> return super.onOptionsItemSelected(item)
+    return when (item?.itemId) {
+      R.id.action_add -> consume { onAddAccountClicked() }
+      else -> super.onOptionsItemSelected(item)
     }
   }
 
@@ -91,8 +91,8 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
 
   override fun showFieldError(fieldError: AddAccountView.FieldError) {
     val message = when (fieldError) {
-      AddAccountView.FieldError.NAME -> getString(R.string.please_set_account_name)
-      AddAccountView.FieldError.SECRET -> getString(R.string.please_set_account_secret)
+      NAME -> getString(R.string.please_set_account_name)
+      SECRET -> getString(R.string.please_set_account_secret)
     }
 
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

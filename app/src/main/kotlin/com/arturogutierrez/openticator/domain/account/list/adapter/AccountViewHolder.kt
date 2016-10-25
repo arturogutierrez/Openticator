@@ -58,19 +58,19 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
 
   // TODO: Duplicated in IssuerDecoratorFactory
   private fun getAccountIconDrawableResource(issuer: Issuer): Int {
-    when (issuer) {
-      Issuer.AWS -> return R.drawable.icon_account_aws
-      Issuer.BITCOIN -> return R.drawable.icon_account_bitcoin
-      Issuer.DIGITALOCEAN -> return R.drawable.icon_account_digitalocean
-      Issuer.DROPBOX -> return R.drawable.icon_account_dropbox
-      Issuer.EVERNOTE -> return R.drawable.icon_account_evernote
-      Issuer.FACEBOOK -> return R.drawable.icon_account_facebook
-      Issuer.GITHUB -> return R.drawable.icon_account_github
-      Issuer.GOOGLE -> return R.drawable.icon_account_google
-      Issuer.MICROSOFT -> return R.drawable.icon_account_microsoft
-      Issuer.SLACK -> return R.drawable.icon_account_slack
-      Issuer.WORDPRESS -> return R.drawable.icon_account_wordpress
-      else -> return R.mipmap.ic_launcher
+    return when (issuer) {
+      Issuer.AWS -> R.drawable.icon_account_aws
+      Issuer.BITCOIN -> R.drawable.icon_account_bitcoin
+      Issuer.DIGITALOCEAN -> R.drawable.icon_account_digitalocean
+      Issuer.DROPBOX -> R.drawable.icon_account_dropbox
+      Issuer.EVERNOTE -> R.drawable.icon_account_evernote
+      Issuer.FACEBOOK -> R.drawable.icon_account_facebook
+      Issuer.GITHUB -> R.drawable.icon_account_github
+      Issuer.GOOGLE -> R.drawable.icon_account_google
+      Issuer.MICROSOFT -> R.drawable.icon_account_microsoft
+      Issuer.SLACK -> R.drawable.icon_account_slack
+      Issuer.WORDPRESS -> R.drawable.icon_account_wordpress
+      else -> R.mipmap.ic_launcher
     }
   }
 }
