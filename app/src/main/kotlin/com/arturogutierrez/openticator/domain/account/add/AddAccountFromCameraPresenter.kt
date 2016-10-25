@@ -23,7 +23,12 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
     view.openCaptureCode()
   }
 
-  fun onScannedQR(data: Intent) {
+  fun onScannedQR(data: Intent?) {
+    if (data == null) {
+      view.hideLoading()
+      return
+    }
+
     val accountUri = data.getStringExtra(Intents.Scan.RESULT)
     if (accountUri == null) {
       showErrorAddingAccount()
@@ -39,7 +44,7 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
       showErrorAddingAccount()
     } else {
       addAccountInteractorInteractor.configure(account)
-      addAccountInteractorInteractor.execute(object: DefaultSubscriber<Account>() {
+      addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
         override fun onNext(item: Account) {
           onAccountAdded()
         }
