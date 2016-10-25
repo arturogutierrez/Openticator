@@ -25,14 +25,14 @@ class AccountListModule {
 
   @Provides
   @PerActivity
-  internal fun provideGetAccountsInteractor(accountRepository: AccountRepository,
-                                            threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetAccountsInteractor {
+  fun provideGetAccountsInteractor(accountRepository: AccountRepository,
+                                   threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetAccountsInteractor {
     return GetAccountsInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideGetAccountPasscodesInteractor(
+  fun provideGetAccountPasscodesInteractor(
       categorySelector: CategorySelector, categoryFactory: CategoryFactory,
       accountRepository: AccountRepository, oneTimePasswordFactory: OneTimePasswordFactory,
       threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetAccountPasscodesInteractor {
@@ -42,38 +42,38 @@ class AccountListModule {
 
   @Provides
   @PerActivity
-  internal fun provideDeleteAccountsInteractor(accountRepository: AccountRepository,
-                                               threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): DeleteAccountsInteractor {
+  fun provideDeleteAccountsInteractor(accountRepository: AccountRepository,
+                                      threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): DeleteAccountsInteractor {
     return DeleteAccountsInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideUpdateAccountInteractor(accountRepository: AccountRepository,
-                                              threadExecutor: ThreadExecutor,
-                                              postExecutionThread: PostExecutionThread): UpdateAccountInteractor {
+  fun provideUpdateAccountInteractor(accountRepository: AccountRepository,
+                                     threadExecutor: ThreadExecutor,
+                                     postExecutionThread: PostExecutionThread): UpdateAccountInteractor {
     return UpdateAccountInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideGetCategoriesInteractor(categoryRepository: CategoryRepository,
-                                              threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetCategoriesInteractor {
+  fun provideGetCategoriesInteractor(categoryRepository: CategoryRepository,
+                                     threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetCategoriesInteractor {
     return GetCategoriesInteractor(categoryRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideAddCategoryInteractor(categoryRepository: CategoryRepository,
-                                            categoryFactory: CategoryFactory, threadExecutor: ThreadExecutor,
-                                            postExecutionThread: PostExecutionThread): AddCategoryInteractor {
+  fun provideAddCategoryInteractor(categoryRepository: CategoryRepository,
+                                   categoryFactory: CategoryFactory, threadExecutor: ThreadExecutor,
+                                   postExecutionThread: PostExecutionThread): AddCategoryInteractor {
     return AddCategoryInteractor(categoryRepository, categoryFactory, threadExecutor,
         postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideAddAccountToCategoryInteractor(
+  fun provideAddAccountToCategoryInteractor(
       categoryRepository: CategoryRepository, threadExecutor: ThreadExecutor,
       postExecutionThread: PostExecutionThread): AddAccountToCategoryInteractor {
     return AddAccountToCategoryInteractor(categoryRepository, threadExecutor,
@@ -82,22 +82,22 @@ class AccountListModule {
 
   @Provides
   @PerActivity
-  internal fun provideGetIssuerInteractor(issuerRepository: IssuerRepository,
-                                          threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetIssuersInteractor {
+  fun provideGetIssuerInteractor(issuerRepository: IssuerRepository,
+                                 threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetIssuersInteractor {
     return GetIssuersInteractor(issuerRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
   @PerActivity
-  internal fun provideTimeProvider(): TimeProvider {
+  fun provideTimeProvider(): TimeProvider {
     return CurrentTimeProvider()
   }
 
   @Provides
   @PerActivity
-  internal fun provideCopyToClipboardInteractor(clipboardRepository: ClipboardRepository,
-                                                threadExecutor: ThreadExecutor,
-                                                postExecutionThread: PostExecutionThread): CopyToClipboardInteractor {
+  fun provideCopyToClipboardInteractor(clipboardRepository: ClipboardRepository,
+                                       threadExecutor: ThreadExecutor,
+                                       postExecutionThread: PostExecutionThread): CopyToClipboardInteractor {
     return CopyToClipboardInteractor(clipboardRepository, threadExecutor, postExecutionThread)
   }
 }
