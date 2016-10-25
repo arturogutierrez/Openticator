@@ -17,6 +17,8 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
+import com.arturogutierrez.openticator.view.widget.gone
+import com.arturogutierrez.openticator.view.widget.visible
 import org.jetbrains.anko.find
 import javax.inject.Inject
 
@@ -99,15 +101,15 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun showEmptyView() {
-    rvAccounts.visibility = View.GONE
-    tvEmptyView.visibility = View.VISIBLE
+    rvAccounts.gone()
+    tvEmptyView.visible()
   }
 
   private fun showAccountList(accounts: List<AccountPasscode>) {
     updateAccounts(accounts)
 
-    rvAccounts.visibility = View.VISIBLE
-    tvEmptyView.visibility = View.GONE
+    rvAccounts.visible()
+    tvEmptyView.gone()
   }
 
   private fun stopCounters() {
