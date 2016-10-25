@@ -33,7 +33,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   @Inject
   internal lateinit var layoutInflater: LayoutInflater
 
-  private lateinit var accountsSubscription: Subscription
+  private val accountsSubscription: Subscription
   private var actionMode: ActionMode? = null
   private var menuItemDelete: MenuItem? = null
   private var menuItemCategory: MenuItem? = null
@@ -41,15 +41,8 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   private var menuItemLogo: MenuItem? = null
 
   init {
-    initialize(accountListComponent)
-  }
-
-  private fun initialize(accountListComponent: AccountListComponent) {
     initializeInjector(accountListComponent)
-
-    accountsSubscription = accountsAdapter.selectedAccounts().subscribe {
-      onSelectedAccounts(it)
-    }
+    accountsSubscription = accountsAdapter.selectedAccounts().subscribe { onSelectedAccounts(it) }
     presenter.view = this
   }
 

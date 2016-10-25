@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.arturogutierrez.openticator.R
@@ -19,16 +18,17 @@ import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
 import com.arturogutierrez.openticator.view.widget.gone
 import com.arturogutierrez.openticator.view.widget.visible
-import org.jetbrains.anko.find
+import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
+
   @Inject
   internal lateinit var presenter: AccountListPresenter
 
-  private lateinit var rvAccounts: RecyclerView
-  private lateinit var tvEmptyView: TextView
-  private lateinit var accountsAdapter: AccountsAdapter
+  private val rvAccounts by lazy { find<RecyclerView>(R.id.rv_accounts) }
+  private val tvEmptyView by lazy { find<TextView>(R.id.tv_empty_view) }
+  private val accountsAdapter by lazy { AccountsAdapter(activity.layoutInflater) }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -55,11 +55,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
   override val layoutResource: Int
     get() = R.layout.fragment_account_list
 
-  override fun configureUI(inflater: LayoutInflater, view: View) {
-    tvEmptyView = view.find(R.id.tv_empty_view)
-    rvAccounts = view.find(R.id.rv_accounts)
-
-    accountsAdapter = AccountsAdapter(inflater)
+  override fun configureUI(view: View) {
     accountsAdapter.editMode().subscribe { presenter.onEditModeList(it) }
     accountsAdapter.onSelectedAccount = { presenter.onPasscodeSelected(it) }
 
