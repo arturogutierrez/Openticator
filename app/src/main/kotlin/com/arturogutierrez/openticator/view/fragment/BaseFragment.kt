@@ -15,16 +15,17 @@ abstract class BaseFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
-    val fragmentView = inflater!!.inflate(layoutResource, container, false)
+    return inflater!!.inflate(layoutResource, container, false)
+  }
 
-    configureUI(inflater, fragmentView)
-
-    return fragmentView
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    configureUI(view!!)
   }
 
   protected abstract val layoutResource: Int
 
-  protected open fun configureUI(inflater: LayoutInflater, view: View) {
+  protected open fun configureUI(view: View) {
     // Nothing to do here
   }
 }

@@ -12,6 +12,7 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListModule
 import com.arturogutierrez.openticator.domain.account.list.di.DaggerAccountListComponent
 import com.arturogutierrez.openticator.domain.account.list.view.AccountListFragment
 import com.arturogutierrez.openticator.domain.navigator.drawer.NavigationDrawer
+import com.arturogutierrez.openticator.helpers.consume
 import com.arturogutierrez.openticator.view.activity.BaseActivity
 import com.github.clans.fab.FloatingActionMenu
 import com.karumi.dexter.Dexter
@@ -25,8 +26,8 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
 
   @Inject
   lateinit var navigationDrawer: NavigationDrawer
-  private val floatingActionMenu by lazy { find<FloatingActionMenu>(R.id.fab_menu) }
 
+  private val floatingActionMenu by lazy { find<FloatingActionMenu>(R.id.fab_menu) }
   override val component by lazy { buildComponent() }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +52,10 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      android.R.id.home -> onBackPressed()
+    return when (item.itemId) {
+      android.R.id.home -> consume { onBackPressed() }
+      else -> super.onOptionsItemSelected(item)
     }
-    return super.onOptionsItemSelected(item)
   }
 
   override fun onBackPressed() {

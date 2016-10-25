@@ -17,7 +17,7 @@ class AddAccountModule {
 
   @Provides
   @PerActivity
-  internal fun provideAddAccountInteractor(accountRepository: AccountRepository,
+  fun provideAddAccountInteractor(accountRepository: AccountRepository,
                                            accountFactory: AccountFactory, categoryRepository: CategoryRepository,
                                            categorySelector: CategorySelector, categoryFactory: CategoryFactory,
                                            threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): AddAccountInteractor {

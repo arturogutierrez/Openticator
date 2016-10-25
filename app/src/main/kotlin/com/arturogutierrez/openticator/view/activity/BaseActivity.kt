@@ -11,6 +11,7 @@ import com.arturogutierrez.openticator.application.OpenticatorApplication
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.module.ActivityModule
 import com.arturogutierrez.openticator.domain.navigator.Navigator
+import com.arturogutierrez.openticator.helpers.consume
 import org.jetbrains.anko.find
 import org.jetbrains.anko.findOptional
 import javax.inject.Inject
@@ -34,12 +35,10 @@ abstract class BaseActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (item.itemId == android.R.id.home) {
-      finish()
-      return true
+    return when (item.itemId) {
+      android.R.id.home -> consume { finish() }
+      else -> return super.onOptionsItemSelected(item)
     }
-
-    return super.onOptionsItemSelected(item)
   }
 
   protected val applicationComponent: ApplicationComponent

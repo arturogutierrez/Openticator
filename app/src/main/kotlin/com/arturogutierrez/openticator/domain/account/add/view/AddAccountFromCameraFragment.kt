@@ -10,6 +10,8 @@ import com.arturogutierrez.openticator.domain.account.add.AddAccountFromCameraVi
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent
 import com.arturogutierrez.openticator.domain.navigator.Navigator
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
+import com.arturogutierrez.openticator.view.widget.gone
+import com.arturogutierrez.openticator.view.widget.visible
 import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
@@ -72,13 +74,13 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
   }
 
   override fun showLoading() {
-    pbLoading.visibility = View.VISIBLE
-    llScanQR.visibility = View.GONE
+    pbLoading.visible()
+    llScanQR.gone()
   }
 
   override fun hideLoading() {
-    pbLoading.visibility = View.GONE
-    llScanQR.visibility = View.VISIBLE
+    pbLoading.gone()
+    llScanQR.visible()
   }
 
   override fun openCaptureCode() {

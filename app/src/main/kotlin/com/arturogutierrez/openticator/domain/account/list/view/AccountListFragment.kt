@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.arturogutierrez.openticator.R
@@ -17,16 +16,19 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
-import org.jetbrains.anko.find
+import com.arturogutierrez.openticator.view.widget.gone
+import com.arturogutierrez.openticator.view.widget.visible
+import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
+
   @Inject
   internal lateinit var presenter: AccountListPresenter
 
-  private lateinit var rvAccounts: RecyclerView
-  private lateinit var tvEmptyView: TextView
-  private lateinit var accountsAdapter: AccountsAdapter
+  private val rvAccounts by lazy { find<RecyclerView>(R.id.rv_accounts) }
+  private val tvEmptyView by lazy { find<TextView>(R.id.tv_empty_view) }
+  private val accountsAdapter by lazy { AccountsAdapter(activity.layoutInflater) }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -53,13 +55,9 @@ class AccountListFragment : BaseFragment(), AccountListView {
   override val layoutResource: Int
     get() = R.layout.fragment_account_list
 
-  override fun configureUI(inflater: LayoutInflater, view: View) {
-    tvEmptyView = view.find(R.id.tv_empty_view)
-    rvAccounts = view.find(R.id.rv_accounts)
-
-    accountsAdapter = AccountsAdapter(inflater)
-    accountsAdapter.editMode().subscribe { presenter.onEditModeList(it) }
-    accountsAdapter.onSelectedAccount = { presenter.onPasscodeSelected(it) }
+  override fun configureUI(view: View) {
+    accountsAdapter.editModeObservable().subscribe { presenter.onEditModeList(it) }
+    accountsAdapter.onSelectedAccountPasscode = { presenter.onPasscodeSelected(it) }
 
     val linearLayoutManager = LinearLayoutManager(context)
     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -99,15 +97,15 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun showEmptyView() {
-    rvAccounts.visibility = View.GONE
-    tvEmptyView.visibility = View.VISIBLE
+    rvAccounts.gone()
+    tvEmptyView.visible()
   }
 
   private fun showAccountList(accounts: List<AccountPasscode>) {
     updateAccounts(accounts)
 
-    rvAccounts.visibility = View.VISIBLE
-    tvEmptyView.visibility = View.GONE
+    rvAccounts.visible()
+    tvEmptyView.gone()
   }
 
   private fun stopCounters() {
@@ -119,6 +117,5 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {
     accountsAdapter.accounts = accounts
-    accountsAdapter.notifyDataSetChanged()
   }
 }

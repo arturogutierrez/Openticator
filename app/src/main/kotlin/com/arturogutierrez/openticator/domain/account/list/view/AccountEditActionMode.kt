@@ -18,6 +18,7 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
+import com.arturogutierrez.openticator.helpers.consume
 import rx.Subscription
 import java.util.*
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   @Inject
   internal lateinit var layoutInflater: LayoutInflater
 
-  private lateinit var accountsSubscription: Subscription
+  private val accountsSubscription: Subscription
   private var actionMode: ActionMode? = null
   private var menuItemDelete: MenuItem? = null
   private var menuItemCategory: MenuItem? = null
@@ -40,15 +41,8 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   private var menuItemLogo: MenuItem? = null
 
   init {
-    initialize(accountListComponent)
-  }
-
-  private fun initialize(accountListComponent: AccountListComponent) {
     initializeInjector(accountListComponent)
-
-    accountsSubscription = accountsAdapter.selectedAccounts().subscribe {
-      onSelectedAccounts(it)
-    }
+    accountsSubscription = accountsAdapter.selectedAccounts().subscribe { onSelectedAccounts(it) }
     presenter.view = this
   }
 
@@ -71,31 +65,18 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.action_delete -> {
-        deleteSelectedAccounts()
-        return true
-      }
-      R.id.action_edit -> {
-        changeNameForSelectedAccount()
-        return true
-      }
-      R.id.action_category -> {
-        changeCategoryForSelectedAccount()
-        return true
-      }
-      R.id.action_logo -> {
-        changeLogoForSelectedAccount()
-        return true
-      }
+    return when (item.itemId) {
+      R.id.action_delete -> consume { deleteSelectedAccounts() }
+      R.id.action_edit -> consume { changeNameForSelectedAccount() }
+      R.id.action_category -> consume { changeCategoryForSelectedAccount() }
+      R.id.action_logo -> consume { changeLogoForSelectedAccount() }
+      else -> false
     }
-
-    return false
   }
 
   override fun onDestroyActionMode(mode: ActionMode) {
     menuItemEdit = null
-    accountsAdapter.setEditMode(false)
+    accountsAdapter.editMode = false
     accountsSubscription.unsubscribe()
   }
 
@@ -107,7 +88,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
     menuItemLogo = menu.findItem(R.id.action_logo)
   }
 
-  private fun onSelectedAccounts(selectedAccounts: Set<Account>) {
+  private fun onSelectedAccounts(selectedAccounts: List<Account>) {
     presenter.onSelectedAccounts(selectedAccounts)
   }
 
@@ -118,7 +99,11 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   private fun changeNameForSelectedAccount() {
     val selectedAccount = accountsAdapter.selectedAccounts.iterator().next()
 
-    MaterialDialog.Builder(activity).title(R.string.rename_account).input(null, selectedAccount.name) { dialog, input -> presenter.updateAccount(selectedAccount, input.toString()) }.show()
+    MaterialDialog.Builder(activity)
+        .title(R.string.rename_account)
+        .input(null, selectedAccount.name) { dialog, input ->
+          presenter.updateAccount(selectedAccount, input.toString())
+        }.show()
   }
 
   private fun changeCategoryForSelectedAccount() {

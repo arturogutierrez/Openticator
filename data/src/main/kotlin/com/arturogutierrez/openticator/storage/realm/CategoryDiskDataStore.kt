@@ -19,9 +19,9 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
     val categoryObservable = Observable.fromCallable {
       val categoryRealm = categoryRealmMapper.transform(category)
 
-      val defaultRealm = Realm.getDefaultInstance()
-      defaultRealm.executeTransaction { realm -> realm.copyToRealm(categoryRealm) }
-      defaultRealm.close()
+      Realm.getDefaultInstance().use {
+        it.executeTransaction { it.copyToRealm(categoryRealm) }
+      }
 
       category
     }
@@ -31,17 +31,17 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
 
   override fun addAccount(category: Category, account: Account): Observable<Category> {
     return Observable.fromCallable {
-      val defaultRealm = Realm.getDefaultInstance()
-      defaultRealm.executeTransaction { realm ->
-        val categoryRealm = getCategoryAsBlocking(realm, category.categoryId)
-        val accountRealm = getAccountAsBlocking(realm, account.accountId)
-        if (categoryRealm == null || accountRealm == null) {
-          return@executeTransaction
-        }
+      Realm.getDefaultInstance().use {
+        it.executeTransaction {
+          val categoryRealm = getCategoryAsBlocking(it, category.categoryId)
+          val accountRealm = getAccountAsBlocking(it, account.accountId)
+          if (categoryRealm == null || accountRealm == null) {
+            return@executeTransaction
+          }
 
-        accountRealm.category = categoryRealm
+          accountRealm.category = categoryRealm
+        }
       }
-      defaultRealm.close()
 
       category
     }
@@ -53,12 +53,10 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
 
   private val categoriesAsBlocking: List<Category>
     get() {
-      val realm = Realm.getDefaultInstance()
-      val realmResults = realm.where(CategoryRealm::class.java).findAllSorted("name")
-      val categories = categoryRealmMapper.reverseTransform(realmResults)
-      realm.close()
-
-      return categories
+      Realm.getDefaultInstance().use {
+        val realmResults = it.where(CategoryRealm::class.java).findAllSorted("name")
+        return categoryRealmMapper.reverseTransform(realmResults)
+      }
     }
 
   private fun getCategoryAsBlocking(realm: Realm, categoryId: String): CategoryRealm? {

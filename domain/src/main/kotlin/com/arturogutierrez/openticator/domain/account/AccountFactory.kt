@@ -18,14 +18,4 @@ open class AccountFactory @Inject constructor(val issuerDecoder: IssuerDecoder) 
     val decodedIssuer = issuerDecoder.decode(name, issuer ?: Issuer.UNKNOWN.identifier)
     return Account(accountId, name, otpType, secret, decodedIssuer)
   }
-
-  fun createAccount(account: Account, newName: String): Account {
-    return Account(account.accountId, newName, account.type, account.secret,
-        account.issuer, account.order)
-  }
-
-  fun createAccount(account: Account, newIssuer: Issuer): Account {
-    return Account(account.accountId, account.name, account.type,
-        account.secret, newIssuer, account.order)
-  }
 }

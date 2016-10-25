@@ -11,8 +11,7 @@ import io.fabric.sdk.android.Fabric
 
 class OpenticatorApplication : Application() {
 
-  lateinit var applicationComponent: ApplicationComponent
-    private set
+  val applicationComponent: ApplicationComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
 
   override fun onCreate() {
     super.onCreate()
@@ -21,7 +20,6 @@ class OpenticatorApplication : Application() {
 
   private fun initialize() {
     initializeFabric()
-    initializeDependencyInjector()
     initializeDexter()
   }
 
@@ -29,10 +27,6 @@ class OpenticatorApplication : Application() {
     val packageName = getString(R.string.default_package_name)
     val fabric = Fabric.Builder(this).kits(Crashlytics()).appIdentifier(packageName).build()
     Fabric.with(fabric)
-  }
-
-  private fun initializeDependencyInjector() {
-    applicationComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
   }
 
   private fun initializeDexter() {

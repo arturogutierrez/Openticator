@@ -30,12 +30,12 @@ class AccountEditModePresenter @Inject constructor(
     deleteAccountsInteractor.unsubscribe()
   }
 
-  fun deleteAccounts(selectedAccounts: Set<Account>) {
+  fun deleteAccounts(selectedAccounts: List<Account>) {
     deleteAccountsInteractor.configure(selectedAccounts)
     deleteAccountsInteractor.execute(DeleteAccountsSubscriber())
   }
 
-  fun onSelectedAccounts(selectedAccounts: Set<Account>) {
+  fun onSelectedAccounts(selectedAccounts: List<Account>) {
     if (selectedAccounts.size == 0) {
       view.dismissActionMode()
       return

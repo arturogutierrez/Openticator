@@ -28,9 +28,9 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
         val accountRealm = accountRealmMapper.transform(account)
         accountRealm.order = numberOfAccounts
 
-        val defaultRealm = Realm.getDefaultInstance()
-        defaultRealm.executeTransaction { realm -> realm.copyToRealm(accountRealm) }
-        defaultRealm.close()
+        Realm.getDefaultInstance().use {
+          it.executeTransaction { it.copyToRealm(accountRealm) }
+        }
 
         account
       }
@@ -41,12 +41,12 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
 
   override fun update(account: Account): Observable<Account> {
     val updateAccountObservable = Observable.fromCallable {
-      val defaultRealm = Realm.getDefaultInstance()
-      defaultRealm.executeTransaction { realm ->
-        val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
-        accountRealmMapper.copyToAccountRealm(accountRealm, account)
+      Realm.getDefaultInstance().use {
+        it.executeTransaction {
+          val accountRealm = getAccountRealmAsBlocking(it, account.accountId) ?: return@executeTransaction
+          accountRealmMapper.copyToAccountRealm(accountRealm, account)
+        }
       }
-      defaultRealm.close()
 
       account
     }
@@ -56,12 +56,12 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
 
   override fun remove(account: Account): Observable<Unit> {
     val removeAccountObservable = Observable.fromCallable<Unit> {
-      val defaultRealm = Realm.getDefaultInstance()
-      defaultRealm.executeTransaction { realm ->
-        val accountRealm = getAccountRealmAsBlocking(realm, account.accountId) ?: return@executeTransaction
-        accountRealm.deleteFromRealm()
+      Realm.getDefaultInstance().use {
+        it.executeTransaction {
+          val accountRealm = getAccountRealmAsBlocking(it, account.accountId) ?: return@executeTransaction
+          accountRealm.deleteFromRealm()
+        }
       }
-      defaultRealm.close()
     }
 
     return removeAccountObservable.doOnNext { notifyAccountChanges() }
@@ -77,21 +77,19 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
 
   private val accountsAsBlocking: List<Account>
     get() {
-      val realm = Realm.getDefaultInstance()
-      val realmResults = realm.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
-      val accounts = accountRealmMapper.reverseTransform(realmResults)
-      realm.close()
-
-      return accounts
+      Realm.getDefaultInstance().use {
+        val realmResults = it.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
+        return accountRealmMapper.reverseTransform(realmResults)
+      }
     }
 
   private fun getAccountsForCategoryAsBlocking(category: Category): List<Account> {
-    val realm = Realm.getDefaultInstance()
-    val realmResults = realm.where(AccountRealm::class.java).equalTo("category.categoryId", category.categoryId).findAllSorted("order", Sort.ASCENDING)
-    val accounts = accountRealmMapper.reverseTransform(realmResults)
-    realm.close()
-
-    return accounts
+    Realm.getDefaultInstance().use {
+      val realmResults = it.where(AccountRealm::class.java)
+          .equalTo("category.categoryId", category.categoryId)
+          .findAllSorted("order", Sort.ASCENDING)
+      return accountRealmMapper.reverseTransform(realmResults)
+    }
   }
 
   private fun getAccountRealmAsBlocking(realm: Realm, accountId: String): AccountRealm? {

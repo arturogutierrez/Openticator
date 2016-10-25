@@ -12,8 +12,8 @@ import com.arturogutierrez.openticator.R
 
 class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
 
-  private lateinit var paint: Paint
-  private lateinit var bounds: RectF
+  private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+  private val bounds = RectF(0f, 0f, width.toFloat(), height.toFloat())
 
   private var color: Int = 0
   private var angle: Int = 0
@@ -38,8 +38,6 @@ class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
     }
 
     angle = 0
-    bounds = RectF(0f, 0f, width.toFloat(), height.toFloat())
-    paint = Paint(Paint.ANTI_ALIAS_FLAG)
     paint.color = color
   }
 
