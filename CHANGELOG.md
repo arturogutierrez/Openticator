@@ -2,6 +2,7 @@
 
 * Fixes: Re-enabling QR scan button after cancelling the scan [#32](https://github.com/arturogutierrez/Openticator/pull/32)
 * Ability to copy a passcode to the clipboard [#31](https://github.com/arturogutierrez/Openticator/pull/31)
+* Kotlin usage improvements [#33](https://github.com/arturogutierrez/Openticator/pull/33)
 
 ### 0.4.5 (23/10/2015)
 
