@@ -10,16 +10,11 @@ import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
+import org.jetbrains.anko.find
+import org.jetbrains.anko.imageResource
 
-class AccountViewHolder(itemView: View, onClickListener: AccountViewHolder.OnClickListener) : RecyclerView.ViewHolder(itemView) {
-
-  // TODO: Change to functions
-  interface OnClickListener {
-
-    fun onItemClick(position: Int)
-
-    fun onLongItemClick(position: Int)
-  }
+class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
+                        onLongItemClick: (Int) -> Boolean) : RecyclerView.ViewHolder(itemView) {
 
   private val ivIcon: ImageView
   private val tvName: TextView
@@ -27,20 +22,17 @@ class AccountViewHolder(itemView: View, onClickListener: AccountViewHolder.OnCli
   private val vCountdown: CountdownWidget
 
   init {
-    ivIcon = itemView.findViewById(R.id.iv_icon) as ImageView
-    tvName = itemView.findViewById(R.id.tv_account_name) as TextView
-    tvPasscode = itemView.findViewById(R.id.tv_code) as TextView
-    vCountdown = itemView.findViewById(R.id.v_countdown) as CountdownWidget
+    ivIcon = itemView.find<ImageView>(R.id.iv_icon)
+    tvName = itemView.find<TextView>(R.id.tv_account_name)
+    tvPasscode = itemView.find<TextView>(R.id.tv_code)
+    vCountdown = itemView.find<CountdownWidget>(R.id.v_countdown)
 
-    itemView.setOnClickListener { l -> onClickListener.onItemClick(layoutPosition) }
-    itemView.setOnLongClickListener { l ->
-      onClickListener.onLongItemClick(layoutPosition)
-      true
-    }
+    itemView.setOnClickListener { onItemClick(layoutPosition) }
+    itemView.setOnLongClickListener { onLongItemClick(layoutPosition) }
   }
 
   fun showAccount(accountPasscode: AccountPasscode, isSelected: Boolean) {
-    ivIcon.setImageResource(getAccountIconDrawableResource(accountPasscode.issuer))
+    ivIcon.imageResource = getAccountIconDrawableResource(accountPasscode.issuer)
     tvName.text = accountPasscode.account.name
     tvPasscode.text = accountPasscode.passcode.code
     itemView.isSelected = isSelected

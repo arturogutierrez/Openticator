@@ -7,12 +7,7 @@ import android.widget.TextView
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
 
-class IssuersViewHolder(itemView: View, onClickListener: IssuersViewHolder.OnClickListener) : RecyclerView.ViewHolder(itemView) {
-
-  interface OnClickListener {
-
-    fun onItemClick(position: Int)
-  }
+class IssuersViewHolder(itemView: View, onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
   private val tvName: TextView
   private val ivIcon: ImageView
@@ -20,7 +15,7 @@ class IssuersViewHolder(itemView: View, onClickListener: IssuersViewHolder.OnCli
   init {
     tvName = itemView.findViewById(R.id.tv_name) as TextView
     ivIcon = itemView.findViewById(R.id.iv_icon) as ImageView
-    itemView.setOnClickListener { l -> onClickListener.onItemClick(layoutPosition) }
+    itemView.setOnClickListener { onItemClick(layoutPosition) }
   }
 
   fun showIssuer(issuerDecorator: IssuerDecorator) {

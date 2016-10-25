@@ -10,7 +10,7 @@ import rx.Observable
 import rx.subjects.PublishSubject
 import java.util.*
 
-class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>(), AccountViewHolder.OnClickListener {
+class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>() {
 
   private var editMode: Boolean = false
   private val editModeSubject: PublishSubject<Boolean>
@@ -50,7 +50,7 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
     val view = layoutInflater.inflate(R.layout.layout_account_row, parent, false)
-    return AccountViewHolder(view, this)
+    return AccountViewHolder(view, { onItemClick(it) }, { onLongItemClick(it) })
   }
 
   override fun onBindViewHolder(viewHolder: AccountViewHolder, position: Int) {
@@ -70,7 +70,7 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
     }
   }
 
-  override fun onItemClick(position: Int) {
+  private fun onItemClick(position: Int) {
     if (editMode) {
       selectOrDeselect(position)
       return
@@ -79,11 +79,13 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
     onSelectedAccount?.invoke(accounts[position])
   }
 
-  override fun onLongItemClick(position: Int) {
+  private fun onLongItemClick(position: Int): Boolean {
     if (!editMode) {
       setEditMode(true)
       selectOrDeselect(position)
     }
+
+    return true
   }
 
   private fun selectOrDeselect(position: Int) {
