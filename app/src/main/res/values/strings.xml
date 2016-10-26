@@ -29,6 +29,9 @@
   <string name="add">Add</string>
   <string name="please_set_account_name">Please, set the account\'s name</string>
   <string name="please_set_account_secret">Please, set the account\'s secret</string>
+  <string name="invalid_secret">The secret is not valid, it should contains only A–Z or 2-7
+    characters
+  </string>
   <string name="tap_in_the_button_to_add_your_first_account">Tap in the circle button to add your
     first account!
   </string>
