@@ -13,14 +13,14 @@ abstract class BaseFragment : Fragment() {
     return componentType.cast((activity as HasComponent<*>).component)
   }
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
-    return inflater!!.inflate(layoutResource, container, false)
+    return inflater.inflate(layoutResource, container, false)
   }
 
-  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    configureUI(view!!)
+    configureUI(view)
   }
 
   protected abstract val layoutResource: Int
