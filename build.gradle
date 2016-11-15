@@ -1,12 +1,5 @@
-apply from: 'dependencies.gradle'
 
 buildscript {
-
-  ext.gradle_build_tools = '2.2.2'
-  ext.kotlin_version = '1.0.4'
-  ext.realm_version = '2.0.2'
-  ext.play_publisher_version = '1.1.5'
-  ext.fabric_version = '1.20.1'
 
   repositories {
     jcenter()
@@ -14,20 +7,22 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:$gradle_build_tools"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath "io.realm:realm-gradle-plugin:$realm_version"
-    classpath "com.github.triplet.gradle:play-publisher:${play_publisher_version}"
-    classpath "io.fabric.tools:gradle:$fabric_version"
+    apply from: 'dependencies.gradle'
 
+    classpath buildPlugins.gradle
+    classpath buildPlugins.kotlin
+    classpath buildPlugins.realm
+    classpath buildPlugins.fabric
+    classpath buildPlugins.playPublisher
   }
 }
 
 allprojects {
   ext {
-    androidApplicationId = 'com.arturogutierrez.openticator'
-    androidVersionCode = 4006
-    androidVersionName = "0.4.6"
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    application = [
+        package: 'com.arturogutierrez.openticator',
+        versionCode: 4006,
+        versionName: '0.4.6',
+    ]
   }
 }
