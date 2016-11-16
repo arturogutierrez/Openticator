@@ -8,14 +8,18 @@ allprojects {
 
 ext {
 
-  // Kotlin
-  kotlinVersion = rootProject.ext.kotlin_version
+  compiler = [java  : JavaVersion.VERSION_1_7,
+              kotlin: '1.0.5']
 
-  // SDK version
-  androidBuildToolsVersion = "24.0.3"
-  androidMinSdkVersion = 16
-  androidTargetSdkVersion = 24
-  androidCompileSdkVersion = 24
+  android = [buildTools: '24.0.3',
+             compileSdk: 24,
+             minSdk    : 16,
+             targetSdk : 24]
+
+  build = [gradle       : '2.2.2',
+           fabric       : '1.21.4',
+           realm        : '2.0.2',
+           playPublisher: '1.1.5']
 
   // Google Libraries
   supportVersion = '24.2.1'
@@ -47,7 +51,13 @@ ext {
   powerMockitoVersion = '1.6.5'
   hamkrestVersion = '1.2.3.0'
 
-  presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+  buildPlugins = [gradle       : "com.android.tools.build:gradle:$build.gradle",
+                  kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
+                  realm        : "io.realm:realm-gradle-plugin:$build.realm",
+                  fabric       : "io.fabric.tools:gradle:$build.fabric",
+                  playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
+
+  presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                               crashlytics    : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger         : "com.google.dagger:dagger:${daggerVersion}",
@@ -67,19 +77,19 @@ ext {
                               anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
                               ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}"]
 
-  domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+  domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
                         javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                         rxJava         : "io.reactivex:rxjava:${rxJavaVersion}"]
 
-  domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-                            junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+  domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                            junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
                             junit       : "junit:junit:${jUnitVersion}",
                             hamkrest    : "com.natpryce:hamkrest:${hamkrestVersion}",
                             mockito     : "org.mockito:mockito-core:${mockitoVersion}",]
 
-  dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+  dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                       daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
                       dagger            : "com.google.dagger:dagger:${daggerVersion}",
                       rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
@@ -87,8 +97,8 @@ ext {
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}"]
 
-  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-                          junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                          junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
                           junit              : "junit:junit:${jUnitVersion}",
                           hamkrest           : "com.natpryce:hamkrest:${hamkrestVersion}",
                           mockito            : "org.mockito:mockito-core:${mockitoVersion}",

@@ -4,20 +4,20 @@ apply plugin: 'com.github.triplet.play'
 apply plugin: 'io.fabric'
 
 android {
-  def globalConfiguration = rootProject.extensions.getByName("ext")
+  def ext = rootProject.extensions.ext
 
-  compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-  buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+  compileSdkVersion ext.android.compileSdk
+  buildToolsVersion ext.android.buildTools
 
   defaultConfig {
-    minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-    targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+    minSdkVersion ext.android.minSdk
+    targetSdkVersion ext.android.targetSdk
 
-    applicationId globalConfiguration.getAt("androidApplicationId")
-    versionCode globalConfiguration.getAt("androidVersionCode")
-    versionName globalConfiguration.getAt("androidVersionName")
+    applicationId ext.application.package
+    versionCode ext.application.versionCode
+    versionName ext.application.versionName
 
-    resValue "string", "default_package_name", globalConfiguration.getAt("androidApplicationId")
+    resValue "string", "default_package_name", ext.application.package
 
     // Vector Drawables for Gradle 2.0.
     // Compat toolbar use it internally
@@ -29,8 +29,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_7
-    targetCompatibility JavaVersion.VERSION_1_7
+    sourceCompatibility ext.compiler.java
+    targetCompatibility ext.compiler.java
   }
 
   dexOptions {
