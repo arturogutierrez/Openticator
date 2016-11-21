@@ -14,8 +14,6 @@ class ProxyActivity : AppCompatActivity() {
   internal lateinit var navigator: Navigator
   @Inject
   internal lateinit var screenSelector: InitialScreenSelector
-  @Inject
-  internal lateinit var storageInitializator: StorageInitializator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -29,7 +27,6 @@ class ProxyActivity : AppCompatActivity() {
     if (screenSelector.shouldShowWizard()) {
       navigator.goToInitialWizard(this)
     } else {
-      configureApplication()
       navigator.goToAccountList(this)
     }
 
@@ -39,9 +36,5 @@ class ProxyActivity : AppCompatActivity() {
 
   private fun initializeInjector() {
     (application as OpenticatorApplication).applicationComponent.inject(this)
-  }
-
-  private fun configureApplication() {
-    storageInitializator.configureStorage()
   }
 }
