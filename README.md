@@ -1,3 +1,5 @@
+<img src="https://travis-ci.org/arturogutierrez/Openticator.svg?branch=master"/>
+
 Openticator
 ------------
 
