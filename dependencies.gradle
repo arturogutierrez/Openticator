@@ -9,7 +9,7 @@ allprojects {
 ext {
 
   compiler = [java  : JavaVersion.VERSION_1_7,
-              kotlin: '1.0.5']
+              kotlin: '1.0.5-2']
 
   android = [buildTools: '24.0.3',
              compileSdk: 24,
@@ -18,7 +18,7 @@ ext {
 
   build = [gradle       : '2.2.2',
            fabric       : '1.21.4',
-           realm        : '2.0.2',
+           realm        : '2.2.0',
            playPublisher: '1.1.5']
 
   // Google Libraries
