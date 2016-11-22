@@ -1,18 +1,26 @@
 package com.arturogutierrez.openticator.view.presenter
 
-interface Presenter<V : Presenter.View> {
+abstract class Presenter<V : Presenter.View> {
 
-  var view: V
+  protected var view: V? = null
 
-  fun resume() {
+  fun attachView(view: V) {
+    this.view = view
+  }
+
+  fun detachView() {
+    this.view = null
+  }
+
+  open fun resume() {
 
   }
 
-  fun pause() {
+  open fun pause() {
 
   }
 
-  fun destroy() {
+  open fun destroy() {
 
   }
 

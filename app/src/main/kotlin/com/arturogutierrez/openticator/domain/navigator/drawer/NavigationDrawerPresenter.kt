@@ -9,9 +9,7 @@ import javax.inject.Inject
 
 class NavigationDrawerPresenter @Inject constructor(
     val getCategoriesInteractor: GetCategoriesInteractor,
-    val categorySelector: CategorySelector) : Presenter<NavigationDrawerView> {
-
-  lateinit override var view: NavigationDrawerView
+    val categorySelector: CategorySelector) : Presenter<NavigationDrawerView>() {
 
   // TODO: Presenter shouldn't has state
   private var categories: List<Category> = emptyList()
@@ -34,7 +32,7 @@ class NavigationDrawerPresenter @Inject constructor(
 
   private fun onFetchCategories(categories: List<Category>) {
     this.categories = categories
-    view.renderCategories(categories)
+    view?.renderCategories(categories)
   }
 
   fun categoryItemClicked(position: Int) {
@@ -42,11 +40,11 @@ class NavigationDrawerPresenter @Inject constructor(
       categorySelector.setSelectedCategory(categories[position])
     }
 
-    view.dismissDrawer()
+    view?.dismissDrawer()
   }
 
   fun allCategoriesItemClicked() {
     categorySelector.removeSelectedCategory()
-    view.dismissDrawer()
+    view?.dismissDrawer()
   }
 }

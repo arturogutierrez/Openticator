@@ -20,19 +20,17 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
   private val categoriesSectionDrawerItem by lazy { createCategoriesSectionDrawerItem() }
   private lateinit var drawer: Drawer
 
-  init {
-    initialize()
-  }
-
   fun onCreate(savedInstanceState: Bundle?) {
     createDrawerLayout(savedInstanceState)
   }
 
   fun onResume() {
+    presenter.attachView(this)
     presenter.resume()
   }
 
   fun onPause() {
+    presenter.detachView()
     presenter.pause()
   }
 
@@ -47,10 +45,6 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
     }
 
     return false
-  }
-
-  private fun initialize() {
-    presenter.view = this
   }
 
   private fun createDrawerLayout(savedInstanceState: Bundle?) {

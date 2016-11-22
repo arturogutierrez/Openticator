@@ -10,22 +10,20 @@ import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
 class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor,
-                                                        val accountDecoder: AccountDecoder) : Presenter<AddAccountFromCameraView> {
-
-  lateinit override var view: AddAccountFromCameraView
+                                                        val accountDecoder: AccountDecoder) : Presenter<AddAccountFromCameraView>() {
 
   override fun destroy() {
     addAccountInteractorInteractor.unsubscribe()
   }
 
   fun onScanQR() {
-    view.showLoading()
-    view.openCaptureCode()
+    view?.showLoading()
+    view?.openCaptureCode()
   }
 
   fun onScannedQR(data: Intent?) {
     if (data == null) {
-      view.hideLoading()
+      view?.hideLoading()
       return
     }
 
@@ -57,7 +55,7 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
   }
 
   private fun onAccountAdded() {
-    view.dismissScreen()
+    view?.dismissScreen()
   }
 
   private fun onErrorAddingAccount() {
@@ -65,7 +63,7 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
   }
 
   private fun showErrorAddingAccount() {
-    view.showQRError()
-    view.hideLoading()
+    view?.showQRError()
+    view?.hideLoading()
   }
 }

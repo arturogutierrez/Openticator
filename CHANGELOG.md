@@ -1,3 +1,7 @@
+### 0.4.8 Unreleased
+
+* Presenter refactor [#39](https://github.com/arturogutierrez/Openticator/pull/39)
+
 ### 0.4.7 (21/11/2016)
 
 * Fixes: Realm crash when it's not configured [#38](https://github.com/arturogutierrez/Openticator/pull/38)

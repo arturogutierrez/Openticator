@@ -14,12 +14,10 @@ import javax.inject.Inject
 class AccountListPresenter @Inject constructor(
     val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
     val copyToClipboardInteractor: CopyToClipboardInteractor,
-    val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView> {
+    val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView>() {
 
   private val handler = Handler(Looper.getMainLooper())
   private val scheduleRunnable = Runnable { this.reloadPasscodes() }
-
-  lateinit override var view: AccountListView
 
   override fun resume() {
     loadAccountPasscodes()
@@ -38,7 +36,7 @@ class AccountListPresenter @Inject constructor(
 
   fun onEditModeList(isEditMode: Boolean) {
     if (isEditMode) {
-      view.startEditMode()
+      view?.startEditMode()
     }
   }
 
@@ -65,20 +63,20 @@ class AccountListPresenter @Inject constructor(
 
   private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {
     if (accountPasscodes.size == 0) {
-      view.noItems()
+      view?.noItems()
       return
     }
 
-    view.renderAccounts(accountPasscodes)
+    view?.renderAccounts(accountPasscodes)
     scheduleUpdate(accountPasscodes)
   }
 
   private fun onFetchError() {
-    view.noItems()
+    view?.noItems()
   }
 
   private fun onPasscodeCopiedToClipboard() {
-    view.passcodeCopiedToClipboard()
+    view?.passcodeCopiedToClipboard()
   }
 
   private fun scheduleUpdate(accountPasscodes: List<AccountPasscode>) {

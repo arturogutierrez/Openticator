@@ -8,9 +8,7 @@ import com.arturogutierrez.openticator.interactor.DefaultSubscriber
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-class AddAccountFormPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView> {
-
-  lateinit override var view: AddAccountView
+class AddAccountFormPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView>() {
 
   override fun destroy() {
     addAccountInteractorInteractor.unsubscribe()
@@ -18,11 +16,11 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
 
   fun createTimeBasedAccount(accountName: String?, accountSecret: String?) {
     if (accountName == null || accountName.trim().length == 0) {
-      view.showFieldError(EMPTY_ACCOUNT_NAME)
+      view?.showFieldError(EMPTY_ACCOUNT_NAME)
     } else if (accountSecret == null || accountSecret.trim().length == 0) {
-      view.showFieldError(EMPTY_SECRET)
+      view?.showFieldError(EMPTY_SECRET)
     } else if (!accountSecret.isBase32()) {
-      view.showFieldError(INVALID_SECRET)
+      view?.showFieldError(INVALID_SECRET)
     } else {
       addAccountInteractorInteractor.configure(accountName.trim(), accountSecret.trim())
       addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
@@ -38,10 +36,10 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
   }
 
   private fun onAccountAdded() {
-    view.dismissForm()
+    view?.dismissForm()
   }
 
   private fun onErrorAddingAccount() {
-    view.unableToAddAccount()
+    view?.unableToAddAccount()
   }
 }

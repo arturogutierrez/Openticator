@@ -40,10 +40,10 @@ class MasterPasswordFragment : BaseFragment(), MasterPasswordView {
   override val layoutResource: Int
     get() = R.layout.fragment_master_password
 
-  override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+  override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
 
-    inflater!!.inflate(R.menu.master_password, menu)
+    inflater.inflate(R.menu.master_password, menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -53,9 +53,18 @@ class MasterPasswordFragment : BaseFragment(), MasterPasswordView {
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    presenter.attachView(this)
+  }
+
+  override fun onPause() {
+    super.onPause()
+    presenter.detachView()
+  }
+
   private fun initialize() {
     initializeInjector()
-    presenter.view = this
   }
 
   private fun initializeInjector() {

@@ -22,9 +22,7 @@ class AccountEditModePresenter @Inject constructor(
     val addCategoryInteractor: AddCategoryInteractor,
     val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
     val getIssuersInteractor: GetIssuersInteractor,
-    val issuerDecoratorFactory: IssuerDecoratorFactory) : Presenter<AccountEditModeView> {
-
-  lateinit override var view: AccountEditModeView
+    val issuerDecoratorFactory: IssuerDecoratorFactory) : Presenter<AccountEditModeView>() {
 
   override fun destroy() {
     deleteAccountsInteractor.unsubscribe()
@@ -37,13 +35,15 @@ class AccountEditModePresenter @Inject constructor(
 
   fun onSelectedAccounts(selectedAccounts: List<Account>) {
     if (selectedAccounts.size == 0) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
       return
     }
 
-    view.showCategoryButton(selectedAccounts.size == 1)
-    view.showEditButton(selectedAccounts.size == 1)
-    view.showLogoButton(selectedAccounts.size == 1)
+    view?.apply {
+      showCategoryButton(selectedAccounts.size == 1)
+      showEditButton(selectedAccounts.size == 1)
+      showLogoButton(selectedAccounts.size == 1)
+    }
   }
 
   fun updateAccount(account: Account, newName: String) {
@@ -52,14 +52,14 @@ class AccountEditModePresenter @Inject constructor(
       updateAccountInteractor.execute(UpdateAccountSubscriber())
     }
 
-    view.dismissActionMode()
+    view?.dismissActionMode()
   }
 
   fun updateAccount(account: Account, issuer: Issuer) {
     updateAccountInteractor.configure(account, issuer)
     updateAccountInteractor.execute(UpdateAccountSubscriber())
 
-    view.dismissActionMode()
+    view?.dismissActionMode()
   }
 
   fun pickCategoryForAccount(account: Account) {
@@ -74,33 +74,33 @@ class AccountEditModePresenter @Inject constructor(
     addAccountToCategoryInteractor.configure(category, account)
     addAccountToCategoryInteractor.execute(AddAccountToCategorySubscriber())
 
-    view.dismissActionMode()
+    view?.dismissActionMode()
   }
 
   fun createCategory(categoryName: String, account: Account) {
     addCategoryInteractor.configure(categoryName, account)
     addCategoryInteractor.execute(CreateCategorySubscriber())
 
-    view.dismissActionMode()
+    view?.dismissActionMode()
   }
 
   private inner class UpdateAccountSubscriber : DefaultSubscriber<Account>() {
     override fun onNext(item: Account) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
 
     override fun onError(e: Throwable) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
   }
 
   private inner class DeleteAccountsSubscriber : DefaultSubscriber<Unit>() {
     override fun onNext(aVoid: Unit) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
 
     override fun onError(e: Throwable) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
   }
 
@@ -110,36 +110,36 @@ class AccountEditModePresenter @Inject constructor(
       getCategoriesInteractor.unsubscribe()
 
       if (categories.size == 0) {
-        view.showChooseEmptyCategory(account)
+        view?.showChooseEmptyCategory(account)
       } else {
-        view.showChooseCategory(categories, account)
+        view?.showChooseCategory(categories, account)
       }
     }
 
     override fun onError(e: Throwable) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
   }
 
   private inner class CreateCategorySubscriber : DefaultSubscriber<Category>() {
 
     override fun onNext(category: Category) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
 
     override fun onError(e: Throwable) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
   }
 
   private inner class AddAccountToCategorySubscriber : DefaultSubscriber<Category>() {
 
     override fun onNext(category: Category) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
 
     override fun onError(e: Throwable) {
-      view.dismissActionMode()
+      view?.dismissActionMode()
     }
   }
 
@@ -147,7 +147,7 @@ class AccountEditModePresenter @Inject constructor(
 
     override fun onNext(issuers: List<Issuer>) {
       val issuerDecorators = issuerDecoratorFactory.create(issuers)
-      view.showChooseLogo(issuerDecorators, account)
+      view?.showChooseLogo(issuerDecorators, account)
     }
   }
 }
