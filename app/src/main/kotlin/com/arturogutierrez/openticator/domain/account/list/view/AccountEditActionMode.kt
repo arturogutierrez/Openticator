@@ -43,7 +43,6 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   init {
     initializeInjector(accountListComponent)
     accountsSubscription = accountsAdapter.selectedAccounts().subscribe { onSelectedAccounts(it) }
-    presenter.view = this
   }
 
   private fun initializeInjector(accountListComponent: AccountListComponent) {
@@ -52,7 +51,9 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
 
   override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
     configureActionMenu(mode.menuInflater, menu)
-    this.actionMode = mode
+    presenter.attachView(this)
+    actionMode = mode
+
     return true
   }
 
@@ -77,6 +78,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   override fun onDestroyActionMode(mode: ActionMode) {
     menuItemEdit = null
     accountsAdapter.editMode = false
+    presenter.detachView()
     accountsSubscription.unsubscribe()
   }
 

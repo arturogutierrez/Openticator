@@ -47,11 +47,13 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
 
   override fun onResume() {
     super.onResume()
+    presenter.attachView(this)
     presenter.resume()
   }
 
   override fun onPause() {
     super.onPause()
+    presenter.detachView()
     presenter.pause()
   }
 
@@ -65,7 +67,6 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
 
   private fun initialize() {
     initializeInjector()
-    presenter.view = this
     llScanQR.setOnClickListener { presenter.onScanQR() }
   }
 

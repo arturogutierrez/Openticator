@@ -51,11 +51,13 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
 
   override fun onResume() {
     super.onResume()
+    presenter.attachView(this)
     presenter.resume()
   }
 
   override fun onPause() {
     super.onPause()
+    presenter.detachView()
     presenter.pause()
   }
 
@@ -69,7 +71,6 @@ class AddAccountFormFragment : BaseFragment(), AddAccountView {
 
   private fun initialize() {
     initializeInjector()
-    presenter.view = this
   }
 
   private fun initializeInjector() {

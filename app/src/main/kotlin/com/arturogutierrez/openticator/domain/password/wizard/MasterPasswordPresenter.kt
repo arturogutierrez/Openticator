@@ -7,18 +7,17 @@ import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
 class MasterPasswordPresenter @Inject constructor(val createMasterPasswordInteractor: CreateMasterPasswordInteractor,
-                                                  val storageInitializator: StorageInitializator) : Presenter<MasterPasswordView> {
-  lateinit override var view: MasterPasswordView
+                                                  val storageInitializator: StorageInitializator) : Presenter<MasterPasswordView>() {
 
   fun createMasterPassword(password: String, confirmPassword: String) {
     if (!isStrongPassword(password)) {
-      view.showWeakPasswordError()
+      view?.showWeakPasswordError()
     } else if (password != confirmPassword) {
-      view.showMismatchPasswordsError()
+      view?.showMismatchPasswordsError()
     } else {
       createMasterPasswordInteractor.createMasterPassword(password)
       storageInitializator.configureStorage()
-      view.closeWizard()
+      view?.closeWizard()
     }
   }
 
