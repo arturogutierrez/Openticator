@@ -1,5 +1,6 @@
-### 0.4.8 Unreleased
+### 0.8.0 (23/11/2016)
 
+* New: New branding! [#40](https://github.com/arturogutierrez/Openticator/pull/40)
 * Presenter refactor [#39](https://github.com/arturogutierrez/Openticator/pull/39)
 
 ### 0.4.7 (21/11/2016)
