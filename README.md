@@ -27,5 +27,5 @@ Developed By
   <img alt="Add me to Linkedin" src="https://static.licdn.com/scds/common/u/images/logos/favicons/v1/favicon.ico" />
 </a>
 
-[1]: ./art/demo.gif
+[1]: ./media/web/demo.gif
 
