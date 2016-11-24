@@ -14,6 +14,8 @@ import com.arturogutierrez.openticator.domain.account.list.adapter.AccountViewHo
 import com.arturogutierrez.openticator.domain.account.list.adapter.AccountsAdapter
 import com.arturogutierrez.openticator.domain.account.list.di.AccountListComponent
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
+import com.arturogutierrez.openticator.helpers.disableAppBarLayoutScroll
+import com.arturogutierrez.openticator.helpers.enableAppBarLayoutScroll
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
 import com.arturogutierrez.openticator.view.widget.gone
@@ -104,6 +106,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun showAccountList(accounts: List<AccountPasscode>) {
     updateAccounts(accounts)
+    updateScrollBasedOnContent(accounts)
 
     rvAccounts.visible()
     tvEmptyView.gone()
@@ -118,5 +121,14 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {
     accountsAdapter.accounts = accounts
+  }
+
+  private fun updateScrollBasedOnContent(accounts: List<AccountPasscode>) {
+    val layoutManager = rvAccounts.layoutManager as LinearLayoutManager
+    if (layoutManager.findLastCompletelyVisibleItemPosition() == accounts.size - 1) {
+      activity.disableAppBarLayoutScroll()
+    } else {
+      activity.enableAppBarLayoutScroll()
+    }
   }
 }
