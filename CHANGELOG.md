@@ -1,6 +1,6 @@
-### Unreleased
+### 0.8.2 (24/11/2016)
 
-* New: Disabling passcode list scroll when there is content that doesn't fit the entire screen  [#43](https://github.com/arturogutierrez/Openticator/pull/43)
+* Fixes: Disabling passcode list scroll when there is content that doesn't fit the entire screen  [#43](https://github.com/arturogutierrez/Openticator/pull/43)
 * Dependencies version updated [#41](https://github.com/arturogutierrez/Openticator/pull/42)
 
 ### 0.8.0 (23/11/2016)
