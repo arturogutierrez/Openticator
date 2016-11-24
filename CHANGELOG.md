@@ -1,3 +1,7 @@
+### Unreleased
+
+* Dependencies version updated [#41](https://github.com/arturogutierrez/Openticator/pull/42)
+
 ### 0.8.0 (23/11/2016)
 
 * New: New branding! [#40](https://github.com/arturogutierrez/Openticator/pull/40)
