@@ -1,5 +1,6 @@
-### 0.8.3 Unreleased
+### 0.8.3 (25/11/2016)
 
+* New: Flow Up added [#45](https://github.com/arturogutierrez/Openticator/pull/45)
 * Fixes: Disabling passcode list scroll when there is content that doesn't fit the entire screen for all cases [#44](https://github.com/arturogutierrez/Openticator/pull/44)
 
 ### 0.8.2 (24/11/2016)
