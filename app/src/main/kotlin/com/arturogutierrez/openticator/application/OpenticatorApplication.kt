@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.application
 
 import android.app.Application
+import com.arturogutierrez.openticator.BuildConfig
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
 import com.arturogutierrez.openticator.di.component.DaggerApplicationComponent
@@ -9,6 +10,7 @@ import com.arturogutierrez.openticator.domain.bootstrap.StorageInitializator
 import com.crashlytics.android.Crashlytics
 import com.karumi.dexter.Dexter
 import io.fabric.sdk.android.Fabric
+import io.flowup.FlowUp
 import javax.inject.Inject
 
 class OpenticatorApplication : Application() {
@@ -25,9 +27,17 @@ class OpenticatorApplication : Application() {
 
   private fun initialize() {
     initializeInjector()
+    initializeFlowUp()
     initializeFabric()
     initializeStorage()
     initializeDexter()
+  }
+
+  private fun initializeFlowUp() {
+    FlowUp.Builder.with(this)
+        .apiKey(getString(R.string.flow_up_api_key))
+        .forceReports(BuildConfig.DEBUG)
+        .start()
   }
 
   private fun initializeInjector() {

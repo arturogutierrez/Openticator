@@ -44,3 +44,5 @@ global.json
 signing.properties
 secrets.tar
 gplay-secret.json
+api-keys.properties
+createSecrets.sh

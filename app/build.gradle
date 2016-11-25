@@ -19,6 +19,11 @@ android {
 
     resValue "string", "default_package_name", ext.application.package
 
+    // Api Keys
+    def (fabricApiKey, flowUpApiKey) = apiKeysFromFile()
+    manifestPlaceholders = [ fabricApiKey: fabricApiKey]
+    resValue "string", "flow_up_api_key", flowUpApiKey
+
     // Vector Drawables for Gradle 2.0.
     // Compat toolbar use it internally
     vectorDrawables.useSupportLibrary = true
@@ -76,6 +81,7 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
+  compile presentationDependencies.flowUp
   compile presentationDependencies.anko
   compile presentationDependencies.ankoSupport
   compile presentationDependencies.supportVersion
@@ -142,4 +148,29 @@ def signingConfigFromFile() {
   }
 
   return [null, null, null]
+}
+
+def apiKeysFromFile() {
+  println '-> apiKeysFromFile'
+  def Properties props = new Properties()
+  def propFile = file('../api-keys.properties')
+
+  if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('FABRIC') &&
+        props.containsKey('FLOW_UP')) {
+
+      def fabricApiKey = props['FABRIC']
+      def flowUpApiKey = props['FLOW_UP']
+
+      return [fabricApiKey, flowUpApiKey]
+    } else {
+      println 'api-keys.properties found but some entries are missing'
+    }
+  } else {
+    println 'api-keys.properties not found'
+  }
+
+  return [null, null]
 }
