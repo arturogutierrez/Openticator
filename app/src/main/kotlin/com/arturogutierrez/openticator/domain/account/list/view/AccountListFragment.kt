@@ -124,11 +124,13 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun updateScrollBasedOnContent(accounts: List<AccountPasscode>) {
-    val layoutManager = rvAccounts.layoutManager as LinearLayoutManager
-    if (layoutManager.findLastCompletelyVisibleItemPosition() == accounts.size - 1) {
-      activity.disableAppBarLayoutScroll()
-    } else {
-      activity.enableAppBarLayoutScroll()
+    rvAccounts.post {
+      val layoutManager = rvAccounts.layoutManager as LinearLayoutManager
+      if (layoutManager.findLastCompletelyVisibleItemPosition() == accounts.size - 1) {
+        activity.disableAppBarLayoutScroll()
+      } else {
+        activity.enableAppBarLayoutScroll()
+      }
     }
   }
 }
