@@ -62,7 +62,7 @@ class AccountListPresenter @Inject constructor(
   }
 
   private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {
-    if (accountPasscodes.size == 0) {
+    if (accountPasscodes.isEmpty()) {
       view?.noItems()
       return
     }
