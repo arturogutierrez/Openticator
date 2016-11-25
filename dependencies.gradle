@@ -42,6 +42,7 @@ ext {
   materialDialogsVersion = '0.9.1.0'
   materialDrawerVersion = '5.8.0'
   ankoVersion = '0.9'
+  flowUpVersion = '0.1.9'
 
   // Testing
   robolectricVersion = '3.1.4'
@@ -75,7 +76,8 @@ ext {
                               materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
                               materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
                               anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
-                              ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}"]
+                              ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
+                              flowUp         : "io.flowup:android-sdk:${flowUpVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
