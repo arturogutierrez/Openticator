@@ -1,6 +1,7 @@
 ### 0.9.1 (28/11/2016)
 
 * New: Spanish translation [#47](https://github.com/arturogutierrez/Openticator/pull/49)
+* Fixes: Welcome animation improvements [#53](https://github.com/arturogutierrez/Openticator/pull/53)
 
 ### 0.9.0 (28/11/2016)
 
