@@ -8,7 +8,7 @@ import com.arturogutierrez.openticator.domain.bootstrap.StorageInitializator
 import com.arturogutierrez.openticator.domain.navigator.Navigator
 import javax.inject.Inject
 
-class ProxyActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
   @Inject
   internal lateinit var navigator: Navigator
@@ -30,7 +30,6 @@ class ProxyActivity : AppCompatActivity() {
       navigator.goToAccountList(this)
     }
 
-    overridePendingTransition(0, 0)
     finish()
   }
 

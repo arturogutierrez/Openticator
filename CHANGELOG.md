@@ -1,3 +1,7 @@
+### 0.8.4 (Unreleased)
+
+* New: Splash added [#46](https://github.com/arturogutierrez/Openticator/pull/46)
+
 ### 0.8.3 (25/11/2016)
 
 * New: Flow Up added [#45](https://github.com/arturogutierrez/Openticator/pull/45)

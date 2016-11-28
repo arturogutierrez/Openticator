@@ -15,7 +15,7 @@ import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
 import com.arturogutierrez.openticator.storage.database.DatabaseConfigurator
 import com.arturogutierrez.openticator.storage.preferences.Preferences
 import com.arturogutierrez.openticator.view.activity.BaseActivity
-import com.arturogutierrez.openticator.view.activity.ProxyActivity
+import com.arturogutierrez.openticator.view.activity.SplashActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ interface ApplicationComponent {
 
   fun inject(application: OpenticatorApplication)
 
-  fun inject(proxyActivity: ProxyActivity)
+  fun inject(splashActivity: SplashActivity)
 
   fun inject(baseActivity: BaseActivity)
 
