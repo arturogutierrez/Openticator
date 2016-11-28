@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_name">Nombre de la cuenta</string>
+  <string name="account_secret">Secreto / Clave</string>
+  <string name="add">Añadir</string>
+  <string name="add_account">Añadir cuenta</string>
+  <string name="add_account_manually">Añadir Cuenta Manualmente</string>
+  <string name="add_to_category">Añadir a categoría</string>
+  <string name="all_accounts">Todas las cuentas</string>
+  <string name="camera_permission">Permiso para usar la cámara</string>
+  <string name="camera_permission_needed_for_scan_qr">El permiso para usar la cámara es necesario
+    para escanear los códigos QR
+  </string>
+  <string name="categories">Categorías</string>
+  <string name="category">Categoría</string>
+  <string name="choose_logo">Elegir logo</string>
+  <string name="configure_master_password">Contraseña Maestra</string>
+  <string name="confirm_password">Confirmar contraseña</string>
+  <string name="create_new_category">Crear nueva categoría</string>
+  <string name="delete">Eliminar</string>
+  <string name="drawer_close">Cerrar</string>
+  <string name="drawer_open">Abrir</string>
+  <string name="edit">Editar</string>
+  <string name="invalid_secret">La clave no es válida, sólo puede contener los siguientes caracters
+    A-Z o 2-7
+  </string>
+  <string name="logo">Logo</string>
+  <string name="next">Siguiente</string>
+  <string name="no_categories">No hay categorías</string>
+  <string name="passcode_copied_to_clipboard">¡Código copiado al portapapeles!</string>
+  <string name="password">Contraseña</string>
+  <string name="please_set_account_name">Por favor, introduce el nombre de la cuenta</string>
+  <string name="please_set_account_secret">Por favor, introduce el código de la cuenta</string>
+  <string name="rename_account">Renombrar cuenta</string>
+  <string name="scan_qr_code">Escanear código QR</string>
+  <string name="start">Empezar</string>
+  <string name="time_based">Basado en tiempo</string>
+  <string name="unable_to_decode_qr">Imposible decodificar el código QR</string>
+  <string name="unable_to_open_the_camera">Imposible abrir la cámara</string>
+  <string name="unable_to_save_the_account">Imposible guardar la cuenta</string>
+  <string name="your_password_is_weak">Tu contraseña es débil, debe tener 10 o más caracteres
+  </string>
+  <string name="master_password_explanation">La contraseña maestra se usará para encriptar tu base
+    de datos para proteger los datos de cuentas. Intenta elegir una contraseña segura con 10 o más
+    caracteres mezclando letras y números.\nTen en cuenta que si olvidas tu contraseña maestra no
+    podrás recuperar la base de datos en otros dispositivos.
+  </string>
+  <string name="qr_explanation">Normalmente, se suele mostrar un código QR cuando se activa la
+    autenticación de 2-pasos.\nPulsa en ESCANEAR CÓDIGO QR y escanea el código con tu teléfono
+  </string>
+  <string name="tap_in_the_button_to_add_your_first_account">¡Pulsa en el botón circular para añadir
+    tu primera cuenta!
+  </string>
+  <string name="the_passwords_are_not_equal">Comprueba que coinciden ambas contraseñas</string>
+  <string name="welcome_body_first">Mejora la proteción de tus cuentas online activando la
+    autenticación de 2-pasos.
+  </string>
+  <string name="welcome_body_second">Openticator genera códigos de un sólo uso para ser usados junto
+    con tu contraseña cuando te identificas en tus cuentas protegidas con autenticación de 2-pasos.
+  </string>
+  <string name="welcome_body_title">Añade una capa de seguridad extra a tus cuentas usando
+    Openticator.
+  </string>
+</resources>
