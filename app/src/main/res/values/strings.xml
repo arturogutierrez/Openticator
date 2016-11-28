@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Openticator</string>
+  <string name="app_name" translatable="false">Openticator</string>
 
   <!-- Welcome -->
   <string name="welcome_body_title">Gives a extra security layer to your accounts using Openticator.
