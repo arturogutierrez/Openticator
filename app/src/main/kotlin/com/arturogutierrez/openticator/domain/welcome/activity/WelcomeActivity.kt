@@ -3,7 +3,6 @@ package com.arturogutierrez.openticator.domain.welcome.activity
 import android.os.Bundle
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -61,8 +60,6 @@ class WelcomeActivity : AppCompatActivity() {
 
   private fun startAnimation() {
     val translationY = (logoPlaceholder.y + container.y) - logoImageView.y
-
-    Log.d(javaClass.simpleName, "TranslationY = $translationY")
 
     ViewCompat.animate(logoImageView)
         .translationY(translationY)
