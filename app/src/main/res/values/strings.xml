@@ -74,16 +74,16 @@
   <string name="passcode_copied_to_clipboard">Code copied to clipboard!</string>
 
   <!-- Issuers -->
-  <string name="aws">AWS</string>
-  <string name="digital_ocean">Digital Ocean</string>
-  <string name="bitcoin">Bitcoin</string>
-  <string name="dropbox">Dropbox</string>
-  <string name="evernote">Evernote</string>
-  <string name="facebook">Facebook</string>
-  <string name="github">GitHub</string>
-  <string name="google">Google</string>
-  <string name="microsoft">Microsoft</string>
-  <string name="slack">Slack</string>
-  <string name="wordpress">WordPress</string>
+  <string name="aws" translatable="false">AWS</string>
+  <string name="digital_ocean" translatable="false">Digital Ocean</string>
+  <string name="bitcoin" translatable="false">Bitcoin</string>
+  <string name="dropbox" translatable="false">Dropbox</string>
+  <string name="evernote" translatable="false">Evernote</string>
+  <string name="facebook" translatable="false">Facebook</string>
+  <string name="github" translatable="false">GitHub</string>
+  <string name="google" translatable="false">Google</string>
+  <string name="microsoft" translatable="false">Microsoft</string>
+  <string name="slack" translatable="false">Slack</string>
+  <string name="wordpress" translatable="false">WordPress</string>
 
 </resources>
