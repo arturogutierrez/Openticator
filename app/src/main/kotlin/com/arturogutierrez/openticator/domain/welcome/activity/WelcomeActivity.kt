@@ -30,6 +30,7 @@ class WelcomeActivity : AppCompatActivity() {
   private val bodyFirst by lazy { find<TextView>(R.id.title_first) }
   private val bodySecond by lazy { find<TextView>(R.id.title_second) }
   private val startButton by lazy { find<Button>(R.id.start_btn) }
+  private var animationStarted = false
 
   @Inject
   lateinit var navigator: Navigator
@@ -49,7 +50,7 @@ class WelcomeActivity : AppCompatActivity() {
   override fun onWindowFocusChanged(hasFocus: Boolean) {
     super.onWindowFocusChanged(hasFocus)
 
-    if (hasFocus) {
+    if (hasFocus && !animationStarted) {
       startAnimation()
     }
   }
@@ -90,5 +91,7 @@ class WelcomeActivity : AppCompatActivity() {
         .setStartDelay(STARTUP_DELAY + LOGO_DURATION + ITEM_DELAY * 3)
         .setDuration(BUTTON_DURATION)
         .start()
+
+    animationStarted = true
   }
 }

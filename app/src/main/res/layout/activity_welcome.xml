@@ -5,10 +5,6 @@
     android:id="@+id/activity_welcome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/content_padding_left"
-    android:paddingRight="@dimen/content_padding_right"
-    android:paddingTop="@dimen/content_padding_top"
-    android:paddingBottom="@dimen/content_padding_bottom"
     android:background="?colorPrimary"
     tools:context="com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity">
 
@@ -17,6 +13,7 @@
       android:src="@mipmap/ic_splash"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="12dp"
       android:layout_gravity="center"
       tools:visibility="gone"
   />
@@ -26,6 +23,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
+      android:paddingLeft="@dimen/content_padding_left"
+      android:paddingRight="@dimen/content_padding_right"
       android:gravity="center"
       android:orientation="vertical">
 
