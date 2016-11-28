@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
     super.onResume()
 
     if (screenSelector.shouldShowWizard()) {
-      navigator.goToInitialWizard(this)
+      navigator.goToWelcomeScreen(this)
     } else {
       navigator.goToAccountList(this)
     }

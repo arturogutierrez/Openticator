@@ -1,6 +1,7 @@
-### 0.8.4 (Unreleased)
+### 0.9.0 (Unreleased)
 
 * New: Splash added [#46](https://github.com/arturogutierrez/Openticator/pull/46)
+* New: Welcome screen added [#47](https://github.com/arturogutierrez/Openticator/pull/47)
 
 ### 0.8.3 (25/11/2016)
 

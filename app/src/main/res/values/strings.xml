@@ -1,6 +1,17 @@
 <resources>
   <string name="app_name">Openticator</string>
 
+  <!-- Welcome -->
+  <string name="welcome_body_title">Gives a extra security layer to your accounts using Openticator.
+  </string>
+  <string name="welcome_body_first">Improve the protection of your online accounts enabling
+    two-factor authentications (2FA).
+  </string>
+  <string name="welcome_body_second">Openticator generates single-use codes to be used along your
+    password when log into your protected accounts with two-factor authentications.
+  </string>
+  <string name="start">Start</string>
+
   <!-- Master Password -->
   <string name="configure_master_password">Configure Master Password</string>
   <string name="password">Password</string>
