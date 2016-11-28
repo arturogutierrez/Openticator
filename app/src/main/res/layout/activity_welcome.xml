@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_welcome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/content_padding_left"
+    android:paddingRight="@dimen/content_padding_right"
+    android:paddingTop="@dimen/content_padding_top"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="?colorPrimary"
+    tools:context="com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity">
+
+  <ImageView
+      android:id="@+id/logo_iv"
+      android:src="@mipmap/ic_splash"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      tools:visibility="gone"
+  />
+
+  <LinearLayout
+      android:id="@+id/welcome_container"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:orientation="vertical">
+
+    <View
+        android:id="@+id/logo_placeholder"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible"
+    />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/welcome_body_title"
+        android:textColor="@android:color/white"
+        android:alpha="0"
+        style="@style/TextAppearance.AppCompat.Title"
+    />
+
+    <TextView
+        android:id="@+id/title_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/welcome_body_first"
+        android:textColor="@android:color/white"
+        android:alpha="0"
+        style="@style/TextAppearance.AppCompat.Body1"
+    />
+
+    <TextView
+        android:id="@+id/title_second"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_body_second"
+        android:textColor="@android:color/white"
+        android:alpha="0"
+        style="@style/TextAppearance.AppCompat.Body1"
+    />
+
+
+    <Button
+        android:id="@+id/start_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/start"
+        android:alpha="0"
+        style="@style/Widget.AppCompat.Button"
+    />
+
+  </LinearLayout>
+
+</FrameLayout>
