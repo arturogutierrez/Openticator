@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.account.list.view.CountdownWidget
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
-import com.arturogutierrez.openticator.domain.issuer.model.Issuer
+import com.arturogutierrez.openticator.domain.issuer.IssuerDecoratorFactory
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
 import org.jetbrains.anko.find
@@ -16,12 +16,14 @@ import org.jetbrains.anko.imageResource
 class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
                         onLongItemClick: (Int) -> Boolean) : RecyclerView.ViewHolder(itemView) {
 
+  private val issuerDecoratorFactory: IssuerDecoratorFactory
   private val ivIcon: ImageView
   private val tvName: TextView
   private val tvPasscode: TextView
   private val vCountdown: CountdownWidget
 
   init {
+    issuerDecoratorFactory = IssuerDecoratorFactory(itemView.context)
     ivIcon = itemView.find<ImageView>(R.id.iv_icon)
     tvName = itemView.find<TextView>(R.id.tv_account_name)
     tvPasscode = itemView.find<TextView>(R.id.tv_code)
@@ -32,7 +34,8 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
   }
 
   fun showAccount(accountPasscode: AccountPasscode, isSelected: Boolean) {
-    ivIcon.imageResource = getAccountIconDrawableResource(accountPasscode.issuer)
+    val issuerDecorator = issuerDecoratorFactory.create(accountPasscode.issuer)
+    ivIcon.imageResource = issuerDecorator.imageResource
     tvName.text = accountPasscode.account.name
     tvPasscode.text = accountPasscode.passcode.code
     itemView.isSelected = isSelected
@@ -52,23 +55,5 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
   private fun calculateRemainingSeconds(validUntilInSeconds: Long): Int {
     val timeCalculator = RemainingTimeCalculator(CurrentTimeProvider())
     return timeCalculator.calculateRemainingSeconds(validUntilInSeconds)
-  }
-
-  // TODO: Duplicated in IssuerDecoratorFactory
-  private fun getAccountIconDrawableResource(issuer: Issuer): Int {
-    return when (issuer) {
-      Issuer.AWS -> R.drawable.icon_account_aws
-      Issuer.BITCOIN -> R.drawable.icon_account_bitcoin
-      Issuer.DIGITALOCEAN -> R.drawable.icon_account_digitalocean
-      Issuer.DROPBOX -> R.drawable.icon_account_dropbox
-      Issuer.EVERNOTE -> R.drawable.icon_account_evernote
-      Issuer.FACEBOOK -> R.drawable.icon_account_facebook
-      Issuer.GITHUB -> R.drawable.icon_account_github
-      Issuer.GOOGLE -> R.drawable.icon_account_google
-      Issuer.MICROSOFT -> R.drawable.icon_account_microsoft
-      Issuer.SLACK -> R.drawable.icon_account_slack
-      Issuer.WORDPRESS -> R.drawable.icon_account_wordpress
-      else -> R.mipmap.ic_launcher
-    }
   }
 }

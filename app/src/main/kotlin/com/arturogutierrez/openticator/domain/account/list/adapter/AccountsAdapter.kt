@@ -47,7 +47,7 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
   fun selectedAccounts(): Observable<List<Account>> = selectedAccountsSubject
 
   private fun clearSelection() {
-    if (selectedAccounts.size > 0) {
+    if (selectedAccounts.isNotEmpty()) {
       selectedAccounts = emptyList()
       notifyDataSetChanged()
     }
