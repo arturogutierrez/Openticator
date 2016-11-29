@@ -34,7 +34,7 @@ class AccountEditModePresenter @Inject constructor(
   }
 
   fun onSelectedAccounts(selectedAccounts: List<Account>) {
-    if (selectedAccounts.size == 0) {
+    if (selectedAccounts.isEmpty()) {
       view?.dismissActionMode()
       return
     }
@@ -47,7 +47,7 @@ class AccountEditModePresenter @Inject constructor(
   }
 
   fun updateAccount(account: Account, newName: String) {
-    if (newName.length > 0) {
+    if (newName.isNotEmpty()) {
       updateAccountInteractor.configure(account, newName)
       updateAccountInteractor.execute(UpdateAccountSubscriber())
     }
@@ -109,7 +109,7 @@ class AccountEditModePresenter @Inject constructor(
     override fun onNext(categories: List<Category>) {
       getCategoriesInteractor.unsubscribe()
 
-      if (categories.size == 0) {
+      if (categories.isEmpty()) {
         view?.showChooseEmptyCategory(account)
       } else {
         view?.showChooseCategory(categories, account)

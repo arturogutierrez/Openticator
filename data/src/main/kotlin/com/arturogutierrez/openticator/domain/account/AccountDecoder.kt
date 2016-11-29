@@ -60,7 +60,7 @@ class AccountDecoder @Inject constructor(val accountFactory: AccountFactory) {
   }
 
   private fun isValidSecret(secret: String?): Boolean {
-    return secret != null && secret.length > 0
+    return secret != null && secret.isNotEmpty()
   }
 
   private fun getAccountName(path: String?): String? {
@@ -72,7 +72,7 @@ class AccountDecoder @Inject constructor(val accountFactory: AccountFactory) {
 
     // Remove leading '/'
     val accountName = decodedPath.substring(1).trim { it <= ' ' }
-    if (accountName.length == 0) {
+    if (accountName.isEmpty()) {
       return null
     }
 

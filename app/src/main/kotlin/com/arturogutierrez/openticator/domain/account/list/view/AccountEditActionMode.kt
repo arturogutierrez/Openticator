@@ -20,7 +20,6 @@ import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
 import com.arturogutierrez.openticator.helpers.consume
 import rx.Subscription
-import java.util.*
 import javax.inject.Inject
 
 class AccountEditActionMode(accountListComponent: AccountListComponent,
@@ -149,10 +148,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun showChooseCategory(categories: List<Category>, account: Account) {
-    val stringCategories = ArrayList<String>(categories.size)
-    for (category in categories) {
-      stringCategories.add(category.name)
-    }
+    val stringCategories = categories.map { it.name }
 
     MaterialDialog.Builder(activity).title(R.string.add_to_category).items(stringCategories).itemsCallback { dialog, itemView, which, text ->
       val category = categories[which]

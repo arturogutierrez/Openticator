@@ -113,10 +113,9 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun stopCounters() {
-    for (i in 0..accountsAdapter.itemCount - 1) {
-      val viewHolder = rvAccounts.findViewHolderForAdapterPosition(i) as AccountViewHolder
-      viewHolder.stopAnimation()
-    }
+    (0..accountsAdapter.itemCount - 1)
+        .map { rvAccounts.findViewHolderForAdapterPosition(it) as AccountViewHolder }
+        .forEach { it.stopAnimation() }
   }
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {

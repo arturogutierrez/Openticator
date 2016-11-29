@@ -24,7 +24,5 @@ abstract class Presenter<V : Presenter.View> {
 
   }
 
-  interface View {
-
-  }
+  interface View
 }

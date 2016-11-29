@@ -15,9 +15,9 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
   }
 
   fun createTimeBasedAccount(accountName: String?, accountSecret: String?) {
-    if (accountName == null || accountName.trim().length == 0) {
+    if (accountName == null || accountName.trim().isEmpty()) {
       view?.showFieldError(EMPTY_ACCOUNT_NAME)
-    } else if (accountSecret == null || accountSecret.trim().length == 0) {
+    } else if (accountSecret == null || accountSecret.trim().isEmpty()) {
       view?.showFieldError(EMPTY_SECRET)
     } else if (!accountSecret.isBase32()) {
       view?.showFieldError(INVALID_SECRET)
