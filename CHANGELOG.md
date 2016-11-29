@@ -2,6 +2,7 @@
 
 * New: Countdown widget clockwise [#54](https://github.com/arturogutierrez/Openticator/pull/54)
 * New: Roberts Space Industries issuer added [#55](https://github.com/arturogutierrez/Openticator/pull/55)
+* Removing some code warnings [#56](https://github.com/arturogutierrez/Openticator/pull/56)
 
 ### 0.9.2 (28/11/2016)
 
