@@ -128,4 +128,17 @@ class IssuerDecoderTest {
 
     assertThat(issuer, `is`(Issuer.WORDPRESS))
   }
+
+  @Test
+  fun testRobertsSpaceIndustriesIssuer() {
+    val issuerWithSpaces = issuerDecoder.decode("", "Roberts Space Industries")
+    val issuerWithOneSpace = issuerDecoder.decode("", "Roberts Space Industries")
+    val issuerWithAnotherSpace = issuerDecoder.decode("", "Roberts Space Industries")
+    val issuerWithoutSpaces = issuerDecoder.decode("", "Roberts Space Industries")
+
+    assertThat(issuerWithSpaces, `is`(Issuer.ROBERTSPACEINDUSTRIES))
+    assertThat(issuerWithOneSpace, `is`(Issuer.ROBERTSPACEINDUSTRIES))
+    assertThat(issuerWithAnotherSpace, `is`(Issuer.ROBERTSPACEINDUSTRIES))
+    assertThat(issuerWithoutSpaces, `is`(Issuer.ROBERTSPACEINDUSTRIES))
+  }
 }

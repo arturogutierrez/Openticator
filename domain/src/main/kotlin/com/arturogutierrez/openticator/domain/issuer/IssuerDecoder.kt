@@ -22,6 +22,7 @@ class IssuerDecoder @Inject constructor() {
     expressions.put(Issuer.MICROSOFT, "microsoft")
     expressions.put(Issuer.SLACK, "slack")
     expressions.put(Issuer.WORDPRESS, "wordpress")
+    expressions.put(Issuer.ROBERTSPACEINDUSTRIES, "roberts\\s?space\\s?industries")
   }
 
   fun decode(accountName: String, issuerText: String): Issuer {
@@ -34,7 +35,7 @@ class IssuerDecoder @Inject constructor() {
   }
 
   private fun decode(text: String): Issuer {
-    if (text.length == 0) {
+    if (text.isEmpty()) {
       return Issuer.UNKNOWN
     }
 

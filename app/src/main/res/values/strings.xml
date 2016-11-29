@@ -74,6 +74,7 @@
   <string name="passcode_copied_to_clipboard">Code copied to clipboard!</string>
 
   <!-- Issuers -->
+  <string name="unknown" translatable="false">Unknown</string>
   <string name="aws" translatable="false">AWS</string>
   <string name="digital_ocean" translatable="false">Digital Ocean</string>
   <string name="bitcoin" translatable="false">Bitcoin</string>
@@ -85,5 +86,6 @@
   <string name="microsoft" translatable="false">Microsoft</string>
   <string name="slack" translatable="false">Slack</string>
   <string name="wordpress" translatable="false">WordPress</string>
+  <string name="roberts_space_industries" translatable="false">Roberts Space Industries</string>
 
 </resources>
