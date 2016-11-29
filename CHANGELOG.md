@@ -1,3 +1,7 @@
+### 0.9.3 (Unreleased)
+
+* New: Countdown widget clockwise [#54](https://github.com/arturogutierrez/Openticator/pull/54)
+
 ### 0.9.2 (28/11/2016)
 
 * Fixes: Welcome animation improvements [#53](https://github.com/arturogutierrez/Openticator/pull/53)

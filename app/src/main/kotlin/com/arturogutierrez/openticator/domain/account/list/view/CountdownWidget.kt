@@ -9,6 +9,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import com.arturogutierrez.openticator.R
+import com.arturogutierrez.openticator.helpers.use
 
 class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
 
@@ -29,11 +30,8 @@ class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
 
   private fun initialize(context: Context, attrs: AttributeSet?) {
     if (attrs != null) {
-      val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CountdownWidget, 0, 0)
-      try {
-        color = typedArray.getColor(R.styleable.CountdownWidget_arcColor, Color.BLACK)
-      } finally {
-        typedArray.recycle()
+      context.obtainStyledAttributes(attrs, R.styleable.CountdownWidget, 0, 0).use {
+        color = getColor(R.styleable.CountdownWidget_arcColor, Color.BLACK)
       }
     }
 
@@ -54,16 +52,15 @@ class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
     stopAnimation()
 
     val initialValue = (360 * Math.min(initialPercent, 1.0f)).toInt()
-    valueAnimator = ValueAnimator.ofInt(initialValue, 0)
-    valueAnimator!!.duration = (lengthInSeconds * 1000).toLong()
-    valueAnimator!!.addUpdateListener(this)
-    valueAnimator!!.start()
+    valueAnimator = ValueAnimator.ofInt(-initialValue, 0).apply {
+      duration = (lengthInSeconds * 1000).toLong()
+      addUpdateListener(this@CountdownWidget)
+      start()
+    }
   }
 
   fun stopAnimation() {
-    if (valueAnimator != null) {
-      valueAnimator!!.cancel()
-    }
+    valueAnimator?.cancel()
   }
 
   override fun onAnimationUpdate(animation: ValueAnimator) {
