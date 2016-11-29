@@ -1,7 +1,5 @@
 package com.arturogutierrez.openticator.mapper
 
-import java.util.*
-
 abstract class Mapper<FROM, TO> {
 
   abstract fun transform(value: FROM): TO
@@ -9,18 +7,10 @@ abstract class Mapper<FROM, TO> {
   abstract fun reverseTransform(value: TO): FROM
 
   fun transform(values: Collection<FROM>): List<TO> {
-    val transformedValues = ArrayList<TO>(values.size)
-    for (value in values) {
-      transformedValues.add(transform(value))
-    }
-    return transformedValues
+    return values.map { transform(it) }
   }
 
   fun reverseTransform(values: Collection<TO>): List<FROM> {
-    val transformedValues = ArrayList<FROM>(values.size)
-    for (value in values) {
-      transformedValues.add(reverseTransform(value))
-    }
-    return transformedValues
+    return values.map { reverseTransform(it) }
   }
 }

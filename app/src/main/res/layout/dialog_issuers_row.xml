@@ -2,33 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_margin="5dp"
+    android:gravity="center_horizontal"
+    android:background="#CCCCCC"
+>
 
-  <LinearLayout
+  <ImageView
+      android:id="@+id/iv_icon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_marginBottom="5dp"
+      android:layout_centerHorizontal="true"
+  />
+
+  <TextView
+      android:id="@+id/tv_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:gravity="center_horizontal"
-      android:background="#CCCCCC"
-      >
-
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="5dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:background="#888888"
-        android:textColor="@android:color/white"
-        />
-
-  </LinearLayout>
+      android:layout_below="@id/iv_icon"
+      android:layout_alignParentBottom="true"
+      android:gravity="center"
+      android:background="#888888"
+      android:textColor="@android:color/white"
+  />
 
 </RelativeLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.arturogutierrez.openticator.application.OpenticatorApplication
 import com.arturogutierrez.openticator.domain.bootstrap.InitialScreenSelector
-import com.arturogutierrez.openticator.domain.bootstrap.StorageInitializator
 import com.arturogutierrez.openticator.domain.navigator.Navigator
 import javax.inject.Inject
 

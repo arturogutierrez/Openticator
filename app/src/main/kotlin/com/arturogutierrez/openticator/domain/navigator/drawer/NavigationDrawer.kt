@@ -16,7 +16,7 @@ import javax.inject.Inject
 class NavigationDrawer @Inject constructor(val activity: Activity, val presenter: NavigationDrawerPresenter) : NavigationDrawerView {
 
   private val toolbar by lazy { activity.find<Toolbar>(R.id.toolbar) }
-  private val allAccountsDrawerItem by lazy { createAllAcccountsDrawerItem() }
+  private val allAccountsDrawerItem by lazy { createAllAccountsDrawerItem() }
   private val categoriesSectionDrawerItem by lazy { createCategoriesSectionDrawerItem() }
   private lateinit var drawer: Drawer
 
@@ -63,17 +63,15 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
     drawer.removeAllItems()
     drawer.addItems(categoriesSectionDrawerItem, allAccountsDrawerItem)
 
-    for (category in categories) {
-      val drawerItem = createCategoryDrawerItem(category)
-      drawer.addItem(drawerItem)
-    }
+    categories.map { createCategoryDrawerItem(it) }
+        .forEach { drawer.addItem(it) }
   }
 
   override fun dismissDrawer() {
     drawer.closeDrawer()
   }
 
-  private fun createAllAcccountsDrawerItem(): PrimaryDrawerItem {
+  private fun createAllAccountsDrawerItem(): PrimaryDrawerItem {
     return PrimaryDrawerItem()
         .withName(R.string.all_accounts)
         .withIcon(R.drawable.ic_folder_black_24dp)

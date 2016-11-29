@@ -10,7 +10,6 @@ import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.interactor.Interactor
 import rx.Observable
-import java.util.*
 
 class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
                                     val categoryFactory: CategoryFactory,
@@ -26,18 +25,13 @@ class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
         return@flatMap accountRepository.allAccounts
       }
       accountRepository.getAccounts(category)
-    }.map {
-      accountList -> calculatePasscodes(accountList)
+    }.map { accountList ->
+      calculatePasscodes(accountList)
     }
   }
 
   private fun calculatePasscodes(accountList: List<Account>): List<AccountPasscode> {
-    val accountPasscodeList = ArrayList<AccountPasscode>(accountList.size)
-    for (account in accountList) {
-      val accountPasscode = calculatePasscode(account)
-      accountPasscodeList.add(accountPasscode)
-    }
-    return accountPasscodeList
+    return accountList.map { calculatePasscode(it) }
   }
 
   private fun calculatePasscode(account: Account): AccountPasscode {

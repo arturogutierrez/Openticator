@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.di.module
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepositoryImpl
@@ -32,7 +33,7 @@ class ApplicationModule(val context: Context) {
   fun provideApplicationContext() = context
 
   @Provides
-  fun provideLayoutInflater() = LayoutInflater.from(context)
+  fun provideLayoutInflater(): LayoutInflater = LayoutInflater.from(context)
 
   @Provides
   @Singleton
@@ -44,7 +45,7 @@ class ApplicationModule(val context: Context) {
 
   @Provides
   @Singleton
-  fun provideSharedPreferences(context: Context) = context.getSharedPreferences(Preferences.preferencesName, Context.MODE_PRIVATE)
+  fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(Preferences.preferencesName, Context.MODE_PRIVATE)
 
   @Provides
   @Singleton

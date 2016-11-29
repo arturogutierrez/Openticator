@@ -94,14 +94,12 @@ class AccountListPresenter @Inject constructor(
   }
 
   private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Int {
-    var minTime = Integer.MAX_VALUE
+    val minTime = accountPasscodes
+        .map {
+          remainingTimeCalculator.calculateRemainingSeconds(
+              it.passcode.validUntil)
+        }.min()
 
-    for (accountPasscode in accountPasscodes) {
-      val remainingTimeInSeconds = remainingTimeCalculator.calculateRemainingSeconds(
-          accountPasscode.passcode.validUntil)
-      minTime = Math.min(minTime, remainingTimeInSeconds)
-    }
-
-    return minTime
+    return minTime ?: Integer.MAX_VALUE
   }
 }

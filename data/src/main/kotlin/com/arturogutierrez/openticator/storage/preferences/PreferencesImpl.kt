@@ -1,7 +1,6 @@
 package com.arturogutierrez.openticator.storage.preferences
 
 import android.content.SharedPreferences
-import com.arturogutierrez.openticator.storage.preferences.Preferences
 import javax.inject.Inject
 
 class PreferencesImpl @Inject constructor(val sharedPreferences: SharedPreferences) : Preferences {
