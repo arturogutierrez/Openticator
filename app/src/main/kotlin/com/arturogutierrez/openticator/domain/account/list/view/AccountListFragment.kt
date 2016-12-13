@@ -114,8 +114,8 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private fun stopCounters() {
     (0..accountsAdapter.itemCount - 1)
-        .map { rvAccounts.findViewHolderForAdapterPosition(it) as AccountViewHolder }
-        .forEach { it.stopAnimation() }
+        .map { rvAccounts.findViewHolderForAdapterPosition(it) as? AccountViewHolder }
+        .forEach { it?.stopAnimation() }
   }
 
   private fun updateAccounts(accounts: List<AccountPasscode>) {
