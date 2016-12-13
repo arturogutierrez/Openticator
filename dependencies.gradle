@@ -16,7 +16,7 @@ ext {
              minSdk    : 16,
              targetSdk : 24]
 
-  build = [gradle       : '2.2.2',
+  build = [gradle       : '2.2.3',
            fabric       : '1.22.0',
            realm        : '2.2.1',
            playPublisher: '1.1.5']
