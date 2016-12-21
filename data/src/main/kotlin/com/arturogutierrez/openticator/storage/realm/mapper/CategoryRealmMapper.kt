@@ -5,16 +5,16 @@ import com.arturogutierrez.openticator.mapper.Mapper
 import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm
 import javax.inject.Inject
 
-class CategoryRealmMapper @Inject constructor() : Mapper<Category, CategoryRealm>() {
+class CategoryRealmMapper @Inject constructor() : Mapper<Category, CategoryRealm> {
 
-  override fun transform(value: Category): CategoryRealm {
+  override fun transform(category: Category): CategoryRealm {
     val categoryRealm = CategoryRealm()
-    categoryRealm.categoryId = value.categoryId
-    categoryRealm.name = value.name
+    categoryRealm.categoryId = category.categoryId
+    categoryRealm.name = category.name
     return categoryRealm
   }
 
-  override fun reverseTransform(value: CategoryRealm): Category {
-    return Category(value.categoryId, value.name)
+  override fun reverseTransform(categoryRealm: CategoryRealm): Category {
+    return Category(categoryRealm.categoryId, categoryRealm.name)
   }
 }

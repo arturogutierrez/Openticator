@@ -1,13 +1,13 @@
 package com.arturogutierrez.openticator.domain.password
 
 import android.util.Base64
-import com.arturogutierrez.openticator.ApplicationTestCase
+import com.arturogutierrez.openticator.RobolectricTestCase
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 
-class PasswordSerializerTest : ApplicationTestCase() {
+class PasswordSerializerTest : RobolectricTestCase() {
 
   private lateinit var passwordSerializer: PasswordSerializer
 

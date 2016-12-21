@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.domain.account
 
-import com.arturogutierrez.openticator.ApplicationTestCase
+import com.arturogutierrez.openticator.RobolectricTestCase
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecoder
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.MockitoAnnotations
 
-class AccountDecoderTest : ApplicationTestCase() {
+class AccountDecoderTest : RobolectricTestCase() {
 
   private lateinit var issuerDecoder: IssuerDecoder
   private lateinit var accountFactory: AccountFactory

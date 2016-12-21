@@ -1,6 +1,5 @@
 package com.arturogutierrez.openticator.storage.realm.mapper
 
-import com.arturogutierrez.openticator.ApplicationTestCase
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
@@ -9,8 +8,11 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.runners.MockitoJUnitRunner
 
-class AccountRealmMapperTest : ApplicationTestCase() {
+@RunWith(MockitoJUnitRunner::class)
+class AccountRealmMapperTest {
 
   companion object {
     private val FAKE_ID = "1"

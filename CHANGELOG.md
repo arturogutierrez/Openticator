@@ -1,3 +1,7 @@
+### 0.9.4 (Unreleased)
+
+* Account and categories JSON Serializing [#58](https://github.com/arturogutierrez/Openticator/pull/58)
+
 ### 0.9.3 (13/12/2016)
 
 * New: Countdown widget clockwise [#54](https://github.com/arturogutierrez/Openticator/pull/54)
