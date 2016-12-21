@@ -3,14 +3,14 @@ package com.arturogutierrez.openticator.storage
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
-import com.arturogutierrez.openticator.ApplicationTestCase
+import com.arturogutierrez.openticator.RobolectricTestCase
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 
-class ClipboardRepositoryTest : ApplicationTestCase() {
+class ClipboardRepositoryTest : RobolectricTestCase() {
 
   private lateinit var clipboardRepository: ClipboardRepositoryImpl
   private lateinit var clipboardManager: ClipboardManager

@@ -1,16 +1,17 @@
 package com.arturogutierrez.openticator.domain.account.repository
 
-import com.arturogutierrez.openticator.ApplicationTestCase
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
+import org.mockito.runners.MockitoJUnitRunner
 
-class AccountRepositoryTest : ApplicationTestCase() {
+@RunWith(MockitoJUnitRunner::class)
+class AccountRepositoryTest {
 
   private lateinit var accountRepository: AccountRepository
   @Mock
@@ -18,8 +19,6 @@ class AccountRepositoryTest : ApplicationTestCase() {
 
   @Before
   fun setUp() {
-    MockitoAnnotations.initMocks(this)
-
     accountRepository = AccountRepositoryImpl(mockAccountDataStore)
   }
 

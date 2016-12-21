@@ -1,14 +1,16 @@
 package com.arturogutierrez.openticator.storage.realm.mapper
 
-import com.arturogutierrez.openticator.ApplicationTestCase
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.runners.MockitoJUnitRunner
 
-class CategoryRealmMapperTest : ApplicationTestCase() {
+@RunWith(MockitoJUnitRunner::class)
+class CategoryRealmMapperTest {
 
   companion object {
     private val FAKE_ID = "id"
