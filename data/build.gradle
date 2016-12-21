@@ -47,6 +47,7 @@ dependencies {
   compile dataDependencies.rxJava
   compile dataDependencies.rxAndroid
   compile dataDependencies.androidAnnotations
+  compile dataDependencies.gson
 
   testCompile testDependencies.kotlinStdLib
   testCompile testDependencies.junitKotlin
