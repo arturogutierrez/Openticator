@@ -11,8 +11,8 @@ class OTPTypeMapper @Inject constructor() : Mapper<OTPType, String> {
     val TOTP = "TOTP"
   }
 
-  override fun transform(account: OTPType): String {
-    return when (account) {
+  override fun transform(otpType: OTPType): String {
+    return when (otpType) {
       OTPType.TOTP -> TOTP
       OTPType.HOTP -> HOTP
     }

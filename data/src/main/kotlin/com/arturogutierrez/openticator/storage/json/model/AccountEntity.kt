@@ -7,4 +7,5 @@ data class AccountEntity(@SerializedName("id") val accountId: String,
                          @SerializedName("type") val type: String,
                          @SerializedName("secret") val secret: String,
                          @SerializedName("issuer") val issuer: String,
-                         @SerializedName("order") val order: Int)
+                         @SerializedName("order") val order: Int,
+                         @SerializedName("category_id") val categoryId: String)

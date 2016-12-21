@@ -1,11 +1,11 @@
 package com.arturogutierrez.openticator.domain.backup
 
 import com.arturogutierrez.openticator.domain.account.model.Account
-import rx.Observable
+import com.arturogutierrez.openticator.domain.category.model.Category
 
 interface AccountSerializer {
 
-  fun serialize(accounts: List<Account>): Observable<String>
+  fun serialize(accounts: List<Pair<Account, Category>>): String
 
-  fun deserialize(json: String): Observable<List<Account>>
+  fun deserialize(json: String): List<Pair<Account, Category>>
 }
