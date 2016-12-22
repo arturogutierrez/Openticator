@@ -36,6 +36,7 @@
   <string name="settings">Settings</string>
   <string name="general">General</string>
   <string name="cloud">Cloud</string>
+  <string name="cloud_summary">Keep safe your accounts in the cloud using your own Google Drive account. Coming soon!.</string>
   <string name="google_drive" translatable="false">Google Drive</string>
 
   <!-- Add Account Manually -->

@@ -6,15 +6,15 @@
 >
 
   <android.support.v7.preference.PreferenceCategory
+      android:enabled="false"
       android:key="general_settings_key"
       android:title="@string/general">
 
     <android.support.v7.preference.PreferenceScreen
         android:key="cloud_settings_key"
         android:title="@string/cloud"
+        android:summary="@string/cloud_summary"
         android:icon="@drawable/ic_cloud_queue_black_24dp"
-        android:enabled="false"
-        android:shouldDisableView="true"
         android:persistent="false">
 
       <android.support.v7.preference.Preference
