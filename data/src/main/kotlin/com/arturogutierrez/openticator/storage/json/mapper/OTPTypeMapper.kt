@@ -11,13 +11,13 @@ class OTPTypeMapper @Inject constructor() : Mapper<OTPType, String> {
     val TOTP = "TOTP"
   }
 
-  override fun transform(otpType: OTPType) = when (otpType) {
+  override fun transform(value: OTPType) = when (value) {
     OTPType.TOTP -> TOTP
     OTPType.HOTP -> HOTP
   }
 
-  override fun reverseTransform(otpType: String): OTPType {
-    if (otpType == HOTP) {
+  override fun reverseTransform(value: String): OTPType {
+    if (value == HOTP) {
       return OTPType.HOTP
     }
 
