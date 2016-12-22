@@ -48,6 +48,6 @@ class AddAccountFromCameraActivity : BaseActivity(), HasComponent<AddAccountComp
 
   private fun showAddAccountFormFragment() {
     val addAccountFromCameraFragment = AddAccountFromCameraFragment()
-    addFragment(R.id.content_frame, addAccountFromCameraFragment)
+    replaceFragment(R.id.content_frame, addAccountFromCameraFragment)
   }
 }

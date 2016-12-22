@@ -106,6 +106,7 @@ dependencies {
   compile presentationDependencies.appCompat
   compile presentationDependencies.design
   compile presentationDependencies.recyclerView
+  compile presentationDependencies.preferenceCompat
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
   compile presentationDependencies.zxingCore

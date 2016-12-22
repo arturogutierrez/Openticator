@@ -32,6 +32,7 @@
     <activity android:name=".domain.account.add.activity.AddAccountManuallyActivity"/>
     <activity android:name=".domain.account.add.activity.AddAccountFromCameraActivity"/>
     <activity android:name=".domain.account.camera.activity.CaptureActivity"/>
+    <activity android:name=".domain.settings.activity.SettingsActivity"/>
 
     <meta-data
         android:name="io.fabric.ApiKey"

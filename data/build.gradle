@@ -49,6 +49,7 @@ dependencies {
   compile dataDependencies.androidAnnotations
   compile dataDependencies.gson
   compile dataDependencies.spongyCastle
+  compile dataDependencies.playServicesDrive
 
   testCompile testDependencies.kotlinStdLib
   testCompile testDependencies.junitKotlin

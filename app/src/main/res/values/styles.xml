@@ -18,6 +18,9 @@
     <item name="windowActionModeOverlay">true</item>
     <item name="actionModeBackground">@color/colorAccent</item>
 
+    <!-- Preferences -->
+    <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
     <!-- Material Dialogs -->
     <item name="md_positive_color">@color/colorPrimary</item>
     <item name="md_widget_color">@color/colorPrimary</item>

@@ -105,7 +105,7 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
 
   private fun showAccountListFragment() {
     val accountListFragment = AccountListFragment()
-    addFragment(R.id.content_frame, accountListFragment)
+    replaceFragment(R.id.content_frame, accountListFragment)
   }
 
   private fun checkCameraPermission() {

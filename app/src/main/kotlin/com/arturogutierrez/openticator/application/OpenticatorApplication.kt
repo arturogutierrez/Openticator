@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class OpenticatorApplication : MultiDexApplication() {
 
-  val applicationComponent: ApplicationComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
+  val applicationComponent: ApplicationComponent by lazy { DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build() }
 
   @Inject
   lateinit var storageInitializator: StorageInitializator
