@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.application
 
-import android.app.Application
+import android.support.multidex.MultiDexApplication
 import com.arturogutierrez.openticator.BuildConfig
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.component.ApplicationComponent
@@ -13,7 +13,7 @@ import io.fabric.sdk.android.Fabric
 import io.flowup.FlowUp
 import javax.inject.Inject
 
-class OpenticatorApplication : Application() {
+class OpenticatorApplication : MultiDexApplication() {
 
   val applicationComponent: ApplicationComponent = DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
 

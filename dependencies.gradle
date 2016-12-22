@@ -28,6 +28,7 @@ ext {
   cardViewVersion = '25.0.1'
   designVersion = '25.0.1'
   androidAnnotationsVersion = '25.0.1'
+  multiDexVersion = '1.0.1'
 
   // Libraries
   crashlyticsVersion = '2.6.5'
@@ -44,6 +45,7 @@ ext {
   ankoVersion = '0.9'
   flowUpVersion = '0.2.5'
   gsonVersion = '2.6.2'
+  spongyCastleVersion = '1.54.0.0'
 
   // Testing
   robolectricVersion = '3.1.4'
@@ -59,7 +61,8 @@ ext {
                   fabric       : "io.fabric.tools:gradle:$build.fabric",
                   playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
 
-  presentationDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+  presentationDependencies = [multiDex       : "com.android.support:multidex:${multiDexVersion}",
+                              kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                               crashlytics    : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger         : "com.google.dagger:dagger:${daggerVersion}",
@@ -99,7 +102,8 @@ ext {
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
-                      gson              : "com.google.code.gson:gson:${gsonVersion}"]
+                      gson              : "com.google.code.gson:gson:${gsonVersion}",
+                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}"]
 
   dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                           junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
