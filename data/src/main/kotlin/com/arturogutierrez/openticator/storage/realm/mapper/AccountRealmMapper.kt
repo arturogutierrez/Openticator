@@ -9,17 +9,17 @@ import javax.inject.Inject
 
 class AccountRealmMapper @Inject constructor() : Mapper<Account, AccountRealm> {
 
-  override fun transform(account: Account): AccountRealm {
+  override fun transform(value: Account): AccountRealm {
     val accountRealm = AccountRealm()
-    copyToAccountRealm(accountRealm, account)
+    copyToAccountRealm(accountRealm, value)
     return accountRealm
   }
 
-  override fun reverseTransform(accountRealm: AccountRealm): Account {
-    val issuer = transformIssuer(accountRealm.issuer)
-    val account = Account(accountRealm.accountId, accountRealm.name,
-        transformAccountType(accountRealm.type), accountRealm.secret, issuer,
-        accountRealm.order)
+  override fun reverseTransform(value: AccountRealm): Account {
+    val issuer = transformIssuer(value.issuer)
+    val account = Account(value.accountId, value.name,
+        transformAccountType(value.type), value.secret, issuer,
+        value.order)
     return account
   }
 

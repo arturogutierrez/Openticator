@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class CategoryEntityMapper @Inject constructor() : Mapper<Category, CategoryEntity> {
 
-  override fun transform(category: Category) = CategoryEntity(category.categoryId, category.name)
+  override fun transform(value: Category) = CategoryEntity(value.categoryId, value.name)
 
   override fun reverseTransform(value: CategoryEntity): Category {
     throw UnsupportedOperationException("not implemented")

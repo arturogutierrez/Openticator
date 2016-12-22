@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class AccountEntityMapper @Inject constructor(val otpTypeMapper: OTPTypeMapper) : Mapper<Pair<Account, Category>, AccountEntity> {
 
-  override fun transform(pair: Pair<Account, Category>): AccountEntity {
-    val account = pair.first
-    val category = pair.second
+  override fun transform(value: Pair<Account, Category>): AccountEntity {
+    val account = value.first
+    val category = value.second
 
     val issuerId = account.issuer.identifier
     val type = otpTypeMapper.transform(account.type)
@@ -18,7 +18,7 @@ class AccountEntityMapper @Inject constructor(val otpTypeMapper: OTPTypeMapper) 
         account.order, category.categoryId)
   }
 
-  override fun reverseTransform(accountEntity: AccountEntity): Pair<Account, Category> {
+  override fun reverseTransform(value: AccountEntity): Pair<Account, Category> {
     throw UnsupportedOperationException("not implemented")
   }
 }

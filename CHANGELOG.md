@@ -1,6 +1,7 @@
 ### 0.9.4 (Unreleased)
 
 * Account and categories JSON Serializing [#58](https://github.com/arturogutierrez/Openticator/pull/58)
+* Using original argument names in mapper in order to avoid possible problems with labeled arguments [#59](https://github.com/arturogutierrez/Openticator/pull/59)
 
 ### 0.9.3 (13/12/2016)
 
