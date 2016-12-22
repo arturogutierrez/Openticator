@@ -56,6 +56,9 @@ android {
   }
 
   signingConfigs {
+    debug {
+      storeFile file("../debug.keystore.jks")
+    }
     release {
       storeFile file("../app.keystore.jks")
     }
@@ -127,8 +130,10 @@ play {
   track = 'beta'
 }
 
-def (releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword) = signingConfigFromFile()
-if (releaseKeystorePassword != null && releaseKeyAlias != null && releaseKeyPassword != null) {
+def (debugPassword, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword) = signingConfigFromFile()
+if (debugPassword != null && releaseKeystorePassword != null && releaseKeyAlias != null && releaseKeyPassword != null) {
+  android.signingConfigs.debug.storePassword = debugPassword
+  android.signingConfigs.debug.keyPassword = debugPassword
   android.signingConfigs.release.storePassword = releaseKeystorePassword
   android.signingConfigs.release.keyAlias = releaseKeyAlias
   android.signingConfigs.release.keyPassword = releaseKeyPassword
@@ -146,15 +151,17 @@ def signingConfigFromFile() {
     props.load(new FileInputStream(propFile))
 
     if (props != null &&
-        props.containsKey('STORE_PASSWORD') &&
-        props.containsKey('KEY_ALIAS') &&
-        props.containsKey('KEY_PASSWORD')) {
+        props.containsKey('DEBUG_PASSWORD') &&
+        props.containsKey('RELEASE_STORE_PASSWORD') &&
+        props.containsKey('RELEASE_KEY_ALIAS') &&
+        props.containsKey('RELEASE_KEY_PASSWORD')) {
 
-      def keystorePassword = props['STORE_PASSWORD']
-      def keyAlias = props['KEY_ALIAS']
-      def keyPassword = props['KEY_PASSWORD']
+      def debugPassword = props['DEBUG_PASSWORD']
+      def releaseKeystorePassword = props['RELEASE_STORE_PASSWORD']
+      def releaseKeyAlias = props['RELEASE_KEY_ALIAS']
+      def releaseKeyPassword = props['RELEASE_KEY_PASSWORD']
 
-      return [keystorePassword, keyAlias, keyPassword]
+      return [debugPassword, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword]
     } else {
       println 'signing.properties found but some entries are missing'
     }
