@@ -17,6 +17,8 @@ android {
     versionCode ext.application.versionCode
     versionName ext.application.versionName
 
+    multiDexEnabled true
+
     resValue "string", "default_package_name", ext.application.package
 
     // Api Keys
@@ -40,7 +42,7 @@ android {
 
   dexOptions {
     preDexLibraries true
-    javaMaxHeapSize '2G'
+    javaMaxHeapSize '4G'
   }
 
   packagingOptions {
@@ -69,6 +71,18 @@ android {
       signingConfig = signingConfigs.release
     }
   }
+
+  productFlavors {
+    fastBuild {
+      // Enable pre-dexing to produce an APK that can be tested on
+      // Android 5.0+ without the time-consuming DEX build processes.
+      minSdkVersion 21
+    }
+
+    regular {
+      minSdkVersion ext.android.minSdk
+    }
+  }
 }
 
 kapt {
@@ -81,6 +95,7 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
+  compile presentationDependencies.multiDex
   compile presentationDependencies.flowUp
   compile presentationDependencies.anko
   compile presentationDependencies.ankoSupport

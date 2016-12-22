@@ -30,7 +30,7 @@ android:
 
 deploy:
 - provider: script
-  script: ./gradlew publishApkRelease
+  script: ./gradlew publishApkRegularRelease
   skip_cleanup: true
   on:
     tags: true
@@ -40,4 +40,4 @@ before_install:
   - tar xvf secrets.tar
 
 script:
-  ./gradlew check -PdisablePreDex --continue
+  ./gradlew test -PdisablePreDex --continue
