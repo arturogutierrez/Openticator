@@ -7,6 +7,7 @@ import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountMan
 import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity
 import com.arturogutierrez.openticator.domain.account.list.activity.AccountListActivity
 import com.arturogutierrez.openticator.domain.password.wizard.activity.MasterPasswordActivity
+import com.arturogutierrez.openticator.domain.settings.activity.SettingsActivity
 import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
@@ -37,5 +38,9 @@ class Navigator @Inject constructor() {
   fun goToCaptureCode(context: Context, fragment: Fragment, requestCode: Int) {
     val intent = context.intentFor<CaptureActivity>()
     fragment.startActivityForResult(intent, requestCode)
+  }
+
+  fun goToSettings(context: Context) {
+    context.startActivity<SettingsActivity>()
   }
 }

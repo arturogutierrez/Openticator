@@ -27,8 +27,10 @@ ext {
   recyclerViewVersion = '25.0.1'
   cardViewVersion = '25.0.1'
   designVersion = '25.0.1'
+  preferenceCompatVersion = '25.0.1'
   androidAnnotationsVersion = '25.0.1'
   multiDexVersion = '1.0.1'
+  playServicesVersion = '10.0.1'
 
   // Libraries
   crashlyticsVersion = '2.6.5'
@@ -61,27 +63,28 @@ ext {
                   fabric       : "io.fabric.tools:gradle:$build.fabric",
                   playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
 
-  presentationDependencies = [multiDex       : "com.android.support:multidex:${multiDexVersion}",
-                              kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
-                              crashlytics    : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
-                              daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
-                              dagger         : "com.google.dagger:dagger:${daggerVersion}",
-                              rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
-                              rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
-                              javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                              supportVersion : "com.android.support:support-v4:${supportVersion}",
-                              appCompat      : "com.android.support:appcompat-v7:${appCompatVersion}",
-                              design         : "com.android.support:design:${designVersion}",
-                              recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
-                              fab            : "com.github.clans:fab:${fabVersion}",
-                              dexter         : "com.karumi:dexter:${dexterVersion}",
-                              zxingCore      : "com.google.zxing:core:${zxingCoreVersion}",
-                              zxing          : "com.google.zxing:android-core:${zxingVersion}",
-                              materialDialogs: "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
-                              materialDrawer : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
-                              anko           : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
-                              ankoSupport    : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
-                              flowUp         : "io.flowup:android-sdk:${flowUpVersion}"]
+  presentationDependencies = [multiDex        : "com.android.support:multidex:${multiDexVersion}",
+                              kotlinStdLib    : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                              crashlytics     : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
+                              daggerCompiler  : "com.google.dagger:dagger-compiler:${daggerVersion}",
+                              dagger          : "com.google.dagger:dagger:${daggerVersion}",
+                              rxJava          : "io.reactivex:rxjava:${rxJavaVersion}",
+                              rxAndroid       : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                              javaxAnnotation : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+                              supportVersion  : "com.android.support:support-v4:${supportVersion}",
+                              appCompat       : "com.android.support:appcompat-v7:${appCompatVersion}",
+                              preferenceCompat: "com.android.support:preference-v7:${preferenceCompatVersion}",
+                              design          : "com.android.support:design:${designVersion}",
+                              recyclerView    : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+                              fab             : "com.github.clans:fab:${fabVersion}",
+                              dexter          : "com.karumi:dexter:${dexterVersion}",
+                              zxingCore       : "com.google.zxing:core:${zxingCoreVersion}",
+                              zxing           : "com.google.zxing:android-core:${zxingVersion}",
+                              materialDialogs : "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
+                              materialDrawer  : "com.mikepenz:materialdrawer:${materialDrawerVersion}@aar",
+                              anko            : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
+                              ankoSupport     : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
+                              flowUp          : "io.flowup:android-sdk:${flowUpVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -103,7 +106,8 @@ ext {
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
                       gson              : "com.google.code.gson:gson:${gsonVersion}",
-                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}"]
+                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}",
+                      playServicesDrive : "com.google.android.gms:play-services-drive:${playServicesVersion}"]
 
   dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                           junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",

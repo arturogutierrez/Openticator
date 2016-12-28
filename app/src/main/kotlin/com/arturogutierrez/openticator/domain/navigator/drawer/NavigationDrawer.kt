@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.category.model.Category
+import com.arturogutierrez.openticator.domain.navigator.Navigator
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
@@ -13,11 +14,15 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import org.jetbrains.anko.find
 import javax.inject.Inject
 
-class NavigationDrawer @Inject constructor(val activity: Activity, val presenter: NavigationDrawerPresenter) : NavigationDrawerView {
+class NavigationDrawer @Inject constructor(val activity: Activity,
+                                           val presenter: NavigationDrawerPresenter,
+                                           val navigator: Navigator) : NavigationDrawerView {
 
   private val toolbar by lazy { activity.find<Toolbar>(R.id.toolbar) }
-  private val allAccountsDrawerItem by lazy { createAllAccountsDrawerItem() }
-  private val categoriesSectionDrawerItem by lazy { createCategoriesSectionDrawerItem() }
+  private val allAccountsDrawerItem = createAllAccountsDrawerItem()
+  private val categoriesSectionDrawerItem = createCategoriesSectionDrawerItem()
+  private val settingsDrawerItem = createSettingsDrawerItem()
+
   private lateinit var drawer: Drawer
 
   fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +59,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
         .withToolbar(toolbar)
         .withActionBarDrawerToggleAnimated(true)
         .addDrawerItems(categoriesSectionDrawerItem, allAccountsDrawerItem)
+        .addStickyDrawerItems(settingsDrawerItem)
         .withOnDrawerItemClickListener { view, position, drawerItem -> onDrawerItemClicked(drawerItem, position) }
         .withSelectedItemByPosition(1)
         .build()
@@ -69,6 +75,13 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
 
   override fun dismissDrawer() {
     drawer.closeDrawer()
+  }
+
+  private fun createSettingsDrawerItem(): PrimaryDrawerItem {
+    return PrimaryDrawerItem()
+        .withName(R.string.settings)
+        .withIcon(R.drawable.ic_settings_black_24dp)
+        .withIconTintingEnabled(true)
   }
 
   private fun createAllAccountsDrawerItem(): PrimaryDrawerItem {
@@ -89,10 +102,10 @@ class NavigationDrawer @Inject constructor(val activity: Activity, val presenter
   }
 
   private fun onDrawerItemClicked(drawerItem: IDrawerItem<*, *>, position: Int): Boolean {
-    if (drawerItem === allAccountsDrawerItem) {
-      presenter.allCategoriesItemClicked()
-    } else {
-      presenter.categoryItemClicked(position - 2)
+    when (drawerItem) {
+      allAccountsDrawerItem -> presenter.allCategoriesItemClicked()
+      settingsDrawerItem -> navigator.goToSettings(activity)
+      else -> presenter.categoryItemClicked(position - 2)
     }
     return true
   }

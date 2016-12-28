@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+  <android.support.v7.preference.PreferenceCategory
+      android:key="general_settings_key"
+      android:title="@string/general">
+
+    <android.support.v7.preference.PreferenceScreen
+        android:enabled="false"
+        android:key="cloud_settings_key"
+        android:title="@string/cloud"
+        android:summary="@string/cloud_summary"
+        android:icon="@drawable/ic_cloud_queue_black_24dp"
+        android:persistent="false">
+
+      <android.support.v7.preference.Preference
+          android:key="google_drive_settings_key"
+          android:title="@string/google_drive"
+          android:persistent="false"/>
+
+    </android.support.v7.preference.PreferenceScreen>
+
+    <android.support.v7.preference.Preference
+        android:key="rate_me_settings_key"
+        android:title="@string/rate_me"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:persistent="false">
+
+      <intent android:action="android.intent.action.VIEW"
+          android:data="market://details?id=com.arturogutierrez.openticator"/>
+
+    </android.support.v7.preference.Preference>
+
+  </android.support.v7.preference.PreferenceCategory>
+
+
+</android.support.v7.preference.PreferenceScreen>

@@ -25,10 +25,6 @@ android {
     def (fabricApiKey, flowUpApiKey) = apiKeysFromFile()
     manifestPlaceholders = [ fabricApiKey: fabricApiKey]
     resValue "string", "flow_up_api_key", flowUpApiKey
-
-    // Vector Drawables for Gradle 2.0.
-    // Compat toolbar use it internally
-    vectorDrawables.useSupportLibrary = true
   }
 
   sourceSets {
@@ -106,6 +102,7 @@ dependencies {
   compile presentationDependencies.appCompat
   compile presentationDependencies.design
   compile presentationDependencies.recyclerView
+  compile presentationDependencies.preferenceCompat
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
   compile presentationDependencies.zxingCore

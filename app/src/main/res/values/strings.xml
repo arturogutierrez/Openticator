@@ -32,6 +32,14 @@
   <string name="categories">Categories</string>
   <string name="all_accounts">All accounts</string>
 
+  <!-- Settings -->
+  <string name="settings">Settings</string>
+  <string name="general">General</string>
+  <string name="cloud">Cloud</string>
+  <string name="rate_me">Rate me!</string>
+  <string name="cloud_summary">Keep safe your accounts in the cloud using your own Google Drive account. Coming soon!.</string>
+  <string name="google_drive" translatable="false">Google Drive</string>
+
   <!-- Add Account Manually -->
   <string name="add_account_manually">Add Account Manually</string>
   <string name="account_name">Account name</string>

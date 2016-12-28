@@ -61,4 +61,10 @@
   <string name="welcome_body_title">Añade una capa de seguridad extra a tus cuentas usando
     Openticator.
   </string>
+  <string name="settings">Ajustes</string>
+  <string name="cloud">Nube</string>
+  <string name="general">Generales</string>
+  <string name="cloud_summary">Guarda tus cuentas en la nube usando tu cuenta de Google Drive. En
+    desarrollo.
+  </string>
 </resources>

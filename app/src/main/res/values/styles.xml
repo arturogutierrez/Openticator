@@ -18,9 +18,16 @@
     <item name="windowActionModeOverlay">true</item>
     <item name="actionModeBackground">@color/colorAccent</item>
 
+    <!-- Preferences -->
+    <item name="preferenceTheme">@style/PreferencesTheme</item>
+
     <!-- Material Dialogs -->
     <item name="md_positive_color">@color/colorPrimary</item>
     <item name="md_widget_color">@color/colorPrimary</item>
+  </style>
+
+  <style name="PreferencesTheme" parent="@style/PreferenceThemeOverlay">
+    <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
   </style>
 
   <style name="AppTheme.Splash">

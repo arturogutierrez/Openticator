@@ -46,6 +46,6 @@ class MasterPasswordActivity : BaseActivity(), HasComponent<MasterPasswordCompon
 
   private fun showMasterPasswordFragment() {
     val masterPasswordFragment = MasterPasswordFragment()
-    addFragment(R.id.content_frame, masterPasswordFragment)
+    replaceFragment(R.id.content_frame, masterPasswordFragment)
   }
 }

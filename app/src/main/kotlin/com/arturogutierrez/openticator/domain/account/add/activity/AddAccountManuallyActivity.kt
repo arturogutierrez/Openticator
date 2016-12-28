@@ -49,6 +49,6 @@ class AddAccountManuallyActivity : BaseActivity(), HasComponent<AddAccountCompon
 
   private fun showAddAccountFormFragment() {
     val addAccountFormFragment = AddAccountFormFragment()
-    addFragment(R.id.content_frame, addAccountFormFragment)
+    replaceFragment(R.id.content_frame, addAccountFormFragment)
   }
 }
