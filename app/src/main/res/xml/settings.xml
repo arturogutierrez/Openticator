@@ -6,11 +6,11 @@
 >
 
   <android.support.v7.preference.PreferenceCategory
-      android:enabled="false"
       android:key="general_settings_key"
       android:title="@string/general">
 
     <android.support.v7.preference.PreferenceScreen
+        android:enabled="false"
         android:key="cloud_settings_key"
         android:title="@string/cloud"
         android:summary="@string/cloud_summary"
@@ -23,6 +23,17 @@
           android:persistent="false"/>
 
     </android.support.v7.preference.PreferenceScreen>
+
+    <android.support.v7.preference.Preference
+        android:key="rate_me_settings_key"
+        android:title="@string/rate_me"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:persistent="false">
+
+      <intent android:action="android.intent.action.VIEW"
+          android:data="market://details?id=com.arturogutierrez.openticator"/>
+
+    </android.support.v7.preference.Preference>
 
   </android.support.v7.preference.PreferenceCategory>
 
