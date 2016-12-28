@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
-import com.arturogutierrez.openticator.domain.account.AccountFactory
+import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
@@ -12,24 +12,14 @@ import com.arturogutierrez.openticator.interactor.Interactor
 import rx.Observable
 
 class AddAccountInteractor(val accountRepository: AccountRepository,
-                           val accountFactory: AccountFactory,
                            val categoryRepository: CategoryRepository,
                            val categorySelector: CategorySelector,
                            val categoryFactory: CategoryFactory,
                            threadExecutor: ThreadExecutor,
-                           postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
+                           postExecutionThread: PostExecutionThread) : Interactor<Params, Account>(threadExecutor, postExecutionThread) {
 
-  private lateinit var newAccount: Account
-
-  fun configure(accountName: String, accountSecret: String) {
-    this.newAccount = accountFactory.createAccount(accountName, accountSecret)
-  }
-
-  fun configure(newAccount: Account) {
-    this.newAccount = newAccount
-  }
-
-  override fun createObservable(): Observable<Account> {
+  override fun createObservable(params: Params): Observable<Account> {
+    val newAccount = params.account
     return categorySelector.selectedCategory.flatMap { category ->
       val emptyCategory = categoryFactory.createEmptyCategory()
       if (category == emptyCategory) {
@@ -41,4 +31,6 @@ class AddAccountInteractor(val accountRepository: AccountRepository,
       }
     }
   }
+
+  data class Params(val account: Account)
 }

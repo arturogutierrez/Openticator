@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
 import com.arturogutierrez.openticator.domain.account.AccountFactory
+import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
@@ -47,8 +48,7 @@ class AddAccountInteractorTest {
     `when`(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account)
     val testSubscriber = TestSubscriber<Account>()
 
-    addAccountInteractor.configure("name", "secret")
-    addAccountInteractor.createObservable().subscribe(testSubscriber)
+    addAccountInteractor.createObservable(Params("name", "secret")).subscribe(testSubscriber)
 
     verify<AccountRepository>(mockAccountRepository).add(account)
     verifyZeroInteractions(mockThreadExecutor)
