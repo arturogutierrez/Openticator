@@ -22,7 +22,7 @@ import com.karumi.dexter.listener.single.EmptyPermissionListener
 import org.jetbrains.anko.find
 import javax.inject.Inject
 
-class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
+class AccountListActivity : BaseActivity(R.layout.activity_toolbar_drawer), HasComponent<AccountListComponent> {
 
   @Inject
   lateinit var navigationDrawer: NavigationDrawer
@@ -63,9 +63,6 @@ class AccountListActivity : BaseActivity(), HasComponent<AccountListComponent> {
       super.onBackPressed()
     }
   }
-
-  override val layoutResource: Int
-    get() = R.layout.activity_toolbar_drawer
 
   private fun initializeActivity(savedInstanceState: Bundle?) {
     configureInjector()

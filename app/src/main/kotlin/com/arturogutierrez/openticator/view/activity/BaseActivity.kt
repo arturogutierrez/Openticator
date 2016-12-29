@@ -1,6 +1,7 @@
 package com.arturogutierrez.openticator.view.activity
 
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +17,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.findOptional
 import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity(@LayoutRes private val layoutResource: Int) : AppCompatActivity() {
 
   val coordinatorLayout by lazy { find<CoordinatorLayout>(R.id.coordinator_layout) }
 
@@ -42,8 +43,6 @@ abstract class BaseActivity : AppCompatActivity() {
   protected val applicationComponent by lazy { (application as OpenticatorApplication).applicationComponent }
 
   protected val activityModule by lazy { ActivityModule(this) }
-
-  protected abstract val layoutResource: Int
 
   protected fun replaceFragment(containerViewId: Int, fragment: Fragment) {
     supportFragmentManager.executeTransaction {
