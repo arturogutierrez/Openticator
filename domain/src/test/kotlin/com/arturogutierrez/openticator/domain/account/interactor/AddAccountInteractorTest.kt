@@ -23,8 +23,6 @@ class AddAccountInteractorTest {
   @Mock
   private lateinit var mockAccountRepository: AccountRepository
   @Mock
-  private lateinit var mockAccountFactory: AccountFactory
-  @Mock
   private lateinit var mockCategoryRepository: CategoryRepository
   @Mock
   private lateinit var mockThreadExecutor: ThreadExecutor
@@ -37,7 +35,7 @@ class AddAccountInteractorTest {
   fun setUp() {
     MockitoAnnotations.initMocks(this)
 
-    addAccountInteractor = AddAccountInteractor(mockAccountRepository, mockAccountFactory, mockCategoryRepository,
+    addAccountInteractor = AddAccountInteractor(mockAccountRepository, mockCategoryRepository,
         CategorySelector(), CategoryFactory(), mockThreadExecutor,
         mockPostExecutionThread)
   }
@@ -45,10 +43,9 @@ class AddAccountInteractorTest {
   @Test
   fun testAddNewAccount() {
     val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
-    `when`(mockAccountFactory.createAccount(anyString(), anyString())).thenReturn(account)
     val testSubscriber = TestSubscriber<Account>()
 
-    addAccountInteractor.createObservable(Params("name", "secret")).subscribe(testSubscriber)
+    addAccountInteractor.createObservable(Params(account)).subscribe(testSubscriber)
 
     verify<AccountRepository>(mockAccountRepository).add(account)
     verifyZeroInteractions(mockThreadExecutor)
