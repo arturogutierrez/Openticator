@@ -8,15 +8,15 @@ import rx.Subscription
 import rx.schedulers.Schedulers
 import rx.subscriptions.Subscriptions
 
-abstract class Interactor<T>(private val threadExecutor: ThreadExecutor,
-                             private val postExecutionThread: PostExecutionThread) {
+abstract class Interactor<in IN, OUT>(private val threadExecutor: ThreadExecutor,
+                                      private val postExecutionThread: PostExecutionThread) {
 
   private var subscription: Subscription = Subscriptions.empty()
 
-  abstract fun createObservable(): Observable<T>
+  abstract fun createObservable(params: IN): Observable<OUT>
 
-  fun execute(interactorObserver: Observer<T>) {
-    subscription = createObservable()
+  fun execute(params: IN, interactorObserver: Observer<OUT>) {
+    subscription = createObservable(params)
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.scheduler)
         .subscribe(interactorObserver)

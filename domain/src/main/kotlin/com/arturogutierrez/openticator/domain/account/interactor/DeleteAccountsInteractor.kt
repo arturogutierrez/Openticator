@@ -7,20 +7,17 @@ import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.interactor.Interactor
 import rx.Observable
 
-class DeleteAccountsInteractor(val accountRepository: AccountRepository,
+class DeleteAccountsInteractor(private val accountRepository: AccountRepository,
                                threadExecutor: ThreadExecutor,
-                               postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
-  private lateinit var accounts: List<Account>
+                               postExecutionThread: PostExecutionThread) : Interactor<DeleteAccountsInteractor.Params, Unit>(threadExecutor, postExecutionThread) {
 
-  fun configure(accounts: List<Account>) {
-    this.accounts = accounts
-  }
-
-  override fun createObservable(): Observable<Unit> {
+  override fun createObservable(params: Params): Observable<Unit> {
+    val accounts = params.accounts
     if (accounts.isEmpty()) {
-      throw IllegalStateException("You can't delete no one accounts")
+      throw IllegalStateException("You can't delete zero accounts")
     }
-
     return Observable.merge(accounts.map { accountRepository.remove(it) })
   }
+
+  data class Params(val accounts: List<Account>)
 }

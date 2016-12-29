@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
+import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboardInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
@@ -7,19 +8,16 @@ import com.arturogutierrez.openticator.interactor.Interactor
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
 import rx.Observable
 
-class CopyToClipboardInteractor(val clipboardRepository: ClipboardRepository,
+class CopyToClipboardInteractor(private val clipboardRepository: ClipboardRepository,
                                 threadExecutor: ThreadExecutor,
-                                postExecutionThread: PostExecutionThread) : Interactor<Unit>(threadExecutor, postExecutionThread) {
+                                postExecutionThread: PostExecutionThread) : Interactor<Params, Unit>(threadExecutor, postExecutionThread) {
 
-  private lateinit var accountPasscode: AccountPasscode
-
-  fun configure(accountPasscode: AccountPasscode) {
-    this.accountPasscode = accountPasscode
-  }
-
-  override fun createObservable(): Observable<Unit> {
+  override fun createObservable(params: Params): Observable<Unit> {
+    val accountPasscode = params.accountPasscode
     return Observable.fromCallable {
       clipboardRepository.copy(accountPasscode.account.name, accountPasscode.passcode.code)
     }
   }
+
+  data class Params(val accountPasscode: AccountPasscode)
 }

@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
+import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor.EmptyParams
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
@@ -31,7 +32,7 @@ class GetAccountsInteractorTest {
 
   @Test
   fun testUsingAccountsFromRepository() {
-    getAccountsInteractor.createObservable()
+    getAccountsInteractor.createObservable(EmptyParams)
 
     verify<AccountRepository>(mockAccountRepository).allAccounts
     verifyZeroInteractions(mockThreadExecutor)

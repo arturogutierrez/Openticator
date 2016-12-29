@@ -1,14 +1,17 @@
 package com.arturogutierrez.openticator.domain.account.add
 
+import com.arturogutierrez.openticator.domain.account.AccountFactory
 import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.*
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.helpers.isBase32
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-class AddAccountFormPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView>() {
+class AddAccountFormPresenter @Inject constructor(private val accountFactory: AccountFactory,
+                                                  private val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView>() {
 
   override fun destroy() {
     addAccountInteractorInteractor.unsubscribe()
@@ -22,8 +25,9 @@ class AddAccountFormPresenter @Inject constructor(val addAccountInteractorIntera
     } else if (!accountSecret.isBase32()) {
       view?.showFieldError(INVALID_SECRET)
     } else {
-      addAccountInteractorInteractor.configure(accountName.trim(), accountSecret.trim())
-      addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
+      val newAccount = accountFactory.createAccount(accountName.trim(), accountSecret.trim())
+      val params = Params(newAccount)
+      addAccountInteractorInteractor.execute(params, object : DefaultSubscriber<Account>() {
         override fun onNext(item: Account) {
           onAccountAdded()
         }

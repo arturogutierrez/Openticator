@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.category.interactor
 
+import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor.EmptyParams
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
@@ -31,7 +32,7 @@ class GetCategoriesInteractorTest {
 
   @Test
   fun testGettingAccountsFromRepository() {
-    getCategoryInteractor.createObservable()
+    getCategoryInteractor.createObservable(EmptyParams)
 
     verify<CategoryRepository>(mockCategoryRepository).categories
     verifyZeroInteractions(mockThreadExecutor)
