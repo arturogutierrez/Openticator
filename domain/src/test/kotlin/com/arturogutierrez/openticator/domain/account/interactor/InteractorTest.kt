@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
+import com.arturogutierrez.openticator.domain.account.interactor.InteractorTest.TestInteractor.EmptyParams
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.interactor.Interactor
@@ -35,7 +36,7 @@ class InteractorTest {
     val testScheduler = TestScheduler()
     given(mockPostExecutionThread.scheduler).willReturn(testScheduler)
 
-    interactor.execute(testSubscriber)
+    interactor.execute(EmptyParams, testSubscriber)
 
     assertThat(testSubscriber.onNextEvents.size, `is`(0))
   }
@@ -44,16 +45,18 @@ class InteractorTest {
   fun testUnsubscription() {
     val testSubscriber = TestSubscriber<String>()
 
-    interactor.execute(testSubscriber)
+    interactor.execute(EmptyParams, testSubscriber)
     interactor.unsubscribe()
 
     assertThat(testSubscriber.isUnsubscribed, `is`(true))
   }
 
-  private class TestInteractor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : Interactor<String>(threadExecutor, postExecutionThread) {
+  class TestInteractor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : Interactor<EmptyParams, String>(threadExecutor, postExecutionThread) {
 
-    override fun createObservable(): Observable<String> {
+    override fun createObservable(params: EmptyParams): Observable<String> {
       return Observable.empty<String>()
     }
+
+    object EmptyParams
   }
 }

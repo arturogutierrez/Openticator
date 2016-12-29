@@ -1,27 +1,20 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
+import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
-import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.interactor.Interactor
 import rx.Observable
 
-class UpdateAccountInteractor(val accountRepository: AccountRepository,
+class UpdateAccountInteractor(private val accountRepository: AccountRepository,
                               threadExecutor: ThreadExecutor,
-                              postExecutionThread: PostExecutionThread) : Interactor<Account>(threadExecutor, postExecutionThread) {
-  private lateinit var account: Account
+                              postExecutionThread: PostExecutionThread) : Interactor<Params, Account>(threadExecutor, postExecutionThread) {
 
-  fun configure(account: Account, newName: String) {
-    this.account = account.copy(name = newName)
+  override fun createObservable(params: Params): Observable<Account> {
+    return accountRepository.update(params.account)
   }
 
-  fun configure(account: Account, newIssuer: Issuer) {
-    this.account = account.copy(issuer = newIssuer)
-  }
-
-  override fun createObservable(): Observable<Account> {
-    return accountRepository.update(account)
-  }
+  data class Params(val account: Account)
 }

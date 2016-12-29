@@ -4,6 +4,7 @@ import android.content.Intent
 import com.arturogutierrez.openticator.domain.account.AccountDecoder
 import com.arturogutierrez.openticator.domain.account.camera.zxing.Intents
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.interactor.DefaultSubscriber
 import com.arturogutierrez.openticator.view.presenter.Presenter
@@ -41,8 +42,8 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
     if (account == null) {
       showErrorAddingAccount()
     } else {
-      addAccountInteractorInteractor.configure(account)
-      addAccountInteractorInteractor.execute(object : DefaultSubscriber<Account>() {
+      val params = Params(account)
+      addAccountInteractorInteractor.execute(params, object : DefaultSubscriber<Account>() {
         override fun onNext(item: Account) {
           onAccountAdded()
         }

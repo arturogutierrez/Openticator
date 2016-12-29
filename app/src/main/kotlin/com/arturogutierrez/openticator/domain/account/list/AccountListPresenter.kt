@@ -41,8 +41,8 @@ class AccountListPresenter @Inject constructor(
   }
 
   fun onPasscodeSelected(accountPasscode: AccountPasscode) {
-    copyToClipboardInteractor.configure(accountPasscode)
-    copyToClipboardInteractor.execute(object : DefaultSubscriber<Unit>() {
+    val params = CopyToClipboardInteractor.Params(accountPasscode)
+    copyToClipboardInteractor.execute(params, object : DefaultSubscriber<Unit>() {
       override fun onNext(item: Unit) {
         onPasscodeCopiedToClipboard()
       }
@@ -50,15 +50,16 @@ class AccountListPresenter @Inject constructor(
   }
 
   private fun loadAccountPasscodes() {
-    getAccountPasscodesInteractor.execute(object : DefaultSubscriber<List<AccountPasscode>>() {
-      override fun onNext(items: List<AccountPasscode>) {
-        onFetchAccountPasscodes(items)
-      }
+    getAccountPasscodesInteractor.execute(GetAccountPasscodesInteractor.EmptyParams,
+        object : DefaultSubscriber<List<AccountPasscode>>() {
+          override fun onNext(items: List<AccountPasscode>) {
+            onFetchAccountPasscodes(items)
+          }
 
-      override fun onError(e: Throwable) {
-        onFetchError()
-      }
-    })
+          override fun onError(e: Throwable) {
+            onFetchError()
+          }
+        })
   }
 
   private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {
