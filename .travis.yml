@@ -28,6 +28,12 @@ android:
     - extra-android-m2repository
     - extra-android-support
 
+    # Emulator
+    - sys-img-armeabi-v7a-android-23
+
+before_script:
+  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a
+
 deploy:
 - provider: script
   script: ./gradlew publishApkRegularRelease
@@ -40,4 +46,5 @@ before_install:
   - tar xvf secrets.tar
 
 script:
-  ./gradlew test -PdisablePreDex --continue
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then emulator -avd test -no-skin -no-audio -no-window &; android-wait-for-emulator; adb shell input keyevent 82 &; ./gradlew connectedRegularDebugAndroidTest; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then ./gradlew test -PdisablePreDex --continue; fi'
