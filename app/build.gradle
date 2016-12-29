@@ -17,6 +17,8 @@ android {
     versionCode ext.application.versionCode
     versionName ext.application.versionName
 
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     multiDexEnabled true
 
     resValue "string", "default_package_name", ext.application.package
@@ -90,6 +92,7 @@ kapt {
 
 dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
+  def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
   compile project(':domain')
   compile project(':data')
@@ -120,6 +123,13 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
+
+
+  androidTestCompile presentationTestDependencies.androidAnnotations
+  androidTestCompile presentationTestDependencies.supportRunner
+  androidTestCompile presentationTestDependencies.supportRules
+  androidTestCompile presentationTestDependencies.espressoCore
+  androidTestCompile presentationTestDependencies.espressoIntents
 }
 
 play {
