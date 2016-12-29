@@ -9,7 +9,7 @@ import com.arturogutierrez.openticator.domain.account.add.di.DaggerAddAccountCom
 import com.arturogutierrez.openticator.domain.account.add.view.AddAccountFromCameraFragment
 import com.arturogutierrez.openticator.view.activity.BaseActivity
 
-class AddAccountFromCameraActivity : BaseActivity(), HasComponent<AddAccountComponent> {
+class AddAccountFromCameraActivity : BaseActivity(R.layout.activity_toolbar), HasComponent<AddAccountComponent> {
 
   override val component by lazy { buildComponent() }
 
@@ -18,9 +18,6 @@ class AddAccountFromCameraActivity : BaseActivity(), HasComponent<AddAccountComp
 
     initializeActivity(savedInstanceState)
   }
-
-  override val layoutResource: Int
-    get() = R.layout.activity_toolbar
 
   private fun initializeActivity(savedInstanceState: Bundle?) {
     configureToolbar()

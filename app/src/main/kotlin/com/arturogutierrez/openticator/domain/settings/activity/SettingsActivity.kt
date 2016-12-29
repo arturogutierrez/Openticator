@@ -8,14 +8,12 @@ import com.arturogutierrez.openticator.domain.settings.view.SettingsFragment
 import com.arturogutierrez.openticator.view.activity.BaseActivity
 import org.jetbrains.anko.startActivity
 
-class SettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+class SettingsActivity : BaseActivity(R.layout.activity_toolbar), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
   companion object {
     val PREFERENCE_ROOT = "settings_activity.preference_root"
     val TITLE = "settings_activity.title"
   }
-
-  override val layoutResource = R.layout.activity_toolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
