@@ -38,6 +38,12 @@ android {
     targetCompatibility ext.compiler.java
   }
 
+  // Enables long timeouts required on slow environments as Travis
+  adbOptions {
+    timeOutInMs 20 * 60 * 1000  // 20 minutes
+    installOptions "-d","-t"
+  }
+
   dexOptions {
     preDexLibraries true
     javaMaxHeapSize '4G'

@@ -4,6 +4,7 @@
 * Account and categories JSON Serializing [#58](https://github.com/arturogutierrez/Openticator/pull/58)
 * Using original argument names in mapper in order to avoid possible problems with labeled arguments [#59](https://github.com/arturogutierrez/Openticator/pull/59)
 * AES Encrypting support using SpongyCastle [#60](https://github.com/arturogutierrez/Openticator/pull/60)
+* First Espresso tests [#64](https://github.com/arturogutierrez/Openticator/pull/64)
 
 ### 0.9.3 (13/12/2016)
 
