@@ -12,14 +12,11 @@ import com.arturogutierrez.openticator.domain.navigator.Navigator
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.widget.gone
 import com.arturogutierrez.openticator.view.widget.visible
+import com.google.zxing.integration.android.IntentIntegrator
 import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
-
-  private companion object {
-    private val REQUEST_CODE = 0x10
-  }
 
   @Inject
   internal lateinit var presenter: AddAccountFromCameraPresenter
@@ -37,12 +34,13 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    if (requestCode != REQUEST_CODE) {
+    val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+    if (result == null) {
       super.onActivityResult(requestCode, resultCode, data)
       return
     }
 
-    presenter.onScannedQR(data)
+    presenter.onScannedQR(result.contents)
   }
 
   override fun onResume() {
@@ -85,7 +83,7 @@ class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {
   }
 
   override fun openCaptureCode() {
-    navigator.goToCaptureCode(activity, this, REQUEST_CODE)
+    navigator.goToCaptureCode(this)
   }
 
   override fun dismissScreen() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.arturogutierrez.openticator">
 
   <uses-permission android:name="android.permission.INTERNET"/>
@@ -31,8 +32,11 @@
     <activity android:name=".domain.account.list.activity.AccountListActivity"/>
     <activity android:name=".domain.account.add.activity.AddAccountManuallyActivity"/>
     <activity android:name=".domain.account.add.activity.AddAccountFromCameraActivity"/>
-    <activity android:name=".domain.account.camera.activity.CaptureActivity"/>
     <activity android:name=".domain.settings.activity.SettingsActivity"/>
+    <activity
+        android:name="com.journeyapps.barcodescanner.CaptureActivity"
+        android:screenOrientation="fullSensor"
+        tools:replace="screenOrientation"/>
 
     <meta-data
         android:name="io.fabric.ApiKey"
