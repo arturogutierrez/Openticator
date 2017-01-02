@@ -17,6 +17,8 @@ android {
     versionCode ext.application.versionCode
     versionName ext.application.versionName
 
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     multiDexEnabled true
 
     resValue "string", "default_package_name", ext.application.package
@@ -34,6 +36,12 @@ android {
   compileOptions {
     sourceCompatibility ext.compiler.java
     targetCompatibility ext.compiler.java
+  }
+
+  // Enables long timeouts required on slow environments as Travis
+  adbOptions {
+    timeOutInMs 20 * 60 * 1000  // 20 minutes
+    installOptions "-d","-t"
   }
 
   dexOptions {
@@ -90,6 +98,7 @@ kapt {
 
 dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
+  def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
   compile project(':domain')
   compile project(':data')
@@ -120,6 +129,13 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
+
+
+  androidTestCompile presentationTestDependencies.androidAnnotations
+  androidTestCompile presentationTestDependencies.supportRunner
+  androidTestCompile presentationTestDependencies.supportRules
+  androidTestCompile presentationTestDependencies.espressoCore
+  androidTestCompile presentationTestDependencies.espressoIntents
 }
 
 play {

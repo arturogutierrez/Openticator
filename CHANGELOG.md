@@ -6,6 +6,7 @@
 * AES Encrypting support using SpongyCastle [#60](https://github.com/arturogutierrez/Openticator/pull/60)
 * Stateless interactors [#62](https://github.com/arturogutierrez/Openticator/pull/62)
 * Removing abstract layout resource from BaseActivity [#63](https://github.com/arturogutierrez/Openticator/pull/63)
+* First Espresso tests [#64](https://github.com/arturogutierrez/Openticator/pull/64)
 
 ### 0.9.3 (13/12/2016)
 
