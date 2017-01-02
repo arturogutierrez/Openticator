@@ -9,12 +9,9 @@ import com.arturogutierrez.openticator.domain.password.wizard.di.MasterPasswordM
 import com.arturogutierrez.openticator.domain.password.wizard.view.MasterPasswordFragment
 import com.arturogutierrez.openticator.view.activity.BaseActivity
 
-class MasterPasswordActivity : BaseActivity(), HasComponent<MasterPasswordComponent> {
+class MasterPasswordActivity : BaseActivity(R.layout.activity_toolbar), HasComponent<MasterPasswordComponent> {
 
   override val component by lazy { buildComponent() }
-
-  override val layoutResource: Int
-    get() = R.layout.activity_toolbar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

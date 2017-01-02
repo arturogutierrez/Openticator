@@ -3,6 +3,7 @@ package com.arturogutierrez.openticator.domain.category.interactor
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.OTPType
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
+import com.arturogutierrez.openticator.domain.category.interactor.AddCategoryInteractor.Params
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
@@ -44,8 +45,7 @@ class AddCategoryInteractorTest {
     `when`(mockCategoryFactory.createCategory(anyString())).thenReturn(category)
     `when`(mockCategoryRepository.add(category)).thenReturn(Observable.just(category))
 
-    addCategoryInteractor.configure("name", account)
-    addCategoryInteractor.createObservable()
+    addCategoryInteractor.createObservable(Params("name", account))
 
     verify(mockCategoryRepository).add(category)
     verifyZeroInteractions(mockThreadExecutor)

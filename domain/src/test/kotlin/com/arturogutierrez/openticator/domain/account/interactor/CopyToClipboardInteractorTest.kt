@@ -1,5 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.interactor
 
+import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboardInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.account.model.OTPType
@@ -47,8 +48,7 @@ class CopyToClipboardInteractorTest {
     val accountPasscode = AccountPasscode(account, Issuer.UNKNOWN, passcode)
     val testSubscriber = TestSubscriber<Unit>()
 
-    copyToClipboardInteractor.configure(accountPasscode)
-    copyToClipboardInteractor.createObservable().subscribe(testSubscriber)
+    copyToClipboardInteractor.createObservable(Params(accountPasscode)).subscribe(testSubscriber)
 
     verify<ClipboardRepository>(mockClipboardRepository).copy(fakeAccountName, fakeCode)
     verifyZeroInteractions(mockThreadExecutor)

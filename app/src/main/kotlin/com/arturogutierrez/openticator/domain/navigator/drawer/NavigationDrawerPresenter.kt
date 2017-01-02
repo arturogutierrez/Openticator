@@ -15,11 +15,13 @@ class NavigationDrawerPresenter @Inject constructor(
   private var categories: List<Category> = emptyList()
 
   override fun resume() {
-    getCategoriesInteractor.execute(object : DefaultSubscriber<List<Category>>() {
-      override fun onNext(item: List<Category>) {
-        onFetchCategories(item)
-      }
-    })
+    getCategoriesInteractor.execute(GetCategoriesInteractor.EmptyParams,
+        object : DefaultSubscriber<List<Category>>() {
+          override fun onNext(item: List<Category>) {
+            onFetchCategories(item)
+          }
+        }
+    )
   }
 
   override fun pause() {

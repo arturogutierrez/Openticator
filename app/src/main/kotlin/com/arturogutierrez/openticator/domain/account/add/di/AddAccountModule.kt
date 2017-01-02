@@ -1,7 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.add.di
 
 import com.arturogutierrez.openticator.di.PerActivity
-import com.arturogutierrez.openticator.domain.account.AccountFactory
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
@@ -18,10 +17,10 @@ class AddAccountModule {
   @Provides
   @PerActivity
   fun provideAddAccountInteractor(accountRepository: AccountRepository,
-                                           accountFactory: AccountFactory, categoryRepository: CategoryRepository,
-                                           categorySelector: CategorySelector, categoryFactory: CategoryFactory,
-                                           threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): AddAccountInteractor {
-    return AddAccountInteractor(accountRepository, accountFactory, categoryRepository,
-        categorySelector, categoryFactory, threadExecutor, postExecutionThread)
+                                  categoryRepository: CategoryRepository,
+                                  categorySelector: CategorySelector, categoryFactory: CategoryFactory,
+                                  threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): AddAccountInteractor {
+    return AddAccountInteractor(accountRepository, categoryRepository, categorySelector,
+        categoryFactory, threadExecutor, postExecutionThread)
   }
 }

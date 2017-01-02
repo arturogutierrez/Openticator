@@ -29,8 +29,8 @@ class AccountEditModePresenter @Inject constructor(
   }
 
   fun deleteAccounts(selectedAccounts: List<Account>) {
-    deleteAccountsInteractor.configure(selectedAccounts)
-    deleteAccountsInteractor.execute(DeleteAccountsSubscriber())
+    val params = DeleteAccountsInteractor.Params(selectedAccounts)
+    deleteAccountsInteractor.execute(params, DeleteAccountsSubscriber())
   }
 
   fun onSelectedAccounts(selectedAccounts: List<Account>) {
@@ -48,38 +48,38 @@ class AccountEditModePresenter @Inject constructor(
 
   fun updateAccount(account: Account, newName: String) {
     if (newName.isNotEmpty()) {
-      updateAccountInteractor.configure(account, newName)
-      updateAccountInteractor.execute(UpdateAccountSubscriber())
+      val params = UpdateAccountInteractor.Params(account.copy(name = newName))
+      updateAccountInteractor.execute(params, UpdateAccountSubscriber())
     }
 
     view?.dismissActionMode()
   }
 
   fun updateAccount(account: Account, issuer: Issuer) {
-    updateAccountInteractor.configure(account, issuer)
-    updateAccountInteractor.execute(UpdateAccountSubscriber())
+    val params = UpdateAccountInteractor.Params(account.copy(issuer = issuer))
+    updateAccountInteractor.execute(params, UpdateAccountSubscriber())
 
     view?.dismissActionMode()
   }
 
   fun pickCategoryForAccount(account: Account) {
-    getCategoriesInteractor.execute(GetCategoriesSubscriber(account))
+    getCategoriesInteractor.execute(GetCategoriesInteractor.EmptyParams, GetCategoriesSubscriber(account))
   }
 
   fun pickLogoForAccount(account: Account) {
-    getIssuersInteractor.execute(GetIssuersSubscriber(account))
+    getIssuersInteractor.execute(GetIssuersInteractor.EmptyParams, GetIssuersSubscriber(account))
   }
 
   fun addAccountToCategory(category: Category, account: Account) {
-    addAccountToCategoryInteractor.configure(category, account)
-    addAccountToCategoryInteractor.execute(AddAccountToCategorySubscriber())
+    val params = AddAccountToCategoryInteractor.Params(category, account)
+    addAccountToCategoryInteractor.execute(params, AddAccountToCategorySubscriber())
 
     view?.dismissActionMode()
   }
 
   fun createCategory(categoryName: String, account: Account) {
-    addCategoryInteractor.configure(categoryName, account)
-    addCategoryInteractor.execute(CreateCategorySubscriber())
+    val params = AddCategoryInteractor.Params(categoryName, account)
+    addCategoryInteractor.execute(params, CreateCategorySubscriber())
 
     view?.dismissActionMode()
   }

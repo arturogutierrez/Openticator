@@ -9,7 +9,7 @@ allprojects {
 ext {
 
   compiler = [java  : JavaVersion.VERSION_1_7,
-              kotlin: '1.0.5-2']
+              kotlin: '1.0.6']
 
   android = [buildTools: '25.0.1',
              compileSdk: 24,
