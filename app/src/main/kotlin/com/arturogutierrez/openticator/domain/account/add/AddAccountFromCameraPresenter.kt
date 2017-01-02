@@ -1,8 +1,6 @@
 package com.arturogutierrez.openticator.domain.account.add
 
-import android.content.Intent
 import com.arturogutierrez.openticator.domain.account.AccountDecoder
-import com.arturogutierrez.openticator.domain.account.camera.zxing.Intents
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
@@ -22,19 +20,18 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
     view?.openCaptureCode()
   }
 
-  fun onScannedQR(data: Intent?) {
-    if (data == null) {
+  fun onScannedQR(contents: String?) {
+    if (contents == null) {
       view?.hideLoading()
       return
     }
 
-    val accountUri = data.getStringExtra(Intents.Scan.RESULT)
-    if (accountUri == null) {
+    if (contents.isEmpty()) {
       showErrorAddingAccount()
       return
     }
 
-    decodeAccount(accountUri)
+    decodeAccount(contents)
   }
 
   private fun decodeAccount(accountUri: String) {

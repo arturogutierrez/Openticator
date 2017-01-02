@@ -1,6 +1,7 @@
 ### 0.9.4 (Unreleased)
 
 * New: Basic settings screen: [#61](https://github.com/arturogutierrez/Openticator/pull/61)
+* New: QR detection improved [#65](https://github.com/arturogutierrez/Openticator/pull/65)
 * Account and categories JSON Serializing [#58](https://github.com/arturogutierrez/Openticator/pull/58)
 * Using original argument names in mapper in order to avoid possible problems with labeled arguments [#59](https://github.com/arturogutierrez/Openticator/pull/59)
 * AES Encrypting support using SpongyCastle [#60](https://github.com/arturogutierrez/Openticator/pull/60)

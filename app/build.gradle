@@ -114,8 +114,7 @@ dependencies {
   compile presentationDependencies.preferenceCompat
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
-  compile presentationDependencies.zxingCore
-  compile presentationDependencies.zxing
+  compile presentationDependencies.zxingAndroidEmbedded
   compile presentationDependencies.materialDialogs
   compile(presentationDependencies.materialDrawer) {
     transitive = true

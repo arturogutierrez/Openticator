@@ -4,12 +4,11 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountFromCameraActivity
 import com.arturogutierrez.openticator.domain.account.add.activity.AddAccountManuallyActivity
-import com.arturogutierrez.openticator.domain.account.camera.activity.CaptureActivity
 import com.arturogutierrez.openticator.domain.account.list.activity.AccountListActivity
 import com.arturogutierrez.openticator.domain.password.wizard.activity.MasterPasswordActivity
 import com.arturogutierrez.openticator.domain.settings.activity.SettingsActivity
 import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
-import org.jetbrains.anko.intentFor
+import com.google.zxing.integration.android.IntentIntegrator
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -35,9 +34,12 @@ class Navigator @Inject constructor() {
     context.startActivity<AddAccountFromCameraActivity>()
   }
 
-  fun goToCaptureCode(context: Context, fragment: Fragment, requestCode: Int) {
-    val intent = context.intentFor<CaptureActivity>()
-    fragment.startActivityForResult(intent, requestCode)
+  fun goToCaptureCode(fragment: Fragment) {
+    val intentIntegrator = IntentIntegrator.forSupportFragment(fragment)
+    intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+    intentIntegrator.setOrientationLocked(false)
+    intentIntegrator.setBeepEnabled(true)
+    intentIntegrator.initiateScan()
   }
 
   fun goToSettings(context: Context) {
