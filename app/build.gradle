@@ -115,6 +115,7 @@ dependencies {
   compile presentationDependencies.fab
   compile presentationDependencies.dexter
   compile presentationDependencies.zxingAndroidEmbedded
+  compile presentationDependencies.robinHoodTicker
   compile presentationDependencies.materialDialogs
   compile(presentationDependencies.materialDrawer) {
     transitive = true

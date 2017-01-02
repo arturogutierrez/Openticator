@@ -50,7 +50,7 @@
         style="@style/AccountName"
         />
 
-    <TextView
+    <com.robinhood.ticker.TickerView
         android:id="@+id/tv_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
