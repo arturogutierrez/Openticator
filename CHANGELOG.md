@@ -3,6 +3,7 @@
 * New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
 * RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
+* Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
 
 ### 0.9.4 (02/01/2017)
 

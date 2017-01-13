@@ -56,6 +56,7 @@ ext {
 
   buildPlugins = [gradle       : "com.android.tools.build:gradle:$build.gradle",
                   kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
+                  kotlinAllOpen: "org.jetbrains.kotlin:kotlin-allopen:$compiler.kotlin",
                   realm        : "io.realm:realm-gradle-plugin:$build.realm",
                   fabric       : "io.fabric.tools:gradle:$build.fabric",
                   playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
