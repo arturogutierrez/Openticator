@@ -3,7 +3,8 @@ package com.arturogutierrez.openticator.storage.realm.model
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class AccountRealm : RealmObject() {
+@RealmModel
+class AccountRealm : RealmObject() {
 
   companion object {
     val TOTP_TYPE = "TOTP"
@@ -11,11 +12,11 @@ open class AccountRealm : RealmObject() {
   }
 
   @PrimaryKey
-  open var accountId: String = ""
-  open var name: String = ""
-  open var type: String = ""
-  open var secret: String = ""
-  open var issuer: String = ""
-  open var order: Int = 0
-  open var category: CategoryRealm? = null
+  var accountId: String = ""
+  var name: String = ""
+  var type: String = ""
+  var secret: String = ""
+  var issuer: String = ""
+  var order: Int = 0
+  var category: CategoryRealm? = null
 }
