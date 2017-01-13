@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'realm-android'
 
 android {
@@ -32,6 +33,10 @@ android {
   lintOptions {
     ignore 'InvalidPackage'
   }
+}
+
+allOpen {
+  annotation("com.arturogutierrez.openticator.storage.realm.model.RealmModel")
 }
 
 dependencies {
