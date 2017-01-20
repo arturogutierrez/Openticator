@@ -1,6 +1,8 @@
 [![Build status](https://travis-ci.org/arturogutierrez/Openticator.svg?branch=master)](https://travis-ci.org/arturogutierrez/Openticator/branches)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
+<a href='https://play.google.com/store/apps/details?id=com.arturogutierrez.openticator'><img alt='Get it on Google Play' width='200' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 Openticator
 ------------
 

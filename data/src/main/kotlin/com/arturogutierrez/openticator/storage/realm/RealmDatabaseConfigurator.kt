@@ -3,8 +3,10 @@ package com.arturogutierrez.openticator.storage.realm
 import android.content.Context
 import android.util.Base64
 import com.arturogutierrez.openticator.storage.database.DatabaseConfigurator
+import com.arturogutierrez.openticator.storage.realm.migration.RealmMigrationManager
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.RealmMigration
 import javax.inject.Inject
 
 class RealmDatabaseConfigurator @Inject constructor(private val context: Context) : DatabaseConfigurator {
@@ -17,7 +19,11 @@ class RealmDatabaseConfigurator @Inject constructor(private val context: Context
 
   private fun configureRealm(encryptionKey: ByteArray) {
     Realm.init(context)
-    val realmConfiguration = RealmConfiguration.Builder().encryptionKey(encryptionKey).build()
+    val realmConfiguration = RealmConfiguration.Builder()
+        .encryptionKey(encryptionKey)
+        .schemaVersion(RealmMigrationManager.currentSchema)
+        .migration(RealmMigrationManager())
+        .build()
     Realm.setDefaultConfiguration(realmConfiguration)
   }
 }

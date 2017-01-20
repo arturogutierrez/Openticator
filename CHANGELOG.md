@@ -3,6 +3,7 @@
 * New: Adding Firebase login with Google to the Welcome screen [#68](https://github.com/arturogutierrez/Openticator/pull/68)
 * Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
 * Stetho support [#69](https://github.com/arturogutierrez/Openticator/pull/69)
+* Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
 
 ### 0.9.4 (02/01/2017)
 
