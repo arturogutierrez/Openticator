@@ -18,7 +18,7 @@ ext {
 
   build = [gradle        : '2.3.0-beta2',
            fabric        : '1.22.0',
-           realm         : '2.2.1',
+           realm         : '2.3.0',
            playPublisher : '1.1.5',
            googleServices: '3.0.0']
 

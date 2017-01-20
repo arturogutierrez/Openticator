@@ -9,4 +9,5 @@ class CategoryRealm : RealmObject() {
   @PrimaryKey
   var categoryId: String = ""
   var name: String = ""
+  var pendingToSync: Boolean = true
 }
