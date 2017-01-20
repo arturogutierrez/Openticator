@@ -46,7 +46,7 @@ before_install:
   - tar xvf secrets.tar
 
 script:
-  - ./gradlew test -PdisablePreDex --continue
+  - ./gradlew test -PdisablePreDex --continue --stacktrace
   #- ./gradlew assembleFastBuildDebug -PdisablePreDex
   #- emulator -avd test -no-skin -no-audio -no-window &
   #- android-wait-for-emulator
