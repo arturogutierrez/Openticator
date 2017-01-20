@@ -13,7 +13,7 @@ import io.fabric.sdk.android.Fabric
 import io.flowup.FlowUp
 import javax.inject.Inject
 
-class OpenticatorApplication : MultiDexApplication() {
+open class OpenticatorApplication : MultiDexApplication() {
 
   val applicationComponent: ApplicationComponent by lazy { DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build() }
 

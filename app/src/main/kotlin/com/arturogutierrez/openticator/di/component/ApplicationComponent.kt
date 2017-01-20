@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import com.arturogutierrez.openticator.application.OpenticatorApplication
+import com.arturogutierrez.openticator.application.OpenticatorDebugApplication
 import com.arturogutierrez.openticator.di.module.ApplicationModule
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategorySelector
@@ -26,6 +27,8 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
   fun inject(application: OpenticatorApplication)
+
+  fun inject(application: OpenticatorDebugApplication)
 
   fun inject(splashActivity: SplashActivity)
 
