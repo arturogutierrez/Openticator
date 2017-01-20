@@ -3,6 +3,7 @@ allprojects {
     jcenter()
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
   }
 }
 
@@ -49,6 +50,8 @@ ext {
   gsonVersion = '2.6.2'
   spongyCastleVersion = '1.54.0.0'
   robinHoodTickerVersion = '1.1.1'
+  stethoVersion = '1.4.2'
+  stethoRealmVersion = '2.0.0'
 
   // Testing
   robolectricVersion = '3.1.4'
@@ -62,7 +65,7 @@ ext {
 
   buildPlugins = [gradle        : "com.android.tools.build:gradle:$build.gradle",
                   kotlin        : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
-                  kotlinAllOpen: "org.jetbrains.kotlin:kotlin-allopen:$compiler.kotlin",
+                  kotlinAllOpen : "org.jetbrains.kotlin:kotlin-allopen:$compiler.kotlin",
                   realm         : "io.realm:realm-gradle-plugin:$build.realm",
                   fabric        : "io.fabric.tools:gradle:$build.fabric",
                   playPublisher : "com.github.triplet.gradle:play-publisher:$build.playPublisher",
@@ -90,7 +93,9 @@ ext {
                               ankoSupport         : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
                               flowUp              : "io.flowup:android-sdk:${flowUpVersion}",
                               robinHoodTicker     : "com.robinhood.ticker:ticker:${robinHoodTickerVersion}",
-                              playServices        : "com.google.android.gms:play-services:$playServicesVersion"]
+                              playServices        : "com.google.android.gms:play-services:$playServicesVersion",
+                              stetho              : "com.facebook.stetho:stetho:$stethoVersion",
+                              stethoRealm         : "com.uphyca:stetho_realm:$stethoRealmVersion"]
 
   presentationTestDependencies =
       ["androidAnnotations": "com.android.support:support-annotations:${androidAnnotationsVersion}",

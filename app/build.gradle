@@ -37,6 +37,7 @@ android {
   }
 
   sourceSets {
+    debug.java.srcDirs += 'src/debug/kotlin'
     main.java.srcDirs += 'src/main/kotlin'
   }
 
@@ -136,6 +137,9 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
+
+  debugCompile presentationDependencies.stetho
+  debugCompile presentationDependencies.stethoRealm
 
   androidTestCompile presentationTestDependencies.androidAnnotations
   androidTestCompile presentationTestDependencies.supportRunner
