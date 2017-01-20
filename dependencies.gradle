@@ -4,6 +4,7 @@ allprojects {
     google()
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
   }
 }
 
@@ -44,6 +45,8 @@ ext {
   gsonVersion = '2.8.2'
   spongyCastleVersion = '1.54.0.0'
   robinHoodTickerVersion = '1.1.1'
+  stethoVersion = '1.4.2'
+  stethoRealmVersion = '2.0.0'
 
   // Testing
   robolectricVersion = '3.1.4'
@@ -85,7 +88,9 @@ ext {
                               ankoSupport         : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
                               flowUp              : "io.flowup:android-sdk:${flowUpVersion}",
                               robinHoodTicker     : "com.robinhood.ticker:ticker:${robinHoodTickerVersion}",
-                              playServices        : "com.google.android.gms:play-services:$playServicesVersion"]
+                              playServices        : "com.google.android.gms:play-services:$playServicesVersion",
+                              stetho              : "com.facebook.stetho:stetho:$stethoVersion",
+                              stethoRealm         : "com.uphyca:stetho_realm:$stethoRealmVersion"]
 
   presentationTestDependencies = ["androidAnnotations": "com.android.support:support-annotations:${supportVersion}",
                                   "supportRunner"     : "com.android.support.test:runner:${supportTestVersion}",

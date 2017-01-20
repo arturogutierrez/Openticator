@@ -10,7 +10,6 @@ import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.domain.cloud.SessionManager
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
-import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository

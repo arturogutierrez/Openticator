@@ -2,6 +2,7 @@
 
 * New: Adding Firebase login with Google to the Welcome screen [#68](https://github.com/arturogutierrez/Openticator/pull/68)
 * Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
+* Stetho support [#69](https://github.com/arturogutierrez/Openticator/pull/69)
 * Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
 * RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
