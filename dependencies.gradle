@@ -17,10 +17,11 @@ ext {
              minSdk    : 16,
              targetSdk : 26]
 
-  build = [gradle       : '3.0.1',
-           fabric       : '1.24.1',
-           realm        : '4.3.2',
-           playPublisher: '1.2.0']
+  build = [gradle        : '3.0.1',
+           fabric        : '1.24.1',
+           realm         : '4.3.2',
+           playPublisher : '1.2.0',
+           googleServices: '3.0.0']
 
   // Google Libraries
   supportVersion = '26.0.2'
@@ -54,12 +55,13 @@ ext {
   supportTestVersion = '1.0.1'
   espressoVersion = '3.0.1'
 
-  buildPlugins = [gradle       : "com.android.tools.build:gradle:$build.gradle",
-                  kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
-                  kotlinAllOpen: "org.jetbrains.kotlin:kotlin-allopen:$compiler.kotlin",
-                  realm        : "io.realm:realm-gradle-plugin:$build.realm",
-                  fabric       : "io.fabric.tools:gradle:$build.fabric",
-                  playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
+  buildPlugins = [gradle        : "com.android.tools.build:gradle:$build.gradle",
+                  kotlin        : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
+                  kotlinAllOpen : "org.jetbrains.kotlin:kotlin-allopen:$compiler.kotlin",
+                  realm         : "io.realm:realm-gradle-plugin:$build.realm",
+                  fabric        : "io.fabric.tools:gradle:$build.fabric",
+                  playPublisher : "com.github.triplet.gradle:play-publisher:$build.playPublisher",
+                  googleServices: "com.google.gms:google-services:$build.googleServices"]
 
   presentationDependencies = [multiDex            : "com.android.support:multidex:${multiDexVersion}",
                               kotlinStdLib        : "org.jetbrains.kotlin:kotlin-stdlib:${compiler.kotlin}",
@@ -82,7 +84,8 @@ ext {
                               anko                : "org.jetbrains.anko:anko-sdk15:${ankoVersion}",
                               ankoSupport         : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
                               flowUp              : "io.flowup:android-sdk:${flowUpVersion}",
-                              robinHoodTicker     : "com.robinhood.ticker:ticker:${robinHoodTickerVersion}"]
+                              robinHoodTicker     : "com.robinhood.ticker:ticker:${robinHoodTickerVersion}",
+                              playServices        : "com.google.android.gms:play-services:$playServicesVersion"]
 
   presentationTestDependencies = ["androidAnnotations": "com.android.support:support-annotations:${supportVersion}",
                                   "supportRunner"     : "com.android.support.test:runner:${supportTestVersion}",
@@ -110,7 +113,10 @@ ext {
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${supportVersion}",
                       gson              : "com.google.code.gson:gson:${gsonVersion}",
-                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}"]
+                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}",
+                      playServices      : "com.google.android.gms:play-services:$playServicesVersion",
+                      googleSignIn      : "com.google.android.gms:play-services-auth:$playServicesVersion",
+                      firebase          : "com.google.firebase:firebase-auth:$playServicesVersion"]
 
   dataTestDependencies = [kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                           junitKotlin  : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",

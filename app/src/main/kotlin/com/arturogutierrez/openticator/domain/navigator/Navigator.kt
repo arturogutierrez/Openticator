@@ -11,11 +11,21 @@ import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
 import com.arturogutierrez.openticator.helpers.startActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import javax.inject.Inject
+import android.content.Intent
+import android.net.Uri
+
 
 class Navigator @Inject constructor() {
 
   fun goToWelcomeScreen(context: Context) {
     context.startActivity<WelcomeActivity>()
+  }
+
+  fun openWhatIsVideo(context: Context) {
+    val intent = Intent("android.intent.action.VIEW").apply {
+      data = Uri.parse("https://youtu.be/zMabEyrtPRg")
+    }
+    context.startActivity(intent)
   }
 
   fun goToInitialWizard(context: Context) {

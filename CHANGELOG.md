@@ -1,4 +1,9 @@
-### 0.9.4.1 (Unreleased)
+### 1.0.0 (Unreleased)
+
+* New: Adding Firebase login with Google to the Welcome screen [#68](https://github.com/arturogutierrez/Openticator/pull/68)
+* Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
+
+### 0.9.4.1 (28/07/2017)
 
 * New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)

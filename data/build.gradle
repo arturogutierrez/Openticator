@@ -55,6 +55,9 @@ dependencies {
   implementation dataDependencies.androidAnnotations
   implementation dataDependencies.gson
   implementation dataDependencies.spongyCastle
+  implementation dataDependencies.playServices
+  implementation dataDependencies.googleSignIn
+  implementation dataDependencies.firebase
 
   testImplementation testDependencies.kotlinStdLib
   testImplementation testDependencies.junitKotlin

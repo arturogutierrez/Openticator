@@ -28,6 +28,13 @@ android {
     def (fabricApiKey, flowUpApiKey) = apiKeysFromFile()
     manifestPlaceholders = [fabricApiKey: fabricApiKey]
     resValue "string", "flow_up_api_key", flowUpApiKey
+
+    // Copying google-services.json from secrets to module
+    copy {
+      from "../"
+      into "."
+      include "google-services.json"
+    }
   }
 
   sourceSets {
@@ -125,6 +132,7 @@ dependencies {
   implementation(presentationDependencies.crashlytics) {
     transitive = true
   }
+  implementation presentationDependencies.playServices
 
   kapt presentationDependencies.daggerCompiler
   implementation presentationDependencies.dagger
@@ -211,3 +219,5 @@ def apiKeysFromFile() {
 
   return [null, null]
 }
+
+apply plugin: 'com.google.gms.google-services'

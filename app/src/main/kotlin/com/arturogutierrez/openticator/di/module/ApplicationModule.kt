@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
-import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
-import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
+import com.arturogutierrez.openticator.domain.cloud.FirebaseSessionManager
+import com.arturogutierrez.openticator.domain.cloud.SessionManager
 import com.arturogutierrez.openticator.executor.JobExecutor
 import com.arturogutierrez.openticator.executor.MainThread
 import com.arturogutierrez.openticator.executor.PostExecutionThread
@@ -61,4 +61,10 @@ class ApplicationModule(val context: Context) {
 
   @Provides
   fun provideClipboardRepository(clipboardRepository: ClipboardRepositoryImpl): ClipboardRepository = clipboardRepository
+
+  @Singleton
+  @Provides
+  fun provideSessionManager(firebaseSessionManager: FirebaseSessionManager): SessionManager {
+    return firebaseSessionManager
+  }
 }
