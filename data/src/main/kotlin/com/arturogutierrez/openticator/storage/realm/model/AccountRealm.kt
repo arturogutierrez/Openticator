@@ -18,5 +18,6 @@ class AccountRealm : RealmObject() {
   var secret: String = ""
   var issuer: String = ""
   var order: Int = 0
+  var pendingToSync: Boolean = true
   var category: CategoryRealm? = null
 }
