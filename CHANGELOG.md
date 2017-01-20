@@ -2,13 +2,13 @@
 
 * New: Adding Firebase login with Google to the Welcome screen [#68](https://github.com/arturogutierrez/Openticator/pull/68)
 * Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
+* Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
+* Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
+* RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
 
 ### 0.9.4.1 (28/07/2017)
 
 * New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
-* Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
-* RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
-* Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
 
 ### 0.9.4 (02/01/2017)
 
