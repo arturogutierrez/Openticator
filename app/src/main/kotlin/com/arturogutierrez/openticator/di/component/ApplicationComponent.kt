@@ -8,6 +8,7 @@ import com.arturogutierrez.openticator.di.module.ApplicationModule
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
+import com.arturogutierrez.openticator.domain.cloud.SessionManager
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
 import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
 import com.arturogutierrez.openticator.executor.PostExecutionThread
@@ -27,8 +28,6 @@ interface ApplicationComponent {
   fun inject(application: OpenticatorApplication)
 
   fun inject(splashActivity: SplashActivity)
-
-  fun inject(welcomeActivity: WelcomeActivity)
 
   fun inject(baseActivity: BaseActivity)
 
@@ -55,4 +54,6 @@ interface ApplicationComponent {
   fun provideCategorySelector(): CategorySelector
 
   fun provideClipboardRepository(): ClipboardRepository
+
+  fun provideSessionManager(): SessionManager
 }

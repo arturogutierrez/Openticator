@@ -55,12 +55,8 @@
   <string name="welcome_body_first">Mejora la proteción de tus cuentas online activando la
     autenticación de 2-pasos.
   </string>
-  <string name="welcome_body_second">Openticator genera códigos de un sólo uso para ser usados junto
-    con tu contraseña cuando te identificas en tus cuentas protegidas con autenticación de 2-pasos.
-  </string>
-  <string name="welcome_body_title">Añade una capa de seguridad extra a tus cuentas usando
-    Openticator.
-  </string>
+  <string name="welcome_body_second">Clica en Empezar para iniciar sesión con tu cuenta de Google.</string>
+  <string name="welcome_body_title">Bienvenido a Openticator\n</string>
   <string name="settings">Ajustes</string>
   <string name="cloud">Nube</string>
   <string name="general">Generales</string>
@@ -68,4 +64,8 @@
     desarrollo.
   </string>
   <string name="rate_me">¡Puntúame!</string>
+  <string name="whats_openticator">¿Qué es Openticator?</string>
+  <string name="unable_to_make_cloud_login">Imposible conectarse con Google. Comprueba que tienes
+    conexión a Internet e intenta de nuevo.
+  </string>
 </resources>

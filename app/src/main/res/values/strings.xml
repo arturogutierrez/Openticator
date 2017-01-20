@@ -2,15 +2,17 @@
   <string name="app_name" translatable="false">Openticator</string>
 
   <!-- Welcome -->
-  <string name="welcome_body_title">Gives a extra security layer to your accounts using Openticator.
-  </string>
+  <string name="welcome_body_title">Welcome to Openticator</string>
   <string name="welcome_body_first">Improve the protection of your online accounts enabling
-    two-factor authentications (2FA).
+    two-factor authentication (2FA).
   </string>
-  <string name="welcome_body_second">Openticator generates single-use codes to be used along your
-    password when log into your protected accounts with two-factor authentications.
+  <string name="welcome_body_second">Click on Start to sign in with your Google account.
   </string>
   <string name="start">Start</string>
+  <string name="whats_openticator">What\'s Openticator?</string>
+  <string name="unable_to_make_cloud_login">Unable to login with Google. Check if you have any
+    Internet connection available and try again.
+  </string>
 
   <!-- Master Password -->
   <string name="configure_master_password">Configure Master Password</string>
@@ -37,7 +39,9 @@
   <string name="general">General</string>
   <string name="cloud">Cloud</string>
   <string name="rate_me">Rate me!</string>
-  <string name="cloud_summary">Keep safe your accounts in the cloud using your own Google Drive account. Coming soon!.</string>
+  <string name="cloud_summary">Keep safe your accounts in the cloud using your own Google Drive
+    account. Coming soon!.
+  </string>
   <string name="google_drive" translatable="false">Google Drive</string>
 
   <!-- Add Account Manually -->
