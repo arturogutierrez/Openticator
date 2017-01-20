@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import com.arturogutierrez.openticator.application.OpenticatorApplication
-import com.arturogutierrez.openticator.application.OpenticatorDebugApplication
 import com.arturogutierrez.openticator.di.module.ApplicationModule
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.domain.cloud.SessionManager
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
-import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
@@ -27,8 +25,6 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
   fun inject(application: OpenticatorApplication)
-
-  fun inject(application: OpenticatorDebugApplication)
 
   fun inject(splashActivity: SplashActivity)
 
