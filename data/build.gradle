@@ -54,7 +54,9 @@ dependencies {
   compile dataDependencies.androidAnnotations
   compile dataDependencies.gson
   compile dataDependencies.spongyCastle
-  compile dataDependencies.playServicesDrive
+  compile dataDependencies.playServices
+  compile dataDependencies.googleSignIn
+  compile dataDependencies.firebase
 
   testCompile testDependencies.kotlinStdLib
   testCompile testDependencies.junitKotlin

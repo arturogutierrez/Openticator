@@ -8,6 +8,8 @@ import com.arturogutierrez.openticator.domain.account.repository.AccountReposito
 import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepositoryImpl
+import com.arturogutierrez.openticator.domain.cloud.FirebaseSessionManager
+import com.arturogutierrez.openticator.domain.cloud.SessionManager
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepositoryImpl
 import com.arturogutierrez.openticator.executor.JobExecutor
@@ -72,4 +74,10 @@ class ApplicationModule(val context: Context) {
 
   @Provides
   fun provideClipboardRepository(clipboardRepository: ClipboardRepositoryImpl): ClipboardRepository = clipboardRepository
+
+  @Singleton
+  @Provides
+  fun provideSessionManager(firebaseSessionManager: FirebaseSessionManager): SessionManager {
+    return firebaseSessionManager
+  }
 }

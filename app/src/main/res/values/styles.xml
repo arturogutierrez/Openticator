@@ -59,6 +59,11 @@
     <item name="fab_colorPressed">@color/colorPrimaryDark</item>
   </style>
 
+  <!-- Welcome -->
+  <style name="WhiteControlActivatedTheme" parent="AppTheme">
+    <item name="colorControlActivated">@android:color/white</item>
+  </style>
+
   <!-- Master Password Wizard -->
   <style name="Explanation" parent="Base.TextAppearance.AppCompat.Body1">
     <item name="android:textColor">@color/colorSecondaryText</item>

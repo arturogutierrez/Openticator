@@ -27,6 +27,13 @@ android {
     def (fabricApiKey, flowUpApiKey) = apiKeysFromFile()
     manifestPlaceholders = [ fabricApiKey: fabricApiKey]
     resValue "string", "flow_up_api_key", flowUpApiKey
+
+    // Copying google-services.json from secrets to module
+    copy {
+      from "../"
+      into "."
+      include "google-services.json"
+    }
   }
 
   sourceSets {
@@ -130,7 +137,6 @@ dependencies {
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
 
-
   androidTestCompile presentationTestDependencies.androidAnnotations
   androidTestCompile presentationTestDependencies.supportRunner
   androidTestCompile presentationTestDependencies.supportRules
@@ -209,3 +215,5 @@ def apiKeysFromFile() {
 
   return [null, null]
 }
+
+apply plugin: 'com.google.gms.google-services'
