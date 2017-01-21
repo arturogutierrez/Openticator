@@ -5,6 +5,7 @@
 * Stetho support [#69](https://github.com/arturogutierrez/Openticator/pull/69)
 * Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
 * Propagating build variant to Android Module [#71](https://github.com/arturogutierrez/Openticator/pull/71)
+* Moving repositories to business logic module [#72](https://github.com/arturogutierrez/Openticator/pull/72)
 
 ### 0.9.4 (02/01/2017)
 
