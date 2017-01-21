@@ -6,7 +6,6 @@ import com.arturogutierrez.openticator.storage.database.DatabaseConfigurator
 import com.arturogutierrez.openticator.storage.realm.migration.RealmMigrationManager
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmMigration
 import javax.inject.Inject
 
 class RealmDatabaseConfigurator @Inject constructor(private val context: Context) : DatabaseConfigurator {
