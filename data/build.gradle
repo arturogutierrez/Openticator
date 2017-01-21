@@ -14,6 +14,9 @@ android {
     minSdkVersion ext.android.minSdk
     targetSdkVersion ext.android.targetSdk
     versionCode ext.application.versionCode
+
+    defaultPublishConfig 'release'
+    publishNonDefault true
   }
 
   sourceSets {

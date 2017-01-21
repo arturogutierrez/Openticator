@@ -4,6 +4,7 @@
 * Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
 * Stetho support [#69](https://github.com/arturogutierrez/Openticator/pull/69)
 * Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
+* Propagating build variant to Android Module [#71](https://github.com/arturogutierrez/Openticator/pull/71)
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
 * RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
 
