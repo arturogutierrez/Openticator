@@ -19,7 +19,7 @@ class AccountRepositoryTest {
 
   @Before
   fun setUp() {
-    accountRepository = AccountRepositoryImpl(mockAccountDataStore)
+    accountRepository = AccountRepository(mockAccountDataStore)
   }
 
   @Test
