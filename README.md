@@ -3,22 +3,41 @@
 
 <a href='https://play.google.com/store/apps/details?id=com.arturogutierrez.openticator'><img alt='Get it on Google Play' width='200' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
-Openticator
-------------
+# Openticator
 
-My own authenticator implementation using the [Uncle Bob's Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) approach with MVP.
+My own authenticator implementation written with [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) and MVP in Kotlin..
 
-I'm using [Dagger2](http://google.github.io/dagger/), [RxJava](https://github.com/ReactiveX/RxJava) and [Realm](https://realm.io/docs/java/latest/) as core libraries.
+## Project Structure
 
-Demo
-------------
+#### App
+* Presentation layer
+* Presenters
+* View implementations
+* Navigation
+* Dagger components and modules
+
+#### Domain (Pure Kotlin module)
+* Business logic
+* Uses cases
+* Data Source interfaces
+* Repositories
+
+#### Data
+* DataSource implementations
+
+## Main Libraries
+
+* [Dagger2](http://google.github.io/dagger/)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [Realm](https://realm.io/docs/java/latest/)
+
+## Demo
 
 Here you can see how the app look likes:
 
 ![Demo][1]
 
-Developed By
-------------
+# Developed By
 
 * Arturo Gutiérrez Díaz-Guerra - <arturo.gutierrez@gmail.com>
 
