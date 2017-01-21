@@ -4,6 +4,7 @@
 * Using allopen plugin for Realm models [#67](https://github.com/arturogutierrez/Openticator/pull/67)
 * Stetho support [#69](https://github.com/arturogutierrez/Openticator/pull/69)
 * Realm migrations support [#70](https://github.com/arturogutierrez/Openticator/pull/70)
+* Propagating build variant to Android Module [#71](https://github.com/arturogutierrez/Openticator/pull/71)
 
 ### 0.9.4 (02/01/2017)
 

@@ -109,7 +109,8 @@ dependencies {
   def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
   compile project(':domain')
-  compile project(':data')
+  debugCompile project(path: ':data', configuration: 'debug')
+  releaseCompile project(path: ':data', configuration: 'release')
 
   compile presentationDependencies.multiDex
   compile presentationDependencies.flowUp
