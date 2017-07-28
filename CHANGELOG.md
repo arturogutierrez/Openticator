@@ -1,4 +1,8 @@
-### 0.9.4 (Unreleased)
+### 0.9.4.1 (Unreleased)
+
+* New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
+
+### 0.9.4 (02/01/2017)
 
 * New: Basic settings screen: [#61](https://github.com/arturogutierrez/Openticator/pull/61)
 * New: QR detection improved [#65](https://github.com/arturogutierrez/Openticator/pull/65)
