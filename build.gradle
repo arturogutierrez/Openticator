@@ -21,7 +21,7 @@ allprojects {
   ext {
     application = [
         package: 'com.arturogutierrez.openticator',
-        versionCode: 9040,
+        versionCode: 9041,
         versionName: '0.9.4',
     ]
   }
