@@ -38,27 +38,25 @@ dependencies {
   def dataDependencies = rootProject.ext.dataDependencies
   def testDependencies = rootProject.ext.dataTestDependencies
 
-  compile project(':domain')
+  implementation project(':domain')
 
   kapt dataDependencies.daggerCompiler
-  provided dataDependencies.javaxAnnotation
-  compile domainDependencies.kotlinStdLib
-  compile dataDependencies.dagger
-  compile dataDependencies.rxJava
-  compile dataDependencies.rxAndroid
-  compile dataDependencies.androidAnnotations
-  compile dataDependencies.gson
-  compile dataDependencies.spongyCastle
-  compile dataDependencies.playServicesDrive
+  compileOnly dataDependencies.javaxAnnotation
+  implementation domainDependencies.kotlinStdLib
+  implementation dataDependencies.dagger
+  implementation dataDependencies.rxJava
+  implementation dataDependencies.rxAndroid
+  implementation dataDependencies.androidAnnotations
+  implementation dataDependencies.gson
+  implementation dataDependencies.spongyCastle
 
-  testCompile testDependencies.kotlinStdLib
-  testCompile testDependencies.junitKotlin
-  testCompile testDependencies.junit
-  testCompile testDependencies.hamkrest
-  testCompile testDependencies.robolectric
+  testImplementation testDependencies.kotlinStdLib
+  testImplementation testDependencies.junitKotlin
+  testImplementation testDependencies.junit
+  testImplementation testDependencies.hamkrest
 
-  testCompile testDependencies.powerMockitoJUnit
-  testCompile testDependencies.powerMockitoRules
-  testCompile testDependencies.powerMockito
-  testCompile testDependencies.powerMockitoXStream
+  testImplementation testDependencies.powerMockitoJUnit
+  testImplementation testDependencies.powerMockitoRules
+  testImplementation testDependencies.powerMockito
+  testImplementation testDependencies.powerMockitoXStream
 }
