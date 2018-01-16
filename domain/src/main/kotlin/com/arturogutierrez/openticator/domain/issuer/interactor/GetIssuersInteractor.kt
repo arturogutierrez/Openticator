@@ -5,14 +5,15 @@ import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import com.arturogutierrez.openticator.domain.issuer.repository.IssuerRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
-import rx.Observable
+import com.arturogutierrez.openticator.interactor.SingleUseCase
+import io.reactivex.Single
 
 class GetIssuersInteractor(private val issuerRepository: IssuerRepository,
                            threadExecutor: ThreadExecutor,
-                           postExecutionThread: PostExecutionThread) : Interactor<EmptyParams, List<Issuer>>(threadExecutor, postExecutionThread) {
+                           postExecutionThread: PostExecutionThread)
+  : SingleUseCase<List<Issuer>, EmptyParams>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: EmptyParams): Observable<List<Issuer>> {
+  override fun buildObservable(params: EmptyParams): Single<List<Issuer>> {
     return issuerRepository.issuers
   }
 

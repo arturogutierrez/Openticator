@@ -1,15 +1,15 @@
 package com.arturogutierrez.openticator.domain.category
 
 import com.arturogutierrez.openticator.domain.category.model.Category
-import rx.Observable
-import rx.subjects.PublishSubject
+import io.reactivex.Flowable
+import io.reactivex.processors.PublishProcessor
 
 class CategorySelector {
 
-  private val publishSubject = PublishSubject.create<Category>()
+  private val publishSubject = PublishProcessor.create<Category>()
   private var currentCategory = Category.empty
 
-  val selectedCategory: Observable<Category>
+  val selectedCategory: Flowable<Category>
     get() = publishSubject.startWith(currentCategory)
 
   fun setSelectedCategory(category: Category) {

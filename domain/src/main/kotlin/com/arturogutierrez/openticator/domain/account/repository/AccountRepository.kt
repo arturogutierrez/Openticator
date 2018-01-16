@@ -2,17 +2,29 @@ package com.arturogutierrez.openticator.domain.account.repository
 
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
-import rx.Observable
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
+import javax.inject.Inject
 
-interface AccountRepository {
+class AccountRepository @Inject constructor(private val accountDataStore: AccountDataStore) {
 
-  fun add(account: Account): Observable<Account>
+  fun add(account: Account): Single<Account> {
+    return accountDataStore.add(account)
+  }
 
-  fun update(account: Account): Observable<Account>
+  fun update(account: Account): Single<Account> {
+    return accountDataStore.update(account)
+  }
 
-  fun remove(account: Account): Observable<Unit>
+  fun remove(account: Account): Completable {
+    return accountDataStore.remove(account)
+  }
 
-  fun getAccounts(category: Category): Observable<List<Account>>
+  fun getAccounts(category: Category): Flowable<List<Account>> {
+    return accountDataStore.getAccounts(category)
+  }
 
-  val allAccounts: Observable<List<Account>>
+  val allAccounts: Flowable<List<Account>>
+    get() = accountDataStore.allAccounts
 }

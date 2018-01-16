@@ -8,28 +8,33 @@ import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
-import rx.Observable
+import com.arturogutierrez.openticator.interactor.SingleUseCase
+import io.reactivex.Single
 
-class AddAccountInteractor(val accountRepository: AccountRepository,
-                           val categoryRepository: CategoryRepository,
-                           val categorySelector: CategorySelector,
-                           val categoryFactory: CategoryFactory,
+class AddAccountInteractor(private val accountRepository: AccountRepository,
+                           private val categoryRepository: CategoryRepository,
+                           private val categorySelector: CategorySelector,
+                           private val categoryFactory: CategoryFactory,
                            threadExecutor: ThreadExecutor,
-                           postExecutionThread: PostExecutionThread) : Interactor<Params, Account>(threadExecutor, postExecutionThread) {
+                           postExecutionThread: PostExecutionThread) : SingleUseCase<Account, Params>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: Params): Observable<Account> {
+  public override fun buildObservable(params: Params): Single<Account> {
     val newAccount = params.account
-    return categorySelector.selectedCategory.flatMap { category ->
-      val emptyCategory = categoryFactory.createEmptyCategory()
-      if (category == emptyCategory) {
-        return@flatMap accountRepository.add(newAccount)
-      }
 
-      accountRepository.add(newAccount).flatMap { createdAccount ->
-        categoryRepository.addAccount(category, createdAccount).flatMap { Observable.just(createdAccount) }
-      }
-    }
+    return categorySelector.selectedCategory
+        .singleOrError()
+        .flatMap { category ->
+          val emptyCategory = categoryFactory.createEmptyCategory()
+          if (category == emptyCategory) {
+            return@flatMap accountRepository.add(newAccount)
+          }
+
+          accountRepository.add(newAccount)
+              .flatMap { createdAccount ->
+                categoryRepository.addAccount(category, newAccount)
+                    .flatMap { Single.just(createdAccount) }
+              }
+        }
   }
 
   data class Params(val account: Account)

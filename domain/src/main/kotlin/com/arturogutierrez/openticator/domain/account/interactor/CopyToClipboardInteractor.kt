@@ -4,17 +4,18 @@ import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboard
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
+import com.arturogutierrez.openticator.interactor.CompletableUseCase
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
-import rx.Observable
+import io.reactivex.Completable
 
 class CopyToClipboardInteractor(private val clipboardRepository: ClipboardRepository,
                                 threadExecutor: ThreadExecutor,
-                                postExecutionThread: PostExecutionThread) : Interactor<Params, Unit>(threadExecutor, postExecutionThread) {
+                                postExecutionThread: PostExecutionThread)
+  : CompletableUseCase<Params>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: Params): Observable<Unit> {
+  public override fun buildObservable(params: Params): Completable {
     val accountPasscode = params.accountPasscode
-    return Observable.fromCallable {
+    return Completable.fromCallable {
       clipboardRepository.copy(accountPasscode.account.name, accountPasscode.passcode.code)
     }
   }

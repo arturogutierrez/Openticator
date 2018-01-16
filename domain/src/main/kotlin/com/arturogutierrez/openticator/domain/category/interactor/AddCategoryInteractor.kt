@@ -7,15 +7,16 @@ import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.category.repository.CategoryRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
-import rx.Observable
+import com.arturogutierrez.openticator.interactor.SingleUseCase
+import io.reactivex.Single
 
 class AddCategoryInteractor(private val categoryRepository: CategoryRepository,
                             private val categoryFactory: CategoryFactory,
                             threadExecutor: ThreadExecutor,
-                            postExecutionThread: PostExecutionThread) : Interactor<Params, Category>(threadExecutor, postExecutionThread) {
+                            postExecutionThread: PostExecutionThread)
+  : SingleUseCase<Category, Params>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: Params): Observable<Category> {
+  public override fun buildObservable(params: Params): Single<Category> {
     val newCategory = categoryFactory.createCategory(params.categoryName)
     val accountToAddToCategory = params.account
     return categoryRepository.add(newCategory)

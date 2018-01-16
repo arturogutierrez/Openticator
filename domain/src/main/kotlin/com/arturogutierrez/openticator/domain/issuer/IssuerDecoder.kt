@@ -7,10 +7,9 @@ import javax.inject.Inject
 
 class IssuerDecoder @Inject constructor() {
 
-  private val expressions: EnumMap<Issuer, String>
+  private val expressions: EnumMap<Issuer, String> = EnumMap<Issuer, String>(Issuer::class.java)
 
   init {
-    expressions = EnumMap<Issuer, String>(Issuer::class.java)
     expressions.put(Issuer.AWS, "mfa-device")
     expressions.put(Issuer.BITCOIN, "bitcoin")
     expressions.put(Issuer.DIGITALOCEAN, "digital\\s?ocean")

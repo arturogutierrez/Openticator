@@ -5,14 +5,15 @@ import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
-import rx.Observable
+import com.arturogutierrez.openticator.interactor.FlowableUseCase
+import io.reactivex.Flowable
 
 class GetAccountsInteractor(private val accountRepository: AccountRepository,
                             threadExecutor: ThreadExecutor,
-                            postExecutionThread: PostExecutionThread) : Interactor<EmptyParams, List<Account>>(threadExecutor, postExecutionThread) {
+                            postExecutionThread: PostExecutionThread)
+  : FlowableUseCase<List<Account>, EmptyParams>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: EmptyParams): Observable<List<Account>> {
+  override fun buildObservable(params: EmptyParams): Flowable<List<Account>> {
     return accountRepository.allAccounts
   }
 
