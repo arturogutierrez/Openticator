@@ -45,10 +45,11 @@ ext {
   robinHoodTickerVersion = '1.1.1'
 
   // Testing
+  robolectricVersion = '3.1.4'
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
   mockitoVersion = '2.10.0'
-  powerMockitoVersion = '1.6.6'
+  mockitoKotlinVersion = '1.5.0'
   hamkrestVersion = '1.4.2.0'
   supportTestVersion = '1.0.1'
   espressoVersion = '3.0.1'
@@ -110,13 +111,10 @@ ext {
                       gson              : "com.google.code.gson:gson:${gsonVersion}",
                       spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}"]
 
-  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
-                          junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
-                          junit              : "junit:junit:${jUnitVersion}",
-                          hamkrest           : "com.natpryce:hamkrest:${hamkrestVersion}",
-                          mockito            : "org.mockito:mockito-core:${mockitoVersion}",
-                          powerMockitoJUnit  : "org.powermock:powermock-module-junit4:${powerMockitoVersion}",
-                          powerMockitoRules  : "org.powermock:powermock-module-junit4-rule:${powerMockitoVersion}",
-                          powerMockito       : "org.powermock:powermock-api-mockito2:${powerMockitoVersion}",
-                          powerMockitoXStream: "org.powermock:powermock-classloading-xstream:${powerMockitoVersion}"]
+  dataTestDependencies = [kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                          junitKotlin  : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
+                          junit        : "junit:junit:${jUnitVersion}",
+                          hamkrest     : "com.natpryce:hamkrest:${hamkrestVersion}",
+                          mockitoKotlin: "com.nhaarman:mockito-kotlin-kt1.1:${mockitoKotlinVersion}",
+                          robolectric  : "org.robolectric:robolectric:${robolectricVersion}"]
 }

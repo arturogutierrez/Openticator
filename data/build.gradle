@@ -54,9 +54,6 @@ dependencies {
   testImplementation testDependencies.junitKotlin
   testImplementation testDependencies.junit
   testImplementation testDependencies.hamkrest
-
-  testImplementation testDependencies.powerMockitoJUnit
-  testImplementation testDependencies.powerMockitoRules
-  testImplementation testDependencies.powerMockito
-  testImplementation testDependencies.powerMockitoXStream
+  testImplementation testDependencies.robolectric
+  testImplementation testDependencies.mockitoKotlin
 }
