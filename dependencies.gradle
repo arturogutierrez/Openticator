@@ -1,6 +1,7 @@
 allprojects {
   repositories {
     jcenter()
+    google()
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
   }
@@ -11,12 +12,12 @@ ext {
   compiler = [java  : JavaVersion.VERSION_1_7,
               kotlin: '1.0.6']
 
-  android = [buildTools: '25.0.1',
+  android = [buildTools: '26.0.2',
              compileSdk: 24,
              minSdk    : 16,
              targetSdk : 24]
 
-  build = [gradle       : '2.2.3',
+  build = [gradle       : '3.0.1',
            fabric       : '1.22.0',
            realm        : '2.2.1',
            playPublisher: '1.1.5']

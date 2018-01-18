@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: "kotlin-kapt"
 
 android {
   def ext = rootProject.extensions.ext
@@ -79,14 +80,20 @@ android {
     }
   }
 
+  flavorDimensions "sdk"
+
   productFlavors {
     fastBuild {
+      dimension "sdk"
+
       // Enable pre-dexing to produce an APK that can be tested on
       // Android 5.0+ without the time-consuming DEX build processes.
       minSdkVersion 21
     }
 
     regular {
+      dimension "sdk"
+
       minSdkVersion ext.android.minSdk
     }
   }
