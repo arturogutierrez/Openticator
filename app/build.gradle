@@ -108,8 +108,10 @@ dependencies {
 
   implementation presentationDependencies.multiDex
   implementation presentationDependencies.flowUp
-  implementation presentationDependencies.anko
-  implementation presentationDependencies.ankoSupport
+  implementation(presentationDependencies.anko) {
+    exclude group: 'org.jetbrains.kotlin'
+  }
+  implementation(presentationDependencies.ankoSupport)
   implementation presentationDependencies.supportVersion
   implementation presentationDependencies.appCompat
   implementation presentationDependencies.design
