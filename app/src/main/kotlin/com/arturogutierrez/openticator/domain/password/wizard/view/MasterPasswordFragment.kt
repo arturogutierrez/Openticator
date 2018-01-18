@@ -90,7 +90,7 @@ class MasterPasswordFragment : BaseFragment(), MasterPasswordView {
   }
 
   override fun closeWizard() {
-    navigator.goToAccountList(context)
+    context?.let { navigator.goToAccountList(it) }
     val activity = activity
     activity?.finish()
   }

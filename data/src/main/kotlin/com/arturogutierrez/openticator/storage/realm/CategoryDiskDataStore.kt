@@ -26,7 +26,7 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
       category
     }
 
-    return categoryObservable.doOnNext { categoryAdded -> notifyAccountChanges() }
+    return categoryObservable.doOnNext { notifyAccountChanges() }
   }
 
   override fun addAccount(category: Category, account: Account): Observable<Category> {

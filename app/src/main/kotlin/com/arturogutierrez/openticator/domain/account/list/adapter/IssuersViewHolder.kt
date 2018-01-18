@@ -9,12 +9,10 @@ import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
 
 class IssuersViewHolder(itemView: View, onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
-  private val tvName: TextView
-  private val ivIcon: ImageView
+  private val tvName: TextView = itemView.findViewById(R.id.tv_name)
+  private val ivIcon: ImageView = itemView.findViewById(R.id.iv_icon)
 
   init {
-    tvName = itemView.findViewById(R.id.tv_name) as TextView
-    ivIcon = itemView.findViewById(R.id.iv_icon) as ImageView
     itemView.setOnClickListener { onItemClick(layoutPosition) }
   }
 

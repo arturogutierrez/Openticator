@@ -5,11 +5,12 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
 import android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
 import android.support.design.widget.CoordinatorLayout
+import android.view.View
 import com.arturogutierrez.openticator.R
 
 fun Activity.disableAppBarLayoutScroll() {
-  val toolbar = findViewById(R.id.toolbar)
-  val appBarLayout = findViewById(R.id.appbar_layout)
+  val toolbar = findViewById<View>(R.id.toolbar)
+  val appBarLayout = findViewById<AppBarLayout>(R.id.appbar_layout)
 
   if (toolbar == null || appBarLayout == null) {
     return
@@ -29,8 +30,8 @@ fun Activity.disableAppBarLayoutScroll() {
 }
 
 fun Activity.enableAppBarLayoutScroll() {
-  val toolbar = findViewById(R.id.toolbar)
-  val appBarLayout = findViewById(R.id.appbar_layout)
+  val toolbar = findViewById<View>(R.id.toolbar)
+  val appBarLayout = findViewById<AppBarLayout>(R.id.appbar_layout)
 
   if (toolbar == null || appBarLayout == null) {
     return

@@ -124,7 +124,7 @@ class AccountListActivity : BaseActivity(R.layout.activity_toolbar_drawer), HasC
     AlertDialog.Builder(this)
         .setTitle(R.string.camera_permission)
         .setMessage(R.string.camera_permission_needed_for_scan_qr)
-        .setPositiveButton(android.R.string.ok) { dialog, which -> dialog.dismiss() }
+        .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
         .show()
   }
 }

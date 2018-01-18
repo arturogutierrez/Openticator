@@ -60,7 +60,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity,
         .withActionBarDrawerToggleAnimated(true)
         .addDrawerItems(categoriesSectionDrawerItem, allAccountsDrawerItem)
         .addStickyDrawerItems(settingsDrawerItem)
-        .withOnDrawerItemClickListener { view, position, drawerItem -> onDrawerItemClicked(drawerItem, position) }
+        .withOnDrawerItemClickListener { _, position, drawerItem -> onDrawerItemClicked(drawerItem, position) }
         .withSelectedItemByPosition(1)
         .build()
   }

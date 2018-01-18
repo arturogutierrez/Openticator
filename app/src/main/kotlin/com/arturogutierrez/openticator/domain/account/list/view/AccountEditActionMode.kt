@@ -23,7 +23,7 @@ import rx.Subscription
 import javax.inject.Inject
 
 class AccountEditActionMode(accountListComponent: AccountListComponent,
-                            val accountsAdapter: AccountsAdapter) : ActionMode.Callback, AccountEditModeView {
+    val accountsAdapter: AccountsAdapter) : ActionMode.Callback, AccountEditModeView {
 
   @Inject
   internal lateinit var activity: Activity
@@ -102,7 +102,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
 
     MaterialDialog.Builder(activity)
         .title(R.string.rename_account)
-        .input(null, selectedAccount.name) { dialog, input ->
+        .input(null, selectedAccount.name) { _, input ->
           presenter.updateAccount(selectedAccount, input.toString())
         }.show()
   }
@@ -134,7 +134,8 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   }
 
   override fun showChooseEmptyCategory(account: Account) {
-    MaterialDialog.Builder(activity).title(R.string.add_to_category).content(R.string.no_categories).positiveText(R.string.create_new_category).onPositive { dialog, which ->
+    MaterialDialog.Builder(activity).title(R.string.add_to_category).content(R.string.no_categories).positiveText(
+        R.string.create_new_category).onPositive { dialog, _ ->
       dialog.dismiss()
       showAddNewCategory(account)
     }.show()
@@ -150,10 +151,10 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   override fun showChooseCategory(categories: List<Category>, account: Account) {
     val stringCategories = categories.map { it.name }
 
-    MaterialDialog.Builder(activity).title(R.string.add_to_category).items(stringCategories).itemsCallback { dialog, itemView, which, text ->
+    MaterialDialog.Builder(activity).title(R.string.add_to_category).items(stringCategories).itemsCallback { _, _, which, _ ->
       val category = categories[which]
       presenter.addAccountToCategory(category, account)
-    }.positiveText(R.string.create_new_category).onPositive { dialog, which ->
+    }.positiveText(R.string.create_new_category).onPositive { dialog, _ ->
       dialog.dismiss()
       showAddNewCategory(account)
     }.show()
@@ -162,7 +163,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   override fun showChooseLogo(issuers: List<IssuerDecorator>, account: Account) {
     val logosView = layoutInflater.inflate(R.layout.dialog_issuers, null)
     val gridLayoutManager = GridLayoutManager(activity, 3)
-    val recyclerView = logosView.findViewById(R.id.rv_logos) as RecyclerView
+    val recyclerView = logosView.findViewById<RecyclerView>(R.id.rv_logos)
     recyclerView.layoutManager = gridLayoutManager
 
     val dialog = MaterialDialog.Builder(activity)

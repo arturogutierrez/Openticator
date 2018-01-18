@@ -10,7 +10,7 @@ allprojects {
 ext {
 
   compiler = [java  : JavaVersion.VERSION_1_7,
-              kotlin: '1.2.0']
+              kotlin: '1.1.50']
 
   android = [buildTools: '26.0.2',
              compileSdk: 26,
@@ -29,7 +29,7 @@ ext {
 
   // Libraries
   crashlyticsVersion = '2.6.8'
-  daggerVersion = '2.11'
+  daggerVersion = '2.14.1'
   rxJavaVersion = '1.2.3'
   rxAndroidVersion = '1.2.1'
   javaxAnnotationVersion = '1.0'
@@ -38,7 +38,7 @@ ext {
   dexterVersion = '2.3.1'
   materialDialogsVersion = '0.9.6.0'
   materialDrawerVersion = '6.0.2'
-  ankoVersion = '0.10.1'
+  ankoVersion = '0.10.4'
   flowUpVersion = '1.0.0'
   gsonVersion = '2.8.2'
   spongyCastleVersion = '1.54.0.0'
