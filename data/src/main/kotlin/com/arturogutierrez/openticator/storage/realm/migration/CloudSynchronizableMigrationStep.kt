@@ -8,7 +8,7 @@ class CloudSynchronizableMigrationStep(override val fromSchemaVersion: Long,
   override fun migrate(dynamicRealm: DynamicRealm) {
     val schema = dynamicRealm.schema
 
-    schema["AccountRealm"].addField("pendingToSync", Boolean::class.java)
-    schema["CategoryRealm"].addField("pendingToSync", Boolean::class.java)
+    schema["AccountRealm"]?.addField("pendingToSync", Boolean::class.java)
+    schema["CategoryRealm"]?.addField("pendingToSync", Boolean::class.java)
   }
 }

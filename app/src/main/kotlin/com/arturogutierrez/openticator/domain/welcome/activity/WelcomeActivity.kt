@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.di.HasComponent
+import com.arturogutierrez.openticator.domain.welcome.di.DaggerWelcomeComponent
 import com.arturogutierrez.openticator.domain.welcome.di.WelcomeComponent
 import com.arturogutierrez.openticator.domain.welcome.di.WelcomeModule
 import com.arturogutierrez.openticator.domain.welcome.view.WelcomePresenter
