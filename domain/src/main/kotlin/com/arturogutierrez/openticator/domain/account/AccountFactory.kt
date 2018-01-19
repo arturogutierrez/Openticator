@@ -7,7 +7,7 @@ import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import java.util.*
 import javax.inject.Inject
 
-open class AccountFactory @Inject constructor(val issuerDecoder: IssuerDecoder) {
+open class AccountFactory @Inject constructor(private val issuerDecoder: IssuerDecoder) {
 
   open fun createAccount(name: String, secret: String): Account {
     return createAccount(OTPType.TOTP, name, secret)

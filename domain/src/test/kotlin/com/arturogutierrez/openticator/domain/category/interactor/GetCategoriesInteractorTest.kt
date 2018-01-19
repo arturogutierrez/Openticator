@@ -32,7 +32,7 @@ class GetCategoriesInteractorTest {
 
   @Test
   fun testGettingAccountsFromRepository() {
-    getCategoryInteractor.createObservable(EmptyParams)
+    getCategoryInteractor.buildObservable(EmptyParams)
 
     verify<CategoryRepository>(mockCategoryRepository).categories
     verifyZeroInteractions(mockThreadExecutor)

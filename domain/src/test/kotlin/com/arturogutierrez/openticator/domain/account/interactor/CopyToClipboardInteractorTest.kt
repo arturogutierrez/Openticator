@@ -9,13 +9,13 @@ import com.arturogutierrez.openticator.domain.otp.model.Passcode
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
 import com.arturogutierrez.openticator.storage.clipboard.ClipboardRepository
+import io.reactivex.subscribers.TestSubscriber
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyZeroInteractions
 import org.mockito.MockitoAnnotations
-import rx.observers.TestSubscriber
 
 class CopyToClipboardInteractorTest {
 
@@ -46,10 +46,10 @@ class CopyToClipboardInteractorTest {
     val account = Account("id", fakeAccountName, OTPType.TOTP, "secret", Issuer.UNKNOWN)
     val passcode = Passcode(fakeCode, 0)
     val accountPasscode = AccountPasscode(account, Issuer.UNKNOWN, passcode)
-    val testSubscriber = TestSubscriber<Unit>()
 
-    copyToClipboardInteractor.createObservable(Params(accountPasscode)).subscribe(testSubscriber)
+    val testObserver = copyToClipboardInteractor.buildObservable(Params(accountPasscode)).test()
 
+    testObserver.assertComplete()
     verify<ClipboardRepository>(mockClipboardRepository).copy(fakeAccountName, fakeCode)
     verifyZeroInteractions(mockThreadExecutor)
     verifyZeroInteractions(mockPostExecutionThread)

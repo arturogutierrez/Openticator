@@ -19,7 +19,7 @@ ext {
 
   build = [gradle       : '3.0.1',
            fabric       : '1.24.1',
-           realm        : '3.7.1',
+           realm        : '4.3.2',
            playPublisher: '1.2.0']
 
   // Google Libraries
@@ -30,8 +30,8 @@ ext {
   // Libraries
   crashlyticsVersion = '2.6.8'
   daggerVersion = '2.14.1'
-  rxJavaVersion = '1.2.3'
-  rxAndroidVersion = '1.2.1'
+  rxJavaVersion = '2.1.3'
+  rxAndroidVersion = '2.0.1'
   javaxAnnotationVersion = '1.0'
   fabVersion = '1.6.4'
   zxingAndroidEmbeddedVersion = '3.4.0'
@@ -65,8 +65,8 @@ ext {
                               crashlytics         : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger              : "com.google.dagger:dagger:${daggerVersion}",
-                              rxJava              : "io.reactivex:rxjava:${rxJavaVersion}",
-                              rxAndroid           : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                              rxJava              : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+                              rxAndroid           : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
                               javaxAnnotation     : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                               supportVersion      : "com.android.support:support-v4:${supportVersion}",
                               appCompat           : "com.android.support:appcompat-v7:${supportVersion}",
@@ -93,19 +93,19 @@ ext {
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
                         javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                        rxJava         : "io.reactivex:rxjava:${rxJavaVersion}"]
+                        rxJava         : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"]
 
-  domainTestDependencies = [kotlinStdLib: "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
-                            junitKotlin : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
-                            junit       : "junit:junit:${jUnitVersion}",
-                            hamkrest    : "com.natpryce:hamkrest:${hamkrestVersion}",
-                            mockito     : "org.mockito:mockito-core:${mockitoVersion}",]
+  domainTestDependencies = [kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                            junitKotlin  : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
+                            junit        : "junit:junit:${jUnitVersion}",
+                            hamkrest     : "com.natpryce:hamkrest:${hamkrestVersion}",
+                            mockitoKotlin: "com.nhaarman:mockito-kotlin-kt1.1:${mockitoKotlinVersion}"]
 
   dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                       daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
                       dagger            : "com.google.dagger:dagger:${daggerVersion}",
-                      rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
-                      rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
+                      rxJava            : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+                      rxAndroid         : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                       androidAnnotations: "com.android.support:support-annotations:${supportVersion}",
                       gson              : "com.google.code.gson:gson:${gsonVersion}",

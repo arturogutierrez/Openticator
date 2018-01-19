@@ -1,10 +1,11 @@
 package com.arturogutierrez.openticator.domain.password.interactor
 
-import com.arturogutierrez.openticator.storage.preferences.Preferences
 import com.arturogutierrez.openticator.domain.password.PasswordSerializer
+import com.arturogutierrez.openticator.storage.preferences.Preferences
 
-class CreateMasterPasswordInteractor(val preferences: Preferences,
-                                     val passwordSerializer: PasswordSerializer) {
+class CreateMasterPasswordInteractor(
+    private val preferences: Preferences,
+    private val passwordSerializer: PasswordSerializer) {
 
   fun createMasterPassword(plainPassword: String) {
     var encodedPassword = passwordSerializer.encodePassword(plainPassword)

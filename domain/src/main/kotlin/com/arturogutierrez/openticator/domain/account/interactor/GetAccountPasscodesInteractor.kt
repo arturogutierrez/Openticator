@@ -9,17 +9,18 @@ import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.otp.OneTimePasswordFactory
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
-import com.arturogutierrez.openticator.interactor.Interactor
-import rx.Observable
+import com.arturogutierrez.openticator.interactor.FlowableUseCase
+import io.reactivex.Flowable
 
-class GetAccountPasscodesInteractor(val categorySelector: CategorySelector,
-                                    val categoryFactory: CategoryFactory,
-                                    val accountRepository: AccountRepository,
-                                    val oneTimePasswordFactory: OneTimePasswordFactory,
+class GetAccountPasscodesInteractor(private val categorySelector: CategorySelector,
+                                    private val categoryFactory: CategoryFactory,
+                                    private val accountRepository: AccountRepository,
+                                    private val oneTimePasswordFactory: OneTimePasswordFactory,
                                     threadExecutor: ThreadExecutor,
-                                    postExecutionThread: PostExecutionThread) : Interactor<EmptyParams, List<AccountPasscode>>(threadExecutor, postExecutionThread) {
+                                    postExecutionThread: PostExecutionThread)
+  : FlowableUseCase<List<AccountPasscode>, EmptyParams>(threadExecutor, postExecutionThread) {
 
-  override fun createObservable(params: EmptyParams): Observable<List<AccountPasscode>> {
+  override fun buildObservable(params: EmptyParams): Flowable<List<AccountPasscode>> {
     return categorySelector.selectedCategory.flatMap { category ->
       val emptyCategory = categoryFactory.createEmptyCategory()
       if (category == emptyCategory) {

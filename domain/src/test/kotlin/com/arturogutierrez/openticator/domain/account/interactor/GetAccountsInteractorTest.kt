@@ -32,7 +32,7 @@ class GetAccountsInteractorTest {
 
   @Test
   fun testUsingAccountsFromRepository() {
-    getAccountsInteractor.createObservable(EmptyParams)
+    getAccountsInteractor.buildObservable(EmptyParams)
 
     verify<AccountRepository>(mockAccountRepository).allAccounts
     verifyZeroInteractions(mockThreadExecutor)

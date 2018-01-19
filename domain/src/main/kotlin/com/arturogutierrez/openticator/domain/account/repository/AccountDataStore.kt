@@ -2,17 +2,19 @@ package com.arturogutierrez.openticator.domain.account.repository
 
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
-import rx.Observable
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface AccountDataStore {
 
-  fun add(account: Account): Observable<Account>
+  fun add(account: Account): Single<Account>
 
-  fun update(account: Account): Observable<Account>
+  fun update(account: Account): Single<Account>
 
-  fun remove(account: Account): Observable<Unit>
+  fun remove(account: Account): Completable
 
-  fun getAccounts(category: Category): Observable<List<Account>>
+  fun getAccounts(category: Category): Flowable<List<Account>>
 
-  val allAccounts: Observable<List<Account>>
+  val allAccounts: Flowable<List<Account>>
 }

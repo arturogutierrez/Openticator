@@ -7,9 +7,9 @@ import com.arturogutierrez.openticator.storage.json.mapper.CategoryEntityMapper
 import com.arturogutierrez.openticator.storage.json.model.BackupEntity
 import com.google.gson.Gson
 
-class BackupJsonSerializer constructor(val categoryEntityMapper: CategoryEntityMapper,
-                                       val accountEntityMapper: AccountEntityMapper,
-                                       val gson: Gson) : BackupSerializer {
+class BackupJsonSerializer constructor(private val categoryEntityMapper: CategoryEntityMapper,
+                                       private val accountEntityMapper: AccountEntityMapper,
+                                       private val gson: Gson) : BackupSerializer {
 
   override fun serialize(version: Int, categories: List<Category>, accounts: List<Pair<Account, Category>>): String {
     val categoryEntities = categoryEntityMapper.transform(categories)

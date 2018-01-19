@@ -1,12 +1,14 @@
 package com.arturogutierrez.openticator.domain.account.add
 
 import com.arturogutierrez.openticator.domain.account.AccountFactory
-import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.*
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.EMPTY_ACCOUNT_NAME
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.EMPTY_SECRET
+import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.INVALID_SECRET
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.helpers.isBase32
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultSingleObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
@@ -14,7 +16,7 @@ class AddAccountFormPresenter @Inject constructor(private val accountFactory: Ac
                                                   private val addAccountInteractorInteractor: AddAccountInteractor) : Presenter<AddAccountView>() {
 
   override fun destroy() {
-    addAccountInteractorInteractor.unsubscribe()
+    addAccountInteractorInteractor.dispose()
   }
 
   fun createTimeBasedAccount(accountName: String?, accountSecret: String?) {
@@ -27,8 +29,8 @@ class AddAccountFormPresenter @Inject constructor(private val accountFactory: Ac
     } else {
       val newAccount = accountFactory.createAccount(accountName.trim(), accountSecret.trim())
       val params = Params(newAccount)
-      addAccountInteractorInteractor.execute(params, object : DefaultSubscriber<Account>() {
-        override fun onNext(item: Account) {
+      addAccountInteractorInteractor.execute(params, object : DefaultSingleObserver<Account>() {
+        override fun onSuccess(t: Account) {
           onAccountAdded()
         }
 

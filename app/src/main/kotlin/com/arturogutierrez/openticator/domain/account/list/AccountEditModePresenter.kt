@@ -10,22 +10,28 @@ import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecoratorFactory
 import com.arturogutierrez.openticator.domain.issuer.interactor.GetIssuersInteractor
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultCompletableObserver
+import com.arturogutierrez.openticator.interactor.DefaultFlowableObserver
+import com.arturogutierrez.openticator.interactor.DefaultSingleObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountEditModePresenter @Inject constructor(
-    val updateAccountInteractor: UpdateAccountInteractor,
-    val deleteAccountsInteractor: DeleteAccountsInteractor,
-    val getCategoriesInteractor: GetCategoriesInteractor,
-    val addCategoryInteractor: AddCategoryInteractor,
-    val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
-    val getIssuersInteractor: GetIssuersInteractor,
-    val issuerDecoratorFactory: IssuerDecoratorFactory) : Presenter<AccountEditModeView>() {
+    private val updateAccountInteractor: UpdateAccountInteractor,
+    private val deleteAccountsInteractor: DeleteAccountsInteractor,
+    private val getCategoriesInteractor: GetCategoriesInteractor,
+    private val addCategoryInteractor: AddCategoryInteractor,
+    private val addAccountToCategoryInteractor: AddAccountToCategoryInteractor,
+    private val getIssuersInteractor: GetIssuersInteractor,
+    private val issuerDecoratorFactory: IssuerDecoratorFactory)
+  : Presenter<AccountEditModeView>() {
 
   override fun destroy() {
     deleteAccountsInteractor.unsubscribe()
+    getCategoriesInteractor.dispose()
+    addCategoryInteractor.dispose()
+    addAccountToCategoryInteractor.dispose()
+    getIssuersInteractor.dispose()
   }
 
   fun deleteAccounts(selectedAccounts: List<Account>) {
@@ -84,8 +90,9 @@ class AccountEditModePresenter @Inject constructor(
     view?.dismissActionMode()
   }
 
-  private inner class UpdateAccountSubscriber : DefaultSubscriber<Account>() {
-    override fun onNext(item: Account) {
+  private inner class UpdateAccountSubscriber : DefaultCompletableObserver() {
+
+    override fun onComplete() {
       view?.dismissActionMode()
     }
 
@@ -94,8 +101,9 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class DeleteAccountsSubscriber : DefaultSubscriber<Unit>() {
-    override fun onNext(aVoid: Unit) {
+  private inner class DeleteAccountsSubscriber : DefaultCompletableObserver() {
+
+    override fun onComplete() {
       view?.dismissActionMode()
     }
 
@@ -104,15 +112,15 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class GetCategoriesSubscriber(val account: Account) : DefaultSubscriber<List<Category>>() {
+  private inner class GetCategoriesSubscriber(val account: Account) : DefaultFlowableObserver<List<Category>>() {
 
-    override fun onNext(categories: List<Category>) {
-      getCategoriesInteractor.unsubscribe()
+    override fun onNext(t: List<Category>) {
+      getCategoriesInteractor.clear()
 
-      if (categories.isEmpty()) {
+      if (t.isEmpty()) {
         view?.showChooseEmptyCategory(account)
       } else {
-        view?.showChooseCategory(categories, account)
+        view?.showChooseCategory(t, account)
       }
     }
 
@@ -121,9 +129,9 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class CreateCategorySubscriber : DefaultSubscriber<Category>() {
+  private inner class CreateCategorySubscriber : DefaultSingleObserver<Category>() {
 
-    override fun onNext(category: Category) {
+    override fun onSuccess(t: Category) {
       view?.dismissActionMode()
     }
 
@@ -132,9 +140,9 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class AddAccountToCategorySubscriber : DefaultSubscriber<Category>() {
+  private inner class AddAccountToCategorySubscriber : DefaultSingleObserver<Category>() {
 
-    override fun onNext(category: Category) {
+    override fun onSuccess(t: Category) {
       view?.dismissActionMode()
     }
 
@@ -143,10 +151,10 @@ class AccountEditModePresenter @Inject constructor(
     }
   }
 
-  private inner class GetIssuersSubscriber(private val account: Account) : DefaultSubscriber<List<Issuer>>() {
+  private inner class GetIssuersSubscriber(private val account: Account) : DefaultSingleObserver<List<Issuer>>() {
 
-    override fun onNext(issuers: List<Issuer>) {
-      val issuerDecorators = issuerDecoratorFactory.create(issuers)
+    override fun onSuccess(t: List<Issuer>) {
+      val issuerDecorators = issuerDecoratorFactory.create(t)
       view?.showChooseLogo(issuerDecorators, account)
     }
   }

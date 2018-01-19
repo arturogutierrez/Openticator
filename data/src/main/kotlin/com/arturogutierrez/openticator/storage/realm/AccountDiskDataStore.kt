@@ -5,42 +5,41 @@ import com.arturogutierrez.openticator.domain.account.repository.AccountDataStor
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.storage.realm.mapper.AccountRealmMapper
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.processors.BehaviorProcessor
+import io.reactivex.processors.PublishProcessor
 import io.realm.Realm
 import io.realm.Sort
-import rx.Observable
-import rx.subjects.PublishSubject
-import rx.subjects.Subject
 import javax.inject.Inject
 
 class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: AccountRealmMapper) : AccountDataStore {
 
-  private val changesPublishSubject: Subject<Unit, Unit>
+  private val changesPublishSubject = BehaviorProcessor.create<Unit>().toSerialized()
 
-  init {
-    changesPublishSubject = PublishSubject.create<Unit>().toSerialized()
-  }
+  override fun add(account: Account): Single<Account> {
+    val accountObservable = allAccounts.firstOrError()
+        .flatMap { accounts ->
+          val numberOfAccounts = accounts.size
 
-  override fun add(account: Account): Observable<Account> {
-    val accountObservable = allAccounts.flatMap { accounts ->
-      val numberOfAccounts = accounts.size
+          Single.fromCallable {
+            val accountRealm = accountRealmMapper.transform(account)
+            accountRealm.order = numberOfAccounts
 
-      Observable.fromCallable {
-        val accountRealm = accountRealmMapper.transform(account)
-        accountRealm.order = numberOfAccounts
+            Realm.getDefaultInstance().use {
+              it.executeTransaction { it.copyToRealm(accountRealm) }
+            }
 
-        Realm.getDefaultInstance().use {
-          it.executeTransaction { it.copyToRealm(accountRealm) }
+            account
+          }
         }
 
-        account
-      }
-    }
-
-    return accountObservable.doOnNext { notifyAccountChanges() }
+    return accountObservable.doOnSuccess { notifyAccountChanges() }
   }
 
-  override fun update(account: Account): Observable<Account> {
-    val updateAccountObservable = Observable.fromCallable {
+  override fun update(account: Account): Single<Account> {
+    val updateAccountObservable = Single.fromCallable {
       Realm.getDefaultInstance().use {
         it.executeTransaction {
           val accountRealm = getAccountRealmAsBlocking(it, account.accountId) ?: return@executeTransaction
@@ -51,11 +50,11 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
       account
     }
 
-    return updateAccountObservable.doOnNext { notifyAccountChanges() }
+    return updateAccountObservable.doOnSuccess { notifyAccountChanges() }
   }
 
-  override fun remove(account: Account): Observable<Unit> {
-    val removeAccountObservable = Observable.fromCallable<Unit> {
+  override fun remove(account: Account): Completable {
+    val removeAccountObservable = Completable.fromCallable {
       Realm.getDefaultInstance().use {
         it.executeTransaction {
           val accountRealm = getAccountRealmAsBlocking(it, account.accountId) ?: return@executeTransaction
@@ -64,16 +63,16 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
       }
     }
 
-    return removeAccountObservable.doOnNext { notifyAccountChanges() }
+    return removeAccountObservable.doOnComplete { notifyAccountChanges() }
   }
 
-  override fun getAccounts(category: Category): Observable<List<Account>> {
+  override fun getAccounts(category: Category): Flowable<List<Account>> {
     return changesPublishSubject.map { getAccountsForCategoryAsBlocking(category) }
-        .startWith(Observable.fromCallable { getAccountsForCategoryAsBlocking(category) })
+        .startWith(Flowable.fromCallable { getAccountsForCategoryAsBlocking(category) })
   }
 
-  override val allAccounts: Observable<List<Account>>
-    get() = changesPublishSubject.map { accountsAsBlocking }.startWith(Observable.just(accountsAsBlocking))
+  override val allAccounts: Flowable<List<Account>>
+    get() = changesPublishSubject.map { accountsAsBlocking }.startWith(Flowable.just(accountsAsBlocking))
 
   private val accountsAsBlocking: List<Account>
     get() {
@@ -96,5 +95,5 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
     return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
   }
 
-  private fun notifyAccountChanges() = changesPublishSubject.onNext(null)
+  private fun notifyAccountChanges() = changesPublishSubject.onNext(Unit)
 }

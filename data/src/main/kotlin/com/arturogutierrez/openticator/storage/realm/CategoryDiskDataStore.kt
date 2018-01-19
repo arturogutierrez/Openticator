@@ -6,17 +6,19 @@ import com.arturogutierrez.openticator.domain.category.repository.CategoryDataSt
 import com.arturogutierrez.openticator.storage.realm.mapper.CategoryRealmMapper
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm
 import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm
+import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.processors.BehaviorProcessor
+import io.reactivex.processors.PublishProcessor
 import io.realm.Realm
-import rx.Observable
-import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper: CategoryRealmMapper) : CategoryDataStore {
 
-  private val changesPublishSubject = PublishSubject.create<Void>().toSerialized()
+  private val changesPublishSubject = BehaviorProcessor.create<Unit>().toSerialized()
 
-  override fun add(category: Category): Observable<Category> {
-    val categoryObservable = Observable.fromCallable {
+  override fun add(category: Category): Single<Category> {
+    val categorySingle = Single.fromCallable {
       val categoryRealm = categoryRealmMapper.transform(category)
 
       Realm.getDefaultInstance().use {
@@ -26,11 +28,11 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
       category
     }
 
-    return categoryObservable.doOnNext { notifyAccountChanges() }
+    return categorySingle.doOnSuccess { notifyAccountChanges() }
   }
 
-  override fun addAccount(category: Category, account: Account): Observable<Category> {
-    return Observable.fromCallable {
+  override fun addAccount(category: Category, account: Account): Single<Category> {
+    return Single.fromCallable {
       Realm.getDefaultInstance().use {
         it.executeTransaction {
           val categoryRealm = getCategoryAsBlocking(it, category.categoryId)
@@ -47,9 +49,9 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
     }
   }
 
-  override val categories: Observable<List<Category>>
+  override val categories: Flowable<List<Category>>
     get() = changesPublishSubject.map { categoriesAsBlocking }
-        .startWith(Observable.just(categoriesAsBlocking))
+        .startWith(Flowable.just(categoriesAsBlocking))
 
   private val categoriesAsBlocking: List<Category>
     get() {
@@ -68,6 +70,6 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
   }
 
   private fun notifyAccountChanges() {
-    changesPublishSubject.onNext(null)
+    changesPublishSubject.onNext(Unit)
   }
 }

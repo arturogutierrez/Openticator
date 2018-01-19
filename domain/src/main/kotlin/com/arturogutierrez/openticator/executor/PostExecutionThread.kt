@@ -1,6 +1,6 @@
 package com.arturogutierrez.openticator.executor
 
-import rx.Scheduler
+import io.reactivex.Scheduler
 
 /**
  * Executor where the response of the work done by interactors is delivered, it will be done on

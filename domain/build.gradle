@@ -33,7 +33,7 @@ dependencies {
   testImplementation domainDependencies.kotlinStdLib
   testImplementation domainTestDependencies.junitKotlin
   testImplementation domainTestDependencies.junit
-  testImplementation domainTestDependencies.mockito
+  testImplementation domainTestDependencies.mockitoKotlin
   testImplementation domainTestDependencies.hamkrest
   // AS is not adding the test resources to the classpath when executing from UI for Java Modules.
   // https://code.google.com/p/android/issues/detail?id=64887

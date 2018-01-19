@@ -6,15 +6,15 @@ import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboard
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultCompletableObserver
+import com.arturogutierrez.openticator.interactor.DefaultFlowableObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountListPresenter @Inject constructor(
-    val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
-    val copyToClipboardInteractor: CopyToClipboardInteractor,
-    val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView>() {
+    private val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
+    private val copyToClipboardInteractor: CopyToClipboardInteractor,
+    private val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView>() {
 
   private val handler = Handler(Looper.getMainLooper())
   private val scheduleRunnable = Runnable { this.reloadPasscodes() }
@@ -24,13 +24,13 @@ class AccountListPresenter @Inject constructor(
   }
 
   override fun pause() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.clear()
     copyToClipboardInteractor.unsubscribe()
     cancelSchedule()
   }
 
   override fun destroy() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.dispose()
     copyToClipboardInteractor.unsubscribe()
   }
 
@@ -42,24 +42,24 @@ class AccountListPresenter @Inject constructor(
 
   fun onPasscodeSelected(accountPasscode: AccountPasscode) {
     val params = CopyToClipboardInteractor.Params(accountPasscode)
-    copyToClipboardInteractor.execute(params, object : DefaultSubscriber<Unit>() {
-      override fun onNext(item: Unit) {
+    copyToClipboardInteractor.execute(params, object : DefaultCompletableObserver() {
+      override fun onComplete() {
         onPasscodeCopiedToClipboard()
       }
     })
   }
 
   private fun loadAccountPasscodes() {
-    getAccountPasscodesInteractor.execute(GetAccountPasscodesInteractor.EmptyParams,
-        object : DefaultSubscriber<List<AccountPasscode>>() {
-          override fun onNext(items: List<AccountPasscode>) {
-            onFetchAccountPasscodes(items)
-          }
+    val params = GetAccountPasscodesInteractor.EmptyParams
+    getAccountPasscodesInteractor.execute(params, object : DefaultFlowableObserver<List<AccountPasscode>>() {
+      override fun onNext(t: List<AccountPasscode>) {
+        onFetchAccountPasscodes(t)
+      }
 
-          override fun onError(e: Throwable) {
-            onFetchError()
-          }
-        })
+      override fun onError(e: Throwable) {
+        onFetchError()
+      }
+    })
   }
 
   private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {
@@ -82,7 +82,7 @@ class AccountListPresenter @Inject constructor(
 
   private fun scheduleUpdate(accountPasscodes: List<AccountPasscode>) {
     val delayInSeconds = calculateMinimumSecondsUntilNextRefresh(accountPasscodes)
-    handler.postDelayed(scheduleRunnable, (delayInSeconds * 1000).toLong())
+    handler.postDelayed(scheduleRunnable, delayInSeconds * 1000)
   }
 
   private fun cancelSchedule() {
@@ -90,17 +90,17 @@ class AccountListPresenter @Inject constructor(
   }
 
   private fun reloadPasscodes() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.clear()
     loadAccountPasscodes()
   }
 
-  private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Int {
+  private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Long {
     val minTime = accountPasscodes
         .map {
           remainingTimeCalculator.calculateRemainingSeconds(
               it.passcode.validUntil)
         }.min()
 
-    return minTime ?: Integer.MAX_VALUE
+    return minTime ?: Long.MAX_VALUE
   }
 }

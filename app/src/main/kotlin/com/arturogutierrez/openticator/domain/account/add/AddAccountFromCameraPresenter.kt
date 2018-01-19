@@ -4,15 +4,15 @@ import com.arturogutierrez.openticator.domain.account.AccountDecoder
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor
 import com.arturogutierrez.openticator.domain.account.interactor.AddAccountInteractor.Params
 import com.arturogutierrez.openticator.domain.account.model.Account
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultSingleObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractorInteractor: AddAccountInteractor,
-                                                        val accountDecoder: AccountDecoder) : Presenter<AddAccountFromCameraView>() {
+class AddAccountFromCameraPresenter @Inject constructor(private val addAccountInteractorInteractor: AddAccountInteractor,
+                                                        private val accountDecoder: AccountDecoder) : Presenter<AddAccountFromCameraView>() {
 
   override fun destroy() {
-    addAccountInteractorInteractor.unsubscribe()
+    addAccountInteractorInteractor.dispose()
   }
 
   fun onScanQR() {
@@ -40,8 +40,8 @@ class AddAccountFromCameraPresenter @Inject constructor(val addAccountInteractor
       showErrorAddingAccount()
     } else {
       val params = Params(account)
-      addAccountInteractorInteractor.execute(params, object : DefaultSubscriber<Account>() {
-        override fun onNext(item: Account) {
+      addAccountInteractorInteractor.execute(params, object : DefaultSingleObserver<Account>() {
+        override fun onSuccess(t: Account) {
           onAccountAdded()
         }
 

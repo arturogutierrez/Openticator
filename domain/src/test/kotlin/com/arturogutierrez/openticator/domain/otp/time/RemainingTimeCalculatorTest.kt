@@ -14,7 +14,7 @@ class RemainingTimeCalculatorTest {
 
     val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(120L)
 
-    assertThat(remainingSeconds, equalTo(20))
+    assertThat(remainingSeconds, equalTo(20L))
   }
 
   @Test
@@ -24,6 +24,6 @@ class RemainingTimeCalculatorTest {
 
     val remainingSeconds = remainingTimeCalculator.calculateRemainingSeconds(20L)
 
-    assertThat(remainingSeconds, equalTo(0))
+    assertThat(remainingSeconds, equalTo(0L))
   }
 }

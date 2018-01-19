@@ -9,13 +9,15 @@ import com.arturogutierrez.openticator.domain.category.repository.CategoryReposi
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import com.arturogutierrez.openticator.executor.PostExecutionThread
 import com.arturogutierrez.openticator.executor.ThreadExecutor
+import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import rx.Observable
 
 class AddCategoryInteractorTest {
 
@@ -42,10 +44,10 @@ class AddCategoryInteractorTest {
   fun testAddNewCategory() {
     val account = Account("id", "name", OTPType.TOTP, "secret", Issuer.UNKNOWN)
     val category = Category("id", "name")
-    `when`(mockCategoryFactory.createCategory(anyString())).thenReturn(category)
-    `when`(mockCategoryRepository.add(category)).thenReturn(Observable.just(category))
+    whenever(mockCategoryFactory.createCategory(anyString())).thenReturn(category)
+    whenever(mockCategoryRepository.add(category)).thenReturn(Single.just(category))
 
-    addCategoryInteractor.createObservable(Params("name", account))
+    addCategoryInteractor.buildObservable(Params("name", account))
 
     verify(mockCategoryRepository).add(category)
     verifyZeroInteractions(mockThreadExecutor)
