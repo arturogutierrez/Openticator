@@ -111,7 +111,7 @@ class AccountEditModePresenter @Inject constructor(
   private inner class GetCategoriesSubscriber(val account: Account) : DefaultFlowableObserver<List<Category>>() {
 
     override fun onNext(t: List<Category>) {
-      getCategoriesInteractor.unsubscribe()
+      getCategoriesInteractor.dispose()
 
       if (t.isEmpty()) {
         view?.showChooseEmptyCategory(account)

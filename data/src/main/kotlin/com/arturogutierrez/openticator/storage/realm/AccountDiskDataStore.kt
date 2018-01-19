@@ -94,5 +94,5 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
     return realm.where(AccountRealm::class.java).equalTo("accountId", accountId).findFirst()
   }
 
-  private fun notifyAccountChanges() = changesPublishSubject.onNext(null)
+  private fun notifyAccountChanges() = changesPublishSubject.onNext(Unit)
 }

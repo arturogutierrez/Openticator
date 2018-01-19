@@ -25,11 +25,11 @@ class NavigationDrawerPresenter @Inject constructor(
   }
 
   override fun pause() {
-    getCategoriesInteractor.unsubscribe()
+    getCategoriesInteractor.dispose()
   }
 
   override fun destroy() {
-    getCategoriesInteractor.unsubscribe()
+    getCategoriesInteractor.dispose()
   }
 
   private fun onFetchCategories(categories: List<Category>) {

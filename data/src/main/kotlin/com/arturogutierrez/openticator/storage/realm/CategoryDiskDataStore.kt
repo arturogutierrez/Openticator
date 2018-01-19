@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper: CategoryRealmMapper) : CategoryDataStore {
 
-  private val changesPublishSubject = PublishProcessor.create<Void>().toSerialized()
+  private val changesPublishSubject = PublishProcessor.create<Unit>().toSerialized()
 
   override fun add(category: Category): Single<Category> {
     val categoryObservable = Single.fromCallable {
@@ -69,6 +69,6 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
   }
 
   private fun notifyAccountChanges() {
-    changesPublishSubject.onNext(null)
+    changesPublishSubject.onNext(Unit)
   }
 }

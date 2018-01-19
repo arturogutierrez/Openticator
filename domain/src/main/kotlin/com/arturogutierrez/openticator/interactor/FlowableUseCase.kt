@@ -23,7 +23,7 @@ abstract class FlowableUseCase<OUT, in Params>(
     disposables.add(disposable)
   }
 
-  fun unsubscribe() {
+  fun dispose() {
     if (!disposables.isDisposed) {
       disposables.dispose()
     }

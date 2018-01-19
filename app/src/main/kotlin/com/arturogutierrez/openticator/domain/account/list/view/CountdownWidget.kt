@@ -48,12 +48,12 @@ class CountdownWidget : View, ValueAnimator.AnimatorUpdateListener {
     canvas.drawArc(bounds, 0f, angle.toFloat(), true, paint)
   }
 
-  fun startAnimation(lengthInSeconds: Int, initialPercent: Float) {
+  fun startAnimation(lengthInSeconds: Long, initialPercent: Float) {
     stopAnimation()
 
     val initialValue = (360 * Math.min(initialPercent, 1.0f)).toInt()
     valueAnimator = ValueAnimator.ofInt(-initialValue, 0).apply {
-      duration = (lengthInSeconds * 1000).toLong()
+      duration = lengthInSeconds * 1000
       addUpdateListener(this@CountdownWidget)
       start()
     }

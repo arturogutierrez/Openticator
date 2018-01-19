@@ -44,7 +44,7 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
     startAnimation(animationLength)
   }
 
-  private fun startAnimation(animationLength: Int) {
+  private fun startAnimation(animationLength: Long) {
     // TODO: Pass valid window length in Passcode
     val percentAnimation = animationLength / 30.0f
     vCountdown.startAnimation(animationLength, percentAnimation)
@@ -52,7 +52,7 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
 
   fun stopAnimation() = vCountdown.stopAnimation()
 
-  private fun calculateRemainingSeconds(validUntilInSeconds: Long): Int {
+  private fun calculateRemainingSeconds(validUntilInSeconds: Long): Long {
     val timeCalculator = RemainingTimeCalculator(CurrentTimeProvider())
     return timeCalculator.calculateRemainingSeconds(validUntilInSeconds)
   }
