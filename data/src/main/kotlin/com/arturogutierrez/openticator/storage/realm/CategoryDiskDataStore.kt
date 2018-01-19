@@ -8,16 +8,17 @@ import com.arturogutierrez.openticator.storage.realm.model.AccountRealm
 import com.arturogutierrez.openticator.storage.realm.model.CategoryRealm
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.PublishProcessor
 import io.realm.Realm
 import javax.inject.Inject
 
 class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper: CategoryRealmMapper) : CategoryDataStore {
 
-  private val changesPublishSubject = PublishProcessor.create<Unit>().toSerialized()
+  private val changesPublishSubject = BehaviorProcessor.create<Unit>().toSerialized()
 
   override fun add(category: Category): Single<Category> {
-    val categoryObservable = Single.fromCallable {
+    val categorySingle = Single.fromCallable {
       val categoryRealm = categoryRealmMapper.transform(category)
 
       Realm.getDefaultInstance().use {
@@ -27,7 +28,7 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
       category
     }
 
-    return categoryObservable.doOnSuccess { notifyAccountChanges() }
+    return categorySingle.doOnSuccess { notifyAccountChanges() }
   }
 
   override fun addAccount(category: Category, account: Account): Single<Category> {

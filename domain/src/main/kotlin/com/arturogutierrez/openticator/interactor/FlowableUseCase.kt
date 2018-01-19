@@ -28,4 +28,10 @@ abstract class FlowableUseCase<OUT, in Params>(
       disposables.dispose()
     }
   }
+
+  fun clear() {
+    if (!disposables.isDisposed) {
+      disposables.clear()
+    }
+  }
 }

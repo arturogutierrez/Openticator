@@ -24,13 +24,13 @@ class AccountListPresenter @Inject constructor(
   }
 
   override fun pause() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.clear()
     copyToClipboardInteractor.unsubscribe()
     cancelSchedule()
   }
 
   override fun destroy() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.dispose()
     copyToClipboardInteractor.unsubscribe()
   }
 
@@ -82,7 +82,7 @@ class AccountListPresenter @Inject constructor(
 
   private fun scheduleUpdate(accountPasscodes: List<AccountPasscode>) {
     val delayInSeconds = calculateMinimumSecondsUntilNextRefresh(accountPasscodes)
-    handler.postDelayed(scheduleRunnable, (delayInSeconds * 1000).toLong())
+    handler.postDelayed(scheduleRunnable, delayInSeconds * 1000)
   }
 
   private fun cancelSchedule() {
@@ -90,17 +90,17 @@ class AccountListPresenter @Inject constructor(
   }
 
   private fun reloadPasscodes() {
-    getAccountPasscodesInteractor.unsubscribe()
+    getAccountPasscodesInteractor.clear()
     loadAccountPasscodes()
   }
 
-  private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Int {
+  private fun calculateMinimumSecondsUntilNextRefresh(accountPasscodes: List<AccountPasscode>): Long {
     val minTime = accountPasscodes
         .map {
           remainingTimeCalculator.calculateRemainingSeconds(
               it.passcode.validUntil)
         }.min()
 
-    return minTime ?: Integer.MAX_VALUE
+    return minTime ?: Long.MAX_VALUE
   }
 }

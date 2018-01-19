@@ -25,7 +25,7 @@ class NavigationDrawerPresenter @Inject constructor(
   }
 
   override fun pause() {
-    getCategoriesInteractor.dispose()
+    getCategoriesInteractor.clear()
   }
 
   override fun destroy() {

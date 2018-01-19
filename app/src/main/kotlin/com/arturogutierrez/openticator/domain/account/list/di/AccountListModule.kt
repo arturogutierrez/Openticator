@@ -1,7 +1,10 @@
 package com.arturogutierrez.openticator.domain.account.list.di
 
-import com.arturogutierrez.openticator.di.PerActivity
-import com.arturogutierrez.openticator.domain.account.interactor.*
+import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboardInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.DeleteAccountsInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.GetAccountsInteractor
+import com.arturogutierrez.openticator.domain.account.interactor.UpdateAccountInteractor
 import com.arturogutierrez.openticator.domain.account.repository.AccountRepository
 import com.arturogutierrez.openticator.domain.category.CategoryFactory
 import com.arturogutierrez.openticator.domain.category.CategorySelector
@@ -24,14 +27,12 @@ import dagger.Provides
 class AccountListModule {
 
   @Provides
-  @PerActivity
   fun provideGetAccountsInteractor(accountRepository: AccountRepository,
                                    threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetAccountsInteractor {
     return GetAccountsInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
-  @PerActivity
   fun provideGetAccountPasscodesInteractor(
       categorySelector: CategorySelector, categoryFactory: CategoryFactory,
       accountRepository: AccountRepository, oneTimePasswordFactory: OneTimePasswordFactory,
@@ -41,14 +42,12 @@ class AccountListModule {
   }
 
   @Provides
-  @PerActivity
   fun provideDeleteAccountsInteractor(accountRepository: AccountRepository,
                                       threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): DeleteAccountsInteractor {
     return DeleteAccountsInteractor(accountRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
-  @PerActivity
   fun provideUpdateAccountInteractor(accountRepository: AccountRepository,
                                      threadExecutor: ThreadExecutor,
                                      postExecutionThread: PostExecutionThread): UpdateAccountInteractor {
@@ -56,14 +55,12 @@ class AccountListModule {
   }
 
   @Provides
-  @PerActivity
   fun provideGetCategoriesInteractor(categoryRepository: CategoryRepository,
                                      threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetCategoriesInteractor {
     return GetCategoriesInteractor(categoryRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
-  @PerActivity
   fun provideAddCategoryInteractor(categoryRepository: CategoryRepository,
                                    categoryFactory: CategoryFactory, threadExecutor: ThreadExecutor,
                                    postExecutionThread: PostExecutionThread): AddCategoryInteractor {
@@ -72,7 +69,6 @@ class AccountListModule {
   }
 
   @Provides
-  @PerActivity
   fun provideAddAccountToCategoryInteractor(
       categoryRepository: CategoryRepository, threadExecutor: ThreadExecutor,
       postExecutionThread: PostExecutionThread): AddAccountToCategoryInteractor {
@@ -81,20 +77,17 @@ class AccountListModule {
   }
 
   @Provides
-  @PerActivity
   fun provideGetIssuerInteractor(issuerRepository: IssuerRepository,
                                  threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread): GetIssuersInteractor {
     return GetIssuersInteractor(issuerRepository, threadExecutor, postExecutionThread)
   }
 
   @Provides
-  @PerActivity
   fun provideTimeProvider(): TimeProvider {
     return CurrentTimeProvider()
   }
 
   @Provides
-  @PerActivity
   fun provideCopyToClipboardInteractor(clipboardRepository: ClipboardRepository,
                                        threadExecutor: ThreadExecutor,
                                        postExecutionThread: PostExecutionThread): CopyToClipboardInteractor {

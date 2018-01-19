@@ -28,6 +28,10 @@ class AccountEditModePresenter @Inject constructor(
 
   override fun destroy() {
     deleteAccountsInteractor.unsubscribe()
+    getCategoriesInteractor.dispose()
+    addCategoryInteractor.dispose()
+    addAccountToCategoryInteractor.dispose()
+    getIssuersInteractor.dispose()
   }
 
   fun deleteAccounts(selectedAccounts: List<Account>) {
@@ -111,7 +115,7 @@ class AccountEditModePresenter @Inject constructor(
   private inner class GetCategoriesSubscriber(val account: Account) : DefaultFlowableObserver<List<Category>>() {
 
     override fun onNext(t: List<Category>) {
-      getCategoriesInteractor.dispose()
+      getCategoriesInteractor.clear()
 
       if (t.isEmpty()) {
         view?.showChooseEmptyCategory(account)

@@ -2,11 +2,14 @@ package com.arturogutierrez.openticator.domain.category
 
 import com.arturogutierrez.openticator.domain.category.model.Category
 import io.reactivex.Flowable
-import io.reactivex.processors.PublishProcessor
+import io.reactivex.processors.BehaviorProcessor
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CategorySelector {
+@Singleton
+class CategorySelector @Inject constructor() {
 
-  private val publishSubject = PublishProcessor.create<Category>()
+  private val publishSubject = BehaviorProcessor.create<Category>()
   private var currentCategory = Category.empty
 
   val selectedCategory: Flowable<Category>

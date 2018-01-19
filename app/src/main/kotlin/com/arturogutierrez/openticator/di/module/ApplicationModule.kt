@@ -59,10 +59,6 @@ class ApplicationModule(val context: Context) {
   @Provides
   fun provideCategoryRepository(categoryDiskDataStore: CategoryDiskDataStore): CategoryRepository = CategoryRepository(categoryDiskDataStore)
 
-  @Singleton
-  @Provides
-  fun provideCategorySelector() = CategorySelector()
-
   @Provides
   fun provideClipboardRepository(clipboardRepository: ClipboardRepositoryImpl): ClipboardRepository = clipboardRepository
 }

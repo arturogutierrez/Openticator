@@ -8,6 +8,7 @@ import com.arturogutierrez.openticator.storage.realm.model.AccountRealm
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.PublishProcessor
 import io.realm.Realm
 import io.realm.Sort
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: AccountRealmMapper) : AccountDataStore {
 
-  private val changesPublishSubject = PublishProcessor.create<Unit>().toSerialized()
+  private val changesPublishSubject = BehaviorProcessor.create<Unit>().toSerialized()
 
   override fun add(account: Account): Single<Account> {
     val accountObservable = allAccounts.firstOrError()

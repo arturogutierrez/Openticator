@@ -22,19 +22,18 @@ class AddAccountInteractor(private val accountRepository: AccountRepository,
     val newAccount = params.account
 
     return categorySelector.selectedCategory
-        .singleOrError()
-        .flatMap { category ->
+        .flatMapSingle { category ->
           val emptyCategory = categoryFactory.createEmptyCategory()
           if (category == emptyCategory) {
-            return@flatMap accountRepository.add(newAccount)
+            accountRepository.add(newAccount)
+          } else {
+            accountRepository.add(newAccount)
+                .flatMap { createdAccount ->
+                  categoryRepository.addAccount(category, newAccount)
+                      .flatMap { Single.just(createdAccount) }
+                }
           }
-
-          accountRepository.add(newAccount)
-              .flatMap { createdAccount ->
-                categoryRepository.addAccount(category, newAccount)
-                    .flatMap { Single.just(createdAccount) }
-              }
-        }
+        }.firstOrError()
   }
 
   data class Params(val account: Account)
