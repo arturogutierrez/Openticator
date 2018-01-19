@@ -1,6 +1,7 @@
 allprojects {
   repositories {
     jcenter()
+    google()
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
   }
@@ -9,43 +10,37 @@ allprojects {
 ext {
 
   compiler = [java  : JavaVersion.VERSION_1_7,
-              kotlin: '1.0.6']
+              kotlin: '1.2.20']
 
-  android = [buildTools: '25.0.1',
-             compileSdk: 24,
+  android = [buildTools: '26.0.2',
+             compileSdk: 26,
              minSdk    : 16,
-             targetSdk : 24]
+             targetSdk : 26]
 
-  build = [gradle       : '2.2.3',
-           fabric       : '1.22.0',
-           realm        : '2.2.1',
-           playPublisher: '1.1.5']
+  build = [gradle       : '3.0.1',
+           fabric       : '1.24.1',
+           realm        : '3.7.1',
+           playPublisher: '1.2.0']
 
   // Google Libraries
-  supportVersion = '25.0.1'
-  appCompatVersion = '25.0.1'
-  recyclerViewVersion = '25.0.1'
-  cardViewVersion = '25.0.1'
-  designVersion = '25.0.1'
-  preferenceCompatVersion = '25.0.1'
-  androidAnnotationsVersion = '25.0.1'
-  multiDexVersion = '1.0.1'
-  playServicesVersion = '10.0.1'
+  supportVersion = '26.0.2'
+  playServicesVersion = '11.2.2'
+  multiDexVersion = '1.0.2'
 
   // Libraries
-  crashlyticsVersion = '2.6.5'
-  daggerVersion = '2.8'
+  crashlyticsVersion = '2.6.8'
+  daggerVersion = '2.14.1'
   rxJavaVersion = '1.2.3'
   rxAndroidVersion = '1.2.1'
   javaxAnnotationVersion = '1.0'
   fabVersion = '1.6.4'
   zxingAndroidEmbeddedVersion = '3.4.0'
   dexterVersion = '2.3.1'
-  materialDialogsVersion = '0.9.1.0'
-  materialDrawerVersion = '5.8.0'
-  ankoVersion = '0.9'
-  flowUpVersion = '0.2.5'
-  gsonVersion = '2.6.2'
+  materialDialogsVersion = '0.9.6.0'
+  materialDrawerVersion = '6.0.2'
+  ankoVersion = '0.10.4'
+  flowUpVersion = '1.0.0'
+  gsonVersion = '2.8.2'
   spongyCastleVersion = '1.54.0.0'
   robinHoodTickerVersion = '1.1.1'
 
@@ -53,11 +48,11 @@ ext {
   robolectricVersion = '3.1.4'
   jUnitVersion = '4.12'
   assertJVersion = '1.7.1'
-  mockitoVersion = '2.2.22'
-  powerMockitoVersion = '1.6.6'
-  hamkrestVersion = '1.2.3.0'
-  supportTestVersion = '0.5'
-  espressoVersion = '2.2.2'
+  mockitoVersion = '2.10.0'
+  mockitoKotlinVersion = '1.5.0'
+  hamkrestVersion = '1.4.2.0'
+  supportTestVersion = '1.0.1'
+  espressoVersion = '3.0.1'
 
   buildPlugins = [gradle       : "com.android.tools.build:gradle:$build.gradle",
                   kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiler.kotlin",
@@ -66,7 +61,7 @@ ext {
                   playPublisher: "com.github.triplet.gradle:play-publisher:$build.playPublisher"]
 
   presentationDependencies = [multiDex            : "com.android.support:multidex:${multiDexVersion}",
-                              kotlinStdLib        : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                              kotlinStdLib        : "org.jetbrains.kotlin:kotlin-stdlib:${compiler.kotlin}",
                               crashlytics         : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger              : "com.google.dagger:dagger:${daggerVersion}",
@@ -74,10 +69,10 @@ ext {
                               rxAndroid           : "io.reactivex:rxandroid:${rxAndroidVersion}",
                               javaxAnnotation     : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
                               supportVersion      : "com.android.support:support-v4:${supportVersion}",
-                              appCompat           : "com.android.support:appcompat-v7:${appCompatVersion}",
-                              preferenceCompat    : "com.android.support:preference-v7:${preferenceCompatVersion}",
-                              design              : "com.android.support:design:${designVersion}",
-                              recyclerView        : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+                              appCompat           : "com.android.support:appcompat-v7:${supportVersion}",
+                              preferenceCompat    : "com.android.support:preference-v7:${supportVersion}",
+                              design              : "com.android.support:design:${supportVersion}",
+                              recyclerView        : "com.android.support:recyclerview-v7:${supportVersion}",
                               fab                 : "com.github.clans:fab:${fabVersion}",
                               dexter              : "com.karumi:dexter:${dexterVersion}",
                               zxingAndroidEmbedded: "com.journeyapps:zxing-android-embedded:${zxingAndroidEmbeddedVersion}",
@@ -87,12 +82,12 @@ ext {
                               ankoSupport         : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
                               flowUp              : "io.flowup:android-sdk:${flowUpVersion}",
                               robinHoodTicker     : "com.robinhood.ticker:ticker:${robinHoodTickerVersion}"]
-  presentationTestDependencies =
-      ["androidAnnotations": "com.android.support:support-annotations:${androidAnnotationsVersion}",
-       "supportRunner"     : "com.android.support.test:runner:${supportTestVersion}",
-       "supportRules"      : "com.android.support.test:rules:${supportTestVersion}",
-       "espressoCore"      : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-       "espressoIntents"   : "com.android.support.test.espresso:espresso-intents:${espressoVersion}"]
+
+  presentationTestDependencies = ["androidAnnotations": "com.android.support:support-annotations:${supportVersion}",
+                                  "supportRunner"     : "com.android.support.test:runner:${supportTestVersion}",
+                                  "supportRules"      : "com.android.support.test:rules:${supportTestVersion}",
+                                  "espressoCore"      : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+                                  "espressoIntents"   : "com.android.support.test.espresso:espresso-intents:${espressoVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -112,19 +107,14 @@ ext {
                       rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
                       rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
                       javaxAnnotation   : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-                      androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
+                      androidAnnotations: "com.android.support:support-annotations:${supportVersion}",
                       gson              : "com.google.code.gson:gson:${gsonVersion}",
-                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}",
-                      playServicesDrive : "com.google.android.gms:play-services-drive:${playServicesVersion}"]
+                      spongyCastle      : "com.madgag.spongycastle:core:${spongyCastleVersion}"]
 
-  dataTestDependencies = [kotlinStdLib       : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
-                          junitKotlin        : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
-                          junit              : "junit:junit:${jUnitVersion}",
-                          hamkrest           : "com.natpryce:hamkrest:${hamkrestVersion}",
-                          mockito            : "org.mockito:mockito-core:${mockitoVersion}",
-                          robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
-                          powerMockitoJUnit  : "org.powermock:powermock-module-junit4:${powerMockitoVersion}",
-                          powerMockitoRules  : "org.powermock:powermock-module-junit4-rule:${powerMockitoVersion}",
-                          powerMockito       : "org.powermock:powermock-api-mockito2:${powerMockitoVersion}",
-                          powerMockitoXStream: "org.powermock:powermock-classloading-xstream:${powerMockitoVersion}"]
+  dataTestDependencies = [kotlinStdLib : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                          junitKotlin  : "org.jetbrains.kotlin:kotlin-test-junit:$compiler.kotlin",
+                          junit        : "junit:junit:${jUnitVersion}",
+                          hamkrest     : "com.natpryce:hamkrest:${hamkrestVersion}",
+                          mockitoKotlin: "com.nhaarman:mockito-kotlin-kt1.1:${mockitoKotlinVersion}",
+                          robolectric  : "org.robolectric:robolectric:${robolectricVersion}"]
 }

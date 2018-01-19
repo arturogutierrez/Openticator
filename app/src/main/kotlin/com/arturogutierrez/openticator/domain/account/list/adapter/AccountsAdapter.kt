@@ -15,16 +15,16 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
   private val selectedAccountsSubject = PublishSubject.create<List<Account>>()
   private val editModeSubject = PublishSubject.create<Boolean>()
 
-  var editMode by Delegates.observable(false) { p, old, newEditMode ->
+  var editMode by Delegates.observable(false) { _, _, newEditMode ->
     if (!newEditMode) {
       clearSelection()
     }
     editModeSubject.onNext(newEditMode)
   }
-  var accounts by Delegates.observable(emptyList<AccountPasscode>()) { p, old, new ->
+  var accounts by Delegates.observable(emptyList<AccountPasscode>()) { _, _, _ ->
     notifyDataSetChanged()
   }
-  var selectedAccounts by Delegates.observable(emptyList<Account>()) { p, old, new ->
+  var selectedAccounts by Delegates.observable(emptyList<Account>()) { _, _, new ->
     selectedAccountsSubject.onNext(new)
   }
   var onSelectedAccountPasscode: ((AccountPasscode) -> Unit) = { }
@@ -74,10 +74,10 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
   private fun selectOrDeselect(position: Int) {
     val accountPasscode = accounts[position]
     val account = accountPasscode.account
-    if (selectedAccounts.contains(account)) {
-      selectedAccounts = selectedAccounts.filter { it != account }
+    selectedAccounts = if (selectedAccounts.contains(account)) {
+      selectedAccounts.filter { it != account }
     } else {
-      selectedAccounts = selectedAccounts.plus(account)
+      selectedAccounts.plus(account)
     }
     notifyItemChanged(position)
   }

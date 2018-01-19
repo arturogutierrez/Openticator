@@ -11,10 +11,9 @@ import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecoratorFactory
 import com.arturogutierrez.openticator.domain.otp.time.CurrentTimeProvider
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
+import com.arturogutierrez.openticator.helpers.find
 import com.robinhood.ticker.TickerUtils
 import com.robinhood.ticker.TickerView
-import org.jetbrains.anko.find
-import org.jetbrains.anko.imageResource
 
 class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
                         onLongItemClick: (Int) -> Boolean) : RecyclerView.ViewHolder(itemView) {
@@ -36,7 +35,7 @@ class AccountViewHolder(itemView: View, onItemClick: (position: Int) -> Unit,
 
   fun showAccount(accountPasscode: AccountPasscode, isSelected: Boolean) {
     val issuerDecorator = issuerDecoratorFactory.create(accountPasscode.issuer)
-    ivIcon.imageResource = issuerDecorator.imageResource
+    ivIcon.setImageResource(issuerDecorator.imageResource)
     tvName.text = accountPasscode.account.name
     tvPasscode.setText(accountPasscode.passcode.code)
     itemView.isSelected = isSelected

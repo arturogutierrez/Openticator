@@ -1,12 +1,12 @@
 package com.arturogutierrez.openticator.domain.settings.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.preference.PreferenceScreen
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.settings.view.SettingsFragment
 import com.arturogutierrez.openticator.view.activity.BaseActivity
-import org.jetbrains.anko.startActivity
 
 class SettingsActivity : BaseActivity(R.layout.activity_toolbar), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
@@ -22,10 +22,11 @@ class SettingsActivity : BaseActivity(R.layout.activity_toolbar), PreferenceFrag
   }
 
   override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat, preferenceScreen: PreferenceScreen): Boolean {
-    startActivity<SettingsActivity>(
-        Pair(TITLE, R.string.cloud),
-        Pair(PREFERENCE_ROOT, preferenceScreen.key)
-    )
+    val intent = Intent(this, SettingsActivity::class.java).apply {
+      putExtra(TITLE, R.string.cloud)
+      putExtra(PREFERENCE_ROOT, preferenceScreen.key)
+    }
+    startActivity(intent)
 
     return true
   }

@@ -6,17 +6,17 @@ import android.support.v7.widget.Toolbar
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.navigator.Navigator
+import com.arturogutierrez.openticator.helpers.find
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SectionDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
-import org.jetbrains.anko.find
 import javax.inject.Inject
 
 class NavigationDrawer @Inject constructor(val activity: Activity,
-                                           val presenter: NavigationDrawerPresenter,
-                                           val navigator: Navigator) : NavigationDrawerView {
+    val presenter: NavigationDrawerPresenter,
+    val navigator: Navigator) : NavigationDrawerView {
 
   private val toolbar by lazy { activity.find<Toolbar>(R.id.toolbar) }
   private val allAccountsDrawerItem = createAllAccountsDrawerItem()
@@ -60,7 +60,7 @@ class NavigationDrawer @Inject constructor(val activity: Activity,
         .withActionBarDrawerToggleAnimated(true)
         .addDrawerItems(categoriesSectionDrawerItem, allAccountsDrawerItem)
         .addStickyDrawerItems(settingsDrawerItem)
-        .withOnDrawerItemClickListener { view, position, drawerItem -> onDrawerItemClicked(drawerItem, position) }
+        .withOnDrawerItemClickListener { _, position, drawerItem -> onDrawerItemClicked(drawerItem, position) }
         .withSelectedItemByPosition(1)
         .build()
   }

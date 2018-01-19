@@ -13,8 +13,8 @@ import com.arturogutierrez.openticator.di.module.ActivityModule
 import com.arturogutierrez.openticator.domain.navigator.Navigator
 import com.arturogutierrez.openticator.helpers.consume
 import com.arturogutierrez.openticator.helpers.executeTransaction
-import org.jetbrains.anko.find
-import org.jetbrains.anko.findOptional
+import com.arturogutierrez.openticator.helpers.find
+import com.arturogutierrez.openticator.helpers.findOptional
 import javax.inject.Inject
 
 abstract class BaseActivity(@LayoutRes private val layoutResource: Int) : AppCompatActivity() {

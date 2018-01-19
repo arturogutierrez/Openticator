@@ -36,7 +36,7 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
       }
     }
 
-    return accountObservable.doOnNext { accountAdded -> notifyAccountChanges() }
+    return accountObservable.doOnNext { notifyAccountChanges() }
   }
 
   override fun update(account: Account): Observable<Account> {

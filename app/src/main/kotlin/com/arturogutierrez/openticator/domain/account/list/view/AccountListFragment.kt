@@ -16,11 +16,11 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.helpers.disableAppBarLayoutScroll
 import com.arturogutierrez.openticator.helpers.enableAppBarLayoutScroll
+import com.arturogutierrez.openticator.helpers.find
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
 import com.arturogutierrez.openticator.view.widget.gone
 import com.arturogutierrez.openticator.view.widget.visible
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
@@ -30,7 +30,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
 
   private val rvAccounts by lazy { find<RecyclerView>(R.id.rv_accounts) }
   private val tvEmptyView by lazy { find<TextView>(R.id.tv_empty_view) }
-  private val accountsAdapter by lazy { AccountsAdapter(activity.layoutInflater) }
+  private val accountsAdapter by lazy { AccountsAdapter(activity!!.layoutInflater) }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
@@ -113,7 +113,7 @@ class AccountListFragment : BaseFragment(), AccountListView {
   }
 
   private fun stopCounters() {
-    (0..accountsAdapter.itemCount - 1)
+    (0 until accountsAdapter.itemCount)
         .map { rvAccounts.findViewHolderForAdapterPosition(it) as? AccountViewHolder }
         .forEach { it?.stopAnimation() }
   }
@@ -126,9 +126,9 @@ class AccountListFragment : BaseFragment(), AccountListView {
     rvAccounts.post {
       val layoutManager = rvAccounts.layoutManager as LinearLayoutManager
       if (layoutManager.findLastCompletelyVisibleItemPosition() == accounts.size - 1) {
-        activity.disableAppBarLayoutScroll()
+        activity?.disableAppBarLayoutScroll()
       } else {
-        activity.enableAppBarLayoutScroll()
+        activity?.enableAppBarLayoutScroll()
       }
     }
   }

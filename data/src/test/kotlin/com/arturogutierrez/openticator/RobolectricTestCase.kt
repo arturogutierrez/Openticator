@@ -6,5 +6,5 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, application = ApplicationStub::class, manifest = Config.NONE, sdk = intArrayOf(23))
+@Config(constants = BuildConfig::class, application = ApplicationStub::class, manifest = Config.NONE, sdk = [23])
 abstract class RobolectricTestCase

@@ -9,11 +9,11 @@ import com.arturogutierrez.openticator.domain.account.add.AddAccountFromCameraPr
 import com.arturogutierrez.openticator.domain.account.add.AddAccountFromCameraView
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent
 import com.arturogutierrez.openticator.domain.navigator.Navigator
+import com.arturogutierrez.openticator.helpers.find
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.widget.gone
 import com.arturogutierrez.openticator.view.widget.visible
 import com.google.zxing.integration.android.IntentIntegrator
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AddAccountFromCameraFragment : BaseFragment(), AddAccountFromCameraView {

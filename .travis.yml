@@ -4,7 +4,7 @@ jdk: oraclejdk8
 
 cache:
   directories:
-    - $HOME/.gradle/caches/3.2.1
+    - $HOME/.gradle/caches/4.4.1
     - $HOME/.gradle/caches/jars-1
     - $HOME/.gradle/daemon
     - $HOME/.gradle/native
@@ -18,8 +18,8 @@ before_install:
 android:
   components:
     - tools
-    - build-tools-25.0.1
-    - android-24
+    - build-tools-26.0.2
+    - android-26
     - platform-tools
 
     # Additional components
@@ -27,12 +27,6 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - extra-android-support
-
-    # Emulator
-    - sys-img-armeabi-v7a-android-24
-
-before_script:
-  - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
 
 deploy:
 - provider: script

@@ -8,8 +8,8 @@ import com.arturogutierrez.openticator.domain.account.list.activity.AccountListA
 import com.arturogutierrez.openticator.domain.password.wizard.activity.MasterPasswordActivity
 import com.arturogutierrez.openticator.domain.settings.activity.SettingsActivity
 import com.arturogutierrez.openticator.domain.welcome.activity.WelcomeActivity
+import com.arturogutierrez.openticator.helpers.startActivity
 import com.google.zxing.integration.android.IntentIntegrator
-import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class Navigator @Inject constructor() {

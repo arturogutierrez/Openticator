@@ -16,11 +16,11 @@ class PasswordSerializerImpl @Inject constructor() : PasswordSerializer {
   }
 
   private fun createMessageDigest(): MessageDigest? {
-    try {
-      return MessageDigest.getInstance("SHA-512")
+    return try {
+      MessageDigest.getInstance("SHA-512")
     } catch (e: NoSuchAlgorithmException) {
       // Should not happen, all Android devices should support SHA-256
-      return null
+      null
     }
   }
 }

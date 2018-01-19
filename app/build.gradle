@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
   def ext = rootProject.extensions.ext
@@ -25,7 +26,7 @@ android {
 
     // Api Keys
     def (fabricApiKey, flowUpApiKey) = apiKeysFromFile()
-    manifestPlaceholders = [ fabricApiKey: fabricApiKey]
+    manifestPlaceholders = [fabricApiKey: fabricApiKey]
     resValue "string", "flow_up_api_key", flowUpApiKey
   }
 
@@ -40,8 +41,8 @@ android {
 
   // Enables long timeouts required on slow environments as Travis
   adbOptions {
-    timeOutInMs 20 * 60 * 1000  // 20 minutes
-    installOptions "-d","-t"
+    timeOutInMs 20 * 60 * 1000 // 20 minutes
+    installOptions "-d", "-t"
   }
 
   dexOptions {
@@ -79,63 +80,64 @@ android {
     }
   }
 
+  flavorDimensions "sdk"
+
   productFlavors {
     fastBuild {
+      dimension "sdk"
+
       // Enable pre-dexing to produce an APK that can be tested on
       // Android 5.0+ without the time-consuming DEX build processes.
       minSdkVersion 21
     }
 
     regular {
+      dimension "sdk"
+
       minSdkVersion ext.android.minSdk
     }
   }
-}
-
-kapt {
-  generateStubs = true
 }
 
 dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
   def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
-  compile project(':domain')
-  compile project(':data')
+  implementation project(':domain')
+  implementation project(':data')
 
-  compile presentationDependencies.multiDex
-  compile presentationDependencies.flowUp
-  compile presentationDependencies.anko
-  compile presentationDependencies.ankoSupport
-  compile presentationDependencies.supportVersion
-  compile presentationDependencies.appCompat
-  compile presentationDependencies.design
-  compile presentationDependencies.recyclerView
-  compile presentationDependencies.preferenceCompat
-  compile presentationDependencies.fab
-  compile presentationDependencies.dexter
-  compile presentationDependencies.zxingAndroidEmbedded
-  compile presentationDependencies.robinHoodTicker
-  compile presentationDependencies.materialDialogs
-  compile(presentationDependencies.materialDrawer) {
+  implementation presentationDependencies.kotlinStdLib
+  implementation presentationDependencies.multiDex
+  implementation presentationDependencies.flowUp
+  implementation presentationDependencies.supportVersion
+  implementation presentationDependencies.appCompat
+  implementation presentationDependencies.design
+  implementation presentationDependencies.recyclerView
+  implementation presentationDependencies.preferenceCompat
+  implementation presentationDependencies.fab
+  implementation presentationDependencies.dexter
+  implementation presentationDependencies.zxingAndroidEmbedded
+  implementation presentationDependencies.robinHoodTicker
+  implementation presentationDependencies.materialDialogs
+  implementation(presentationDependencies.materialDrawer) {
     transitive = true
   }
-  compile(presentationDependencies.crashlytics) {
-    transitive = true;
+  implementation(presentationDependencies.crashlytics) {
+    transitive = true
   }
 
   kapt presentationDependencies.daggerCompiler
-  compile presentationDependencies.dagger
-  compile presentationDependencies.rxJava
-  compile presentationDependencies.rxAndroid
-  provided presentationDependencies.javaxAnnotation
+  implementation presentationDependencies.dagger
+  implementation presentationDependencies.rxJava
+  implementation presentationDependencies.rxAndroid
+  compileOnly presentationDependencies.javaxAnnotation
 
 
-  androidTestCompile presentationTestDependencies.androidAnnotations
-  androidTestCompile presentationTestDependencies.supportRunner
-  androidTestCompile presentationTestDependencies.supportRules
-  androidTestCompile presentationTestDependencies.espressoCore
-  androidTestCompile presentationTestDependencies.espressoIntents
+  androidTestImplementation presentationTestDependencies.androidAnnotations
+  androidTestImplementation presentationTestDependencies.supportRunner
+  androidTestImplementation presentationTestDependencies.supportRules
+  androidTestImplementation presentationTestDependencies.espressoCore
+  androidTestImplementation presentationTestDependencies.espressoIntents
 }
 
 play {
@@ -143,7 +145,8 @@ play {
   track = 'beta'
 }
 
-def (debugPassword, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword) = signingConfigFromFile()
+def (debugPassword, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword) =
+signingConfigFromFile()
 if (debugPassword != null && releaseKeystorePassword != null && releaseKeyAlias != null && releaseKeyPassword != null) {
   android.signingConfigs.debug.storePassword = debugPassword
   android.signingConfigs.debug.keyPassword = debugPassword
@@ -157,7 +160,7 @@ if (debugPassword != null && releaseKeystorePassword != null && releaseKeyAlias 
 
 def signingConfigFromFile() {
   println '-> signingConfigFromFile'
-  def Properties props = new Properties()
+  Properties props = new Properties()
   def propFile = file('../signing.properties')
 
   if (propFile.canRead()) {
@@ -187,14 +190,13 @@ def signingConfigFromFile() {
 
 def apiKeysFromFile() {
   println '-> apiKeysFromFile'
-  def Properties props = new Properties()
+  Properties props = new Properties()
   def propFile = file('../api-keys.properties')
 
   if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
 
-    if (props != null && props.containsKey('FABRIC') &&
-        props.containsKey('FLOW_UP')) {
+    if (props != null && props.containsKey('FABRIC') && props.containsKey('FLOW_UP')) {
 
       def fabricApiKey = props['FABRIC']
       def flowUpApiKey = props['FLOW_UP']

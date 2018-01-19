@@ -11,8 +11,8 @@ import com.arturogutierrez.openticator.domain.navigator.Navigator
 import com.arturogutierrez.openticator.domain.password.wizard.MasterPasswordPresenter
 import com.arturogutierrez.openticator.domain.password.wizard.di.MasterPasswordComponent
 import com.arturogutierrez.openticator.helpers.consume
+import com.arturogutierrez.openticator.helpers.find
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class MasterPasswordFragment : BaseFragment(), MasterPasswordView {
@@ -90,7 +90,7 @@ class MasterPasswordFragment : BaseFragment(), MasterPasswordView {
   }
 
   override fun closeWizard() {
-    navigator.goToAccountList(context)
+    context?.let { navigator.goToAccountList(it) }
     val activity = activity
     activity?.finish()
   }

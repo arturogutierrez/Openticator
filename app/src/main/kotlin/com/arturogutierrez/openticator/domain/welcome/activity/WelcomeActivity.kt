@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.application.OpenticatorApplication
 import com.arturogutierrez.openticator.domain.navigator.Navigator
-import org.jetbrains.anko.find
+import com.arturogutierrez.openticator.helpers.find
 import javax.inject.Inject
 
 class WelcomeActivity : AppCompatActivity() {
