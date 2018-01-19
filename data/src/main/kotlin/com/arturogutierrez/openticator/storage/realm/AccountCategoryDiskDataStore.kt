@@ -6,16 +6,16 @@ import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.storage.realm.mapper.AccountRealmMapper
 import com.arturogutierrez.openticator.storage.realm.mapper.CategoryRealmMapper
 import com.arturogutierrez.openticator.storage.realm.model.AccountRealm
+import io.reactivex.Single
 import io.realm.Realm
-import rx.Observable
 import javax.inject.Inject
 
 class AccountCategoryDiskDataStore @Inject constructor(
     private val accountRealmMapper: AccountRealmMapper,
     private val categoryRealmMapper: CategoryRealmMapper) : AccountCategoryDataStore {
 
-  override val allAccounts: Observable<List<Pair<Account, Category>>>
-    get() = Observable.fromCallable {
+  override val allAccounts: Single<List<Pair<Account, Category>>>
+    get() = Single.fromCallable {
       Realm.getDefaultInstance().use {
         val results = it.where(AccountRealm::class.java).findAll()
         results.map {

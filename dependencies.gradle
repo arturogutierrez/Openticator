@@ -19,7 +19,7 @@ ext {
 
   build = [gradle       : '3.0.1',
            fabric       : '1.24.1',
-           realm        : '3.7.1',
+           realm        : '4.3.2',
            playPublisher: '1.2.0']
 
   // Google Libraries

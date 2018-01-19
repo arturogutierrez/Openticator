@@ -17,7 +17,7 @@ class CategoryRepositoryTest {
 
   @Before
   fun setUp() {
-    categoryRepository = CategoryRepositoryImpl(mockCategoryDataStore)
+    categoryRepository = CategoryRepository(mockCategoryDataStore)
   }
 
   @Test
