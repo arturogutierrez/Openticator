@@ -6,15 +6,15 @@ import com.arturogutierrez.openticator.domain.account.interactor.CopyToClipboard
 import com.arturogutierrez.openticator.domain.account.interactor.GetAccountPasscodesInteractor
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.domain.otp.time.RemainingTimeCalculator
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultCompletableObserver
+import com.arturogutierrez.openticator.interactor.DefaultFlowableObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
-@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class AccountListPresenter @Inject constructor(
-    val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
-    val copyToClipboardInteractor: CopyToClipboardInteractor,
-    val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView>() {
+    private val getAccountPasscodesInteractor: GetAccountPasscodesInteractor,
+    private val copyToClipboardInteractor: CopyToClipboardInteractor,
+    private val remainingTimeCalculator: RemainingTimeCalculator) : Presenter<AccountListView>() {
 
   private val handler = Handler(Looper.getMainLooper())
   private val scheduleRunnable = Runnable { this.reloadPasscodes() }
@@ -42,24 +42,24 @@ class AccountListPresenter @Inject constructor(
 
   fun onPasscodeSelected(accountPasscode: AccountPasscode) {
     val params = CopyToClipboardInteractor.Params(accountPasscode)
-    copyToClipboardInteractor.execute(params, object : DefaultSubscriber<Unit>() {
-      override fun onNext(item: Unit) {
+    copyToClipboardInteractor.execute(params, object : DefaultCompletableObserver() {
+      override fun onComplete() {
         onPasscodeCopiedToClipboard()
       }
     })
   }
 
   private fun loadAccountPasscodes() {
-    getAccountPasscodesInteractor.execute(GetAccountPasscodesInteractor.EmptyParams,
-        object : DefaultSubscriber<List<AccountPasscode>>() {
-          override fun onNext(items: List<AccountPasscode>) {
-            onFetchAccountPasscodes(items)
-          }
+    val params = GetAccountPasscodesInteractor.EmptyParams
+    getAccountPasscodesInteractor.execute(params, object : DefaultFlowableObserver<List<AccountPasscode>>() {
+      override fun onNext(t: List<AccountPasscode>) {
+        onFetchAccountPasscodes(t)
+      }
 
-          override fun onError(e: Throwable) {
-            onFetchError()
-          }
-        })
+      override fun onError(e: Throwable) {
+        onFetchError()
+      }
+    })
   }
 
   private fun onFetchAccountPasscodes(accountPasscodes: List<AccountPasscode>) {

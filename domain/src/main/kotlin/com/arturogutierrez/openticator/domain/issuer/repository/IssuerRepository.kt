@@ -2,8 +2,11 @@ package com.arturogutierrez.openticator.domain.issuer.repository
 
 import com.arturogutierrez.openticator.domain.issuer.model.Issuer
 import io.reactivex.Single
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface IssuerRepository {
+@Singleton
+class IssuerRepository @Inject constructor() {
 
   val issuers: Single<List<Issuer>>
     get() {

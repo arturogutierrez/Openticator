@@ -15,7 +15,7 @@ abstract class CompletableUseCase<in Params> constructor(
 
   protected abstract fun buildObservable(params: Params): Completable
 
-  fun execute(observer: CompletableObserver, params: Params) {
+  fun execute(params: Params, observer: CompletableObserver) {
     buildObservable(params)
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.scheduler)

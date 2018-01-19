@@ -19,11 +19,12 @@ import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.category.model.Category
 import com.arturogutierrez.openticator.domain.issuer.IssuerDecorator
 import com.arturogutierrez.openticator.helpers.consume
-import rx.Subscription
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class AccountEditActionMode(accountListComponent: AccountListComponent,
-    val accountsAdapter: AccountsAdapter) : ActionMode.Callback, AccountEditModeView {
+class AccountEditActionMode(private val accountsAdapter: AccountsAdapter,
+                            accountListComponent: AccountListComponent)
+  : ActionMode.Callback, AccountEditModeView {
 
   @Inject
   internal lateinit var activity: Activity
@@ -32,7 +33,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
   @Inject
   internal lateinit var layoutInflater: LayoutInflater
 
-  private val accountsSubscription: Subscription
+  private val accountsDisposable: Disposable
   private var actionMode: ActionMode? = null
   private var menuItemDelete: MenuItem? = null
   private var menuItemCategory: MenuItem? = null
@@ -41,7 +42,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
 
   init {
     initializeInjector(accountListComponent)
-    accountsSubscription = accountsAdapter.selectedAccounts().subscribe { onSelectedAccounts(it) }
+    accountsDisposable = accountsAdapter.selectedAccounts().subscribe { onSelectedAccounts(it) }
   }
 
   private fun initializeInjector(accountListComponent: AccountListComponent) {
@@ -78,7 +79,7 @@ class AccountEditActionMode(accountListComponent: AccountListComponent,
     menuItemEdit = null
     accountsAdapter.editMode = false
     presenter.detachView()
-    accountsSubscription.unsubscribe()
+    accountsDisposable.dispose()
   }
 
   private fun configureActionMenu(inflater: MenuInflater, menu: Menu) {

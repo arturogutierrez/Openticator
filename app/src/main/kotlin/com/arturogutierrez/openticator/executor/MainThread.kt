@@ -1,7 +1,7 @@
 package com.arturogutierrez.openticator.executor
 
-import rx.Scheduler
-import rx.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 class MainThread @Inject constructor() : PostExecutionThread {

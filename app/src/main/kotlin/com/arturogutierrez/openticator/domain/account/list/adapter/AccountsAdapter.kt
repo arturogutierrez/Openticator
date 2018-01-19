@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import com.arturogutierrez.openticator.R
 import com.arturogutierrez.openticator.domain.account.model.Account
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
-import rx.Observable
-import rx.subjects.PublishSubject
+import io.reactivex.Flowable
+import io.reactivex.processors.PublishProcessor
 import kotlin.properties.Delegates
 
-class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>() {
+class AccountsAdapter(private val layoutInflater: LayoutInflater) : RecyclerView.Adapter<AccountViewHolder>() {
 
-  private val selectedAccountsSubject = PublishSubject.create<List<Account>>()
-  private val editModeSubject = PublishSubject.create<Boolean>()
+  private val selectedAccountsSubject = PublishProcessor.create<List<Account>>()
+  private val editModeSubject = PublishProcessor.create<Boolean>()
 
   var editMode by Delegates.observable(false) { _, _, newEditMode ->
     if (!newEditMode) {
@@ -42,9 +42,9 @@ class AccountsAdapter(val layoutInflater: LayoutInflater) : RecyclerView.Adapter
 
   override fun getItemCount() = accounts.size
 
-  fun editModeObservable(): Observable<Boolean> = editModeSubject
+  fun editModeObservable(): Flowable<Boolean> = editModeSubject
 
-  fun selectedAccounts(): Observable<List<Account>> = selectedAccountsSubject
+  fun selectedAccounts(): Flowable<List<Account>> = selectedAccountsSubject
 
   private fun clearSelection() {
     if (selectedAccounts.isNotEmpty()) {

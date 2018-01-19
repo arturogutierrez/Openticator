@@ -18,7 +18,8 @@ abstract class MaybeUseCase<T, in Params> constructor(
 
   open fun execute(params: Params, observer: DisposableMaybeObserver<T>) {
     val observable = buildObservable(params)
-        .subscribeOn(Schedulers.from(threadExecutor)) as Maybe<T>
+        .subscribeOn(Schedulers.from(threadExecutor))
+        .observeOn(postExecutionThread.scheduler)
     addDisposable(observable.subscribeWith(observer))
   }
 

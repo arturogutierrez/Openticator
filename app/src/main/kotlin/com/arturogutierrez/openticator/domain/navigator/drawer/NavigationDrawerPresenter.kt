@@ -3,25 +3,25 @@ package com.arturogutierrez.openticator.domain.navigator.drawer
 import com.arturogutierrez.openticator.domain.category.CategorySelector
 import com.arturogutierrez.openticator.domain.category.interactor.GetCategoriesInteractor
 import com.arturogutierrez.openticator.domain.category.model.Category
-import com.arturogutierrez.openticator.interactor.DefaultSubscriber
+import com.arturogutierrez.openticator.interactor.DefaultFlowableObserver
 import com.arturogutierrez.openticator.view.presenter.Presenter
 import javax.inject.Inject
 
 class NavigationDrawerPresenter @Inject constructor(
-    val getCategoriesInteractor: GetCategoriesInteractor,
-    val categorySelector: CategorySelector) : Presenter<NavigationDrawerView>() {
+    private val getCategoriesInteractor: GetCategoriesInteractor,
+    private val categorySelector: CategorySelector)
+  : Presenter<NavigationDrawerView>() {
 
   // TODO: Presenter shouldn't has state
   private var categories: List<Category> = emptyList()
 
   override fun resume() {
-    getCategoriesInteractor.execute(GetCategoriesInteractor.EmptyParams,
-        object : DefaultSubscriber<List<Category>>() {
-          override fun onNext(item: List<Category>) {
-            onFetchCategories(item)
-          }
-        }
-    )
+    val params = GetCategoriesInteractor.EmptyParams
+    getCategoriesInteractor.execute(params, object : DefaultFlowableObserver<List<Category>>() {
+      override fun onNext(t: List<Category>) {
+        onFetchCategories(t)
+      }
+    })
   }
 
   override fun pause() {
