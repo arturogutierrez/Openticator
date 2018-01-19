@@ -12,8 +12,8 @@ import com.arturogutierrez.openticator.domain.account.add.AddAccountView
 import com.arturogutierrez.openticator.domain.account.add.AddAccountView.InputError.*
 import com.arturogutierrez.openticator.domain.account.add.di.AddAccountComponent
 import com.arturogutierrez.openticator.helpers.consume
+import com.arturogutierrez.openticator.helpers.find
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AddAccountFormFragment : BaseFragment(), AddAccountView {

@@ -16,11 +16,11 @@ import com.arturogutierrez.openticator.domain.account.list.di.AccountListCompone
 import com.arturogutierrez.openticator.domain.account.model.AccountPasscode
 import com.arturogutierrez.openticator.helpers.disableAppBarLayoutScroll
 import com.arturogutierrez.openticator.helpers.enableAppBarLayoutScroll
+import com.arturogutierrez.openticator.helpers.find
 import com.arturogutierrez.openticator.view.fragment.BaseFragment
 import com.arturogutierrez.openticator.view.fragment.makeSnackbar
 import com.arturogutierrez.openticator.view.widget.gone
 import com.arturogutierrez.openticator.view.widget.visible
-import org.jetbrains.anko.support.v4.find
 import javax.inject.Inject
 
 class AccountListFragment : BaseFragment(), AccountListView {
