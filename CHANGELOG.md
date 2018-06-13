@@ -1,8 +1,11 @@
-### 0.9.4.1 (Unreleased)
+### 0.9.4.2
 
-* New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
 * RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
+
+### 0.9.4.1 (28/07/2017)
+
+* New: Allow backup: [#77](https://github.com/arturogutierrez/Openticator/pull/77)
 
 ### 0.9.4 (02/01/2017)
 

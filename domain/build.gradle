@@ -27,6 +27,7 @@ dependencies {
   compileOnly domainDependencies.javaxAnnotation
 
   implementation domainDependencies.kotlinStdLib
+  implementation domainDependencies.kotlinReflect
   implementation domainDependencies.dagger
   implementation domainDependencies.rxJava
 

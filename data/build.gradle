@@ -7,7 +7,6 @@ android {
   def ext = rootProject.extensions.ext
 
   compileSdkVersion ext.android.compileSdk
-  buildToolsVersion ext.android.buildTools
 
   defaultConfig {
     minSdkVersion ext.android.minSdk
@@ -44,6 +43,7 @@ dependencies {
   kapt dataDependencies.daggerCompiler
   compileOnly dataDependencies.javaxAnnotation
   implementation dataDependencies.kotlinStdLib
+  implementation dataDependencies.kotlinReflect
   implementation dataDependencies.dagger
   implementation dataDependencies.rxJava
   implementation dataDependencies.rxAndroid

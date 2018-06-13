@@ -8,7 +8,6 @@ android {
   def ext = rootProject.extensions.ext
 
   compileSdkVersion ext.android.compileSdk
-  buildToolsVersion ext.android.buildTools
 
   defaultConfig {
     minSdkVersion ext.android.minSdk
@@ -107,6 +106,7 @@ dependencies {
   implementation project(':data')
 
   implementation presentationDependencies.kotlinStdLib
+  implementation presentationDependencies.kotlinReflect
   implementation presentationDependencies.multiDex
   implementation presentationDependencies.flowUp
   implementation presentationDependencies.supportVersion

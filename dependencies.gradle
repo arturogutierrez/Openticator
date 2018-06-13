@@ -10,14 +10,13 @@ allprojects {
 ext {
 
   compiler = [java  : JavaVersion.VERSION_1_7,
-              kotlin: '1.2.20']
+              kotlin: '1.2.41']
 
-  android = [buildTools: '26.0.2',
-             compileSdk: 26,
+  android = [compileSdk: 26,
              minSdk    : 16,
              targetSdk : 26]
 
-  build = [gradle       : '3.0.1',
+  build = [gradle       : '3.1.0',
            fabric       : '1.24.1',
            realm        : '4.3.2',
            playPublisher: '1.2.0']
@@ -37,7 +36,7 @@ ext {
   zxingAndroidEmbeddedVersion = '3.4.0'
   dexterVersion = '2.3.1'
   materialDialogsVersion = '0.9.6.0'
-  materialDrawerVersion = '6.0.2'
+  materialDrawerVersion = '6.0.7'
   ankoVersion = '0.10.4'
   flowUpVersion = '1.0.0'
   gsonVersion = '2.8.2'
@@ -62,6 +61,7 @@ ext {
 
   presentationDependencies = [multiDex            : "com.android.support:multidex:${multiDexVersion}",
                               kotlinStdLib        : "org.jetbrains.kotlin:kotlin-stdlib:${compiler.kotlin}",
+                              kotlinReflect       : "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
                               crashlytics         : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar",
                               daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
                               dagger              : "com.google.dagger:dagger:${daggerVersion}",
@@ -90,6 +90,7 @@ ext {
                                   "espressoIntents"   : "com.android.support.test.espresso:espresso-intents:${espressoVersion}"]
 
   domainDependencies = [kotlinStdLib   : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                        kotlinReflect  : "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
                         daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
                         dagger         : "com.google.dagger:dagger:${daggerVersion}",
                         javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
@@ -102,6 +103,7 @@ ext {
                             mockitoKotlin: "com.nhaarman:mockito-kotlin-kt1.1:${mockitoKotlinVersion}"]
 
   dataDependencies = [kotlinStdLib      : "org.jetbrains.kotlin:kotlin-stdlib:$compiler.kotlin",
+                      kotlinReflect     : "org.jetbrains.kotlin:kotlin-reflect:$compiler.kotlin",
                       daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
                       dagger            : "com.google.dagger:dagger:${daggerVersion}",
                       rxJava            : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
