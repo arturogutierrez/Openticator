@@ -77,7 +77,7 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
   private val accountsAsBlocking: List<Account>
     get() {
       Realm.getDefaultInstance().use {
-        val realmResults = it.where(AccountRealm::class.java).findAllSorted("order", Sort.ASCENDING)
+        val realmResults = it.where(AccountRealm::class.java).findAll().sort("order", Sort.ASCENDING)
         return accountRealmMapper.reverseTransform(realmResults)
       }
     }
@@ -86,7 +86,7 @@ class AccountDiskDataStore @Inject constructor(private val accountRealmMapper: A
     Realm.getDefaultInstance().use {
       val realmResults = it.where(AccountRealm::class.java)
           .equalTo("category.categoryId", category.categoryId)
-          .findAllSorted("order", Sort.ASCENDING)
+          .findAll().sort("order", Sort.ASCENDING)
       return accountRealmMapper.reverseTransform(realmResults)
     }
   }
