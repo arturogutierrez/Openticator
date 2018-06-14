@@ -1,4 +1,8 @@
-### 0.9.4.2
+### 0.9.4.3
+
+* Realm Migration Fix [#80](https://github.com/arturogutierrez/Openticator/pull/80)
+
+### 0.9.4.2 (13/06/2018)
 
 * Android Gradle Plugin update 3.0: [#78](https://github.com/arturogutierrez/Openticator/pull/78)
 * RxJava 2 migration: [#79](https://github.com/arturogutierrez/Openticator/pull/79)
