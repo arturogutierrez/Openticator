@@ -56,7 +56,7 @@ class CategoryDiskDataStore @Inject constructor(private val categoryRealmMapper:
   private val categoriesAsBlocking: List<Category>
     get() {
       Realm.getDefaultInstance().use {
-        val realmResults = it.where(CategoryRealm::class.java).findAllSorted("name")
+        val realmResults = it.where(CategoryRealm::class.java).findAll().sort("name")
         return categoryRealmMapper.reverseTransform(realmResults)
       }
     }

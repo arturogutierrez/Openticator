@@ -34,6 +34,12 @@ android {
   }
 }
 
+kapt {
+  arguments {
+    arg("realm.ignoreKotlinNullability", true)
+  }
+}
+
 dependencies {
   def dataDependencies = rootProject.ext.dataDependencies
   def testDependencies = rootProject.ext.dataTestDependencies
